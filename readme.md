@@ -16,6 +16,7 @@ Pasos
 3. Instalar las dependencias de npm usando el comando: npm install
 4. Editar el archivo /.env.example para adecuarlo a tu entorno y renombrarlo como /.env
 5. Editar el archivo /config/admin.example.php, en él podrás editar los datos del administrador del sistema de agendas. Renombrarlo como admin.php 
-7. Correr las migraciones con el comando: php artisan migrate.
+6. Generar clave de aplicación con el comando: php artisan key:generate
+7. Correr las migraciones con el comando: php artisan migrate
 8. Listo!
 
