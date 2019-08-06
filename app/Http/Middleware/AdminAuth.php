@@ -27,8 +27,7 @@ class AdminAuth
 
             #dd($validate_admin);
 
-            if (!($validate_admin->email == config('admin.login') &&
-                    Hash::check(config('admin.password'), $validate_admin->password))) {
+            if ($validate_admin->email != config('admin.login')) {
                 return new Response(view('unauthorized')->with('role', 'ADMIN'));
             } else{
                 return $next($request);
