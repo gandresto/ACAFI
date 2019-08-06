@@ -3,7 +3,7 @@
     Agenda para las academias de la FI. Hecho sobre el framework de Laravel 5.8 con PHP 7.3.
 </p>
 
-##Instrucciones de instalación
+## Instrucciones de instalación
 
 Requerimientos:
 - Laravel 5.8
