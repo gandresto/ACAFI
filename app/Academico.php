@@ -12,6 +12,14 @@ class Academico extends Model
         'grado_id', 'nombre', 'apellido_pat', 'apellido_mat'
     ];
 
+    // this is a recommended way to declare event handlers
+    public static function boot() {
+        parent::boot();
+        static::deleting(function($academico) {
+            $academico->user()->delete();
+        });
+    }
+
     public function nombreCompleto()
     {
         $nombre_completo = $this->nombre . ' ' .
