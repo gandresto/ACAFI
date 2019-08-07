@@ -6,33 +6,33 @@
 
 @section('content')
     <form class="form-horizontal" method="POST" action="/division">
-        {{ csrf_field() }}
+        @csrf
 
-        <div class="form-group{{ $errors->has('siglas') ? ' has-error' : '' }}">
-            <label for="siglas" class="col-md-4 control-label">Siglas</label>
+        <div class="form-group row">
+            <label for="siglas" class="col-md-4 col-form-label text-md-right">Siglas</label>
 
             <div class="col-md-6">
-                <input id="siglas" type="text" class="form-control" name="siglas" value="{{ old('siglas') }}" required>
+                <input id="siglas" type="text" class="form-control  @error('siglas') is-invalid @enderror" name="siglas" value="{{ old('siglas') }}" required>
 
-                @if ($errors->has('siglas'))
-                    <span class="help-block">
-                        <strong>{{ $errors->first('siglas') }}</strong>
+                @error('siglas')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
                     </span>
-                @endif
+                @enderror
             </div>
         </div>
 
-        <div class="form-group{{ $errors->has('nombre') ? ' has-error' : '' }}">
-            <label for="nombre" class="col-md-4 control-label">Nombre Completo</label>
+        <div class="form-group row">
+            <label for="nombre" class="col-md-4 col-form-label text-md-right">Nombre Completo</label>
 
             <div class="col-md-6">
-                <input id="nombre" type="text" class="form-control" name="nombre" value="{{ old('nombre') }}" required>
+                <input id="nombre" type="text" class="form-control  @error('nombre') is-invalid @enderror" name="nombre" value="{{ old('nombre') }}" required>
 
-                @if ($errors->has('nombre'))
-                    <span class="help-block">
-                        <strong>{{ $errors->first('nombre') }}</strong>
+                @error('nombre')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
                     </span>
-                @endif
+                @enderror
             </div>
         </div>
 
@@ -40,8 +40,8 @@
 
 
 
-        <div class="form-group">
-            <div class="col-md-6 col-md-offset-4">
+        <div class="form-group row mb-0">
+            <div class="col-md-6 offset-md-4">
                 <button type="submit" class="btn btn-primary">
                     Añadir división
                 </button>

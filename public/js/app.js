@@ -37080,10 +37080,13 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "form-group" }, [
+    _c("div", { staticClass: "form-group row" }, [
       _c(
         "label",
-        { staticClass: "col-md-4 control-label", attrs: { for: "buscarJefe" } },
+        {
+          staticClass: "col-md-4 control-label text-md-right",
+          attrs: { for: "buscarJefe" }
+        },
         [_vm._v("Jefe de División")]
       ),
       _vm._v(" "),
@@ -37135,11 +37138,11 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      { class: [_vm.tieneerrores ? "form-group has-error" : "form-group"] },
+      { class: [_vm.tieneerrores ? "form-group is-invalid" : "form-group"] },
       [
         _c(
           "div",
-          { staticClass: "col-md-8 col-md-offset-4" },
+          { staticClass: "col-md-8 offset-md-4" },
           [
             _vm._l(_vm.academicos, function(academico, index) {
               return _c("div", { key: index, staticClass: "radio" }, [
