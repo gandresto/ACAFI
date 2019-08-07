@@ -67,13 +67,13 @@ class AcademicosController extends Controller
         if ($driver == 'sqlite') {
             $academicos = Academico::orWhereRaw("nombre || ' ' || apellido_pat || ' ' || apellido_mat like '%" .
                                 $busqueda . "%' ")
-                                ->orderBy('name', 'desc')
+                                ->orderBy('nombre', 'desc')
                                 ->limit(5)
                                 ->get();
         } else {
             $academicos = Academico::orWhereRaw("concat(nombre, ' ', apellido_pat, ' ', apellido_mat) like '%" .
                                 $busqueda . "%' ")
-                                ->orderBy('name', 'desc')
+                                ->orderBy('nombre', 'desc')
                                 ->limit(5)
                                 ->get();
         }
