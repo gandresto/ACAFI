@@ -49398,7 +49398,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
-Vue.component('buscar-usuario', __webpack_require__(/*! ./components/BuscarUsuario.vue */ "./resources/js/components/BuscarUsuario.vue"));
+Vue.component('buscar-usuario', __webpack_require__(/*! ./components/BuscarUsuario.vue */ "./resources/js/components/BuscarUsuario.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
