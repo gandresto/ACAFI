@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Academico;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -45,17 +46,19 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+
     protected function validator(array $data)
     {
         return Validator::make($data, [
             'grado_id' => 'required|string|max:8',
-            'nombre' => 'required|string|max:255|min:3',
-            'apellido_pat' => 'required|string|max:255|min:3',
-            'apellido_mat' => 'required|string|max:255|min:3',
+            'nombre' => 'required|string|max:200|min:3',
+            'apellido_pat' => 'required|string|max:200|min:3',
+            'apellido_mat' => 'required|string|max:200|min:3',
             'email' => 'required|string|email|max:50|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
+
 
     /**
      * Create a new user instance after a valid registration.
@@ -63,8 +66,10 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data, Request $request)
+    protected function create(array $data)
     {
+        #dd($data);
+
         $academico = new Academico;
         $academico->nombre = $data['nombre'];
         $academico->apellido_pat = $data['apellido_pat'];
@@ -72,9 +77,9 @@ class RegisterController extends Controller
         $academico->grado_id = $data['grado_id'];
         $academico->push();
 
-        $request->session()->flash('status', 'Académico con nombre \''
-                                                . $request['nombre']
-                                                .'\' creado satisfactoriamente.');
+        //$data->session()->flash('status', 'Académico con nombre \''
+        //                                        . $data['nombre']
+        //                                       .'\' creado satisfactoriamente.');
 
         return User::create([
             'email' => $data['email'],

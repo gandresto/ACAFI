@@ -7,7 +7,7 @@
 @section('content')
     <form class="form-horizontal" method="POST" action="/division">
         {{ csrf_field() }}
-                            
+
         <div class="form-group{{ $errors->has('siglas') ? ' has-error' : '' }}">
             <label for="siglas" class="col-md-4 control-label">Siglas</label>
 
@@ -37,7 +37,7 @@
         </div>
 
         <buscar-usuario tieneerrores="{{$errors->has('jefeDeDivision')}}" errores="{{$errors->has('jefeDeDivision') ? $errors->first('jefeDeDivision') : ''}}"></buscar-usuario>
-        
+
 
 
         <div class="form-group">
