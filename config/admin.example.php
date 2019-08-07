@@ -2,7 +2,7 @@
 
 return [
     'login' => 'admin@example.com',
-    'pass' => 'password',
+    'password' => 'password',
     'grado' => 'C.',
     'nombre' => 'Nombre',
     'apellido_pat' => 'Apellido1',

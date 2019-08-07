@@ -20,7 +20,7 @@ class AcademicosController extends Controller
     }
 
     public function show(Academico $academico)
-    {        
+    {
         return response()->json($academico);
     }
 
@@ -52,8 +52,8 @@ class AcademicosController extends Controller
             'apellido_mat' => $request['apellido_mat'],
         ]);
 
-        $request->session()->flash('status', 'Académico con nombre \'' 
-                                                . $request['nombre'] 
+        $request->session()->flash('status', 'Académico con nombre \''
+                                                . $request['nombre']
                                                 .'\' creado satisfactoriamente.');
 
         return redirect(route('academicos.index'));
@@ -65,13 +65,13 @@ class AcademicosController extends Controller
         $connection = config('database.default');
         $driver = config("database.connections.{$connection}.driver");
         if ($driver == 'sqlite') {
-            $academicos = Academico::orWhereRaw("nombre || ' ' || apellido_pat || ' ' || apellido_mat like '%" . 
+            $academicos = Academico::orWhereRaw("nombre || ' ' || apellido_pat || ' ' || apellido_mat like '%" .
                                 $busqueda . "%' ")
                                 ->orderBy('name', 'desc')
                                 ->limit(5)
                                 ->get();
         } else {
-            $academicos = Academico::orWhereRaw("concat(nombre, ' ', apellido_pat, ' ', apellido_mat) like '%" . 
+            $academicos = Academico::orWhereRaw("concat(nombre, ' ', apellido_pat, ' ', apellido_mat) like '%" .
                                 $busqueda . "%' ")
                                 ->orderBy('name', 'desc')
                                 ->limit(5)

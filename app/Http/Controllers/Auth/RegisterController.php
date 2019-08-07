@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -37,7 +36,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('auth');
     }
 
     /**
@@ -53,7 +52,7 @@ class RegisterController extends Controller
             'nombre' => 'required|string|max:255|min:3',
             'apellido_pat' => 'required|string|max:255|min:3',
             'apellido_mat' => 'required|string|max:255|min:3',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:50|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
@@ -64,7 +63,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
+    protected function create(array $data, Request $request)
     {
         $academico = new Academico;
         $academico->nombre = $data['nombre'];
@@ -72,6 +71,10 @@ class RegisterController extends Controller
         $academico->apellido_mat = $data['apellido_mat'];
         $academico->grado_id = $data['grado_id'];
         $academico->push();
+
+        $request->session()->flash('status', 'Académico con nombre \''
+                                                . $request['nombre']
+                                                .'\' creado satisfactoriamente.');
 
         return User::create([
             'email' => $data['email'],
