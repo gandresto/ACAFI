@@ -15,11 +15,11 @@ class CreateDivisionsTable extends Migration
     {
         Schema::create('divisions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('siglas')->unique();
-            $table->string('nombre')->unique();
+            $table->string('siglas', 30)->unique();
+            $table->string('nombre', 50)->unique();
             $table->unsignedBigInteger('id_jefe_div');
-            $table->timestamps();      
-            
+            $table->timestamps();
+
             $table->index('id_jefe_div');
             $table->index('siglas');
         });
