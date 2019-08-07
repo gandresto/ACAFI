@@ -60,12 +60,20 @@ class UsersController extends Controller
 
         dd($data);
 
-        $academico = new App\Academico;
+/*         App\Academico::create([
+            'nombre' => $data['nombre'],
+            'apellido_pat' => $data['apellido_pat'],
+            'apellido_mat' => $data['apellido_mat'],
+        ]);
         $academico->nombre = $data['nombre'];
         $academico->apellido_pat = $data['apellido_pat'];
         $academico->apellido_mat = $data['apellido_mat'];
         $academico->grado_id = $data['grado_id'];
-        $academico->push();
+        $academico->user()->create([
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+        ]);
+        $academico->push(); */
     }
 
     /**
