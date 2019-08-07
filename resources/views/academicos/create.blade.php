@@ -13,7 +13,7 @@
             </label>
             <div class="col-md-6">
                 <select class="form-control @error('grado_id') is-invalid @enderror" name="grado_id" id="grado_id" required>
-                        <option value="null">Selecciona Uno</option>
+                        <option value="" disabled selected>Selecciona Uno</option>
                     @foreach (App\Grado::all()->sortBy('id') as $grado)
                         <option value="{{$grado->id}}">{{$grado->id}}</option>
                     @endforeach

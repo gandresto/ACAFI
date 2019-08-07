@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/academicos';
+    protected $redirectTo = '/login';
 
     /**
      * Create a new controller instance.
@@ -50,10 +50,10 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'grado_id' => 'required|string|max:8',
-            'nombre' => 'required|string|max:200|min:3',
-            'apellido_pat' => 'required|string|max:200|min:3',
-            'apellido_mat' => 'required|string|max:200|min:3',
+            'grado_id' => 'required|max:8|string|exists:grados,id',
+            'nombre' => 'required|max:50|string',
+            'apellido_pat' => 'required|max:50|string',
+            'apellido_mat' => 'required|max:50|string',
             'email' => 'required|string|email|max:50|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);

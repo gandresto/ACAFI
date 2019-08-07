@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'login' => 'admin@example.com',
+    'email' => 'admin@example.com',
     'password' => 'password',
     'grado' => 'C.',
     'nombre' => 'Nombre',

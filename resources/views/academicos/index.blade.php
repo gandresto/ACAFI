@@ -6,11 +6,9 @@
 
 @section('content')
 <div class="row">
-    @if (session('status'))
-        <div class="alert alert-success" role="alert">
-            {{ session('status') }}
-        </div>
-    @endif
+    <div class="col-md-12 py-2">
+        @include('flash-message')
+    </div>
 
     <div class="col-md-12 py-2">
         <a class="btn btn-primary" href="{{route('academicos.registrar')}}" role="button">
@@ -39,33 +37,43 @@
     </div>
 
     <div class="col-md-12 py-2">
-        <div class="table-responsive-lg">
+        <div class="table-responsive">
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>id</th>
-                        <th>Grado</th>
-                        <th>Nombre</th>
-                        <th>Apellido Paterno</th>
-                        <th>Apellido Materno</th>
-                        <th>Correo</th>
-                        <th>Acciones</th>
+                        <th scope="col">id</th>
+                        <th scope="col">Grado</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido Paterno</th>
+                        <th scope="col">Apellido Materno</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($academicos as $academico)
                         <tr>
-                            <td>{{$academico->id}}</td>
+                            <th scope="row">{{$academico->id}}</td>
                             <td>{{$academico->grado->id}}</td>
                             <td>{{$academico->nombre}}</td>
                             <td>{{$academico->apellido_pat}}</td>
                             <td>{{$academico->apellido_mat}}</td>
                             <td>{{$academico->user ? $academico->user->email : 'N/A'}}</td>
                             <td>
-                                <div class="btn-group" role="group" aria-label="Modificar Academico">
-                                        <a name="editarAcademico" id="editarAcademico{{$academico->id}}" class="btn btn-primary" href="#" role="button">Editar</a>
-                                        <a name="eliminarAcademico" id="eliminarAcademico{{$academico->id}}" class="btn btn-danger" href="#" role="button">Eliminar</a>
-                                </div>
+                                <form action="{{ route('academicos.destroy',$academico->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <div class="btn-group" role="group" aria-label="Modificar Academico">
+                                        <a name="editarAcademico" id="editarAcademico{{$academico->id}}" class="btn btn-primary" href="#" role="button">
+                                            <i class="fas fa-edit" aria-hidden="true"></i>
+                                            Editar
+                                        </a>
+                                        <button type="submit" onclick="return confirm('¿Estás seguro de eliminar al académico {{$academico->id}}? Esta acción también eliminará su cuenta de usuario.')" class="btn btn-danger" href="#" role="button">
+                                            <i class="fas fa-trash" aria-hidden="true"></i>
+                                            Eliminar
+                                        </button>
+                                    </div>
+                                </form>
                             </td>
                         </tr>
                     @endforeach

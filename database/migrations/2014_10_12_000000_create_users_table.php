@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
         #DB::update("ALTER TABLE users AUTO_INCREMENT = 2;");
         App\User::create([
             'id' => 1,
-            'email' => config('admin.login'),
+            'email' => config('admin.email'),
             'password' => bcrypt(config('admin.password')),
             'academico_id' => 1,
         ]);
