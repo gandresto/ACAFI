@@ -27,8 +27,14 @@ class CreateUsersTable extends Migration
         });
 
         #DB::update("ALTER TABLE users AUTO_INCREMENT = 2;");
+        App\User::create([
+            'id' => 1,
+            'email' => config('admin.login'),
+            'password' => bcrypt(config('admin.password')),
+            'academico_id' => 1,
+        ]);
 
-        DB::table('users')->insert([
+        /* DB::table('users')->insert([
             [
                 'id' => 1,
                 'email'=> config('admin.login'),
@@ -36,7 +42,7 @@ class CreateUsersTable extends Migration
                 'academico_id' => 1,
                 'created_at' => Carbon::now()->format('Y-m-d H:m:s'),
             ],
-        ]);
+        ]); */
     }
 
     /**
