@@ -16,7 +16,7 @@ class CreateAcuerdosTable extends Migration
         Schema::create('acuerdos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('descripcion');
-            $table->boolean('resuelto')->default('false');
+            $table->boolean('resuelto')->default(0);
             $table->string('resultado')->nullable();
             $table->string('producto_esperado');
             $table->timestamps();
