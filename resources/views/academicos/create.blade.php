@@ -7,7 +7,6 @@
 @section('content')
     <form class="form-horizontal" method="POST" action="/academicos">
         @csrf
-
         <div class="form-group row">
             <label for="grado_id" class="col-md-4 col-form-label text-md-right">
                 Grado Académico
@@ -73,7 +72,7 @@
         <div class="form-group row mb-0">
             <div class="col-md-6 offset-md-4">
                 <button type="submit" class="btn btn-primary">
-                    Registrar Académico
+                    Agregar Académico
                 </button>
             </div>
         </div>
