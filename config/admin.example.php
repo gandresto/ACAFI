@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'login' => 'admin@example.com',
-    'pass' => 'password',
+    'email' => 'admin@example.com',
+    'password' => 'password',
     'grado' => 'C.',
     'nombre' => 'Nombre',
     'apellido_pat' => 'Apellido1',

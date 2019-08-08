@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use App\Academico;
+use Illuminate\Support\Facades\Session;
 
 class AcademicosController extends Controller
 {
@@ -20,7 +20,7 @@ class AcademicosController extends Controller
     }
 
     public function show(Academico $academico)
-    {        
+    {
         return response()->json($academico);
     }
 
@@ -36,24 +36,23 @@ class AcademicosController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'grado_id' => 'required|max:8|string|exists:grados,id',
-            'nombre' => 'required|max:255|string',
-            'apellido_pat' => 'required|max:255|string',
-            'apellido_mat' => 'required|max:255|string',
-        ]);
 
-        #dd($request);
+        $data = request()->validate([
+            'grado_id' => 'required|max:8|string|exists:grados,id',
+            'nombre' => 'required|max:50|string',
+            'apellido_pat' => 'required|max:50|string',
+            'apellido_mat' => 'required|max:50|string',
+        ]);
 
         Academico::create([
-            'grado_id' => $request['grado_id'],
-            'nombre' => $request['nombre'],
-            'apellido_pat' => $request['apellido_pat'],
-            'apellido_mat' => $request['apellido_mat'],
+            'grado_id' => $data['grado_id'],
+            'nombre' => $data['nombre'],
+            'apellido_pat' => $data['apellido_pat'],
+            'apellido_mat' => $data['apellido_mat'],
         ]);
 
-        $request->session()->flash('status', 'Académico con nombre \'' 
-                                                . $request['nombre'] 
+        $request->session()->flash('status', 'Académico con nombre \''
+                                                . $data['nombre']
                                                 .'\' creado satisfactoriamente.');
 
         return redirect(route('academicos.index'));
@@ -65,18 +64,31 @@ class AcademicosController extends Controller
         $connection = config('database.default');
         $driver = config("database.connections.{$connection}.driver");
         if ($driver == 'sqlite') {
-            $academicos = Academico::orWhereRaw("nombre || ' ' || apellido_pat || ' ' || apellido_mat like '%" . 
+            $academicos = Academico::orWhereRaw("nombre || ' ' || apellido_pat || ' ' || apellido_mat like '%" .
                                 $busqueda . "%' ")
-                                ->orderBy('name', 'desc')
+                                ->orderBy('nombre', 'desc')
                                 ->limit(5)
                                 ->get();
         } else {
-            $academicos = Academico::orWhereRaw("concat(nombre, ' ', apellido_pat, ' ', apellido_mat) like '%" . 
+            $academicos = Academico::orWhereRaw("concat(nombre, ' ', apellido_pat, ' ', apellido_mat) like '%" .
                                 $busqueda . "%' ")
-                                ->orderBy('name', 'desc')
+                                ->orderBy('nombre', 'desc')
                                 ->limit(5)
                                 ->get();
         }
         return response()->json($academicos);
+    }
+    public function destroy(int $id)
+    {
+        //dd($id);
+        $academico = Academico::find($id);
+        if($academico->user && $academico->user->email == config('admin.email')){
+            return redirect()->route('academicos.index')
+                            ->with('error', 'No se puede borrar este registro.');
+        }else{
+            $academico->delete();
+            return redirect()->route('academicos.index')
+                            ->with('success', 'El academico fue borrado satisfactoriamente.');
+        }
     }
 }

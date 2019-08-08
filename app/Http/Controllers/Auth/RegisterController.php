@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Academico;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/academicos';
+    protected $redirectTo = '/login';
 
     /**
      * Create a new controller instance.
@@ -37,7 +37,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('auth');
     }
 
     /**
@@ -46,17 +46,19 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'grado_id' => 'required|string|max:8',
-            'nombre' => 'required|string|max:255|min:3',
-            'apellido_pat' => 'required|string|max:255|min:3',
-            'apellido_mat' => 'required|string|max:255|min:3',
-            'email' => 'required|string|email|max:255|unique:users',
+            'grado_id' => 'required|max:8|string|exists:grados,id',
+            'nombre' => 'required|max:50|string',
+            'apellido_pat' => 'required|max:50|string',
+            'apellido_mat' => 'required|max:50|string',
+            'email' => 'required|string|email|max:50|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
+
 
     /**
      * Create a new user instance after a valid registration.
@@ -66,6 +68,8 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        #dd($data);
+
         $academico = new Academico;
         $academico->nombre = $data['nombre'];
         $academico->apellido_pat = $data['apellido_pat'];
@@ -73,10 +77,14 @@ class RegisterController extends Controller
         $academico->grado_id = $data['grado_id'];
         $academico->push();
 
+        //$data->session()->flash('status', 'Académico con nombre \''
+        //                                        . $data['nombre']
+        //                                       .'\' creado satisfactoriamente.');
+
         return User::create([
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'academico_id' => $academico->id,
-        ]);;
+        ]);
     }
 }

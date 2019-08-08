@@ -21,13 +21,13 @@ class AdminAuth
         #dd($request->user());
         if($request->user()){
             $validate_admin = DB::table('users')
-                                ->select('email', 'password')
+                                ->select('email')
                                 ->where('email', $request->user()->email)
                                 ->first();
 
             #dd($validate_admin);
 
-            if ($validate_admin->email != config('admin.login')) {
+            if ($validate_admin->email != config('admin.email')) {
                 return new Response(view('unauthorized')->with('role', 'ADMIN'));
             } else{
                 return $next($request);

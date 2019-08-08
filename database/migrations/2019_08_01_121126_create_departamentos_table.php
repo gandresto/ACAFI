@@ -15,7 +15,7 @@ class CreateDepartamentosTable extends Migration
     {
         Schema::create('departamentos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre');
+            $table->string('nombre', 50)->unique();
             $table->unsignedBigInteger('id_jefe_dpto');
             $table->unsignedBigInteger('division_id');
             $table->timestamps();
