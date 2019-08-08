@@ -36,7 +36,9 @@ Route::get('/division/{division}', 'DivisionController@show')->name('division.sh
 Route::post('/users', 'UsersController@store')->name('users.store');
 
 
-Route::get('/academicos', 'AcademicosController@index')->name('academicos.index');
+Route::get('/academicos', 'AcademicosController@index')
+            ->name('academicos.index')
+            ->middleware('auth.admin');
 Route::post('/academicos', 'AcademicosController@store')->name('academicos.store');
 Route::get('/academicos/create', 'AcademicosController@create')
             ->name('academicos.create')
