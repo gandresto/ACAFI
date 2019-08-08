@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Validation\Validator;
+use App\Academico;
+use App\User;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
@@ -47,33 +50,42 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        $data = request()->validate(
+        $dataUser = request()->validate(
+            [
+                'email' => 'required|string|email|max:50|unique:users',
+                'password' => 'required|string|min:6|confirmed'
+            ]
+        );     
+        
+        $dataAcademico = request()->validate(
             [
                 'grado_id' => 'required|max:8|string|exists:grados,id',
                 'nombre' => 'required|max:50|string',
                 'apellido_pat' => 'required|max:50|string',
-                'apellido_mat' => 'required|max:50|string',
-                'email' => 'required|string|email|max:50|unique:users',
-                'password' => 'required|string|min:6|confirmed',
+                'apellido_mat' => 'required|max:50|string'
             ]
         );
+        
+        
+        try {
+            $academico = Academico::create($dataAcademico);
+            $user = User::create(
+                [
+                    'email' => $dataUser['email'], 
+                    'password' => Hash::make($dataUser['password']), 
+                    'academico_id'=>$academico->id
+                ]
+            );
+        } catch(\Illuminate\Database\QueryException $ex){ 
+            return redirect()->route('academicos.index')
+                        ->with('error', 'Error en la base de datos, intente de nuevo.');
+        }
+        
 
-        dd($data);
-
-/*         App\Academico::create([
-            'nombre' => $data['nombre'],
-            'apellido_pat' => $data['apellido_pat'],
-            'apellido_mat' => $data['apellido_mat'],
-        ]);
-        $academico->nombre = $data['nombre'];
-        $academico->apellido_pat = $data['apellido_pat'];
-        $academico->apellido_mat = $data['apellido_mat'];
-        $academico->grado_id = $data['grado_id'];
-        $academico->user()->create([
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
-        $academico->push(); */
+        #dd($user);
+        
+        return redirect()->route('academicos.index')
+                        ->with('success', 'Académico con nombre ' . $academico->nombre . ' creado satisfactoriamente.');
     }
 
     /**
