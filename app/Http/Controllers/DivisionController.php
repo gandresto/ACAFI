@@ -28,12 +28,12 @@ class DivisionController extends Controller
 
     public function create()
     {
-        #$this->middleware(AdminMiddleware::class);
+        $this->authorize('create', Division::class);
         return view('division.create');
     }
 
     public function store(Request $request)
-    {   
+    {
         $this->validate($request, [
             'siglas' => 'required|unique:divisions|max:255|string',
             'nombre' => 'required|unique:divisions|max:255|string',
@@ -47,8 +47,8 @@ class DivisionController extends Controller
             'siglas' => $request['siglas'],
             'nombre' => $request['nombre'],
         ]);
-        $request->session()->flash('status', 'División con nombre \'' 
-                                            . $request['nombre'] 
+        $request->session()->flash('status', 'División con nombre \''
+                                            . $request['nombre']
                                             .'\' creada satisfactoriamente.');
         return redirect('/division');
     }

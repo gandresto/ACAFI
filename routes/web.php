@@ -28,8 +28,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/division', 'DivisionController@index')->name('division.index');
 Route::post('/division', 'DivisionController@store')->name('division.store');
 Route::get('/division/create', 'DivisionController@create')
-            ->name('division.create')
-            ->middleware('auth.admin');
+            ->name('division.create');
 Route::get('/division/{division}', 'DivisionController@show')->name('division.show');
 
 

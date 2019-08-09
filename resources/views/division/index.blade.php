@@ -11,15 +11,17 @@
             {{ session('status') }}
         </div>
     @endif
-
-    <div class="row">
-        <div class="col-md-12 py-2">
-            <a class="btn btn-primary" href="{{route('division.create')}}" role="button">
-                <i class="fa fa-plus" aria-hidden="true"></i>
-                <span class="pl-6">Añadir división</span>
-            </a>
+    @can('create', Division::class)
+        <div class="row">
+            <div class="col-md-12 py-2">
+                <a class="btn btn-primary" href="{{route('division.create')}}" role="button">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    <span class="pl-6">Añadir división</span>
+                </a>
+            </div>
         </div>
-    </div>
+    @endcan
+
     <hr>
     <div class="row">
         @foreach ($divisiones as $division)

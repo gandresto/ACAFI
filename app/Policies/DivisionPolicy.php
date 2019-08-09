@@ -5,11 +5,18 @@ namespace App\Policies;
 use App\User;
 use App\Division;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class DivisionPolicy
 {
     use HandlesAuthorization;
-    
+
+/*     public function before($user, $ability)
+    {
+        return $user()->email == config('admin.email');
+
+    } */
+
     /**
      * Determine whether the user can view any divisions.
      *
@@ -41,7 +48,7 @@ class DivisionPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->email == config('admin.email');
     }
 
     /**
