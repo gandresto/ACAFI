@@ -1,21 +1,21 @@
 @extends('layouts.app')
 
 @section('title')
-    Registrar Académico
+    Actualizar Académico - {{$academico->nombreCompleto()}}
 @endsection
 
 @section('content')
-    <form class="form-horizontal" method="POST" action="{{ route('academicos.index') }}">
+    <form class="form-horizontal" method="POST" action="{{ route('academicos.update', $academico->id) }}">
         @csrf
+        @method('PATCH')
         <div class="form-group row">
             <label for="grado_id" class="col-md-4 col-form-label text-md-right">
                 Grado Académico
             </label>
             <div class="col-md-6">
                 <select class="form-control @error('grado_id') is-invalid @enderror" name="grado_id" id="grado_id" required>
-                        <option value="" disabled selected>Selecciona Uno</option>
                     @foreach (App\Grado::all()->sortBy('id') as $grado)
-                        <option value="{{$grado->id}}">{{$grado->id}}</option>
+                        <option value="{{$grado->id}}" @if ($grado->id == $academico->grado_id) {{'selected'}} @endif>{{$grado->id}}</option>
                     @endforeach
                 </select>
                 @error('grado_id')
@@ -31,7 +31,7 @@
                 Nombre
             </label>
             <div class="col-md-6">
-                <input id="nombre" type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" value="{{ old('nombre') }}" required autofocus>
+                <input id="nombre" type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" value="{{ $academico->nombre }}" required autofocus>
 
                 @error('nombre')
                     <span class="invalid-feedback" role="alert">
@@ -45,7 +45,7 @@
             <label for="apellido_pat" class="col-md-4 control-label text-md-right">Apellido Paterno</label>
 
             <div class="col-md-6">
-                <input id="apellido_pat" type="text" class="form-control @error('apellido_pat') is-invalid @enderror" name="apellido_pat" value="{{ old('apellido_pat') }}" required>
+                <input id="apellido_pat" type="text" class="form-control @error('apellido_pat') is-invalid @enderror" name="apellido_pat" value="{{ $academico->apellido_pat }}" required>
 
                 @error('apellido_pat')
                     <span class="invalid-feedback" role="alert">
@@ -59,7 +59,7 @@
             <label for="apellido_mat" class="col-md-4 control-label text-md-right">Apellido Materno</label>
 
             <div class="col-md-6">
-                <input id="apellido_mat" type="text" class="form-control @error('apellido_mat') is-invalid @enderror" name="apellido_mat" value="{{ old('apellido_mat') }}" required>
+                <input id="apellido_mat" type="text" class="form-control @error('apellido_mat') is-invalid @enderror" name="apellido_mat" value="{{  $academico->apellido_mat }}" required>
 
                 @error('apellido_mat')
                     <span class="invalid-feedback" role="alert">
@@ -75,7 +75,7 @@
             </label>
 
             <div class="col-md-6">
-                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{$academico->user->email}}" required autocomplete="email">
 
                 @error('email')
                     <span class="invalid-feedback" role="alert">
@@ -85,39 +85,14 @@
             </div>
         </div>
 
-        <div class="form-group row">
-            <label for="helpId" class="col-md-4 col-form-label text-md-right">Contraseña recomendada</label>
-                <div class="col-md-6">
-                    <strong> {{random_str()}}</strong>
-                </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="password" class="col-md-4 col-form-label text-md-right">Contraseña</label>
-
-            <div class="col-md-6">
-                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                @error('password')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">@lang('strings.pass_confirm')</label>
-
-            <div class="col-md-6">
-                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-            </div>
-        </div>
-
         <div class="form-group row mb-0">
-            <div class="col-md-6 offset-md-4">
+            <div class="col-md-6 offset-md-4 text-md-right">
+                <a class="btn btn-danger" role="button" href="{{route('academicos.index')}}">
+                    <i class="fa fa-undo" aria-hidden="true"></i>
+                    Regresar
+                </a>
                 <button type="submit" class="btn btn-primary">
-                    Registrar Académico
+                    Actualizar Académico
                 </button>
             </div>
         </div>

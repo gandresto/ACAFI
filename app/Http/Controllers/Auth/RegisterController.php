@@ -7,6 +7,7 @@ use App\Academico;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Session;
 
 class RegisterController extends Controller
 {
@@ -68,8 +69,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        #dd($data);
-
+        $this->authorize('viewAny', Academico::class);
         $academico = new Academico;
         $academico->nombre = $data['nombre'];
         $academico->apellido_pat = $data['apellido_pat'];
@@ -77,9 +77,9 @@ class RegisterController extends Controller
         $academico->grado_id = $data['grado_id'];
         $academico->push();
 
-        //$data->session()->flash('status', 'Académico con nombre \''
-        //                                        . $data['nombre']
-        //                                       .'\' creado satisfactoriamente.');
+        Session::flash('status', 'Académico con nombre \''
+                                                . $data['nombre']
+                                               .'\' creado satisfactoriamente.');
 
         return User::create([
             'email' => $data['email'],

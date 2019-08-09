@@ -22,7 +22,8 @@ class Academico extends Model
 
     public function nombreCompleto()
     {
-        $nombre_completo = $this->nombre . ' ' .
+        $nombre_completo = $this->grado_id . ' ' .
+                            $this->nombre . ' ' .
                             $this->apellido_pat . ' ' .
                             $this->apellido_mat ;
         return $nombre_completo;

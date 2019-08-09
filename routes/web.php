@@ -44,7 +44,7 @@ Route::get('/academicos/create', 'AcademicosController@create')
             ->middleware('auth.admin');
 Route::get('/academicos/registrar', 'AcademicosController@registrar')
             ->name('academicos.registrar')
-            ->middleware('auth.admin');;
+            ->middleware('auth.admin');
 Route::get('/academicos/buscar/{busqueda}', 'AcademicosController@buscar')->name('academicos.buscar');
 Route::get('/academicos/{academico}', 'AcademicosController@show')->name('academicos.show');
 Route::delete('/academicos/{academico}', 'AcademicosController@destroy')->name('academicos.destroy');

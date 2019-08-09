@@ -60,7 +60,9 @@
                                     <a class="dropdown-item" href="{{route('division.index')}}">Divisiones</a>
                                     <a class="dropdown-item" href="#">Departamentos</a>
                                     <a class="dropdown-item" href="#">Academias</a>
-                                    <a class="dropdown-item" href="{{route('academicos.index')}}">Académicos</a>
+                                    @can('viewAny', App\Academico::class)
+                                        <a class="dropdown-item" href="{{route('academicos.index')}}">Académicos</a>
+                                    @endcan
                                 </div>
                             </li>
                         </ul>
@@ -101,7 +103,7 @@
         <main class="py-4">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-sm-12 col-md-12 col-lg-10 col-xl-8">
+                    <div class="col-sm-12 col-md-12 col-lg-10">
                         <div class="card">
                             <div class="card-header">
                                 @yield('title')

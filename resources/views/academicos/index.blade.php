@@ -64,7 +64,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <div class="btn-group" role="group" aria-label="Modificar Academico">
-                                        <a name="editarAcademico" id="editarAcademico{{$academico->id}}" class="btn btn-primary" href="#" role="button">
+                                        <a name="editarAcademico" id="editarAcademico{{$academico->id}}" class="btn btn-primary" href="{{route('academicos.edit', $academico->id)}}" role="button">
                                             <i class="fas fa-edit" aria-hidden="true"></i>
                                             Editar
                                         </a>

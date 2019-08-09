@@ -11,7 +11,7 @@
             {{ session('status') }}
         </div>
     @endif
-    @can('create', Division::class)
+    @can('create', App\Division::class)
         <div class="row">
             <div class="col-md-12 py-2">
                 <a class="btn btn-primary" href="{{route('division.create')}}" role="button">
