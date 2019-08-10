@@ -41,7 +41,7 @@ class AcademicoPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->email == config('admin.email');
     }
 
     /**

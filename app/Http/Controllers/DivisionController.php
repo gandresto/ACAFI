@@ -34,6 +34,7 @@ class DivisionController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('create', Division::class);
         $request->validate([
             'siglas' => 'required|unique:divisions|max:10|string',
             'nombre' => 'required|unique:divisions|max:50|string',
@@ -50,12 +51,13 @@ class DivisionController extends Controller
 
     public function edit(Division $division)
     {
-        #dd($division);
+        $this->authorize('update', $division);
         return view('divisions.edit', compact('division'));
     }
 
     public function update(Request $request, Division $division)
     {
+        $this->authorize('update', $division);
         $request->validate([
             'siglas' => 'required|unique:divisions|max:10|string',
             'nombre' => 'required|unique:divisions|max:50|string',
@@ -72,6 +74,7 @@ class DivisionController extends Controller
 
     public function destroy(int $id)
     {
+        $this->authorize('delete', $id);
         Division::destroy($id);
         return redirect()->route('divisions.index')
                         ->with('success', 'División con eliminada.');

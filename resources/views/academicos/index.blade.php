@@ -11,15 +11,16 @@
         @include('flash-message')
     </div>
 </div>
-
-<div class="row">
-    <div class="col-md-12">
-        <a class="btn btn-primary" href="{{route('academicos.registrar')}}" role="button">
-            <i class="fa fa-user-plus" aria-hidden="true"></i>
-            <span class="">Registrar académico</span>
-        </a>
+@can('create', App\Academico::class)
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-primary" href="{{route('academicos.registrar')}}" role="button">
+                <i class="fa fa-user-plus" aria-hidden="true"></i>
+                <span class="">Registrar académico</span>
+            </a>
+        </div>
     </div>
-</div>
+@endcan
 <hr>
 
 {{--

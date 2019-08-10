@@ -60,7 +60,7 @@ class DivisionPolicy
      */
     public function update(User $user, Division $division)
     {
-        //
+        return $user->email == config('admin.email');
     }
 
     /**
@@ -72,7 +72,7 @@ class DivisionPolicy
      */
     public function delete(User $user, Division $division)
     {
-        //
+        return $user->email == config('admin.email');
     }
 
     /**
