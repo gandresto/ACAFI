@@ -37,15 +37,21 @@
             </div>
         </div>
 
-        <buscar-usuario tieneerrores="{{$errors->has('jefeDeDivision')}}"
-            errores="{{$errors->has('jefeDeDivision') ? $errors->first('jefeDeDivision') : ''}}"
-            v-bind:busqueda="{{ $division->jefe->nombreCompleto() }}">
+        <buscar-usuario
+            tiene-errores="{{$errors->has('id_jefe_div')}}"
+            errores="{{$errors->has('id_jefe_div') ? $errors->first('id_jefe_div') : ''}}"
+            busqueda-inicial="{{ $division->jefe->nombreCompleto() }}"
+            input-tag-name="id_jefe_div">
         </buscar-usuario>
 
         <div class="form-group row mb-0">
-            <div class="col-md-6 offset-md-4">
+            <div class="col-md-6 offset-md-4 text-md-right">
+                <a class="btn btn-danger" role="button" href="{{route('divisions.index')}}">
+                    <i class="fa fa-undo" aria-hidden="true"></i>
+                    Regresar
+                </a>
                 <button type="submit" class="btn btn-primary">
-                    Añadir división
+                    Actualizar División
                 </button>
             </div>
         </div>

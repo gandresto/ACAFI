@@ -37,9 +37,10 @@
         </div>
 
         <buscar-usuario
-            tieneerrores="{{$errors->has('jefeDeDivision')}}"
-            errores="{{$errors->has('jefeDeDivision') ? $errors->first('jefeDeDivision') : ''}}"
-            v-bind:busqueda="">
+            tiene-errores="{{$errors->has('id_jefe_div')}}"
+            errores="{{$errors->has('id_jefe_div') ? $errors->first('id_jefe_div') : ''}}"
+            busqueda-inicial=""
+            input-tag-name="id_jefe_div">>
         </buscar-usuario>
 
 

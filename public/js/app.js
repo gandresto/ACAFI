@@ -1725,15 +1725,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    console.log('Component mounted.');
+    //console.log('Component mounted.')
+    //console.log(this.busquedaInicial)
+    this.buscarAcademico();
   },
-  props: ['errores', 'tieneerrores'],
+  props: ['errores', 'tieneErrores', 'busquedaInicial', 'inputTagName'],
   data: function data() {
     return {
-      busqueda: '',
-      academicos: null
+      busqueda: this.busquedaInicial,
+      academicos: null,
+      inputName: this.inputTagName
     };
   },
   methods: {
@@ -37085,7 +37093,7 @@ var render = function() {
         "label",
         {
           staticClass: "col-md-4 control-label text-md-right",
-          attrs: { for: "buscarJefe" }
+          attrs: { for: "buscarAcademico" }
         },
         [_vm._v("Jefe de División")]
       ),
@@ -37102,8 +37110,8 @@ var render = function() {
           ],
           staticClass: "form-control",
           attrs: {
-            id: "buscarJefe",
-            name: "buscarJefe",
+            id: "buscarAcademico",
+            name: "buscarAcademico",
             type: "text",
             placeholder: "Buscar..."
           },
@@ -37138,7 +37146,7 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      { class: [_vm.tieneerrores ? "form-group is-invalid" : "form-group"] },
+      { class: [_vm.tieneErrores ? "form-group is-invalid" : "form-group"] },
       [
         _c(
           "div",
@@ -37150,7 +37158,7 @@ var render = function() {
                   _c("input", {
                     attrs: {
                       type: "radio",
-                      name: "jefeDeDivision",
+                      name: _vm.inputName,
                       id: [academico.id],
                       required: ""
                     },
