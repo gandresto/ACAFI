@@ -16,7 +16,7 @@ class DivisionController extends Controller
 
     public function index()
     {
-        $divisiones = Division::paginate(5);
+        $divisiones = Division::paginate(10);
         return view('divisions.index', compact('divisiones'));
     }
 
@@ -34,19 +34,13 @@ class DivisionController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'siglas' => 'required|unique:divisions|max:255|string',
-            'nombre' => 'required|unique:divisions|max:255|string',
-            'jefeDeDivision' => ['required', 'exists:academicos,id'],
+        $request->validate([
+            'siglas' => 'required|unique:divisions|max:10|string',
+            'nombre' => 'required|unique:divisions|max:50|string',
+            'id_jefe_div' => ['required', 'exists:academicos,id'],
         ]);
 
-        #dd($request['jefeDeDivision']);
-
-        Division::create([
-            'id_jefe_div' => $request['jefeDeDivision'],
-            'siglas' => $request['siglas'],
-            'nombre' => $request['nombre'],
-        ]);
+        Division::create($request->all());
 
         return redirect()->route('divisions.index')
                         ->with('success', 'División con nombre \''
@@ -56,16 +50,30 @@ class DivisionController extends Controller
 
     public function edit(Division $division)
     {
+        #dd($division);
         return view('divisions.edit', compact('division'));
     }
 
     public function update(Request $request, Division $division)
     {
-        dd($division);
+        $request->validate([
+            'siglas' => 'required|unique:divisions|max:10|string',
+            'nombre' => 'required|unique:divisions|max:50|string',
+            'id_jefe_div' => ['required', 'exists:academicos,id'],
+        ]);
+
+        $division->update($request->all());
+
+        return redirect()->route('divisions.index')
+                        ->with('success', 'División con nombre \''
+                                        . $request->data['nombre']
+                                        .'\' actualizada satisfactoriamente.');
     }
 
     public function destroy(int $id)
     {
-        # code...
+        Division::destroy($id);
+        return redirect()->route('divisions.index')
+                        ->with('success', 'División con eliminada.');
     }
 }

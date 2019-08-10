@@ -53,7 +53,8 @@ class AcademicoPolicy
      */
     public function update(User $user, Academico $academico)
     {
-        //
+        return $academico->user->email != config('admin.email') &&
+                $user->email == config('admin.email');
     }
 
     /**
@@ -65,7 +66,8 @@ class AcademicoPolicy
      */
     public function delete(User $user, Academico $academico)
     {
-        //
+        $academico->user->email != config('admin.email') &&
+                $user->email == config('admin.email');
     }
 
     /**
@@ -89,6 +91,7 @@ class AcademicoPolicy
      */
     public function forceDelete(User $user, Academico $academico)
     {
-        //
+        $academico->user->email != config('admin.email') &&
+                $user->email == config('admin.email');
     }
 }

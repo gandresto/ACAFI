@@ -16,8 +16,7 @@ class AcademicosController extends Controller
 
     public function index(Academico $academicos)
     {
-        $this->authorize('viewAny', Academico::class);
-        $academicos = Academico::paginate(5);
+        $academicos = Academico::paginate(10);
         return view('academicos.index', compact('academicos'));
     }
 
@@ -102,11 +101,40 @@ class AcademicosController extends Controller
 
     public function edit(Academico $academico)
     {
+        $this->authorize('update', $academico);
         return view('academicos.edit', compact('academico'));
     }
 
     public function update(Request $request, Academico $academico)
     {
-        dd($academico);
+        $this->authorize('update', $academico);
+
+        $data = request()->validate([
+            'grado_id' => 'required|max:8|string|exists:grados,id',
+            'nombre' => 'required|max:50|string',
+            'apellido_pat' => 'required|max:50|string',
+            'apellido_mat' => 'required|max:50|string',
+            'email' => 'required|string|email|max:50|unique:users',
+        ]);
+
+        $academico->update(
+            [
+                'grado_id' => $data['grado_id'],
+                'nombre' => $data['nombre'],
+                'apellido_pat' =>  $data['apellido_pat'],
+                'apellido_mat' => $data['apellido_mat'],
+            ]
+        );
+
+        $academico->user()->update(
+            [
+                'email' => $data['email'],
+            ]
+        );
+
+        return redirect(route('academicos.index'))
+                        ->with('success', 'Académico con nombre \''
+                        . $data['nombre']
+                        .'\' actualizado satisfactoriamente.');
     }
 }
