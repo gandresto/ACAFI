@@ -5,38 +5,46 @@
 @endsection
 
 @section('content')
+
 <div class="row">
-    <div class="col-md-12 py-2">
+    <div class="col-md-12">
         @include('flash-message')
     </div>
+</div>
 
-    <div class="col-md-12 py-2">
+<div class="row">
+    <div class="col-md-12">
         <a class="btn btn-primary" href="{{route('academicos.registrar')}}" role="button">
             <i class="fa fa-user-plus" aria-hidden="true"></i>
             <span class="">Registrar académico</span>
         </a>
     </div>
+</div>
+<hr>
 
+{{--
+-- Barra de búsqueda no lista --
 
-    <div class="col-md-6 py-2">
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Buscar" aria-describedby="basic-addon2">
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-            </span>
-        </div>
+<div class="col-md-6 py-2">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Buscar" aria-describedby="basic-addon2">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+        </span>
     </div>
+</div>
 
-    <div class="col-md-4 py-2">
-        <select name="sel-columna" id="inputsel-columna" class="form-control">
-            <option value="">Buscar por</option>
-            @foreach (Schema::getColumnListing('academicos') as $columna)
-                <option value="{{$columna}}">{{$columna}}</option>
-            @endforeach
-        </select>
-    </div>
-
-    <div class="col-md-12 py-2">
+<div class="col-md-4 py-2">
+    <select name="sel-columna" id="inputsel-columna" class="form-control">
+        <option value="">Buscar por</option>
+        @foreach (Schema::getColumnListing('academicos') as $columna)
+            <option value="{{$columna}}">{{$columna}}</option>
+        @endforeach
+    </select>
+</div>
+--}}
+<div class="row">
+    <div class="col-md-12">
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
                 <thead>
@@ -64,13 +72,11 @@
                                     @csrf
                                     @method('DELETE')
                                     <div class="btn-group" role="group" aria-label="Modificar Academico">
-                                        <a name="editarAcademico" id="editarAcademico{{$academico->id}}" class="btn btn-primary" href="{{route('academicos.edit', $academico->id)}}" role="button">
+                                        <a name="editarAcademico" id="editarAcademico{{$academico->id}}" class="btn btn-primary" href="{{route('academicos.edit', $academico->id)}}" role="button" title="Editar">
                                             <i class="fas fa-edit" aria-hidden="true"></i>
-                                            Editar
                                         </a>
-                                        <button type="submit" onclick="return confirm('¿Estás seguro de eliminar al académico {{$academico->id}}? Esta acción también eliminará su cuenta de usuario.')" class="btn btn-danger" href="#" role="button">
+                                        <button type="submit" onclick="return confirm('¿Estás seguro de eliminar al académico {{$academico->id}}? Esta acción también eliminará su cuenta de usuario.')" class="btn btn-danger" href="#" role="button" title="Eliminar">
                                             <i class="fas fa-trash" aria-hidden="true"></i>
-                                            Eliminar
                                         </button>
                                     </div>
                                 </form>
@@ -81,6 +87,14 @@
             </table>
         </div>
     </div>
-
 </div>
+
+<div class="row">
+    <div class="col-sm-12">
+        {{$academicos->links()}}
+    </div>
+</div>
+
+
+
 @endsection

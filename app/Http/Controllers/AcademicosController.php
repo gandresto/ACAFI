@@ -17,7 +17,7 @@ class AcademicosController extends Controller
     public function index(Academico $academicos)
     {
         $this->authorize('viewAny', Academico::class);
-        $academicos = Academico::all();
+        $academicos = Academico::paginate(5);
         return view('academicos.index', compact('academicos'));
     }
 

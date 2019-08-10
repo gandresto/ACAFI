@@ -16,20 +16,20 @@ class DivisionController extends Controller
 
     public function index()
     {
-        $divisiones = Division::all();
-        return view('division.index', compact('divisiones'));
+        $divisiones = Division::paginate(5);
+        return view('divisions.index', compact('divisiones'));
     }
 
     public function show($division)
     {
         $division = Division::findOrFail($division);
-        return view('division.show', compact('division'));
+        return view('divisions.show', compact('division'));
     }
 
     public function create()
     {
         $this->authorize('create', Division::class);
-        return view('division.create');
+        return view('divisions.create');
     }
 
     public function store(Request $request)
@@ -47,9 +47,25 @@ class DivisionController extends Controller
             'siglas' => $request['siglas'],
             'nombre' => $request['nombre'],
         ]);
-        $request->session()->flash('status', 'División con nombre \''
-                                            . $request['nombre']
-                                            .'\' creada satisfactoriamente.');
-        return redirect('/division');
+
+        return redirect()->route('divisions.index')
+                        ->with('success', 'División con nombre \''
+                                        . $request['nombre']
+                                        .'\' creada satisfactoriamente.');
+    }
+
+    public function edit(Division $division)
+    {
+        return view('divisions.edit', compact('division'));
+    }
+
+    public function update(Request $request, Division $division)
+    {
+        dd($division);
+    }
+
+    public function destroy(int $id)
+    {
+        # code...
     }
 }
