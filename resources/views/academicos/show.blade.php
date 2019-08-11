@@ -12,6 +12,6 @@
         </div>
     @endif
 
-    You are logged in!
+    {{$academico->nombre}}
 
 @endsection
