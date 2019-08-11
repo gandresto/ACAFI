@@ -16,8 +16,13 @@
             <div class="col-md-8 offset-md-4">
                 <div class="radio" v-for="(academico, index) in academicos" :key="index">
                     <label :for="[academico.id]">
-                        <input type="radio" :name="inputName" :id="[academico.id]" :value="[academico.id]" required>
-                        {{ academico.grado_id + ' ' + academico.nombre + ' ' + academico.apellido_pat + ' ' + academico.apellido_mat}}
+                        <input type="radio" 
+                                :name="inputName" 
+                                :id="[academico.id]" 
+                                :value="[academico.id]" 
+                                required
+                                :checked="index==0">
+                            {{ academico.grado_id + ' ' + academico.nombre + ' ' + academico.apellido_pat + ' ' + academico.apellido_mat}}
                     </label>
                 </div>
 
@@ -35,7 +40,6 @@
     export default {
         mounted() {
             this.buscarAcademico();
-            console.log(this.labelInicial);
         },
 
         props : ['errores', 'tieneErrores', 'busquedaInicial', 'inputTagName', 'labelInicial'],

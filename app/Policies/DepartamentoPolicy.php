@@ -12,7 +12,8 @@ class DepartamentoPolicy
 
     public function before(User $user, $ability)
     {
-        return $user->email == config('admin.email');
+        if($user->email == config('admin.email')) return True;
+        //else return False;
     }
     
     /**
@@ -58,8 +59,10 @@ class DepartamentoPolicy
      */
     public function update(User $user, Departamento $departamento)
     {
-        return $user->academico->id == $departamento->id_jefe_dpto
-                or $user->academico->id == $departamento->division->id_jefe_div;
+        $user_id = $user->academico->id;
+        return ($user_id == $departamento->id_jefe_dpto
+                || $user_id == $departamento->division->id_jefe_div
+                || $user_id == $departamento->id_jefe_dpto);
     }
 
     /**
@@ -71,8 +74,7 @@ class DepartamentoPolicy
      */
     public function delete(User $user, Departamento $departamento)
     {
-        return $user->academico->id == $departamento->id_jefe_dpto
-                or $user->academico->id == $departamento->division->id_jefe_div;
+        return $user->academico->id == $departamento->division->id_jefe_div;   
     }
 
     /**

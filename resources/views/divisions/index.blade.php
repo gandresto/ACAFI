@@ -49,7 +49,7 @@
                             <td>{{$division->jefe->nombreCompletoG()}}</td>
                             @can('create', App\Division::class)
                                 <td>
-                                    <form action="{{ route('divisions.destroy',$division->id) }}" method="POST">
+                                    <form action="{{ route('divisions.destroy', $division->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <div class="btn-group" role="group" aria-label="Modificar division">

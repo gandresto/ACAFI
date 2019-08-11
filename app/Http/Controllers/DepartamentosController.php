@@ -73,9 +73,10 @@ class DepartamentosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Departamento $departamento)
     {
-        //
+        $this->authorize('update', $departamento);
+        return view('departamentos.edit', compact('departamento'));
     }
 
     /**
@@ -85,9 +86,21 @@ class DepartamentosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Departamento $departamento)
     {
-        //
+        $this->authorize('update', $departamento);
+        $request->validate([
+            'nombre' => 'required|max:50|string',
+            'id_jefe_dpto' => 'required|exists:academicos,id',
+            'division_id' => 'required|exists:divisions,id',
+        ]);
+
+        $departamento->update($request->all());
+
+        return redirect()->route('departamentos.index')
+                        ->with('success', 'Departamento con nombre \''
+                                        . $request['nombre']
+                                        .'\' actualizado satisfactoriamente.');
     }
 
     /**
@@ -96,9 +109,18 @@ class DepartamentosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Departamento $departamento)
     {
-        //
+        $this->authorize('delete', $departamento);
+        if($departamento->academias->isEmpty()){ 
+            $departamento->delete();
+            return redirect()->route('departamentos.index')
+                        ->with('success', 'Departamento borrado.');
+
+        } else {
+            return redirect()->route('departamentos.index')
+                            ->with('error', 'No se puede eliminar un departamento que aún tiene academias.');
+        }
     }
 
     public function buscar($busqueda)

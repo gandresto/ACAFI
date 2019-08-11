@@ -16,7 +16,12 @@
             <div class="col-md-8 offset-md-4">
                 <div class="radio" v-for="(division, index) in divisions" :key="index">
                     <label :for="[division.id]">
-                        <input type="radio" :name="inputName" :id="[division.id]" :value="[division.id]" required>
+                        <input type="radio" 
+                                :name="inputName" 
+                                :id="[division.id]" 
+                                :value="[division.id]" 
+                                required
+                                :checked="index==0">
                         {{ division.nombre}}
                     </label>
                 </div>
@@ -35,7 +40,6 @@
     export default {
         mounted() {
             this.buscarDivision();
-            console.log(this.labelInicial);
         },
 
         props : ['errores', 'tieneErrores', 'busquedaInicial', 'inputTagName', 'labelInicial'],

@@ -36,9 +36,9 @@
                         <th scope="col">División</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Jefe</th>
-                        @can('create', App\Departamento::class)
+                        {{-- @can('create', App\Academia::class) --}}                        
                             <th scope="col">Acciones</th>
-                        @endcan
+                        {{-- @endcan --}}
                     </tr>
                 </thead>
                 <tbody>
@@ -47,22 +47,27 @@
                             <td>{{$departamento->division->siglas}}</td>
                             <td>{{$departamento->nombre}}</td>
                             <td>{{$departamento->jefe->nombreCompletoG()}}</td>
-                            @can('create', App\Departamento::class)
+                            {{-- @can('create', App\Academia::class) --}}  
                                 <td>
                                     <form action="{{ route('departamentos.destroy',$departamento->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <div class="btn-group" role="group" aria-label="Modificar departamento">
-                                            <a name="editardepartamento" id="editardepartamento{{$departamento->id}}" class="btn btn-primary" href="{{route('departamentos.edit', $departamento->id)}}" role="button" title="Editar">
-                                                <i class="fas fa-edit" aria-hidden="true"></i>
-                                            </a>
-                                            <button type="submit" onclick="return confirm('¿Estás seguro de eliminar \'{{$departamento->nombre}}?\'')" class="btn btn-danger" href="#" role="button" title="Eliminar">
-                                                <i class="fas fa-trash" aria-hidden="true"></i>
-                                            </button>
+                                            @can('update', $departamento)
+                                                <a name="editardepartamento" id="editardepartamento{{$departamento->id}}" class="btn btn-primary" href="{{route('departamentos.edit', $departamento->id)}}" role="button" title="Editar">
+                                                    <i class="fas fa-edit" aria-hidden="true"></i>
+                                                </a>
+                                            @endcan
+                                            @can('delete', $departamento)
+                                                <button type="submit" onclick="return confirm('¿Estás seguro de eliminar \'{{$departamento->nombre}}?\'')" class="btn btn-danger" href="#" role="button" title="Eliminar">
+                                                    <i class="fas fa-trash" aria-hidden="true"></i>
+                                                </button>
+                                            @endcan
+                                            
                                         </div>
                                     </form>
                                 </td>
-                            @endcan
+                            {{-- @endcan --}}
                         </tr>
                     @endforeach
                 </tbody>

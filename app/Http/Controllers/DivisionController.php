@@ -74,10 +74,19 @@ class DivisionController extends Controller
 
     public function destroy(int $id)
     {
-        $this->authorize('delete', $id);
-        Division::destroy($id);
-        return redirect()->route('divisions.index')
+        $division = Division::find($id);
+        $this->authorize('delete', $division);
+
+        if ($division->departamentos->isEmpty()){
+            $division->delete();
+            return redirect()->route('divisions.index')
                         ->with('success', 'División con eliminada.');
+        } else{
+            return redirect()->route('divisions.index')
+                        ->with('error', 'No se puede eliminar una división que aún tiene departamentos.');
+        }
+            
+        
     }
 
     public function buscar($busqueda)

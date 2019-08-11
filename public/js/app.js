@@ -1730,10 +1730,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     this.buscarDivision();
-    console.log(this.labelInicial);
   },
   props: ['errores', 'tieneErrores', 'busquedaInicial', 'inputTagName', 'labelInicial'],
   data: function data() {
@@ -1801,10 +1805,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     this.buscarAcademico();
-    console.log(this.labelInicial);
   },
   props: ['errores', 'tieneErrores', 'busquedaInicial', 'inputTagName', 'labelInicial'],
   data: function data() {
@@ -37228,7 +37236,7 @@ var render = function() {
                       id: [division.id],
                       required: ""
                     },
-                    domProps: { value: [division.id] }
+                    domProps: { value: [division.id], checked: index == 0 }
                   }),
                   _vm._v(
                     "\n                    " +
@@ -37345,10 +37353,10 @@ var render = function() {
                       id: [academico.id],
                       required: ""
                     },
-                    domProps: { value: [academico.id] }
+                    domProps: { value: [academico.id], checked: index == 0 }
                   }),
                   _vm._v(
-                    "\n                    " +
+                    "\n                        " +
                       _vm._s(
                         academico.grado_id +
                           " " +
