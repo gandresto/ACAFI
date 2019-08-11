@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="form-group row">
-            <label for="buscarAcademico" class="col-md-4 control-label text-md-right">Jefe de División</label>
+            <label for="buscarAcademico" class="col-md-4 control-label text-md-right" v-text="labelInicial"></label>
             <div class="col-md-6">
                 <input id="buscarAcademico" name="buscarAcademico"
                         type="text"
@@ -34,12 +34,11 @@
 <script>
     export default {
         mounted() {
-            //console.log('Component mounted.')
-            //console.log(this.busquedaInicial)
             this.buscarAcademico();
+            console.log(this.labelInicial);
         },
 
-        props : ['errores', 'tieneErrores', 'busquedaInicial', 'inputTagName'],
+        props : ['errores', 'tieneErrores', 'busquedaInicial', 'inputTagName', 'labelInicial'],
 
         data : function () {
             return {

@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Acuerdo;
 use Illuminate\Http\Request;
 
-class AcuerdoController extends Controller
+class AcademiasController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +40,10 @@ class AcuerdoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Acuerdo  $acuerdo
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Acuerdo $acuerdo)
+    public function show($id)
     {
         //
     }
@@ -52,10 +51,10 @@ class AcuerdoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Acuerdo  $acuerdo
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Acuerdo $acuerdo)
+    public function edit($id)
     {
         //
     }
@@ -64,10 +63,10 @@ class AcuerdoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Acuerdo  $acuerdo
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Acuerdo $acuerdo)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -75,10 +74,10 @@ class AcuerdoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Acuerdo  $acuerdo
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Acuerdo $acuerdo)
+    public function destroy($id)
     {
         //
     }

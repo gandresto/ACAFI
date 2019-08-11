@@ -58,7 +58,7 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{route('divisions.index')}}">Divisiones</a>
-                                    <a class="dropdown-item" href="#">Departamentos</a>
+                                    <a class="dropdown-item" href="{{route('departamentos.index')}}">Departamentos</a>
                                     <a class="dropdown-item" href="#">Academias</a>
                                     @can('viewAny', App\Academico::class)
                                         <a class="dropdown-item" href="{{route('academicos.index')}}">Académicos</a>

@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Division;
 use App\Policies\DivisionPolicy;
+use App\Departamento;
+use App\Policies\DepartamentoPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -18,6 +20,7 @@ class AuthServiceProvider extends ServiceProvider
         #'App\Model' => 'App\Policies\ModelPolicy',
         Division::class => DivisionPolicy::class,
         Academico::class => AcademicoPolicy::class,
+        Departamento::class => DepartamentoPolicy::class,
     ];
 
     /**

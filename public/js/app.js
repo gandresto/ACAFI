@@ -1732,11 +1732,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    //console.log('Component mounted.')
-    //console.log(this.busquedaInicial)
     this.buscarAcademico();
+    console.log(this.labelInicial);
   },
-  props: ['errores', 'tieneErrores', 'busquedaInicial', 'inputTagName'],
+  props: ['errores', 'tieneErrores', 'busquedaInicial', 'inputTagName', 'labelInicial'],
   data: function data() {
     return {
       busqueda: this.busquedaInicial,
@@ -37089,14 +37088,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-md-4 control-label text-md-right",
-          attrs: { for: "buscarAcademico" }
-        },
-        [_vm._v("Jefe de División")]
-      ),
+      _c("label", {
+        staticClass: "col-md-4 control-label text-md-right",
+        attrs: { for: "buscarAcademico" },
+        domProps: { textContent: _vm._s(_vm.labelInicial) }
+      }),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-6" }, [
         _c("input", {
