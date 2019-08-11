@@ -59,8 +59,8 @@ class DivisionController extends Controller
     {
         $this->authorize('update', $division);
         $request->validate([
-            'siglas' => 'required|unique:divisions|max:10|string',
-            'nombre' => 'required|unique:divisions|max:50|string',
+            'siglas' => 'required|max:10|string',
+            'nombre' => 'required|max:50|string',
             'id_jefe_div' => ['required', 'exists:academicos,id'],
         ]);
 
