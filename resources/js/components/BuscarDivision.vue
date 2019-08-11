@@ -1,23 +1,23 @@
 <template>
     <div>
         <div class="form-group row">
-            <label for="buscarAcademico" class="col-md-4 control-label text-md-right" v-text="labelInicial"></label>
+            <label for="buscarDivision" class="col-md-4 control-label text-md-right" v-text="labelInicial"></label>
             <div class="col-md-6">
-                <input id="buscarAcademico" name="buscarAcademico"
+                <input id="buscarDivision" name="buscarDivision"
                         type="text"
                         class="form-control"
                         placeholder="Buscar..."
                         v-model="busqueda"
-                        @input="buscarAcademico"
-                        v-on:keyup.delete="buscarAcademico" >
+                        @input="buscarDivision"
+                        v-on:keyup.delete="buscarDivision" >
             </div>
         </div><!-- /form-group -->
         <div :class="[tieneErrores ? 'form-group is-invalid' : 'form-group']">
             <div class="col-md-8 offset-md-4">
-                <div class="radio" v-for="(academico, index) in academicos" :key="index">
-                    <label :for="[academico.id]">
-                        <input type="radio" :name="inputName" :id="[academico.id]" :value="[academico.id]" required>
-                        {{ academico.grado_id + ' ' + academico.nombre + ' ' + academico.apellido_pat + ' ' + academico.apellido_mat}}
+                <div class="radio" v-for="(division, index) in divisions" :key="index">
+                    <label :for="[division.id]">
+                        <input type="radio" :name="inputName" :id="[division.id]" :value="[division.id]" required>
+                        {{ division.nombre}}
                     </label>
                 </div>
 
@@ -34,7 +34,7 @@
 <script>
     export default {
         mounted() {
-            this.buscarAcademico();
+            this.buscarDivision();
             console.log(this.labelInicial);
         },
 
@@ -43,17 +43,18 @@
         data : function () {
             return {
                 busqueda : this.busquedaInicial,
-                academicos : null,
+                divisions : null,
                 inputName : this.inputTagName
             }
         },
 
         methods: {
-            buscarAcademico(){
+            buscarDivision(){
                 if(this.busqueda.length > 2){
-                    axios.get('/academicos/buscar/' + this.busqueda)
+                    axios.get('/divisions/buscar/' + this.busqueda)
                         .then(response => {
-                            this.academicos = response.data;
+                            this.divisions = response.data;
+                            console.log(this.divisions);
                         });
                 }
             }

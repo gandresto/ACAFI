@@ -21,6 +21,7 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('buscar-usuario', require('./components/BuscarUsuario.vue').default);
+Vue.component('buscar-division', require('./components/BuscarDivision.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -7,6 +7,10 @@ use App\Departamento;
 
 class DepartamentosController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -37,7 +41,19 @@ class DepartamentosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('create', Departamento::class);
+        $request->validate([
+            'nombre' => 'required|unique:departamentos|max:50|string',
+            'id_jefe_dpto' => 'required|exists:academicos,id',
+            'division_id' => 'required|exists:divisions,id',
+        ]);
+
+        Departamento::create($request->all());
+
+        return redirect()->route('departamentos.index')
+                        ->with('success', 'Departamento con nombre \''
+                                        . $request['nombre']
+                                        .'\' creado satisfactoriamente.');
     }
 
     /**
@@ -83,5 +99,17 @@ class DepartamentosController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function buscar($busqueda)
+    {
+        $busqueda = urldecode($busqueda);
+    
+        $departamentos = Departamento::where('nombre', 'like', '%' . $busqueda . '%')
+                            ->orderBy('nombre', 'desc')
+                            ->limit(5)
+                            ->get();
+        
+        return response()->json($departamentos);
     }
 }

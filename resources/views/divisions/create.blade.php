@@ -40,7 +40,8 @@
             tiene-errores="{{$errors->has('id_jefe_div')}}"
             errores="{{$errors->has('id_jefe_div') ? $errors->first('id_jefe_div') : ''}}"
             busqueda-inicial=""
-            input-tag-name="id_jefe_div">>
+            input-tag-name="id_jefe_div"
+            label-inicial="Jefe de división">
         </buscar-usuario>
 
 

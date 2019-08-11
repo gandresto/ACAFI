@@ -20,7 +20,10 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('divisions', 'DivisionController');
+Route::get('/divisions/buscar/{busqueda}', 'DivisionController@buscar')->name('divisions.buscar');
+
 Route::resource('departamentos', 'DepartamentosController');
+
 
 Route::post('/users', 'UsersController@store')->name('users.store');
 

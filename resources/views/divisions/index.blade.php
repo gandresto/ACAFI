@@ -44,7 +44,7 @@
                 <tbody>
                     @foreach ($divisiones as $division)
                         <tr>
-                            <td>{{$division->siglas}}</td>
+                            <th scope="row">{{$division->siglas}}</th>
                             <td>{{$division->nombre}}</td>
                             <td>{{$division->jefe->nombreCompletoG()}}</td>
                             @can('create', App\Division::class)

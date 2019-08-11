@@ -33,6 +33,7 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
+                        <th scope="col">División</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Jefe</th>
                         @can('create', App\Departamento::class)
@@ -43,6 +44,7 @@
                 <tbody>
                     @foreach ($departamentos as $departamento)
                         <tr>
+                            <td>{{$departamento->division->siglas}}</td>
                             <td>{{$departamento->nombre}}</td>
                             <td>{{$departamento->jefe->nombreCompletoG()}}</td>
                             @can('create', App\Departamento::class)

@@ -85,6 +85,7 @@ class AcademicosController extends Controller
         }
         return response()->json($academicos);
     }
+
     public function destroy(int $id)
     {
         //dd($id);
@@ -114,7 +115,7 @@ class AcademicosController extends Controller
             'nombre' => 'required|max:50|string',
             'apellido_pat' => 'required|max:50|string',
             'apellido_mat' => 'required|max:50|string',
-            'email' => 'required|string|email|max:50|unique:users',
+            'email' => 'required|string|email|max:50',
         ]);
 
         $academico->update(

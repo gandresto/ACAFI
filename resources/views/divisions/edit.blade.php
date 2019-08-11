@@ -41,7 +41,8 @@
             tiene-errores="{{$errors->has('id_jefe_div')}}"
             errores="{{$errors->has('id_jefe_div') ? $errors->first('id_jefe_div') : ''}}"
             busqueda-inicial="{{ $division->jefe->nombreCompleto() }}"
-            input-tag-name="id_jefe_div">
+            input-tag-name="id_jefe_div"
+            label-inicial="Jefe de departamento">
         </buscar-usuario>
 
         <div class="form-group row mb-0">

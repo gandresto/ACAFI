@@ -7,6 +7,14 @@
 @section('content')
     <form class="form-horizontal" method="POST" action="{{route('departamentos.index')}}">
         @csrf
+        
+        <buscar-division
+            tiene-errores="{{$errors->has('division_id')}}"
+            errores="{{$errors->has('division_id') ? $errors->first('division_id') : ''}}"
+            busqueda-inicial=""
+            input-tag-name="division_id"
+            label-inicial="División de procedencia">
+        </buscar-division>
 
         <div class="form-group row">
             <label for="nombre" class="col-md-4 col-form-label text-md-right">Nombre del Departamento</label>

@@ -79,4 +79,18 @@ class DivisionController extends Controller
         return redirect()->route('divisions.index')
                         ->with('success', 'División con eliminada.');
     }
+
+    public function buscar($busqueda)
+    {
+        $busqueda = urldecode($busqueda);    
+        $divisiones = Division::where('nombre', 'like', '%' . $busqueda . '%')
+                            ->orWhere('siglas', 'like', '%' . $busqueda . '%')
+                            ->orderBy('nombre', 'desc')
+                            ->limit(5)
+                            ->get();        
+        
+        return response()->json($divisiones);
+    }
+
+    
 }
