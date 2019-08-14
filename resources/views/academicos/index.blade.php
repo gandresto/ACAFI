@@ -50,7 +50,7 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">id</th>
+                        <th scope="col">#</th>
                         <th scope="col">Grado</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Apellido Paterno</th>
