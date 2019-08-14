@@ -16,11 +16,12 @@ class CreateAcademiasTable extends Migration
         Schema::create('academias', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
-            $table->unsignedBigInteger('id_presidente');
+            $table->boolean('activa')->default(True);
+            $table->unsignedBigInteger('presidente_id');
             $table->unsignedBigInteger('departamento_id');
             $table->timestamps();
 
-            $table->index('id_presidente');
+            $table->index('presidente_id');
             $table->index('departamento_id');
         });
     }

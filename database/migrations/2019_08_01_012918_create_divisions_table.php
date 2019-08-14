@@ -17,10 +17,13 @@ class CreateDivisionsTable extends Migration
             $table->increments('id');
             $table->string('siglas', 10)->unique();
             $table->string('nombre', 50)->unique();
-            $table->unsignedBigInteger('id_jefe_div');
+            $table->string('url', 200);
+            $table->string('logo', 200)->nullable();
+            $table->boolean('activa')->default(True);
+            $table->unsignedBigInteger('jefe_div_id');
             $table->timestamps();
 
-            $table->index('id_jefe_div');
+            $table->index('jefe_div_id');
             $table->index('siglas');
         });
     }

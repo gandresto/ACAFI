@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAcademiaAcademicoPivotTable extends Migration
+class CreateAcademiaUserPivotTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,17 @@ class CreateAcademiaAcademicoPivotTable extends Migration
      */
     public function up()
     {
-        Schema::create('academia_academico', function (Blueprint $table) {
+        Schema::create('academia_user', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedBigInteger('academia_id');
-            $table->unsignedBigInteger('academico_id');
+            $table->unsignedBigInteger('user_id');
             $table->boolean('activo')->default(true);
             $table->date('fecha_ingreso');
             $table->date('fecha_egreso')->nullable();
             $table->timestamps();
 
             $table->index('academia_id');
-            $table->index('academico_id');
+            $table->index('user_id');
         });
     }
 
@@ -34,6 +34,6 @@ class CreateAcademiaAcademicoPivotTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('academia_academico');
+        Schema::dropIfExists('academia_user');
     }
 }
