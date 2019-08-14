@@ -60,9 +60,7 @@
                                     <a class="dropdown-item" href="{{route('divisions.index')}}">Divisiones</a>
                                     <a class="dropdown-item" href="{{route('departamentos.index')}}">Departamentos</a>
                                     <a class="dropdown-item" href="#">Academias</a>
-                                    @can('viewAny', App\Academico::class)
-                                        <a class="dropdown-item" href="{{route('academicos.index')}}">Académicos</a>
-                                    @endcan
+                                    <a class="dropdown-item" href="{{route('academicos.index')}}">Académicos</a>
                                 </div>
                             </li>
                         </ul>
@@ -78,7 +76,7 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->academico->grado_id . ' ' . Auth::user()->academico->nombre }}
+                                    {{ Auth::user()->grado . ' ' . Auth::user()->nombre }}
                                     <span class="caret"></span>
                                 </a>
 
