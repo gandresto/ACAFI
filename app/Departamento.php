@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Departamento extends Model
 {
     protected $fillable = [
-        'division_id', 'nombre', 'id_jefe_dpto'
+        'division_id', 'nombre', 'jefe_dpto_id'
     ];
 
     public function division()
@@ -17,7 +17,7 @@ class Departamento extends Model
 
     public function jefe()
     {
-        return $this->belongsTo(Academico::class, 'id_jefe_dpto');
+        return $this->belongsTo(User::class, 'jefe_dpto_id');
     }
     
     public function academias()

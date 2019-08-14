@@ -17,11 +17,11 @@ class CreateDepartamentosTable extends Migration
             $table->increments('id');
             $table->string('nombre', 50)->unique();
             $table->boolean('activo')->default(True);
-            $table->unsignedBigInteger('id_jefe_dpto');
+            $table->unsignedBigInteger('jefe_dpto_id');
             $table->unsignedBigInteger('division_id');
             $table->timestamps();
 
-            $table->index('id_jefe_dpto');
+            $table->index('jefe_dpto_id');
             $table->index('division_id');
         });
     }

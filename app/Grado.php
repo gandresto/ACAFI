@@ -10,8 +10,8 @@ class Grado extends Model
     protected $primaryKey = 'id';
     public $incrementing = false;
 
-    public function academicos()
-    {
-        return $this->hasMany(Academico::class);
-    }
+    #public function academicos()
+    #{
+    #    return $this->hasMany(Academico::class);
+    #}
 }

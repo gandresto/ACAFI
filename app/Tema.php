@@ -8,11 +8,11 @@ class Tema extends Model
 {
     public function reunion()
     {
-        return $this->belongsTo('App\Reunion');
+        return $this->belongsTo(Reunion::class);
     }
 
     public function acuerdos()
     {
-        return $this->hasMany('App\Acuerdo');
+        return $this->hasMany(Acuerdo::class);
     }
 }

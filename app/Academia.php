@@ -13,17 +13,17 @@ class Academia extends Model
 
     public function presidente()
     {
-        return $this->belongsTo(Academico::class, 'id_presidente');
+        return $this->belongsTo(User::class, 'presidente_id');
     }
 
-    public function academicos()
+    public function miembros()
     {
-        return $this->belongsToMany(Academico::class)
-                    ->withPivot('estado', 'fecha_ingreso', 'fecha_egreso');
+        return $this->belongsToMany(User::class)
+                    ->withPivot('activo', 'fecha_ingreso', 'fecha_egreso');
     }
 
     public function reuniones()
     {
-        return $this->hasMany('App\Reunion');
+        return $this->hasMany(Reunion::class);
     }
 }
