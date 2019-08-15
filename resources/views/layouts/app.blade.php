@@ -120,7 +120,11 @@
         <!-- Footer -->
         <footer class="page-footer font-small blue pt-6">
             <!-- Copyright -->
-            <div class="footer-copyright text-center py-3">Copyrights © 2019 / Facultad de Ingeniería/ UNAM /
+            <div class="footer-copyright text-center py-3">Todos los derechos reservados © 1999 - 2019 / Facultad de Ingeniería/UNAM/</div>
+            <div class="container">
+                <div class="small">
+                        Esta es la página electrónica institucional de la Facultad de Ingeniería de la UNAM. Puede ser reproducida con fines no lucrativos, siempre y cuando no se mutile, se cite la fuente completa y su dirección electrónica. Contiene enlaces con diversos portales de entidades y organizaciones académicas, estudiantiles y profesionales, así como con páginas personales de profesores e investigadores cuyos contenidos son de la responsabilidad exclusiva de sus titulares.
+                </div>
             </div>
             <!-- Copyright -->
         </footer>
