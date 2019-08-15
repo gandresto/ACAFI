@@ -39,21 +39,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function nombreCompleto()
+    public function getNombreCompletoAttribute()
     {
-        $nombre_completo = $this->nombre . ' ' .
-                            $this->apellido_pat . ' ' .
-                            $this->apellido_mat ;
-        return $nombre_completo;
+        return "{$this->nombre} {$this->apellido_pat} {$this->apellido_mat}";
     }
 
-    public function nombreCompletoYGrado()
+    public function getGradoNombreCompletoAttribute()
     {
-        $nombre_completo = $this->grado . ' ' .
-                            $this->nombre . ' ' .
-                            $this->apellido_pat . ' ' .
-                            $this->apellido_mat ;
-        return $nombre_completo;
+        return "{$this->grado} {$this->nombre} {$this->apellido_pat} {$this->apellido_mat}";
     }
 
     /*  Relaciones con otras tablas */

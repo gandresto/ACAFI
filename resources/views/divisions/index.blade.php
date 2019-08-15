@@ -46,7 +46,7 @@
                         <tr>
                             <th scope="row">{{$division->siglas}}</th>
                             <td>{{$division->nombre}}</td>
-                            <td>{{$division->jefe->nombreCompletoG()}}</td>
+                            <td>{{$division->jefe->grado_nombre_completo}}</td>
                             @can('create', App\Division::class)
                                 <td>
                                     <form action="{{ route('divisions.destroy', $division->id) }}" method="POST">

@@ -38,7 +38,7 @@ class DivisionController extends Controller
         $request->validate([
             'siglas' => 'required|unique:divisions|max:10|string',
             'nombre' => 'required|unique:divisions|max:50|string',
-            'id_jefe_div' => ['required', 'exists:academicos,id'],
+            'id_jefe_div' => ['required', 'exists:users,id'],
         ]);
 
         Division::create($request->all());
