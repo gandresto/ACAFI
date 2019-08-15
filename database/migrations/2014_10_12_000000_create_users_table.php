@@ -25,15 +25,17 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-        App\User::create([
-            'id' => 1,
-            'email' => config('admin.email'),
-            'password' => bcrypt(config('admin.password')),
-            'grado'=> config('admin.grado'),
-            'nombre'=> config('admin.nombre'),
-            'apellido_pat'=> config('admin.apellido_pat'),
-            'apellido_mat'=> config('admin.apellido_mat'),
-        ]);
+        DB::table('users')->insert(
+            array(
+                'id' => 1,
+                'email' => config('admin.email'),
+                'password' => bcrypt(config('admin.password')),
+                'grado'=> config('admin.grado'),
+                'nombre'=> config('admin.nombre'),
+                'apellido_pat'=> config('admin.apellido_pat'),
+                'apellido_mat'=> config('admin.apellido_mat'),
+            )
+        );
     }
 
     /**
