@@ -53,6 +53,9 @@
                                         @csrf
                                         @method('DELETE')
                                         <div class="btn-group" role="group" aria-label="Modificar division">
+                                            <a name="verdivision" href="{{route('divisions.show',$division->id)}}" role="button" class="btn btn-success">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
                                             <a name="editardivision" id="editardivision{{$division->id}}" class="btn btn-primary" href="{{route('divisions.edit', $division->id)}}" role="button" title="Editar">
                                                 <i class="fas fa-edit" aria-hidden="true"></i>
                                             </a>
