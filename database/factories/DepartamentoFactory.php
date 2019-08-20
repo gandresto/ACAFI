@@ -18,7 +18,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Departamento::class, function (Faker $faker) {
     return [
-        'nombre' => $faker->sentence(4, true),
+        'nombre' => 'Departamento de '.$faker->word(),
         'jefe_dpto_id' => $faker->unique()->numberBetween($min = 2, $max = 50),
     ];
 });
