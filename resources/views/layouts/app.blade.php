@@ -35,7 +35,7 @@
                     @auth
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('home')}}">
+                                <a class="nav-link" href="{{route('calendario')}}">
                                     Calendario
                                 </a>
                             </li>

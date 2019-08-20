@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/calendario', 'HomeController@index')->name('calendario');
 
 Route::resource('divisions', 'DivisionController');
 Route::get('/divisions/buscar/{busqueda}', 'DivisionController@buscar')->name('divisions.buscar');

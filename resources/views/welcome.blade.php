@@ -68,7 +68,7 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">Calendario</a>
+                        <a href="{{ route('calendario') }}">Calendario</a>
                     @else
                         <a href="{{ route('login') }}">@lang('strings.login')</a>
                     @endauth
