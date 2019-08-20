@@ -21,13 +21,17 @@ class EstructuraFITableSeeder extends Seeder
         $users=App\User::all();
 
         App\Division::all()->each(function ($division) use ($users) {
-            $division->jefes()->attach(
-                $users->random(rand(2, 51))->pluck('id')->toArray()
-            );
-            //$division->jefes()->sync(
-            //    $users->random(rand(2, 51))->pluck('id')->toArray()
-            //);
-            //$division->jefes()->saveMany($users);
+            $num_jefes = 4;
+            //Seleccionar 4 usuarios al azar
+            $jefes_rand = $users->random($num_jefes)->pluck('id')->toArray();
+            //Jefe Activo
+            $division->jefes()->attach($jefes_rand[0]);
+            //Jefes inactivos
+            for ($i=0; $i < $num_jefes; $i++) {
+                $division->jefes()->attach(
+                    array($jefes_rand[$i] => ['actual' => false])
+                );
+            }
         });
     }
 }
