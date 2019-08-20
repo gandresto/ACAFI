@@ -68,7 +68,7 @@ class DivisionController extends Controller
 
         return redirect()->route('divisions.index')
                         ->with('success', 'División con nombre \''
-                                        . $request->data['nombre']
+                                        . $request->all()['nombre']
                                         .'\' actualizada satisfactoriamente.');
     }
 
@@ -80,7 +80,7 @@ class DivisionController extends Controller
         if ($division->departamentos->isEmpty()){
             $division->delete();
             return redirect()->route('divisions.index')
-                        ->with('success', 'División con eliminada.');
+                        ->with('success', 'División eliminada.');
         } else{
             return redirect()->route('divisions.index')
                         ->with('error', 'No se puede eliminar una división que aún tiene departamentos.');
