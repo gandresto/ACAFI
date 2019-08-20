@@ -7,7 +7,10 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-        {{$division->nombre}}
+        Nombre: {{$division->nombre}}
+    </div>
+    <div class="col-md-12">
+        Jefe: {{'placeholder-jefe'/*$departamento->jefe->grado_nombre_completo*/}}
     </div>
 </div>
 <hr>
@@ -15,12 +18,56 @@
     <div class="col-md-12">
         Departamentos:
     </div>
-    @foreach ($division->departamentos as $departamento)
-        <div class="col-md-12">
-            {{$departamento->nombre}}
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Jefe</th>
+                        {{-- @can('create', App\Academia::class) --}}                        
+                            <th scope="col">Acciones</th>
+                        {{-- @endcan --}}
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($division->departamentos as $departamento)
+                        <tr>
+                            <td>{{$departamento->nombre}}</td>
+                            <td>{{'placeholder-jefe'/*$departamento->jefe->grado_nombre_completo*/}}</td>
+                            {{-- @can('create', App\Academia::class) --}}  
+                                <td>
+                                    <form action="{{ route('departamentos.destroy',$departamento->id) }}" method="POST">                                        
+                                        <div class="btn-group" role="group" aria-label="Modificar departamento">
+                                            <a name="verdepartamento" href="{{route('departamentos.show',$departamento->id)}}" role="button" class="btn btn-success">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            @can('update', $departamento)
+                                                <a name="editardepartamento" id="editardepartamento{{$departamento->id}}" class="btn btn-primary" href="{{route('departamentos.edit', $departamento->id)}}" role="button" title="Editar">
+                                                    <i class="fas fa-edit" aria-hidden="true"></i>
+                                                </a>
+                                            @endcan
+                                            @can('delete', $departamento)
+                                                @csrf
+                                                @method('DELETE') 
+                                                <button type="submit" onclick="return confirm('¿Estás seguro de eliminar \'{{$departamento->nombre}}?\'')" class="btn btn-danger" href="#" role="button" title="Eliminar">
+                                                    <i class="fas fa-trash" aria-hidden="true"></i>
+                                                </button>
+                                            @endcan
+
+                                        </div>
+                                    </form>
+                                </td>
+                            {{-- @endcan --}}
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
-    @endforeach
-    
+    </div>
 </div>
     
 @endsection

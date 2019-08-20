@@ -35,10 +35,8 @@
                     <tr>
                         <th scope="col">Siglas</th>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Jefe</th>
-                        @can('create', App\Division::class)
-                            <th scope="col">Acciones</th>
-                        @endcan
+                        <th scope="col">Jefe</th>                      
+                        <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,23 +44,28 @@
                         <tr>
                             <th scope="row">{{$division->siglas}}</th>
                             <td>{{$division->nombre}}</td>
-                            <td>{{$division->jefe->grado_nombre_completo}}</td>
-                            @can('create', App\Division::class)
-                                <td>
-                                    <form action="{{ route('divisions.destroy', $division->id) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <div class="btn-group" role="group" aria-label="Modificar division">
+                            <td>{{$division->jefe_actual->grado_nombre_completo}}</td>
+                            <td>
+                                <form action="{{ route('divisions.destroy', $division->id) }}" method="POST">
+                                    <div class="btn-group" role="group" aria-label="Modificar division">
+                                        <a name="verdivision" href="{{route('divisions.show',$division->id)}}" role="button" class="btn btn-success">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        @can('update', $division)
                                             <a name="editardivision" id="editardivision{{$division->id}}" class="btn btn-primary" href="{{route('divisions.edit', $division->id)}}" role="button" title="Editar">
                                                 <i class="fas fa-edit" aria-hidden="true"></i>
                                             </a>
+                                        @endcan                                            
+                                        @can('delete', $division)
+                                            @csrf
+                                            @method('DELETE')
                                             <button type="submit" onclick="return confirm('¿Estás seguro de eliminar \'{{$division->nombre}}?\'')" class="btn btn-danger" href="#" role="button" title="Eliminar">
                                                 <i class="fas fa-trash" aria-hidden="true"></i>
-                                            </button>
-                                        </div>
-                                    </form>
-                                </td>
-                            @endcan
+                                            </button>                                                
+                                        @endcan
+                                    </div>
+                                </form>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
