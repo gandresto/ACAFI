@@ -17,7 +17,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'email', 'password',
-        'grado', 'nombre', 
+        'grado', 'nombre',
         'apellido_pat', 'apellido_mat'
     ];
 
@@ -53,7 +53,15 @@ class User extends Authenticatable
 
     public function jefeDeDivisiones()
     {
-        return $this->hasMany(Division::class, 'jefe_div_id');
+        return $this->belongsToMany(Division::class, 'division_jefe',
+                                    'jefe_id', 'division_id')#,
+                                    #exit$parentKey = 'id', $relatedKey = 'division_id')
+                    ->withPivot('actual', 'fecha_ingreso', 'fecha_egreso');
+    }
+
+    public function jefeActualDeDivisiones()
+    {
+        return $this->jefeDeDivisiones()->wherePivot('actual', '=', true);
     }
 
     public function jefeDeDepartamentos()

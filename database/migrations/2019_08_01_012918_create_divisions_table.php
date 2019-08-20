@@ -20,7 +20,7 @@ class CreateDivisionsTable extends Migration
             $table->string('url', 200);
             $table->string('logo', 200)->nullable();
             $table->boolean('activa')->default(True);
-            $table->unsignedBigInteger('jefe_div_id');
+            #$table->unsignedBigInteger('jefe_div_id');
             $table->timestamps();
 
             $table->index('jefe_div_id');

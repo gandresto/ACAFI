@@ -22,6 +22,6 @@ $factory->define(Division::class, function (Faker $faker) {
         'nombre' => $faker->sentence(4, true),
         'url' => $faker->url,
         'logo' => '/storage/' . Str::random(10) . '.png',
-        'jefe_div_id' => $faker->unique()->numberBetween($min = 2, $max = 50),
+        #'jefe_div_id' => $faker->unique()->numberBetween($min = 2, $max = 50),
     ];
 });

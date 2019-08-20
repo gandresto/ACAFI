@@ -7,12 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 class Division extends Model
 {
     protected $fillable = [
-        'siglas', 'nombre', 'jefe_div_id'
+        'siglas', 'nombre', 'url', 'logo'
     ];
 
-    public function jefe()
+    public function getJefeActualAttribute()
     {
-        return $this->belongsTo(User::class, 'jefe_div_id');
+        return $this->jefes()->wherePivot('actual', '=', true)->first();
+    }
+
+    public function jefes()
+    {
+        return $this->belongsToMany(User::class, 'division_jefe',
+                                    'division_id', 'jefe_id')#,
+                                    #'id', 'user_id')
+                    ->withPivot('actual', 'fecha_ingreso', 'fecha_egreso');;
     }
 
     public function departamentos()
