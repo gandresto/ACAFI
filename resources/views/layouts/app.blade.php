@@ -60,7 +60,9 @@
                                     <a class="dropdown-item" href="{{route('divisions.index')}}">Divisiones</a>
                                     <a class="dropdown-item" href="{{route('departamentos.index')}}">Departamentos</a>
                                     <a class="dropdown-item" href="#">Academias</a>
-                                    <a class="dropdown-item" href="{{route('academicos.index')}}">Académicos</a>
+                                    @can('viewAny', App\User::class)
+                                        <a class="dropdown-item" href="{{route('users.index')}}">Usuarios</a>
+                                    @endcan                                    
                                 </div>
                             </li>
                         </ul>

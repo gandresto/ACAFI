@@ -24,8 +24,7 @@ Route::get('/divisions/buscar/{busqueda}', 'DivisionController@buscar')->name('d
 
 Route::resource('departamentos', 'DepartamentosController');
 
-
-Route::post('/users', 'UsersController@store')->name('users.store');
+Route::resource('users', 'UsersController');
 
 Route::get('/academicos', 'AcademicosController@index')
             ->name('academicos.index')
