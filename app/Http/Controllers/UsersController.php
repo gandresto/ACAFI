@@ -40,7 +40,8 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        $this->authorize('create', User::class);
+        return view('users.create');
     }
 
     /**
@@ -51,7 +52,8 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        $dataUser = request()->validate(
+        $this->authorize('create', User::class);
+        $data = request()->validate(
             [
                 'email' => 'required|string|email|max:50|unique:users',
                 'password' => 'required|string|min:6|confirmed',
@@ -61,12 +63,10 @@ class UsersController extends Controller
                 'apellido_mat' => 'required|max:50|string'
             ]
         );
-        
-        
-        dd($dataUser);
-        
+        #dd($data);
+        $user = User::create($data);       
         return redirect()->route('users.index')
-                        ->with('success', 'Usuario con nombre ' . $academico->nombre . ' creado satisfactoriamente.');
+                        ->with('success', 'Usuario con nombre ' . $user->nombre_completo . ' creado satisfactoriamente.');
     }
 
     /**
@@ -112,5 +112,26 @@ class UsersController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function buscar($consulta)
+    {
+        $consulta = urldecode($consulta);
+        $connection = config('database.default');
+        $driver = config("database.connections.{$connection}.driver");
+        if ($driver == 'sqlite') {
+            $users = User::orWhereRaw("nombre || ' ' || apellido_pat || ' ' || apellido_mat like '%" . $consulta . "%' ")
+                                ->orWhere("email", 'like', '%'. $consulta . "%' ")
+                                ->orderBy('nombre', 'desc')
+                                ->limit(5)
+                                ->get();
+        } else {
+            $users = User::orWhereRaw("concat(nombre, ' ', apellido_pat, ' ', apellido_mat) like '%" . $consulta . "%' ")
+                                ->orWhere("email", 'like', '%'. $consulta . "%' ")
+                                ->orderBy('nombre', 'desc')
+                                ->limit(5)
+                                ->get();
+        }
+        return response()->json($users);
     }
 }

@@ -25,6 +25,10 @@ Route::get('/divisions/buscar/{busqueda}', 'DivisionController@buscar')->name('d
 Route::resource('departamentos', 'DepartamentosController');
 
 Route::resource('users', 'UsersController');
+Route::get('/users/buscar/{consulta}', 'UsersController@buscar')->name('users.buscar');
+
+
+/*
 
 Route::get('/academicos', 'AcademicosController@index')
             ->name('academicos.index')
@@ -41,3 +45,5 @@ Route::get('/academicos/{academico}', 'AcademicosController@show')->name('academ
 Route::delete('/academicos/{academico}', 'AcademicosController@destroy')->name('academicos.destroy');
 Route::get('/academicos/{academico}/edit', 'AcademicosController@edit')->name('academicos.edit');
 Route::patch('/academicos/{academico}', 'AcademicosController@update')->name('academicos.update');
+
+*/

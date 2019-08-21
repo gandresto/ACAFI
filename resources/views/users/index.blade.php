@@ -79,6 +79,9 @@
                                     @csrf
                                     @method('DELETE')
                                     <div class="btn-group" role="group" aria-label="Modificar Usuario">
+                                        <a name="veruser" href="{{route('users.show',$user->id)}}" role="button" class="btn btn-success">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
                                         <a name="editarUsuario" id="editarUsuario{{$user->id}}" class="btn btn-primary" href="{{route('users.edit', $user->id)}}" role="button" title="Editar">
                                             <i class="fas fa-edit" aria-hidden="true"></i>
                                         </a>
