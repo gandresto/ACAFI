@@ -21,6 +21,7 @@ class AuthServiceProvider extends ServiceProvider
         Division::class => DivisionPolicy::class,
         Academico::class => AcademicoPolicy::class,
         Departamento::class => DepartamentoPolicy::class,
+        User::class => UserPolicy::class,
     ];
 
     /**

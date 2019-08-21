@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Validation\Validator;
-use App\Academico;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -29,7 +28,9 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
+        $this->authorize('viewAny', User::class);
+        $users = User::paginate(10);
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -53,13 +54,8 @@ class UsersController extends Controller
         $dataUser = request()->validate(
             [
                 'email' => 'required|string|email|max:50|unique:users',
-                'password' => 'required|string|min:6|confirmed'
-            ]
-        );     
-        
-        $dataAcademico = request()->validate(
-            [
-                'grado_id' => 'required|max:8|string|exists:grados,id',
+                'password' => 'required|string|min:6|confirmed',
+                'grado' => 'required|max:8|string',
                 'nombre' => 'required|max:50|string',
                 'apellido_pat' => 'required|max:50|string',
                 'apellido_mat' => 'required|max:50|string'
@@ -67,25 +63,10 @@ class UsersController extends Controller
         );
         
         
-        try {
-            $academico = Academico::create($dataAcademico);
-            $user = User::create(
-                [
-                    'email' => $dataUser['email'], 
-                    'password' => Hash::make($dataUser['password']), 
-                    'academico_id'=>$academico->id
-                ]
-            );
-        } catch(\Illuminate\Database\QueryException $ex){ 
-            return redirect()->route('academicos.index')
-                        ->with('error', 'Error en la base de datos, intente de nuevo.');
-        }
+        dd($dataUser);
         
-
-        #dd($user);
-        
-        return redirect()->route('academicos.index')
-                        ->with('success', 'Académico con nombre ' . $academico->nombre . ' creado satisfactoriamente.');
+        return redirect()->route('users.index')
+                        ->with('success', 'Usuario con nombre ' . $academico->nombre . ' creado satisfactoriamente.');
     }
 
     /**
