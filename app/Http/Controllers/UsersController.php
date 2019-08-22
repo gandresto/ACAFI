@@ -78,6 +78,7 @@ class UsersController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
+        $this->authorize('view', $user);
         dd($user);        
     }
 
@@ -90,6 +91,10 @@ class UsersController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
+        if($user->email == config('admin.email')){
+            return redirect()->route('users.index')
+                            ->with('error', 'Error: No está permitido editar este registro.');
+        }
         $this->authorize('update', $user);
         return view('users.edit', compact('user'));
     }
@@ -137,7 +142,11 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        if($user->email == config('admin.email')){
+            return redirect()->route('users.index')
+                            ->with('error', 'Error: No está permitido borrar este registro.');
+        }
     }
 
     public function buscar($consulta)
@@ -146,14 +155,14 @@ class UsersController extends Controller
         $connection = config('database.default');
         $driver = config("database.connections.{$connection}.driver");
         if ($driver == 'sqlite') {
-            $users = User::orWhereRaw("nombre || ' ' || apellido_pat || ' ' || apellido_mat like '%" . $consulta . "%' ")
-                                ->orWhere("email", 'like', '%'. $consulta . "%' ")
+            $users = User::where("email", "like", "%". $consulta . "%")
+                                ->orWhereRaw("nombre || ' ' || apellido_pat || ' ' || apellido_mat like '%" . $consulta . "%' ")
                                 ->orderBy('nombre', 'desc')
                                 ->limit(5)
                                 ->get();
         } else {
-            $users = User::orWhereRaw("concat(nombre, ' ', apellido_pat, ' ', apellido_mat) like '%" . $consulta . "%' ")
-                                ->orWhere("email", 'like', '%'. $consulta . "%' ")
+            $users = User::where("email", 'like', "%". $consulta . "%")
+                                ->orWhereRaw("concat(nombre, ' ', apellido_pat, ' ', apellido_mat) like '%" . $consulta . "%' ")
                                 ->orderBy('nombre', 'desc')
                                 ->limit(5)
                                 ->get();
