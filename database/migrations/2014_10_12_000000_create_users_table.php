@@ -34,6 +34,7 @@ class CreateUsersTable extends Migration
                 'nombre'=> config('admin.nombre'),
                 'apellido_pat'=> config('admin.apellido_pat'),
                 'apellido_mat'=> config('admin.apellido_mat'),
+                'remember_token' => Str::random(10),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             )
