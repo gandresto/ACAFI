@@ -77,7 +77,8 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+        dd($user);        
     }
 
     /**
@@ -88,7 +89,9 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $this->authorize('update', $user);
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -100,7 +103,30 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $this->authorize('update', $user); 
+        $data = request()->validate([
+            'grado' => 'required|max:8|string',
+            'nombre' => 'required|max:50|string',
+            'apellido_pat' => 'required|max:50|string',
+            'apellido_mat' => 'required|max:50|string',
+            'email' => 'required|string|email|max:50|unique:users,email,'.$user->id,
+        ]);
+
+        $user->update(
+            [
+                'grado' => $data['grado'],
+                'nombre' => $data['nombre'],
+                'apellido_pat' =>  $data['apellido_pat'],
+                'apellido_mat' => $data['apellido_mat'],
+                'email' => $data['email'],
+            ]
+        );
+
+        return redirect(route('users.index'))
+                        ->with('success', 'Académico con nombre \''
+                        . $data['nombre']
+                        .'\' actualizado satisfactoriamente.');
     }
 
     /**
