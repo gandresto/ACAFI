@@ -39,6 +39,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function esAdmin()
+    {
+        return $this->email == config('admin.email');
+    }
+
     public function getNombreCompletoAttribute()
     {
         return "{$this->nombre} {$this->apellido_pat} {$this->apellido_mat}";

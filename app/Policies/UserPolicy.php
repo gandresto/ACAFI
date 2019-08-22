@@ -11,7 +11,7 @@ class UserPolicy
 
     public function before($user, $ability)
     {
-        if($user->email == config('admin.email')) return true;
+        if($user->esAdmin()) return true;
     }
     
     /**
@@ -22,7 +22,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->email == config('admin.email');
+        return $user->esAdmin();
     }
 
     /**
@@ -45,6 +45,7 @@ class UserPolicy
      */
     public function create(User $user)
     {
+        App\Division::all();
         //return $user->email == config('admin.email');
     }
 
