@@ -40,7 +40,7 @@
         <buscar-usuario
             tiene-errores="{{$errors->has('id_jefe_div')}}"
             errores="{{$errors->has('id_jefe_div') ? $errors->first('id_jefe_div') : ''}}"
-            busqueda-inicial="{{ $division->jefe->nombreCompleto() }}"
+            busqueda-inicial="{{ $division->jefe_actual->nombre_completo }}"
             input-tag-name="id_jefe_div"
             label-inicial="Jefe de departamento">
         </buscar-usuario>
