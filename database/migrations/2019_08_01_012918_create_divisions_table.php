@@ -23,7 +23,7 @@ class CreateDivisionsTable extends Migration
             #$table->unsignedBigInteger('jefe_div_id');
             $table->timestamps();
 
-            $table->index('jefe_div_id');
+            $table->index('nombre');
             $table->index('siglas');
         });
     }

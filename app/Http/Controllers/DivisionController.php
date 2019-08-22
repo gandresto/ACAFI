@@ -35,17 +35,20 @@ class DivisionController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create', Division::class);
-        $request->validate([
-            'siglas' => 'required|unique:divisions|max:10|string',
-            'nombre' => 'required|unique:divisions|max:50|string',
-            'id_jefe_div' => ['required', 'exists:users,id'],
-        ]);
+        $data = request()->validate(
+            [
+                'siglas' => 'required|unique:divisions|max:10|string',
+                'nombre' => 'required|unique:divisions|max:50|string',
+                'id_jefe_div' => 'required|exists:users,id',
+            ]
+        );
+        dd($data);
 
-        Division::create($request->all());
+        $division = Division::create($data);
 
         return redirect()->route('divisions.index')
                         ->with('success', 'División con nombre \''
-                                        . $request['nombre']
+                                        . $data['nombre']
                                         .'\' creada satisfactoriamente.');
     }
 
@@ -58,17 +61,17 @@ class DivisionController extends Controller
     public function update(Request $request, Division $division)
     {
         $this->authorize('update', $division);
-        $request->validate([
+        $data = request()->validate([
             'siglas' => 'required|max:10|string|unique:divisions,siglas,'.$division->id,
             'nombre' => 'required|max:50|string|unique:divisions,nombre,'.$division->id,
             'id_jefe_div' => ['required', 'exists:academicos,id'],
         ]);
 
-        $division->update($request->all());
+        $division->update($data);
 
         return redirect()->route('divisions.index')
                         ->with('success', 'División con nombre \''
-                                        . $request->all()['nombre']
+                                        . $data['nombre']
                                         .'\' actualizada satisfactoriamente.');
     }
 
