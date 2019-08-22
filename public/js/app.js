@@ -1812,23 +1812,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    this.buscarAcademico();
+    this.buscarUser();
   },
   props: ['errores', 'tieneErrores', 'busquedaInicial', 'inputTagName', 'labelInicial'],
   data: function data() {
     return {
       busqueda: this.busquedaInicial,
-      academicos: null,
+      users: null,
       inputName: this.inputTagName
     };
   },
   methods: {
-    buscarAcademico: function buscarAcademico() {
+    buscarUser: function buscarUser() {
       var _this = this;
 
       if (this.busqueda.length > 2) {
-        axios.get('/academicos/buscar/' + this.busqueda).then(function (response) {
-          _this.academicos = response.data;
+        axios.get('/users/buscar/' + this.busqueda).then(function (response) {
+          _this.users = response.data;
         });
       }
     }
@@ -37285,7 +37285,7 @@ var render = function() {
     _c("div", { staticClass: "form-group row" }, [
       _c("label", {
         staticClass: "col-md-4 control-label text-md-right",
-        attrs: { for: "buscarAcademico" },
+        attrs: { for: "buscarUser" },
         domProps: { textContent: _vm._s(_vm.labelInicial) }
       }),
       _vm._v(" "),
@@ -37301,8 +37301,8 @@ var render = function() {
           ],
           staticClass: "form-control",
           attrs: {
-            id: "buscarAcademico",
-            name: "buscarAcademico",
+            id: "buscarUser",
+            name: "buscarUser",
             type: "text",
             placeholder: "Buscar..."
           },
@@ -37315,7 +37315,7 @@ var render = function() {
                 }
                 _vm.busqueda = $event.target.value
               },
-              _vm.buscarAcademico
+              _vm.buscarUser
             ],
             keyup: function($event) {
               if (
@@ -37328,7 +37328,7 @@ var render = function() {
               ) {
                 return null
               }
-              return _vm.buscarAcademico($event)
+              return _vm.buscarUser($event)
             }
           }
         })
@@ -37343,28 +37343,28 @@ var render = function() {
           "div",
           { staticClass: "col-md-8 offset-md-4" },
           [
-            _vm._l(_vm.academicos, function(academico, index) {
+            _vm._l(_vm.users, function(user, index) {
               return _c("div", { key: index, staticClass: "radio" }, [
-                _c("label", { attrs: { for: [academico.id] } }, [
+                _c("label", { attrs: { for: [user.id] } }, [
                   _c("input", {
                     attrs: {
                       type: "radio",
                       name: _vm.inputName,
-                      id: [academico.id],
+                      id: [user.id],
                       required: ""
                     },
-                    domProps: { value: [academico.id], checked: index == 0 }
+                    domProps: { value: [user.id], checked: index == 0 }
                   }),
                   _vm._v(
                     "\n                        " +
                       _vm._s(
-                        academico.grado_id +
+                        user.grado +
                           " " +
-                          academico.nombre +
+                          user.nombre +
                           " " +
-                          academico.apellido_pat +
+                          user.apellido_pat +
                           " " +
-                          academico.apellido_mat
+                          user.apellido_mat
                       ) +
                       "\n                "
                   )
@@ -49897,8 +49897,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/gandresto/PHPCodes/agendav2/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/gandresto/PHPCodes/agendav2/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\agendav2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\agendav2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
