@@ -6,17 +6,35 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-12">
-        Nombre: {{$division->nombre}}
-    </div>
-    <div class="col-md-12">
-        Jefe: {{'placeholder-jefe'/*$departamento->jefe->grado_nombre_completo*/}}
+    <div class="col-xs-12 col-md-8">
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td scope="row">Siglas</td>
+                    <td>{{$division->siglas}}</td>
+                </tr>
+                <tr>
+                    <td scope="row">Nombre</td>
+                    <td>{{$division->nombre}}</td>
+                </tr>
+                <tr>
+                    <td scope="row">Sitio web</td>
+                    <td><a href="{{$division->url}}">{{$division->url}}</a></td>
+                </tr>
+                <tr>
+                    <td scope="row">Jefe de División</td>
+                    <td>{{$division->jefe_actual->grado_nombre_completo}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 <hr>
 <div class="row">
-    <div class="col-md-12">
-        Departamentos:
+    <div class="col-md-12 pb-2">
+        <strong>
+            Departamentos:
+        </strong>
     </div>
 </div>
 
@@ -28,7 +46,7 @@
                     <tr>
                         <th scope="col">Nombre</th>
                         <th scope="col">Jefe</th>
-                        {{-- @can('create', App\Academia::class) --}}                        
+                        {{-- @can('create', App\Academia::class) --}}
                             <th scope="col">Acciones</th>
                         {{-- @endcan --}}
                     </tr>
@@ -38,9 +56,9 @@
                         <tr>
                             <td>{{$departamento->nombre}}</td>
                             <td>{{'placeholder-jefe'/*$departamento->jefe->grado_nombre_completo*/}}</td>
-                            {{-- @can('create', App\Academia::class) --}}  
+                            {{-- @can('create', App\Academia::class) --}}
                                 <td>
-                                    <form action="{{ route('departamentos.destroy',$departamento->id) }}" method="POST">                                        
+                                    <form action="{{ route('departamentos.destroy',$departamento->id) }}" method="POST">
                                         <div class="btn-group" role="group" aria-label="Modificar departamento">
                                             <a name="verdepartamento" href="{{route('departamentos.show',$departamento->id)}}" role="button" class="btn btn-success">
                                                 <i class="fas fa-eye"></i>
@@ -52,7 +70,7 @@
                                             @endcan
                                             @can('delete', $departamento)
                                                 @csrf
-                                                @method('DELETE') 
+                                                @method('DELETE')
                                                 <button type="submit" onclick="return confirm('¿Estás seguro de eliminar \'{{$departamento->nombre}}?\'')" class="btn btn-danger" href="#" role="button" title="Eliminar">
                                                     <i class="fas fa-trash" aria-hidden="true"></i>
                                                 </button>
@@ -69,5 +87,5 @@
         </div>
     </div>
 </div>
-    
+
 @endsection
