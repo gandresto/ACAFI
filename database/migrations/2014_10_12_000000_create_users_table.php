@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Carbon\Carbon;
 
 class CreateUsersTable extends Migration
 {
@@ -21,6 +22,9 @@ class CreateUsersTable extends Migration
             $table->string('apellido_mat');
             $table->string('email', 50)->unique();
             $table->string('password');
+            $table->string('api_token', 80)->unique()
+                        ->nullable()
+                        ->default(null);
             $table->rememberToken();
             $table->timestamps();
         });
@@ -35,6 +39,7 @@ class CreateUsersTable extends Migration
                 'apellido_pat'=> config('admin.apellido_pat'),
                 'apellido_mat'=> config('admin.apellido_mat'),
                 'remember_token' => Str::random(10),
+                'api_token' => Str::random(80),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             )
