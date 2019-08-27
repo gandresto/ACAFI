@@ -20,7 +20,7 @@ Auth::routes();
 Route::get('/calendario', 'HomeController@index')->name('calendario');
 
 Route::resource('divisions', 'DivisionController');
-Route::get('/divisions/buscar/{busqueda}', 'DivisionController@buscar')->name('divisions.buscar');
+Route::get('/divisions/buscar/{consulta}', 'DivisionController@buscar')->name('divisions.buscar');
 
 Route::resource('departamentos', 'DepartamentosController');
 

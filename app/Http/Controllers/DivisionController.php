@@ -102,11 +102,11 @@ class DivisionController extends Controller
 
     }
 
-    public function buscar($busqueda)
+    public function buscar($consulta)
     {
-        $busqueda = urldecode($busqueda);
-        $divisiones = Division::where('nombre', 'like', '%' . $busqueda . '%')
-                            ->orWhere('siglas', 'like', '%' . $busqueda . '%')
+        $consulta = urldecode($consulta);
+        $divisiones = Division::where('nombre', 'like', '%' . $consulta . '%')
+                            ->orWhere('siglas', 'like', '%' . $consulta . '%')
                             ->orderBy('nombre', 'desc')
                             ->limit(5)
                             ->get();
