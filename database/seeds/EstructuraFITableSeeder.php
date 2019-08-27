@@ -11,7 +11,21 @@ class EstructuraFITableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class, 50)->create();
+        $faker = \Faker\Factory::create();
+        $password = bcrypt('123456'); // password
+        for ($i=0; $i < 50; $i++) { 
+            App\User::create([
+                'grado' => $faker->randomElement(array('Ing.', 'Dr.', 'M.I.')),
+                'nombre' => $faker->firstName,
+                'apellido_pat' => $faker->lastName,
+                'apellido_mat' => $faker->lastName,
+                'email' => $faker->unique()->safeEmail,
+                'password' => $password, // password
+                'api_token' => Str::random(80),
+                'remember_token' => Str::random(10),
+            ]);
+        }
+        //factory(App\User::class, 50)->create();
 
         factory(App\Division::class, 5)->create()->each(function ($division) {
             $division->departamentos()
