@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Validation\Validator;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Division;
+use App\Http\Resources\Division as DivisionResource;
+use App\Http\Resources\Divisions as DivisionsResource;
 
 class DivisionController extends Controller
 {
@@ -16,7 +20,7 @@ class DivisionController extends Controller
     public function index()
     {
         $divisiones = Division::all();
-        return response()->json($divisiones);
+        return new DivisionsResource($divisiones);
     }
 
     /**
@@ -27,7 +31,39 @@ class DivisionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('create', Division::class);
+/*         $data = $request->all();
+        $validator = Validator::make($data, [
+            [
+                'siglas' => 'required|unique:divisions|max:10|string',
+                'nombre' => 'required|unique:divisions|max:50|string',
+                'url' => 'required|max:128|url',
+                'fecha_ingreso' => 'max:128|date|before:'.Carbon::now(),
+                'id_jefe_div' => 'required|exists:users,id',
+            ]
+        ]); */
+        $data = request()->validate(
+            [
+                'siglas' => 'required|unique:divisions|max:10|string',
+                'nombre' => 'required|unique:divisions|max:50|string',
+                'url' => 'required|max:128|url',
+                'fecha_ingreso' => 'max:128|date|before:'.Carbon::now(),
+                'id_jefe_div' => 'required|exists:users,id',
+            ]
+        );
+
+/*         if($validator->fails()){
+            return $this->sendError('Error de validación.', $validator->errors());       
+        } */
+
+        $division = Division::create([
+            'siglas' => $data['siglas'],
+            'nombre' => $data['nombre'],
+            'url' => $data['url'],
+        ]);
+
+        $division->jefes()->attach($data['id_jefe_div'], ['fecha_ingreso' => $data['fecha_ingreso']]);
+        return new DivisionResource($division);
     }
 
     /**
@@ -38,7 +74,8 @@ class DivisionController extends Controller
      */
     public function show($id)
     {
-        //
+        $division = Division::findOrFail($id);
+        return response()->json($division);
     }
 
     /**
@@ -50,7 +87,7 @@ class DivisionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**
@@ -73,6 +110,6 @@ class DivisionController extends Controller
                             ->limit(5)
                             ->get();
 
-        return response()->json($divisiones);
+        return new DivisionResource($divisiones);
     }
 }
