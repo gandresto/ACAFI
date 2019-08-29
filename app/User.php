@@ -39,6 +39,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function rollApiKey(){
+        do{
+           $this->api_token = str_random(80);
+        }while($this->where('api_token', $this->api_token)->exists());
+        $this->save();
+     }
+
     public function esAdmin()
     {
         return $this->email == config('admin.email');
