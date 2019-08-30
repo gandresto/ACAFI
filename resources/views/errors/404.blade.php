@@ -2,4 +2,4 @@
 
 @section('title', 'No encontrado')
 @section('code', '404')
-@section('message', 'El recurso al que intenas acceder no está disponible, verifica la ruta.')
+@section('message', 'La página no se ha encontrado. Verifica la ruta, por favor.')
