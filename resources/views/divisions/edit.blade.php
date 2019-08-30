@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Agregar División
+    Editar División "{{$division->siglas}}"
 @endsection
 
 @section('content')
@@ -45,16 +45,30 @@
             label-inicial="Jefe de departamento">
         </buscar-usuario>
 
+        <div class="form-group row">
+            <label for="fecha_ingreso" class="col-md-4 col-form-label text-md-right">Fecha de inicio de su cargo</label>
+
+            <div class="col-md-6">
+                <input id="fecha_ingreso" type="date" class="form-control  @error('fecha_ingreso') is-invalid @enderror" name="fecha_ingreso" value="{{ $division->jefe_actual->fecha_ingreso }}" required>
+
+                @error('fecha_ingreso')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+        </div>
+
         <div class="form-group row mb-0">
             <div class="col-md-6 offset-md-4 text-md-right">
                 <a class="btn btn-danger" role="button" href="{{route('divisions.index')}}">
-                    <i class="fa fa-undo" aria-hidden="true"></i>
-                    Regresar
-                </a>
-                <button type="submit" class="btn btn-primary">
-                    Actualizar División
-                </button>
+                        <i class="fa fa-undo" aria-hidden="true"></i>
+                        Regresar
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        Actualizar División
+                    </button>
+                </div>
             </div>
-        </div>
     </form>
 @endsection
