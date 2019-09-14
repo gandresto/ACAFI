@@ -14,7 +14,7 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -62,7 +62,7 @@
                                     <a class="dropdown-item" href="#">Academias</a>
                                     @can('viewAny', App\User::class)
                                         <a class="dropdown-item" href="{{route('users.index')}}">Usuarios</a>
-                                    @endcan                                    
+                                    @endcan
                                 </div>
                             </li>
                         </ul>
@@ -107,8 +107,8 @@
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="pt-2">
-                                   @yield('title') 
-                                </h5>                                
+                                   @yield('title')
+                                </h5>
                             </div>
                             <div class="card-body">
                                 @yield('content')
