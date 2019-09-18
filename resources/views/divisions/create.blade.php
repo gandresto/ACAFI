@@ -51,6 +51,8 @@
 
         </div>
 
+        <hr>
+
         <buscar-usuario
             tiene-errores="{{$errors->has('id_jefe_div')}}"
             errores="{{$errors->has('id_jefe_div') ? $errors->first('id_jefe_div') : ''}}"
