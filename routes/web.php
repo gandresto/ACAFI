@@ -22,6 +22,7 @@ Route::get('/calendario', 'HomeController@index')->name('calendario');
 Route::resource('divisions', 'DivisionController');
 Route::get('/divisions/buscar/{consulta}', 'DivisionController@buscar')->name('divisions.buscar');
 
+Route::resource('divisions.departamentos', 'DivisionDepartamentoController');
 Route::resource('departamentos', 'DepartamentosController');
 
 Route::resource('users', 'UsersController');
