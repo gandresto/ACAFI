@@ -17,10 +17,10 @@ class DivisionDepartamentoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index($id_division)
     {
-        $division = Division::findOrFail($id);
-        $departamentos = Departamento::where('id_division', $id)->paginate(10);// $division->departamentos::paginate(10);
+        $division = Division::findOrFail($id_division);
+        $departamentos = Departamento::where('id_division', $id_division)->paginate(10);// $division->departamentos::paginate(10);
         return view('divisions.departamentos.index', compact('division', 'departamentos'));
     }
 
@@ -29,9 +29,11 @@ class DivisionDepartamentoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id_division)
     {
-        //
+        $this->authorize('create', Division::class);
+        $division = Division::findOrFail($id_division);
+        return view('divisions.departamentos.create', compact('division'));
     }
 
     /**
@@ -42,7 +44,8 @@ class DivisionDepartamentoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('create', Division::class);
+        dd($request);
     }
 
     /**
