@@ -17,11 +17,11 @@ class CreateAcademiasTable extends Migration
             $table->increments('id');
             $table->string('nombre');
             $table->boolean('activa')->default(True);
-            $table->unsignedBigInteger('presidente_id');
+            //$table->unsignedBigInteger('presidente_id');
             $table->unsignedBigInteger('departamento_id');
             $table->timestamps();
 
-            $table->index('presidente_id');
+            //$table->index('presidente_id');
             $table->index('departamento_id');
         });
     }
