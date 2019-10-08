@@ -14,7 +14,7 @@
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -35,7 +35,7 @@
                     @auth
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('home')}}">
+                                <a class="nav-link" href="{{route('calendario')}}">
                                     Calendario
                                 </a>
                             </li>
@@ -60,8 +60,8 @@
                                     <a class="dropdown-item" href="{{route('divisions.index')}}">Divisiones</a>
                                     <a class="dropdown-item" href="{{route('departamentos.index')}}">Departamentos</a>
                                     <a class="dropdown-item" href="#">Academias</a>
-                                    @can('viewAny', App\Academico::class)
-                                        <a class="dropdown-item" href="{{route('academicos.index')}}">Académicos</a>
+                                    @can('viewAny', App\User::class)
+                                        <a class="dropdown-item" href="{{route('users.index')}}">Usuarios</a>
                                     @endcan
                                 </div>
                             </li>
@@ -78,7 +78,7 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->academico->grado_id . ' ' . Auth::user()->academico->nombre }}
+                                    {{ Auth::user()->grado . ' ' . Auth::user()->nombre }}
                                     <span class="caret"></span>
                                 </a>
 
@@ -106,7 +106,9 @@
                     <div class="col-sm-12 col-md-12 col-lg-10">
                         <div class="card">
                             <div class="card-header">
-                                @yield('title')
+                                <h5 class="pt-2">
+                                   @yield('title')
+                                </h5>
                             </div>
                             <div class="card-body">
                                 @yield('content')

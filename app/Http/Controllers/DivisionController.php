@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Division;
 use App\Http\Middleware\AdminMiddleware;
+use Carbon\Carbon as Carbon;
 
 class DivisionController extends Controller
 {
@@ -35,17 +36,27 @@ class DivisionController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create', Division::class);
-        $request->validate([
-            'siglas' => 'required|unique:divisions|max:10|string',
-            'nombre' => 'required|unique:divisions|max:50|string',
-            'id_jefe_div' => ['required', 'exists:academicos,id'],
+        $data = request()->validate(
+            [
+                'siglas' => 'required|unique:divisions|max:10|string',
+                'nombre' => 'required|unique:divisions|max:50|string',
+                'url' => 'required|max:128|url',
+                'fecha_ingreso' => 'max:128|date|before:'.Carbon::now(),
+                'id_jefe_div' => 'required|exists:users,id',
+            ]
+        );
+
+        $division = Division::create([
+            'siglas' => $data['siglas'],
+            'nombre' => $data['nombre'],
+            'url' => $data['url'],
         ]);
 
-        Division::create($request->all());
+        $division->jefes()->attach($data['id_jefe_div'], ['fecha_ingreso' => $data['fecha_ingreso']]);
 
         return redirect()->route('divisions.index')
                         ->with('success', 'División con nombre \''
-                                        . $request['nombre']
+                                        . $data['nombre']
                                         .'\' creada satisfactoriamente.');
     }
 
@@ -58,13 +69,15 @@ class DivisionController extends Controller
     public function update(Request $request, Division $division)
     {
         $this->authorize('update', $division);
-        $request->validate([
-            'siglas' => 'required|max:10|string',
-            'nombre' => 'required|max:50|string',
+        $data = request()->validate([
+            'siglas' => 'required|max:10|string|unique:divisions,siglas,'.$division->id,
+            'nombre' => 'required|max:50|string|unique:divisions,nombre,'.$division->id,
             'id_jefe_div' => ['required', 'exists:academicos,id'],
         ]);
 
-        $division->update($request->all());
+        dd($data);
+
+        $division->update($data);
 
         return redirect()->route('divisions.index')
                         ->with('success', 'División con nombre \''
@@ -85,21 +98,21 @@ class DivisionController extends Controller
             return redirect()->route('divisions.index')
                         ->with('error', 'No se puede eliminar una división que aún tiene departamentos.');
         }
-            
-        
+
+
     }
 
-    public function buscar($busqueda)
+    public function buscar($consulta)
     {
-        $busqueda = urldecode($busqueda);    
-        $divisiones = Division::where('nombre', 'like', '%' . $busqueda . '%')
-                            ->orWhere('siglas', 'like', '%' . $busqueda . '%')
+        $consulta = urldecode($consulta);
+        $divisiones = Division::where('nombre', 'like', '%' . $consulta . '%')
+                            ->orWhere('siglas', 'like', '%' . $consulta . '%')
                             ->orderBy('nombre', 'desc')
                             ->limit(5)
-                            ->get();        
-        
+                            ->get();
+
         return response()->json($divisiones);
     }
 
-    
+
 }

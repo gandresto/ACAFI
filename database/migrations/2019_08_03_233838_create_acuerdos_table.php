@@ -15,13 +15,13 @@ class CreateAcuerdosTable extends Migration
     {
         Schema::create('acuerdos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('descripcion');
+            $table->string('descripcion', 240);
             $table->boolean('resuelto')->default(0);
-            $table->string('resultado')->nullable();
-            $table->string('producto_esperado');
-            $table->timestamps();
-
+            $table->string('resultado', 240)->nullable();
+            $table->string('producto_esperado', 240);
             $table->unsignedBigInteger('tema_id');
+            $table->timestamps();
+            
             $table->index('tema_id');
         });
     }

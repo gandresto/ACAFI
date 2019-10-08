@@ -24,7 +24,7 @@ class DepartamentoPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -36,7 +36,7 @@ class DepartamentoPolicy
      */
     public function view(User $user, Departamento $departamento)
     {
-        //
+        
     }
 
     /**
@@ -59,10 +59,9 @@ class DepartamentoPolicy
      */
     public function update(User $user, Departamento $departamento)
     {
-        $user_id = $user->academico->id;
-        return ($user_id == $departamento->id_jefe_dpto
-                || $user_id == $departamento->division->id_jefe_div
-                || $user_id == $departamento->id_jefe_dpto);
+        return ($user->id == $departamento->id_jefe_dpto
+                || $user->id == $departamento->division->jefe_actual->id
+                || $user->id == $departamento->id_jefe_dpto);
     }
 
     /**
@@ -74,7 +73,7 @@ class DepartamentoPolicy
      */
     public function delete(User $user, Departamento $departamento)
     {
-        return $user->academico->id == $departamento->division->id_jefe_div;   
+        return $user->id == $departamento->division->jefe_actual->id;   
     }
 
     /**

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Validation\Validator;
-use App\Academico;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -29,7 +28,9 @@ class UsersController extends Controller
      */
     public function index()
     {
-        //
+        $this->authorize('viewAny', User::class);
+        $users = User::paginate(10);
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -39,7 +40,8 @@ class UsersController extends Controller
      */
     public function create()
     {
-        //
+        $this->authorize('create', User::class);
+        return view('users.create');
     }
 
     /**
@@ -50,42 +52,21 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        $dataUser = request()->validate(
+        $this->authorize('create', User::class);
+        $data = request()->validate(
             [
                 'email' => 'required|string|email|max:50|unique:users',
-                'password' => 'required|string|min:6|confirmed'
-            ]
-        );     
-        
-        $dataAcademico = request()->validate(
-            [
-                'grado_id' => 'required|max:8|string|exists:grados,id',
+                'password' => 'required|string|min:6|confirmed',
+                'grado' => 'required|max:8|string',
                 'nombre' => 'required|max:50|string',
                 'apellido_pat' => 'required|max:50|string',
                 'apellido_mat' => 'required|max:50|string'
             ]
         );
-        
-        
-        try {
-            $academico = Academico::create($dataAcademico);
-            $user = User::create(
-                [
-                    'email' => $dataUser['email'], 
-                    'password' => Hash::make($dataUser['password']), 
-                    'academico_id'=>$academico->id
-                ]
-            );
-        } catch(\Illuminate\Database\QueryException $ex){ 
-            return redirect()->route('academicos.index')
-                        ->with('error', 'Error en la base de datos, intente de nuevo.');
-        }
-        
-
-        #dd($user);
-        
-        return redirect()->route('academicos.index')
-                        ->with('success', 'Académico con nombre ' . $academico->nombre . ' creado satisfactoriamente.');
+        #dd($data);
+        $user = User::create($data);       
+        return redirect()->route('users.index')
+                        ->with('success', 'Usuario con nombre ' . $user->nombre_completo . ' creado satisfactoriamente.');
     }
 
     /**
@@ -96,7 +77,9 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $this->authorize('view', $user);
+        dd($user);        
     }
 
     /**
@@ -107,7 +90,13 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        if($user->email == config('admin.email')){
+            return redirect()->route('users.index')
+                            ->with('error', 'Error: No está permitido editar este registro.');
+        }
+        $this->authorize('update', $user);
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -119,7 +108,30 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $this->authorize('update', $user); 
+        $data = request()->validate([
+            'grado' => 'required|max:8|string',
+            'nombre' => 'required|max:50|string',
+            'apellido_pat' => 'required|max:50|string',
+            'apellido_mat' => 'required|max:50|string',
+            'email' => 'required|string|email|max:50|unique:users,email,'.$user->id,
+        ]);
+
+        $user->update(
+            [
+                'grado' => $data['grado'],
+                'nombre' => $data['nombre'],
+                'apellido_pat' =>  $data['apellido_pat'],
+                'apellido_mat' => $data['apellido_mat'],
+                'email' => $data['email'],
+            ]
+        );
+
+        return redirect(route('users.index'))
+                        ->with('success', 'Académico con nombre \''
+                        . $data['nombre']
+                        .'\' actualizado satisfactoriamente.');
     }
 
     /**
@@ -130,6 +142,31 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        if($user->email == config('admin.email')){
+            return redirect()->route('users.index')
+                            ->with('error', 'Error: No está permitido borrar este registro.');
+        }
+    }
+
+    public function buscar($consulta)
+    {
+        $consulta = urldecode($consulta);
+        $connection = config('database.default');
+        $driver = config("database.connections.{$connection}.driver");
+        if ($driver == 'sqlite') {
+            $users = User::where("email", "like", "%". $consulta . "%")
+                                ->orWhereRaw("nombre || ' ' || apellido_pat || ' ' || apellido_mat like '%" . $consulta . "%' ")
+                                ->orderBy('nombre', 'desc')
+                                ->limit(5)
+                                ->get();
+        } else {
+            $users = User::where("email", 'like', "%". $consulta . "%")
+                                ->orWhereRaw("concat(nombre, ' ', apellido_pat, ' ', apellido_mat) like '%" . $consulta . "%' ")
+                                ->orderBy('nombre', 'desc')
+                                ->limit(5)
+                                ->get();
+        }
+        return response()->json($users);
     }
 }

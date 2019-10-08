@@ -8,23 +8,23 @@ class Reunion extends Model
 {
     public function academia()
     {
-        return $this->belongsTo('App\Academia');
+        return $this->belongsTo(Academia::class);
     }
 
     public function temas()
     {
-        return $this->hasMany('App\Tema');
+        return $this->hasMany(Tema::class);
     }
 
-    public function academicos()
+    public function invitados()
     {
-        return $this->belongsToMany('App\Academico')
+        return $this->belongsToMany(User::class)
                     ->withPivot('asistio');
     }
 
     public function acuerdos()
     {
-        return $this->belongsToMany('App\Acuerdo')
+        return $this->belongsToMany(Acuerdo::class)
                     ->withPivot('avance');
     }
 }

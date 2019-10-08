@@ -17,15 +17,19 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/calendario', 'HomeController@index')->name('calendario');
 
 Route::resource('divisions', 'DivisionController');
-Route::get('/divisions/buscar/{busqueda}', 'DivisionController@buscar')->name('divisions.buscar');
+Route::get('/divisions/buscar/{consulta}', 'DivisionController@buscar')->name('divisions.buscar');
 
+Route::resource('divisions.departamentos', 'DivisionDepartamentoController');
 Route::resource('departamentos', 'DepartamentosController');
 
+Route::resource('users', 'UsersController');
+Route::get('/users/buscar/{consulta}', 'UsersController@buscar')->name('users.buscar');
 
-Route::post('/users', 'UsersController@store')->name('users.store');
+
+/*
 
 Route::get('/academicos', 'AcademicosController@index')
             ->name('academicos.index')
@@ -42,3 +46,5 @@ Route::get('/academicos/{academico}', 'AcademicosController@show')->name('academ
 Route::delete('/academicos/{academico}', 'AcademicosController@destroy')->name('academicos.destroy');
 Route::get('/academicos/{academico}/edit', 'AcademicosController@edit')->name('academicos.edit');
 Route::patch('/academicos/{academico}', 'AcademicosController@update')->name('academicos.update');
+
+*/

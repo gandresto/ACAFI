@@ -16,6 +16,7 @@ class CreateReunionsTable extends Migration
         Schema::create('reunions', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedBigInteger('academia_id');
+            $table->string('lugar');
             $table->dateTime('inicio');
             $table->dateTime('fin');
             $table->string('orden_del_dia')->nullable();

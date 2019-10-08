@@ -46,7 +46,7 @@
                         <tr>
                             <td>{{$departamento->division->siglas}}</td>
                             <td>{{$departamento->nombre}}</td>
-                            <td>{{$departamento->jefe->nombreCompletoG()}}</td>
+                            <td>{{$departamento->jefe->grado_nombre_completo}}</td>
                             {{-- @can('create', App\Academia::class) --}}  
                                 <td>
                                     <form action="{{ route('departamentos.destroy',$departamento->id) }}" method="POST">

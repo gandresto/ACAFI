@@ -11,11 +11,11 @@ class DivisionPolicy
 {
     use HandlesAuthorization;
 
-/*     public function before($user, $ability)
+    public function before($user, $ability)
     {
-        return $user()->email == config('admin.email');
+        if($user->esAdmin()) return true;
 
-    } */
+    }
 
     /**
      * Determine whether the user can view any divisions.
@@ -48,7 +48,7 @@ class DivisionPolicy
      */
     public function create(User $user)
     {
-        return $user->email == config('admin.email');
+        return $user->esAdmin();
     }
 
     /**
@@ -60,7 +60,7 @@ class DivisionPolicy
      */
     public function update(User $user, Division $division)
     {
-        return $user->email == config('admin.email');
+        return $user->esAdmin();
     }
 
     /**
@@ -72,7 +72,7 @@ class DivisionPolicy
      */
     public function delete(User $user, Division $division)
     {
-        return $user->email == config('admin.email');
+        return $user->esAdmin();
     }
 
     /**

@@ -8,12 +8,12 @@ class Acuerdo extends Model
 {
     public function tema()
     {
-        return $this->belongsTo('App\Tema');
+        return $this->belongsTo(Tema::class);
     }
 
     public function reuniones()
     {
-        return $this->belongsToMany('App\Reunion')
+        return $this->belongsToMany(Reunion::class)
                     ->withPivot('avance');
     }
 }

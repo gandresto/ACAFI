@@ -8,6 +8,14 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import VueRouter from 'vue-router';
+Vue.use(VueRouter);
+
+import VueAxios from 'vue-axios';
+import axios from 'axios';
+Vue.use(VueAxios, axios);
+
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -22,6 +30,8 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('buscar-usuario', require('./components/BuscarUsuario.vue').default);
 Vue.component('buscar-division', require('./components/BuscarDivision.vue').default);
+Vue.component('editar-division', require('./components/EditarDivision.vue').default);
+Vue.component('modal', require('./components/PlantillaModal.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -29,6 +39,9 @@ Vue.component('buscar-division', require('./components/BuscarDivision.vue').defa
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
+const router = new VueRouter({ mode: 'history'});
+const app = new Vue(Vue.util.extend({ router })).$mount('#app');
+
+/* const app = new Vue({
     el: '#app',
-});
+}); */

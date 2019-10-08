@@ -7,7 +7,7 @@
         <title>Coordinación de Planeación y Desarrollo - {{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->
-        <link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css">
 
         <!-- Styles -->
         <style>
@@ -68,7 +68,7 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">Calendario</a>
+                        <a href="{{ route('calendario') }}">Calendario</a>
                     @else
                         <a href="{{ route('login') }}">@lang('strings.login')</a>
                     @endauth
