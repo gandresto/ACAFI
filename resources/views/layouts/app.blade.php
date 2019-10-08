@@ -52,19 +52,15 @@
                                 </div>
                             </li>
 
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Estructura de la FI
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{route('divisions.index')}}">Divisiones</a>
-                                    <a class="dropdown-item" href="{{route('departamentos.index')}}">Departamentos</a>
-                                    <a class="dropdown-item" href="#">Academias</a>
-                                    @can('viewAny', App\User::class)
-                                        <a class="dropdown-item" href="{{route('users.index')}}">Usuarios</a>
-                                    @endcan
-                                </div>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('divisions.index')}}">Estructura de la FI</a>
                             </li>
+
+                            @can('viewAny', App\User::class)
+                            <li class="nav-item">
+                                    <a class="nav-link" href="{{route('users.index')}}">Usuarios</a>
+                            </li>
+                            @endcan
                         </ul>
                     @endauth
 
