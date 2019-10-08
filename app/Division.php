@@ -18,8 +18,7 @@ class Division extends Model
     public function jefes()
     {
         return $this->belongsToMany(User::class, 'division_jefe',
-                                    'division_id', 'jefe_id')#,
-                                    #'id', 'user_id')
+                                    'division_id', 'jefe_id')
                     ->withPivot('actual', 'fecha_ingreso', 'fecha_egreso');;
     }
 

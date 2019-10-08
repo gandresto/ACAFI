@@ -18,9 +18,8 @@ class Academia extends Model
 
     public function presidentes()
     {
-        return $this->belongsToMany(User::class, 'division_presidente',
-                                    'division_id', 'presidente_id')#,
-                                    #'id', 'user_id')
+        return $this->belongsToMany(User::class, 'academia_presidente',
+                                    'academia_id', 'presidente_id')
                     ->withPivot('actual', 'fecha_ingreso', 'fecha_egreso');;
     }
 
