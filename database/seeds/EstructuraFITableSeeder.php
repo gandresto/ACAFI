@@ -11,9 +11,9 @@ class EstructuraFITableSeeder extends Seeder
      */
     public function run()
     {
-        $faker = \Faker\Factory::create();
+        $faker = \Faker\Factory::create($locale='es_ES');
         $password = bcrypt('123456'); // password
-        for ($i=0; $i < 50; $i++) { 
+        for ($i=0; $i < 50; $i++) {
             App\User::create([
                 'grado' => $faker->randomElement(array('Ing.', 'Dr.', 'M.I.')),
                 'nombre' => $faker->firstName,
@@ -33,10 +33,9 @@ class EstructuraFITableSeeder extends Seeder
         });
 
         $users=App\User::all();
-
-        App\Division::all()->each(function ($division) use ($users) {
-            $num_jefes = 4;
-            //Seleccionar 4 usuarios al azar
+        $num_jefes = 4;
+        App\Division::all()->each(function ($division) use ($users, $num_jefes) {
+            //Seleccionar 4 usuarios al azar para hacerlos jefes de division
             $jefes_rand = $users->random($num_jefes)->pluck('id')->toArray();
             //Jefe Activo
             $division->jefes()->attach($jefes_rand[0]);
@@ -46,6 +45,18 @@ class EstructuraFITableSeeder extends Seeder
                     array($jefes_rand[$i] => ['actual' => false])
                 );
             }
+            $division->departamentos->each(function ($departamento) use ($users, $num_jefes){
+                //Seleccionar 4 usuarios al azar
+                $jefes_rand = $users->random($num_jefes)->pluck('id')->toArray();
+                //Jefe activo
+                $departamento->jefes()->attach($jefes_rand);
+                for ($i=0; $i < $num_jefes; $i++) {
+                    $departamento->jefes()->attach(
+                        array($jefes_rand[$i] => ['actual' => false])
+                    );
+                }
+                //$departamento->academias->each();
+            });
         });
     }
 }
