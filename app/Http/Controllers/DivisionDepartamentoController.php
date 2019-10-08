@@ -20,8 +20,8 @@ class DivisionDepartamentoController extends Controller
     public function index($id_division)
     {
         $division = Division::findOrFail($id_division);
-        $departamentos = Departamento::where('id_division', $id_division)->paginate(10);// $division->departamentos::paginate(10);
-        return view('divisions.departamentos.index', compact('division', 'departamentos'));
+        //$departamentos = Departamento::where('division_id','=', $id_division)->paginate(10);
+        return view('divisions.departamentos.index', compact('division'));//, 'departamentos'));
     }
 
     /**
