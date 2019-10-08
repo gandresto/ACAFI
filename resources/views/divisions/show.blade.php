@@ -44,9 +44,10 @@
 <hr>
 <div class="row">
     <div class="col-md-12 pb-2">
-        <strong>
-            Departamentos:
-        </strong>
+        <h5>
+            Departamentos
+            {{-- <a href="{{route('divisions.departamentos.index', $division->id)}}">Departamentos:</a> --}}
+        </h5>
     </div>
 </div>
 @can('create', App\Departamento::class)
@@ -81,7 +82,7 @@
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th scope="col">Nombre</th>
+                            <th scope="col">Departamento</th>
                             <th scope="col">Jefe</th>
                             {{-- @can('create', App\Academia::class) --}}
                                 <th scope="col">Acciones</th>
@@ -92,7 +93,7 @@
                         @foreach ($division->departamentos as $departamento)
                             <tr>
                                 <td>{{$departamento->nombre}}</td>
-                                <td>{{'placeholder-jefe'/*$departamento->jefe->grado_nombre_completo*/}}</td>
+                                <td>{{$departamento->jefeActual->grado_nombre_completo}}</td>
                                 {{-- @can('create', App\Academia::class) --}}
                                     <td>
                                         <form action="{{ route('divisions.departamentos.destroy', [$division->id, $departamento->id]) }}" method="POST">
@@ -108,7 +109,7 @@
                                                 @can('delete', $departamento)
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" onclick="return confirm('¿Estás seguro de eliminar \'{{$departamento->nombre}}?\'')" class="btn btn-danger" href="#" role="button" title="Eliminar">
+                                                    <button type="submit" onclick="return confirm('¿Estás seguro de eliminar el Departemento de \'{{$departamento->nombre}}?\'')" class="btn btn-danger" href="#" role="button" title="Eliminar">
                                                         <i class="fas fa-trash" aria-hidden="true"></i>
                                                     </button>
                                                 @endcan
