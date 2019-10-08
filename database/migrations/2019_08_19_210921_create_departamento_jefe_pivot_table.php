@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Carbon;
 
 class CreateDepartamentoJefePivotTable extends Migration
 {
@@ -18,7 +19,7 @@ class CreateDepartamentoJefePivotTable extends Migration
             $table->unsignedBigInteger('departamento_id');
             $table->unsignedBigInteger('jefe_id');
             $table->boolean('actual')->default(true);
-            $table->date('fecha_ingreso');
+            $table->date('fecha_ingreso')->default(Carbon::now());
             $table->date('fecha_egreso')->nullable();
 
             $table->index('departamento_id');

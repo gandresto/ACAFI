@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Departamento extends Model
 {
     protected $fillable = [
-        'division_id', 'nombre', 'jefe_dpto_id'
+        'division_id', 'nombre'
     ];
 
     public function division()
@@ -15,11 +15,19 @@ class Departamento extends Model
         return $this->belongsTo(Division::class);
     }
 
-    public function jefe()
+    public function getJefeActualAttribute()
     {
-        return $this->belongsTo(User::class, 'jefe_dpto_id');
+        return $this->jefes()->wherePivot('actual', '=', true)->first();
     }
-    
+
+    public function jefes()
+    {
+        return $this->belongsToMany(User::class, 'departamento_jefe',
+                                    'departamento_id', 'jefe_id')#,
+                                    #'id', 'user_id')
+                    ->withPivot('actual', 'fecha_ingreso', 'fecha_egreso');;
+    }
+
     public function academias()
     {
         return $this->hasMany(Academia::class);
