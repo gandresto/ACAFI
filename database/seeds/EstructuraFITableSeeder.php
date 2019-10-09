@@ -13,6 +13,7 @@ class EstructuraFITableSeeder extends Seeder
     {
         $faker = \Faker\Factory::create($locale='es_ES');
         $password = bcrypt('123456'); // password
+        echo 'Creando usuarios\n';
         for ($i=0; $i < 50; $i++) {
             App\User::create([
                 'grado' => $faker->randomElement(array('Ing.', 'Dr.', 'M.I.')),
@@ -27,14 +28,11 @@ class EstructuraFITableSeeder extends Seeder
         }
         //factory(App\User::class, 50)->create();
 
-        factory(App\Division::class, 5)->create()->each(function ($division) {
-            $division->departamentos()
-                        ->saveMany(factory(App\Departamento::class, 4)->make());
-        });
-
+        // Creamos divisiones, departamentos y academias.
         $users=App\User::all();
         $num_jefes = 4;
-        App\Division::all()->each(function ($division) use ($users, $num_jefes) {
+        echo 'Creando divisiones\n';
+        factory(App\Division::class, 5)->create()->each(function ($division) use ($users, $num_jefes){
             //Seleccionar 4 usuarios al azar para hacerlos jefes de division
             $jefes_rand = $users->random($num_jefes)->pluck('id')->toArray();
             //Jefe Activo
@@ -45,18 +43,35 @@ class EstructuraFITableSeeder extends Seeder
                     array($jefes_rand[$i] => ['actual' => false])
                 );
             }
-            $division->departamentos->each(function ($departamento) use ($users, $num_jefes){
-                //Seleccionar 4 usuarios al azar
-                $jefes_rand = $users->random($num_jefes)->pluck('id')->toArray();
-                //Jefe activo
-                $departamento->jefes()->attach($jefes_rand);
-                for ($i=0; $i < $num_jefes; $i++) {
-                    $departamento->jefes()->attach(
-                        array($jefes_rand[$i] => ['actual' => false])
-                    );
-                }
-                //$departamento->academias->each();
-            });
+            echo 'Creando departamentos para la '.$division->nombre .'\n';
+            $division->departamentos()->saveMany(factory(App\Departamento::class, 4)->make());
+            $division->departamentos->each(function ($departamento) use ($users, $num_jefes)
+                {
+                    //echo 'Creando academias para Dpto. '.$departamento->nombre .'\n';
+                    //Seleccionar 4 usuarios al azar
+                    $jefes_rand = $users->random($num_jefes)->pluck('id')->toArray();
+                    //Jefe activo
+                    $departamento->jefes()->attach($jefes_rand);
+                    for ($i=0; $i < $num_jefes; $i++) {
+                        $departamento->jefes()->attach(
+                            array($jefes_rand[$i] => ['actual' => false])
+                        );
+                    }
+                    echo 'Creando academias para el Departamento de '.$departamento->nombre .'\n';
+                    $departamento->academias()->saveMany(factory(App\Academia::class, 10)->make());
+                    $departamento->academias->each(function ($academia) use ($users, $num_jefes)
+                        {
+                            //Seleccionar 4 usuarios al azar para hacerlos presidentes de academia
+                            $presidentes_rand = $users->random($num_jefes)->pluck('id')->toArray();
+                            //Jefe activo
+                            $academia->presidentes()->attach($presidentes_rand);
+                            for ($i=0; $i < $num_jefes; $i++) {
+                                $academia->presidentes()->attach(
+                                    array($presidentes_rand[$i] => ['actual' => false])
+                                );
+                        }
+                    });
+                });
         });
     }
 }
