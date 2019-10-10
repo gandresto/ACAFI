@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Division;
 use App\Departamento;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DivisionDepartamentoController extends Controller
@@ -17,10 +18,10 @@ class DivisionDepartamentoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id_division)
+    public function index($division_id)
     {
-        $division = Division::findOrFail($id_division);
-        //$departamentos = Departamento::where('division_id','=', $id_division)->paginate(10);
+        $division = Division::findOrFail($division_id);
+        //$departamentos = Departamento::where('division_id','=', $division_id)->paginate(10);
         return view('divisions.departamentos.index', compact('division'));//, 'departamentos'));
     }
 
@@ -29,10 +30,10 @@ class DivisionDepartamentoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id_division)
+    public function create($division_id)
     {
         $this->authorize('create', Division::class);
-        $division = Division::findOrFail($id_division);
+        $division = Division::findOrFail($division_id);
         return view('divisions.departamentos.create', compact('division'));
     }
 
@@ -42,10 +43,29 @@ class DivisionDepartamentoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($division_id, Request $request)
     {
-        $this->authorize('create', Division::class);
-        dd($request);
+        $this->authorize('create', Departamento::class);
+        // dd($request->all());
+        $data = request()->validate([
+            'nombre' => 'required|unique:departamentos|max:50|string',
+            'id_jefe_dpto' => 'required|exists:users,id',
+            'fecha_ingreso' => 'max:128|date|before:'.Carbon::now(),
+            //'division_id' => 'required|exists:divisions,id',
+        ]);
+
+        // dd([$data, $division_id]);
+        $departamento = Departamento::create([
+            'nombre' => $data['nombre'],
+            'division_id' => $division_id,
+        ]);
+
+        $departamento->jefes()->attach($division_id, ['fecha_ingreso' => $data['fecha_ingreso']]);
+
+        return redirect()->route('divisions.show', ['division' => $division_id])
+                        ->with('success', 'Departamento con nombre \''
+                                        . $data['nombre']
+                                        .'\' creado satisfactoriamente.');
     }
 
     /**
@@ -54,9 +74,11 @@ class DivisionDepartamentoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($division_id, $dpto_id)
     {
-        //
+        $division = Division::findOrFail($division_id);
+        $departamento = Departamento::findOrFail($dpto_id);
+        return view('divisions.departamentos.show', compact('division', 'departamento'));
     }
 
     /**
@@ -65,7 +87,7 @@ class DivisionDepartamentoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id_division, $id_departamento)
+    public function edit($division_id, $departamento_id)
     {
         //
     }
@@ -77,7 +99,7 @@ class DivisionDepartamentoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id_division, $id_departamento)
+    public function update(Request $request, $division_id, $departamento_id)
     {
         //
     }
@@ -85,12 +107,22 @@ class DivisionDepartamentoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id_division
-     * @param  int  $id_departamento
+     * @param  int  $division_id
+     * @param  int  $departamento_id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id_division, $id_departamento)
+    public function destroy($division_id, $departamento_id)
     {
-        //
+        $departamento = Departamento::find($departamento_id);
+        $this->authorize('delete', $departamento);
+        //dd('Removiendo departamento '. $departamento_id);
+        if ($departamento->academias->isEmpty()){
+            $departamento->delete();
+            return redirect()->route('divisions.show', $division_id)
+                        ->with('success', 'División eliminada.');
+        } else{
+            return redirect()->route('divisions.show', $division_id)
+                        ->with('error', 'No se puede eliminar un departamento que aún tiene academias.');
+        }
     }
 }
