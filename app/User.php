@@ -46,7 +46,7 @@ class User extends Authenticatable
         $this->save();
      }
 
-    public function esAdmin()
+    public function getesAdminAttribute()
     {
         return $this->email == config('admin.email');
     }
