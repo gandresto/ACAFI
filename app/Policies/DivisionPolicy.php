@@ -13,7 +13,7 @@ class DivisionPolicy
 
     public function before($user, $ability)
     {
-        if($user->esAdmin()) return true;
+        if($user->esAdmin) return true;
 
     }
 
@@ -48,7 +48,7 @@ class DivisionPolicy
      */
     public function create(User $user)
     {
-        return $user->esAdmin();
+        return $user->esAdmin;
     }
 
     /**
@@ -60,7 +60,7 @@ class DivisionPolicy
      */
     public function update(User $user, Division $division)
     {
-        return $user->esAdmin();
+        return $user->esAdmin;
     }
 
     /**
@@ -72,7 +72,7 @@ class DivisionPolicy
      */
     public function delete(User $user, Division $division)
     {
-        return $user->esAdmin();
+        return $user->esAdmin;
     }
 
     /**

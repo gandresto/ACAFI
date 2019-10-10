@@ -12,10 +12,10 @@ class DepartamentoPolicy
 
     public function before(User $user, $ability)
     {
-        if($user->email == config('admin.email')) return True;
+        if($user->esAdmin) return True;
         //else return False;
     }
-    
+
     /**
      * Determine whether the user can view any departamentos.
      *
@@ -36,7 +36,7 @@ class DepartamentoPolicy
      */
     public function view(User $user, Departamento $departamento)
     {
-        
+        return true;
     }
 
     /**
@@ -73,7 +73,7 @@ class DepartamentoPolicy
      */
     public function delete(User $user, Departamento $departamento)
     {
-        return $user->id == $departamento->division->jefe_actual->id;   
+        return $user->id == $departamento->division->jefe_actual->id;
     }
 
     /**

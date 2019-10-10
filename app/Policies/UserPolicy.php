@@ -11,9 +11,9 @@ class UserPolicy
 
     public function before($user, $ability)
     {
-        if($user->esAdmin()) return true;
+        if($user->esAdmin) return true;
     }
-    
+
     /**
      * Determine whether the user can view any models.
      *
@@ -22,7 +22,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->esAdmin();
+        return $user->esAdmin;
     }
 
     /**
