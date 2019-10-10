@@ -64,6 +64,12 @@
 {{-- Barra de búsqueda próximamente aquí --}}
 
 <hr>
+<div class="row">
+    <div class="col-md-12">
+        @include('flash-message')
+    </div>
+</div>
+
 @if ($division->departamentos->isEmpty())
     <div class="row">
         <div class="col-sm-12">
