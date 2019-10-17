@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Academia;
+use App\Departamento;
+use App\Division;
 use Illuminate\Http\Request;
 
 class DivisionDepartamentoAcademiaController extends Controller
@@ -47,9 +50,13 @@ class DivisionDepartamentoAcademiaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($division_id, $departamento_id, $academia_id)
     {
-        //
+        $division = Division::findOrFail($division_id);
+        $departamento = $division->departamentos()->findOrFail($departamento_id);
+        $academia = $departamento->academias()->findOrFail($academia_id);
+        // dd(compact(['division', 'departamento', 'academia']));
+        return view('divisions.departamentos.academias.show', compact(['division', 'departamento', 'academia']));
     }
 
     /**
