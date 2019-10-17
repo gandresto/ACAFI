@@ -12,9 +12,9 @@ class EstructuraFITableSeeder extends Seeder
     public function run()
     {
         $faker = \Faker\Factory::create($locale='es_ES');
-        $password = bcrypt('123456'); // password
+        $password = bcrypt('123456789'); // password
         echo 'Creando usuarios\n';
-        for ($i=0; $i < 50; $i++) {
+        for ($i=0; $i < 100; $i++) {
             App\User::create([
                 'grado' => $faker->randomElement(array('Ing.', 'Dr.', 'M.I.')),
                 'nombre' => $faker->firstName,
@@ -43,7 +43,7 @@ class EstructuraFITableSeeder extends Seeder
                     array($jefes_rand[$i] => ['actual' => false])
                 );
             }
-            echo 'Creando departamentos para la '.$division->nombre .'\n';
+            echo 'Creando departamentos para la '.$division->nombre;
             $division->departamentos()->saveMany(factory(App\Departamento::class, 4)->make());
             $division->departamentos->each(function ($departamento) use ($users, $num_jefes)
                 {
@@ -57,7 +57,7 @@ class EstructuraFITableSeeder extends Seeder
                             array($jefes_rand[$i] => ['actual' => false])
                         );
                     }
-                    echo 'Creando academias para el Departamento de '.$departamento->nombre .'\n';
+                    echo 'Creando academias para el Departamento de '.$departamento->nombre;
                     $departamento->academias()->saveMany(factory(App\Academia::class, 10)->make());
                     $departamento->academias->each(function ($academia) use ($users, $num_jefes)
                         {
