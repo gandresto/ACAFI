@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Academia;
 use App\Departamento;
 use App\Division;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DivisionDepartamentoAcademiaController extends Controller
@@ -28,9 +29,11 @@ class DivisionDepartamentoAcademiaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($division_id, $departamento_id)
     {
-        //
+        $division = Division::findOrFail($division_id);
+        $departamento = $division->departamentos()->findOrFail($departamento_id);
+        return view('divisions.departamentos.academias.create', compact(['division', 'departamento']));
     }
 
     /**
@@ -39,9 +42,30 @@ class DivisionDepartamentoAcademiaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($division_id, $departamento_id, Request $request)
     {
-        //
+
+        $this->authorize('create', Academia::class);
+        $data = request()->validate(
+            [
+                'nombre' => 'required|unique:divisions|max:50|string',
+                'fecha_ingreso' => 'max:128|date|before:'.Carbon::now(),
+                'presidente_id' => 'required|exists:users,id',
+            ]
+        );
+
+        // dd($data, $division_id, $departamento_id);
+
+        $academia = Academia::create([
+            'nombre' => $data['nombre'],
+            'departamento_id' => $departamento_id,
+        ]);
+
+        $academia->presidentes()->attach($data['presidente_id'], ['fecha_ingreso' => $data['fecha_ingreso']]);
+
+        return redirect()->route('divisions.departamentos.show', compact('division_id', 'departamento_id'))
+                        ->with('success', 'Academia \''. $data['nombre']
+                                        .'\' creada satisfactoriamente.');
     }
 
     /**
@@ -88,8 +112,18 @@ class DivisionDepartamentoAcademiaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($division_id, $departamento_id, $academia_id)
     {
-        //
+        $academia = Academia::find($academia_id);
+        $this->authorize('delete', $academia);
+
+        if ($academia->miembros->isEmpty()){
+            $academia->delete();
+            return redirect()->route('divisions.departamentos.show', compact('division_id', 'departamento_id'))
+                        ->with('success', 'Academia eliminada.');
+        } else{
+            return redirect()->route('divisions.departamentos.show', compact('division_id', 'departamento_id'))
+                        ->with('error', 'No se puede eliminar una academia que aún tiene miembros.');
+        }
     }
 }

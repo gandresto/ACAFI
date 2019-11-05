@@ -49,6 +49,11 @@
 {{-- Barra de búsqueda próximamente aquí --}}
 
 <hr>
+<div class="row">
+    <div class="col-md-12">
+        @include('flash-message')
+    </div>
+</div>
 @if ($departamento->academias->isEmpty())
     <div class="row">
         <div class="col-sm-12">
@@ -94,7 +99,7 @@
                                                 @can('delete', $academia)
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" onclick="return confirm('¿Estás seguro de eliminar la Academia de \'{{$academia->nombre}}?\'')" class="btn btn-danger" href="#" role="button" title="Eliminar">
+                                                    <button type="submit" onclick="return confirm('¿Estás seguro de eliminar la Academia de {{$academia->nombre}}?')" class="btn btn-danger" href="#" role="button" title="Eliminar">
                                                         <i class="fas fa-trash" aria-hidden="true"></i>
                                                     </button>
                                                 @endcan
