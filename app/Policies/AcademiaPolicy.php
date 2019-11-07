@@ -35,7 +35,7 @@ class AcademiaPolicy
      */
     public function view(User $user, Academia $academia)
     {
-        //
+        return true;
     }
 
     /**
@@ -95,5 +95,13 @@ class AcademiaPolicy
     public function forceDelete(User $user, Academia $academia)
     {
         //
+    }
+
+    public function viewMiembros(User $user, Academia $academia)
+    {
+        return $user->esMiembro($academia) || // Miembros de la academia pueden ver miembros
+                $academia->presidenteActual->id == $user->id || // Presidente de academia también
+                $academia->departamento->jefeActual->id == $user->id || // Jefe de departamento también
+                $academia->departamento->division->jefeActual->id == $user->id; // Jefe de división también
     }
 }

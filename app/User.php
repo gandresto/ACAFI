@@ -46,7 +46,14 @@ class User extends Authenticatable
         $this->save();
      }
 
-    public function getesAdminAttribute()
+    public function esMiembro(Academia $academia)
+    {
+        if ($academia->miembros->isEmpty()) return false;
+        return in_array($this, $academia->miembros);
+    }
+
+
+    public function getEsAdminAttribute()
     {
         return $this->email == config('admin.email');
     }
