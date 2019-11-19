@@ -29,7 +29,8 @@ class Academia extends Model
 
     public function miembros()
     {
-        return $this->belongsToMany(User::class)
+        return $this->belongsToMany(User::class, 'academia_miembro',
+                                    'academia_id', 'miembro_id')
                     ->withPivot('activo', 'fecha_ingreso', 'fecha_egreso');
     }
 

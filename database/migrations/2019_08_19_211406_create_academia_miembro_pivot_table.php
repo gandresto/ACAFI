@@ -16,13 +16,13 @@ class CreateAcademiaMiembroPivotTable extends Migration
         Schema::create('academia_miembro', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedBigInteger('academia_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('miembro_id');
             $table->boolean('activo')->default(true);
             $table->date('fecha_ingreso');
             $table->date('fecha_egreso')->nullable();
 
             $table->index('academia_id');
-            $table->index('user_id');
+            $table->index('miembro_id');
             $table->index('activo');
         });
     }
