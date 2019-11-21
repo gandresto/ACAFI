@@ -17,6 +17,12 @@
                     <td scope="row">Jefe de Departamento</td>
                     <td>{{$departamento->jefe_actual->grado_nombre_completo}}</td>
                 </tr>
+                <td scope="row">Correo</td>
+                    <td>
+                        <a href="mailto:{{ $departamento->jefe_actual->email }}">
+                            {{ $departamento->jefe_actual->email }}
+                        </a>
+                    </td>
                 <tr>
                     <td scope="row">División de origen</td>
                     <td>
