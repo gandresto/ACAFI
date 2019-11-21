@@ -49,7 +49,7 @@ class User extends Authenticatable
     public function esMiembro(Academia $academia)
     {
         if ($academia->miembros->isEmpty()) return false;
-        return in_array($this, $academia->miembros);
+        return $academia->miembros->contains($this);
     }
 
 
