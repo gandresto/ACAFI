@@ -18,6 +18,14 @@
                     <td>{{ $academia->presidenteActual->gradoNombreCompleto }}</td>
                 </tr>
                 <tr>
+                    <td scope="row">Correo</td>
+                    <td>
+                        <a href="mailto:{{ $academia->presidenteActual->email }}">
+                            {{ $academia->presidenteActual->email }}
+                        </a>
+                    </td>
+                </tr>
+                <tr>
                     <td scope="row">Departamento de origen</td>
                     <td>
                         <a href="{{route('divisions.departamentos.show', [$division->id, $departamento->id])}}">{{$departamento->nombre}}</a>
