@@ -37,6 +37,14 @@
                     <td scope="row">Jefe de División</td>
                     <td>{{$division->jefe_actual->grado_nombre_completo}}</td>
                 </tr>
+                <tr>
+                    <td scope="row">Correo</td>
+                    <td>
+                        <a href="mailto:{{ $division->jefe_actual->email }}">
+                            {{ $division->jefe_actual->email }}
+                        </a>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
