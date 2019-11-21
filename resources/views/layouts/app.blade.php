@@ -119,13 +119,13 @@
         <footer class="page-footer font-small blue pt-6">
             <!-- Copyright -->
             <div class="footer-copyright text-center py-3">Copyright 2019 Facultad de Ingeniería, UNAM</div>
-            <div class="container">
+            {{-- <div class="container">
                 <div class="small">
                     Autorizado en virtud de la Licencia de Apache, Versión 2.0 (la "Licencia"); se prohíbe utilizar este archivo excepto en cumplimiento de la Licencia. Podrá obtener una copia de la Licencia en:<br>
                     <a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a><br>
                     A menos que lo exijan las leyes pertinentes o se haya establecido por escrito, el software distribuido en virtud de la Licencia se distribuye “TAL CUAL”, SIN GARANTÍAS NI CONDICIONES DE NINGÚN TIPO, ya sean expresas o implícitas. Véase la Licencia para consultar el texto específico relativo a los permisos y limitaciones establecidos en la Licencia.
                 </div>
-            </div>
+            </div> --}}
             <!-- Copyright -->
         </footer>
         <!-- Footer -->
