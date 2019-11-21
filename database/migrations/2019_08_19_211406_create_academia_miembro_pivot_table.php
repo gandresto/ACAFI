@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -18,7 +19,7 @@ class CreateAcademiaMiembroPivotTable extends Migration
             $table->unsignedBigInteger('academia_id');
             $table->unsignedBigInteger('miembro_id');
             $table->boolean('activo')->default(true);
-            $table->date('fecha_ingreso');
+            $table->date('fecha_ingreso')->default(Carbon::now());;
             $table->date('fecha_egreso')->nullable();
 
             $table->index('academia_id');

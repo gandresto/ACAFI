@@ -33,7 +33,7 @@ class EstructuraFITableSeeder extends Seeder
         $num_jefes = 4;
         $num_miembros = 7;
         echo ' Creando divisiones... ';
-        factory(App\Division::class, 5)->create()->each(function ($division) use ($users, $num_jefes){
+        factory(App\Division::class, 5)->create()->each(function ($division) use ($users, $num_jefes, $num_miembros){
             //Seleccionar 4 usuarios al azar para hacerlos jefes de division
             $jefes_rand = $users->random($num_jefes)->pluck('id')->toArray();
             //Jefe Activo
