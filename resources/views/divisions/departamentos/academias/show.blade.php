@@ -36,7 +36,7 @@
             </h5>
         </div>
     </div>
-    @can('create', App\Academia::class)
+    @can('addMiembro', $academia)
         <div class="row">
             <div class="col-md-12 py-2">
                 <a class="btn btn-primary" href="#" role="button">
@@ -82,7 +82,7 @@
                                 <tr>
                                     <td>{{$miembro->gradoNombreCompleto}}</td>
                                     <td>{{$miembro->email}}</td>
-                                    <td>{{$miembro}}</td>
+                                    <td>{{$miembro->pivot->fecha_ingreso}}</td>
                                     {{-- @can('create', App\Academia::class) --}}
                                         <td>
                                             {{-- <form action="{{ route('divisions.departamentos.academias.destroy', [$division->id, $departamento->id, $academia->id]) }}" method="POST">

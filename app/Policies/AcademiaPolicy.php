@@ -104,4 +104,9 @@ class AcademiaPolicy
                 $academia->departamento->jefeActual->id == $user->id || // Jefe de departamento también
                 $academia->departamento->division->jefeActual->id == $user->id; // Jefe de división también
     }
+
+    public function addMiembro(User $user, Academia $academia)
+    {
+        return $academia->presidenteActual->id == $user->id; // Solo el presidente de la academia puede agregar miembros
+    }
 }
