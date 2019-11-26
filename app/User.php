@@ -73,29 +73,43 @@ class User extends Authenticatable
     public function jefeDeDivisiones()
     {
         return $this->belongsToMany(Division::class, 'division_jefe',
-                                    'jefe_id', 'division_id')#,
-                                    #exit$parentKey = 'id', $relatedKey = 'division_id')
+                                    'jefe_id', 'division_id')
                     ->withPivot('actual', 'fecha_ingreso', 'fecha_egreso');
     }
 
-    public function jefeActualDeDivisiones()
+    public function getJefeActualDeDivisionesAttribute()
     {
-        return $this->jefeDeDivisiones()->wherePivot('actual', '=', true);
+        return $this->jefeDeDivisiones()->wherePivot('actual', '=', true)->get();
     }
 
     public function jefeDeDepartamentos()
     {
-        return $this->hasMany(Departamento::class, 'jefe_dpto_id');
+        return $this->belongsToMany(Departamento::class, 'departamento_jefe',
+                                        'jefe_id', 'departamento_id')
+                    ->withPivot('actual', 'fecha_ingreso', 'fecha_egreso');
+    }
+
+    public function getJefeActualDeDepartamentosAttribute()
+    {
+        return $this->jefeDeDepartamentos()->wherePivot('actual', '=', true)->get();
     }
 
     public function presidenteDeAcademias()
     {
-        return $this->hasMany(Academia::class, 'presidente_id');
+        return $this->belongsToMany(Academia::class, 'academia_presidente',
+                                        'presidente_id', 'academia_id')
+                    ->withPivot('actual', 'fecha_ingreso', 'fecha_egreso');
+    }
+
+    public function getPresidenteActualDeAcademiasAttribute()
+    {
+        return $this->presidenteDeAcademias()->wherePivot('actual', '=', true)->get();
     }
 
     public function academias()
     {
-        return $this->belongsToMany(Academia::class)
+        return $this->belongsToMany(Academia::class, 'academia_miembro',
+                                    'miembro_id', 'academia_id')
                     ->withPivot('activo', 'fecha_ingreso', 'fecha_egreso');
     }
 
