@@ -46,12 +46,11 @@ class User extends Authenticatable
         $this->save();
      }
 
-    public function esMiembro(Academia $academia)
+    public function esMiembroActual(Academia $academia)
     {
-        if ($academia->miembros->isEmpty()) return false;
-        return $academia->miembros()->wherePivot('fecha_egreso', '=', null)->get()->contains($this); // Checa si hay registros donde el miembro siga activo
+        if ($academia->miembrosActuales->isEmpty()) return false;
+        return $academia->miembrosActuales->contains($this); // Checa si hay registros donde el miembro siga activo
     }
-
 
     public function getEsAdminAttribute()
     {

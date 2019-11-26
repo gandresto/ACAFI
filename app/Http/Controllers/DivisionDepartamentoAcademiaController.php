@@ -131,7 +131,21 @@ class DivisionDepartamentoAcademiaController extends Controller
     {
         $academia = Academia::find($academia_id);
         $this->authorize('darDeBajaCualquierMiembro', $academia);
-        dd($academia);
-        //$academia->miembros()->updateExistingPivot($miembro_id, array('activo' => 0), false);
+        // dd($academia);
+        $academia->miembros()->updateExistingPivot($miembro_id,
+                                                        // [
+                                                        //     'fecha_egreso' => null,
+                                                        //     'activo' => true
+                                                        // ],
+                                                        [
+                                                            'fecha_egreso' => Carbon::now(),
+                                                            'activo' => false
+                                                        ],
+                                                        );
+        // dd($academia->miembros()->wherePivot('fecha_egreso', '=', null)
+        //                         ->where('miembro_id', '=', $miembro_id)
+        //                         ->get());//->whereupdateExistingPivot($miembro_id, ['fecha_egreso' => Carbon::now()]);
+        return redirect()->route('divisions.departamentos.academias.show', compact('division_id', 'departamento_id', 'academia_id'))
+                        ->with('success', 'Miembro dado de baja.');
     }
 }

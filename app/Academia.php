@@ -34,6 +34,16 @@ class Academia extends Model
                     ->withPivot('activo', 'fecha_ingreso', 'fecha_egreso');
     }
 
+    public function getMiembrosActualesAttribute()
+    {
+        return $this->miembros()->wherePivot('fecha_egreso', '=', null)->get();
+    }
+
+    public function getMiembrosActivosAttribute()
+    {
+        return $this->miembros()->wherePivot('activo', '=', true)->get();
+    }
+
     public function reuniones()
     {
         return $this->hasMany(Reunion::class);

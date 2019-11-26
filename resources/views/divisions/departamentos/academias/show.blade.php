@@ -86,7 +86,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($academia->miembros as $miembro)
+                            @foreach ($academia->miembrosActuales as $miembro)
                                 <tr>
                                     <td>{{$miembro->gradoNombreCompleto}}</td>
                                     <td>{{$miembro->email}}</td>
@@ -100,7 +100,7 @@
                                                     </a> --}}
                                                     @can('darDeBajaCualquierMiembro', $academia)
                                                         @csrf
-                                                    {{-- @method('DELETE') --}}
+                                                        {{-- @method('DELETE') --}}
                                                         <button type="submit" onclick="return confirm('¿Estás seguro que quieres dar de baja al miembro {{$miembro->nombreCompleto}}? Esta acción no eliminará al usuario.')" class="btn btn-danger" href="#" role="button" title="Dar de baja">
                                                             <i class="fas fa-user-times" aria-hidden="true"></i>
                                                         </button>
