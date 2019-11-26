@@ -109,4 +109,8 @@ class AcademiaPolicy
     {
         return $academia->presidenteActual->id == $user->id; // Solo el presidente de la academia puede agregar miembros
     }
+
+    public function darDeBajaCualquierMiembro(User $user, Academia $academia){
+        return $academia->presidenteActual->id == $user->id;
+    }
 }

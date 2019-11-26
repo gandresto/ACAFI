@@ -25,6 +25,9 @@ Route::get('/divisions/buscar/{consulta}', 'DivisionController@buscar')->name('d
 Route::resource('divisions.departamentos', 'DivisionDepartamentoController');
 Route::resource('departamentos', 'DepartamentosController');
 
+Route::post('/divisions/{division}/departamentos/{departamento}/academias/{academia}/{miembro}',
+            'DivisionDepartamentoAcademiaController@darDeBajaMiembro')
+                ->name('divisions.departamentos.academias.darDeBajaMiembro');
 Route::resource('divisions.departamentos.academias', 'DivisionDepartamentoAcademiaController');
 
 Route::resource('users', 'UsersController');

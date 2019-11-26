@@ -126,4 +126,12 @@ class DivisionDepartamentoAcademiaController extends Controller
                         ->with('error', 'No se puede eliminar una academia que aún tiene miembros.');
         }
     }
+
+    public function darDeBajaMiembro($division_id, $departamento_id, $academia_id, $miembro_id)
+    {
+        $academia = Academia::find($academia_id);
+        $this->authorize('darDeBajaCualquierMiembro', $academia);
+        dd($academia);
+        //$academia->miembros()->updateExistingPivot($miembro_id, array('activo' => 0), false);
+    }
 }

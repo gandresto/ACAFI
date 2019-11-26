@@ -93,26 +93,20 @@
                                     <td>{{$miembro->pivot->fecha_ingreso}}</td>
                                     {{-- @can('create', App\Academia::class) --}}
                                         <td>
-                                            {{-- <form action="{{ route('divisions.departamentos.academias.destroy', [$division->id, $departamento->id, $academia->id]) }}" method="POST">
-                                                <div class="btn-group" role="group" aria-label="Modificar academia">
-                                                    <a name="veracademia" href="{{route('divisions.departamentos.academias.show', [$division->id, $departamento->id, $academia->id])}}" role="button" class="btn btn-success">
+                                            <form action="{{ route('divisions.departamentos.academias.darDeBajaMiembro', [$division->id, $departamento->id, $academia->id, $miembro->id]) }}" method="POST">
+                                                <div class="btn-group" role="group" aria-label="Acciones miembro">
+                                                    {{-- <a name="vermiembro" href="{{route('divisions.departamentos.academias.showMiembro', [$division->id, $departamento->id, $academia->id])}}" role="button" class="btn btn-success">
                                                         <i class="fas fa-eye"></i>
-                                                    </a>
-                                                    @can('update', $academia)
-                                                        <a name="editaracademia" id="editaracademia{{$academia->id}}" class="btn btn-primary" href="{{route('divisions.departamentos.academias.edit', [$division->id, $departamento->id, $academia->id])}}" role="button" title="Editar">
-                                                            <i class="fas fa-edit" aria-hidden="true"></i>
-                                                        </a>
-                                                    @endcan
-                                                    @can('delete', $academia)
+                                                    </a> --}}
+                                                    @can('darDeBajaCualquierMiembro', $academia)
                                                         @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" onclick="return confirm('¿Estás seguro de eliminar la Academia de {{$academia->nombre}}?')" class="btn btn-danger" href="#" role="button" title="Eliminar">
-                                                            <i class="fas fa-trash" aria-hidden="true"></i>
+                                                    {{-- @method('DELETE') --}}
+                                                        <button type="submit" onclick="return confirm('¿Estás seguro que quieres dar de baja al miembro {{$miembro->nombreCompleto}}? Esta acción no eliminará al usuario.')" class="btn btn-danger" href="#" role="button" title="Dar de baja">
+                                                            <i class="fas fa-user-times" aria-hidden="true"></i>
                                                         </button>
                                                     @endcan
-
                                                 </div>
-                                            </form> --}}
+                                            </form>
                                         </td>
                                     {{-- @endcan --}}
                                 </tr>
