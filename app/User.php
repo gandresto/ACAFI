@@ -49,7 +49,7 @@ class User extends Authenticatable
     public function esMiembro(Academia $academia)
     {
         if ($academia->miembros->isEmpty()) return false;
-        return $academia->miembros->contains($this);
+        return $academia->miembros()->wherePivot('fecha_egreso', '=', null)->get()->contains($this); // Checa si hay registros donde el miembro siga activo
     }
 
 
