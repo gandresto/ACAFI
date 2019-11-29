@@ -130,5 +130,11 @@
         </footer>
         <!-- Footer -->
     </div>
+    <script>
+        window.Laravel = {!! json_encode([
+            'csrfToken' => csrf_token(),
+            'apiToken' => Auth::user()->api_token ?? null,
+        ]) !!};
+     </script>
 </body>
 </html>

@@ -53623,6 +53623,12 @@ Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 
 Vue.use(vue_axios__WEBPACK_IMPORTED_MODULE_1___default.a, axios__WEBPACK_IMPORTED_MODULE_2___default.a);
+axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common = {
+  'X-CSRF-TOKEN': Laravel.csrfToken,
+  'X-Requested-With': 'XMLHttpRequest',
+  'Authorization': 'Bearer ' + Laravel.apiToken
+};
+window.Vue.prototype.$http = axios__WEBPACK_IMPORTED_MODULE_2___default.a;
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -54095,8 +54101,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\agendav2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\agendav2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Andres.DESKTOP-0MVIK1S\agendav2\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Andres.DESKTOP-0MVIK1S\agendav2\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
