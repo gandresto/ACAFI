@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
+use App\Academia;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Division;
 use App\Policies\DivisionPolicy;
 use App\Departamento;
+use App\Policies\AcademiaPolicy;
 use App\Policies\DepartamentoPolicy;
 
 class AuthServiceProvider extends ServiceProvider
@@ -22,6 +24,7 @@ class AuthServiceProvider extends ServiceProvider
         Academico::class => AcademicoPolicy::class,
         Departamento::class => DepartamentoPolicy::class,
         User::class => UserPolicy::class,
+        Academiaa::class => AcademiaPolicy::class,
     ];
 
     /**
