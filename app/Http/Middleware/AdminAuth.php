@@ -18,16 +18,10 @@ class AdminAuth
      */
     public function handle($request, Closure $next)
     {
-        #dd($request->user());
         if($request->user()){
-            if ($request->user()->email != config('admin.email')) {
-                return new Response(view('unauthorized')->with('role', 'ADMIN'));
-            } else{
+            if ($request->user()->esAdmin())
                 return $next($request);
-            }
-        }else{
-            return new Response(view('unauthorized')->with('role', 'ADMIN'));
         }
-
+        return new Response(view('unauthorized')->with('role', 'ADMIN'));
     }
 }
