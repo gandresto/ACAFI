@@ -19,3 +19,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::resource('/divisions', 'Api\DivisionController')->middleware('auth:api');
 Route::get('/divisions/buscar/{consulta}', 'Api\DivisionController@buscar')->middleware('auth:api');
+
+Route::get('users/test', 'Api\UserController@test');
+Route::resource('users/', 'Api\UserController');
+
+Route::fallback(function(){
+    return response()->json(['message' => 'Not Found!'], 404);
+});

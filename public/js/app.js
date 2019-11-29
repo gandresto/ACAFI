@@ -53626,7 +53626,8 @@ Vue.use(vue_axios__WEBPACK_IMPORTED_MODULE_1___default.a, axios__WEBPACK_IMPORTE
 axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common = {
   'X-CSRF-TOKEN': Laravel.csrfToken,
   'X-Requested-With': 'XMLHttpRequest',
-  'Authorization': 'Bearer ' + Laravel.apiToken
+  'Authorization': 'Bearer ' + Laravel.apiToken,
+  'Accept': 'application/json'
 };
 window.Vue.prototype.$http = axios__WEBPACK_IMPORTED_MODULE_2___default.a;
 /**

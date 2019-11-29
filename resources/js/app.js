@@ -19,6 +19,7 @@ axios.defaults.headers.common = {
     'X-CSRF-TOKEN': Laravel.csrfToken,
     'X-Requested-With': 'XMLHttpRequest',
     'Authorization': 'Bearer ' + Laravel.apiToken,
+    'Accept' : 'application/json',
 };
 
 window.Vue.prototype.$http = axios;
