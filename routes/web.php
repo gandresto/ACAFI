@@ -28,6 +28,9 @@ Route::resource('departamentos', 'DepartamentosController');
 Route::post('/divisions/{division}/departamentos/{departamento}/academias/{academia}/{miembro}',
             'DivisionDepartamentoAcademiaController@darDeBajaMiembro')
                 ->name('divisions.departamentos.academias.darDeBajaMiembro');
+Route::get('/divisions/{division}/departamentos/{departamento}/academias/{academia}/agregar-miembro',
+            'DivisionDepartamentoAcademiaController@agregarMiembro')
+                ->name('divisions.departamentos.academias.agregar-miembro');
 Route::resource('divisions.departamentos.academias', 'DivisionDepartamentoAcademiaController');
 
 Route::resource('users', 'UsersController');

@@ -148,4 +148,12 @@ class DivisionDepartamentoAcademiaController extends Controller
         return redirect()->route('divisions.departamentos.academias.show', compact('division_id', 'departamento_id', 'academia_id'))
                         ->with('success', 'Miembro dado de baja.');
     }
+
+    public function agregarMiembro($division_id, $departamento_id, $academia_id)
+    {
+        $division = Division::findOrFail($division_id);
+        $departamento = $division->departamentos()->findOrFail($departamento_id);
+        $academia = $departamento->academias()->findOrFail($academia_id);
+        return view('divisions.departamentos.academias.agregar-miembro', compact('division', 'departamento', 'academia'));
+    }
 }
