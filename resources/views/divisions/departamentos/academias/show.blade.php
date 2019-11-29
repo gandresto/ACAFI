@@ -101,7 +101,7 @@
                                                     @can('darDeBajaCualquierMiembro', $academia)
                                                         @csrf
                                                         {{-- @method('DELETE') --}}
-                                                        <button type="submit" onclick="return confirm('¿Estás seguro que quieres dar de baja al miembro {{$miembro->nombreCompleto}}? Esta acción no eliminará al usuario.')" class="btn btn-danger" href="#" role="button" title="Dar de baja">
+                                                        <button type="submit" onclick="return confirm('¿Estás seguro que quieres dar de baja al miembro {{$miembro->nombreCompleto}}? Esta acción no eliminará su cuenta de usuario.')" class="btn btn-danger" href="#" role="button" title="Dar de baja">
                                                             <i class="fas fa-user-times" aria-hidden="true"></i>
                                                         </button>
                                                     @endcan
