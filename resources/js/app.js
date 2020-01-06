@@ -6,13 +6,12 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
-
-import VueRouter from 'vue-router';
-Vue.use(VueRouter);
-
+import Vue from 'vue';
 import VueAxios from 'vue-axios';
 import axios from 'axios';
+
+// Vue = require('vue');
+// Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 
 axios.defaults.headers.common = {
@@ -22,7 +21,7 @@ axios.defaults.headers.common = {
     'Accept' : 'application/json',
 };
 
-window.Vue.prototype.$http = axios;
+// Vue.prototype.$http = axios;
 
 /**
  * The following block of code may be used to automatically register your
@@ -47,9 +46,6 @@ Vue.component('modal', require('./components/PlantillaModal.vue').default);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const router = new VueRouter({ mode: 'history'});
-const app = new Vue(Vue.util.extend({ router })).$mount('#app');
-
-/* const app = new Vue({
+const app = new Vue({
     el: '#app',
-}); */
+});
