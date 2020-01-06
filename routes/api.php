@@ -24,5 +24,5 @@ Route::get('users/test', 'Api\UserController@test');
 Route::resource('users/', 'Api\UserController');
 
 Route::fallback(function(){
-    return response()->json(['message' => 'Not Found!'], 404);
+    return response()->json(['message' => '¡No se encontró el recurso!'], 404);
 });
