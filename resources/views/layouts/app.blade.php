@@ -45,7 +45,7 @@
                                     Reuniones y Documentos
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">Reuniones</a>
+                                    <a class="dropdown-item" href="{{route('reuniones.index')}}">Reuniones</a>
                                     <a class="dropdown-item" href="#">Minutas</a>
                                     <a class="dropdown-item" href="#">Órdenes del día</a>
                                     <a class="dropdown-item" href="#">Asuntos Pendientes</a>

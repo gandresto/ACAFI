@@ -19,12 +19,15 @@ Auth::routes();
 
 Route::get('/calendario', 'HomeController@index')->name('calendario');
 
+// ----- DIVISIONES -------
 Route::resource('divisions', 'DivisionController');
 Route::get('/divisions/buscar/{consulta}', 'DivisionController@buscar')->name('divisions.buscar');
 
+// ------- DEPARTAMENTOS -------
 Route::resource('divisions.departamentos', 'DivisionDepartamentoController');
 Route::resource('departamentos', 'DepartamentosController');
 
+// ------- ACADEMIAS --------
 Route::post('/divisions/{division}/departamentos/{departamento}/academias/{academia}/{miembro}',
             'DivisionDepartamentoAcademiaController@darDeBajaMiembro')
                 ->name('divisions.departamentos.academias.darDeBajaMiembro');
@@ -33,26 +36,9 @@ Route::get('/divisions/{division}/departamentos/{departamento}/academias/{academ
                 ->name('divisions.departamentos.academias.agregar-miembro');
 Route::resource('divisions.departamentos.academias', 'DivisionDepartamentoAcademiaController');
 
+// -------- USUARIOS ---------
 Route::resource('users', 'UsersController');
 Route::get('/users/buscar/{consulta}', 'UsersController@buscar')->name('users.buscar');
 
-
-/*
-
-Route::get('/academicos', 'AcademicosController@index')
-            ->name('academicos.index')
-            ->middleware('auth.admin');
-Route::post('/academicos', 'AcademicosController@store')->name('academicos.store');
-Route::get('/academicos/create', 'AcademicosController@create')
-            ->name('academicos.create')
-            ->middleware('auth.admin');
-Route::get('/academicos/registrar', 'AcademicosController@registrar')
-            ->name('academicos.registrar')
-            ->middleware('auth.admin');
-Route::get('/academicos/buscar/{busqueda}', 'AcademicosController@buscar')->name('academicos.buscar');
-Route::get('/academicos/{academico}', 'AcademicosController@show')->name('academicos.show');
-Route::delete('/academicos/{academico}', 'AcademicosController@destroy')->name('academicos.destroy');
-Route::get('/academicos/{academico}/edit', 'AcademicosController@edit')->name('academicos.edit');
-Route::patch('/academicos/{academico}', 'AcademicosController@update')->name('academicos.update');
-
-*/
+// ------ REUNIONES -----------
+Route::get('/reuniones', 'ReunionesController@index')->name('reuniones.index');
