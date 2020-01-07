@@ -10,8 +10,6 @@ import Vue from 'vue';
 import VueAxios from 'vue-axios';
 import axios from 'axios';
 
-// Vue = require('vue');
-// Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 
 axios.defaults.headers.common = {
@@ -21,8 +19,6 @@ axios.defaults.headers.common = {
     'Accept' : 'application/json',
 };
 
-// Vue.prototype.$http = axios;
-
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -30,9 +26,6 @@ axios.defaults.headers.common = {
  *
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
-
-// const files = require.context('./', true, /\.vue$/i);
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('buscar-usuario', require('./components/BuscarUsuario.vue').default);

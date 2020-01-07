@@ -50725,8 +50725,6 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
- // Vue = require('vue');
-// Vue.use(VueRouter);
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_axios__WEBPACK_IMPORTED_MODULE_1___default.a, axios__WEBPACK_IMPORTED_MODULE_2___default.a);
 axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common = {
@@ -50734,8 +50732,7 @@ axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common = {
   'X-Requested-With': 'XMLHttpRequest',
   'Authorization': 'Bearer ' + Laravel.apiToken,
   'Accept': 'application/json'
-}; // Vue.prototype.$http = axios;
-
+};
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -50743,8 +50740,6 @@ axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common = {
  *
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
-// const files = require.context('./', true, /\.vue$/i);
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('buscar-usuario', __webpack_require__(/*! ./components/BuscarUsuario.vue */ "./resources/js/components/BuscarUsuario.vue")["default"]);
