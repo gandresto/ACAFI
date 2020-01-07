@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Http\Resources\User as UserResource;
 
 class UserController extends Controller
 {
@@ -69,18 +70,19 @@ class UserController extends Controller
         $connection = config('database.default');
         $driver = config("database.connections.{$connection}.driver");
         if ($driver == 'sqlite') {
-            $users = User::where("email", "like", "%". $consulta . "%")
-                                ->orWhereRaw("nombre || ' ' || apellido_pat || ' ' || apellido_mat like '%" . $consulta . "%' ")
+            $users = User::where("email", "LIKE", "%". $consulta . "%")
+                                ->orWhereRaw("nombre || ' ' || apellido_pat || ' ' || apellido_mat LIKE '%" . $consulta . "%' ")
                                 ->orderBy('nombre', 'desc')
                                 ->limit(5)
                                 ->get();
         } else {
-            $users = User::where("email", 'like', "%". $consulta . "%")
-                                ->orWhereRaw("concat(nombre, ' ', apellido_pat, ' ', apellido_mat) like '%" . $consulta . "%' ")
+            $users = User::where("email", 'LIKE', "%". $consulta . "%")
+                                ->orWhereRaw("CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) LIKE '%" . $consulta . "%' ")
                                 ->orderBy('nombre', 'desc')
                                 ->limit(5)
                                 ->get();
         }
-        return response()->json($users);
+        // dd($users);
+        return $users->isNotEmpty() ? UserResource::collection($users) : response()->json(['message' => 'No se encontró ningún usuario'], 404);
     }
 }
