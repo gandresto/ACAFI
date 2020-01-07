@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Division;
 use App\Http\Resources\Division as DivisionResource;
-use App\Http\Resources\Divisions as DivisionsResource;
+use App\Http\Resources\Divisions as DivisionsCollection;
 
 class DivisionController extends Controller
 {
@@ -20,7 +20,7 @@ class DivisionController extends Controller
     public function index()
     {
         $divisiones = Division::all();
-        return new DivisionsResource($divisiones);
+        return new DivisionsCollection($divisiones);
     }
 
     /**
@@ -32,7 +32,8 @@ class DivisionController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create', Division::class);
-/*         $data = $request->all();
+        /*
+        $data = $request->all();
         $validator = Validator::make($data, [
             [
                 'siglas' => 'required|unique:divisions|max:10|string',
@@ -41,7 +42,8 @@ class DivisionController extends Controller
                 'fecha_ingreso' => 'max:128|date|before:'.Carbon::now(),
                 'id_jefe_div' => 'required|exists:users,id',
             ]
-        ]); */
+        ]);
+        */
         $data = request()->validate(
             [
                 'siglas' => 'required|unique:divisions|max:10|string',
@@ -51,10 +53,6 @@ class DivisionController extends Controller
                 'id_jefe_div' => 'required|exists:users,id',
             ]
         );
-
-/*         if($validator->fails()){
-            return $this->sendError('Error de validación.', $validator->errors());       
-        } */
 
         $division = Division::create([
             'siglas' => $data['siglas'],
@@ -87,7 +85,7 @@ class DivisionController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        return response()->json(['Nombre de la página' => "Editar division {$id}"]);
     }
 
     /**
