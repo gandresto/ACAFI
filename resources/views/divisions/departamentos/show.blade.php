@@ -79,7 +79,7 @@
                     <thead>
                         <tr>
                             <th scope="col">Academia</th>
-                            <th scope="col">Jefe</th>
+                            <th scope="col">Presidente</th>
                             {{-- @can('create', App\Academia::class) --}}
                                 <th scope="col">Acciones</th>
                             {{-- @endcan --}}
