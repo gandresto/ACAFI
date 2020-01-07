@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 
@@ -28,5 +29,9 @@ class AppServiceProvider extends ServiceProvider
         //if(env('FORCE_HTTPS')) {
         //    URL::forceScheme('https');
         //}
+        Route::resourceVerbs([
+            'create' => 'crear',
+            'edit' => 'editar',
+        ]);
     }
 }
