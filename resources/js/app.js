@@ -9,8 +9,11 @@ require('./bootstrap');
 import Vue from 'vue';
 import VueAxios from 'vue-axios';
 import axios from 'axios';
+import BootstrapVue from 'bootstrap-vue';
+import store from './store/';
 
 Vue.use(VueAxios, axios);
+Vue.use(BootstrapVue);
 
 axios.defaults.headers.common = {
     'X-CSRF-TOKEN': Laravel.csrfToken,
@@ -31,6 +34,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('buscar-usuario', require('./components/BuscarUsuario.vue').default);
 Vue.component('buscar-division', require('./components/BuscarDivision.vue').default);
 Vue.component('editar-division', require('./components/EditarDivision.vue').default);
+Vue.component('crear-reunion', require('./components/CrearReunion.vue').default);
 Vue.component('modal', require('./components/PlantillaModal.vue').default);
 
 /**
@@ -40,5 +44,6 @@ Vue.component('modal', require('./components/PlantillaModal.vue').default);
  */
 
 const app = new Vue({
+    store,
     el: '#app',
 });
