@@ -17,4 +17,10 @@ class ReunionesController extends Controller
         // $this->authorize('viewAny', Reunion::class);
         return view('reuniones.index');
     }
+
+    public function create(Request $request)
+    {
+        $this->authorize('create', Reunion::class);
+        return view('reuniones.create');
+    }
 }

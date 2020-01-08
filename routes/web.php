@@ -41,4 +41,5 @@ Route::resource('users', 'UsersController');
 Route::get('/users/buscar/{consulta}', 'UsersController@buscar')->name('users.buscar');
 
 // ------ REUNIONES -----------
-Route::get('/reuniones', 'ReunionesController@index')->name('reuniones.index');
+Route::resource('/reuniones', 'ReunionesController',
+    ['except' => ['store', 'update', 'destroy']]);

@@ -15,15 +15,13 @@
 @can('create', App\Reunion::class)
     <div class="row">
         <div class="col-md-12 py-2">
-        <a class="btn btn-primary" href="#{{' '/*route('divisions.create')*/}}" role="button">
+        <a class="btn btn-primary" href="{{route('reuniones.create')}}" role="button">
                 <i class="fa fa-calendar-plus" aria-hidden="true"></i>
                 <span class="ml-2">Agendar reunión</span>
             </a>
         </div>
     </div>
 @endcan
-
-{{-- Barra de búsqueda próximamente aquí --}}
 
 <hr>
 
@@ -32,11 +30,5 @@
         Lista de reuniones
     </div>
 </div>
-
-{{-- <div class="row">
-    <div class="col-sm-12">
-        {{$divisiones->links()}}
-    </div>
-</div> --}}
 
 @endsection
