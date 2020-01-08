@@ -87,12 +87,12 @@ class UserController extends Controller
         return $users->isNotEmpty() ? UserResource::collection($users) : response()->json(['message' => 'No se encontró ningún usuario'], 404);
     }
 
-    public function presidenteDeAcademias(Request $request, int $user_id)
+    public function academiasQueHaPresidido(Request $request, int $user_id)
     {
         $user = User::findOrFail($user_id);
         $actual = $request->input('actual');
         if($actual && ($actual=="true" || $actual==1))
-            return new AcademiasResource($user->presidenteActualDeAcademias);
-        return new AcademiasResource($user->presidenteDeAcademias);
+            return new AcademiasResource($user->academiasQuePreside);
+        return new AcademiasResource($user->academiasQuePresido);
     }
 }

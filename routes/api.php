@@ -23,7 +23,7 @@ Route::get('/divisions/buscar/{consulta}', 'Api\DivisionController@buscar')->mid
 
 Route::resource('/users', 'Api\UserController')->middleware('auth:api');
 Route::get('/users/buscar/{consulta}', 'Api\UserController@buscar')->middleware('auth:api');
-Route::get('/users/{user_id}/presidenteDeAcademias', 'Api\UserController@presidenteDeAcademias')->middleware('auth:api');
+Route::get('/users/{user_id}/academiasQueHaPresidido', 'Api\UserController@academiasQueHaPresidido')->middleware('auth:api');
 
 Route::fallback(function(){
     return response()->json(['message' => '¡No se encontró el recurso! Verifica la url'], 404);
