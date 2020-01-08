@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,8 +22,9 @@ Route::resource('/divisions', 'Api\DivisionController')->middleware('auth:api');
 Route::get('/divisions/buscar/{consulta}', 'Api\DivisionController@buscar')->middleware('auth:api');
 
 Route::resource('/users', 'Api\UserController')->middleware('auth:api');
-Route::get('/users/buscar/{consulta}', 'Api\UserController@buscar')->middleware('auth:api');;
+Route::get('/users/buscar/{consulta}', 'Api\UserController@buscar')->middleware('auth:api');
+Route::get('/users/{user_id}/presidenteDeAcademias', 'Api\UserController@presidenteDeAcademias')->middleware('auth:api');
 
 Route::fallback(function(){
-    return response()->json(['message' => '¡No se encontró el recurso!'], 404);
+    return response()->json(['message' => '¡No se encontró el recurso! Verifica la url'], 404);
 });
