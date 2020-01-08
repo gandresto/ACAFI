@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Http\Resources\User as UserResource;
 use App\Http\Resources\Academias as AcademiasResource;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -94,5 +95,11 @@ class UserController extends Controller
         if($actual && ($actual=="true" || $actual==1))
             return new AcademiasResource($user->academiasQuePreside);
         return new AcademiasResource($user->academiasQuePresido);
+    }
+
+    public function yo(Request $request)
+    {
+        // return json_encode(['mensaje'=> 'yo mero :D']);
+        return new UserResource(Auth::user());
     }
 }

@@ -14,13 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::resource('/divisions', 'Api\DivisionController')->middleware('auth:api');
 Route::get('/divisions/buscar/{consulta}', 'Api\DivisionController@buscar')->middleware('auth:api');
 
+Route::get('/users/yo', 'Api\UserController@yo')->middleware('auth:api');
 Route::resource('/users', 'Api\UserController')->middleware('auth:api');
 Route::get('/users/buscar/{consulta}', 'Api\UserController@buscar')->middleware('auth:api');
 Route::get('/users/{user_id}/academiasQueHaPresidido', 'Api\UserController@academiasQueHaPresidido')->middleware('auth:api');
