@@ -10,7 +10,7 @@ export default {
         commit('colocarEstadoAcademias', ESTADO_API.CARGANDO);
         axios
             .get(uri)
-            .then(r => r.data)
+            .then(r => r.data.data)
             .then(academias => {
                 commit('colocarAcademias', academias);
                 commit('colocarEstadoAcademias', ESTADO_API.LISTO);
