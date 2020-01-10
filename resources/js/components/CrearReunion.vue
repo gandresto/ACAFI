@@ -21,8 +21,8 @@
             >
                 <select class="form-control"
                     id="select-academia"
-                    v-model="academiaSel"
-                    @change="console.log(academia.id)"
+                    v-model="academiaSeleccionada"
+                    @change="seleccionarAcademia"
                 >
                     <option disabled selected value="">Seleccione una academia</option>
                     <option v-for="academia in cAcademias" :key="academia.id"
@@ -32,13 +32,41 @@
                     </option>
                 </select>
             </b-form-group>
-            <div>
-                <b-form-group>
-
+            <div v-if="academiaSeleccionada">
+                <b-row>
+                    <v-datetime
+                        class="form-group col-md-12"
+                        input-id="fecha-inicio-input"
+                        type="datetime"
+                        :min-datetime="limiteInferiorFecha"
+                        v-model="fechaInicio"
+                        :phrases="frases"
+                        required="true"
+                        input-class="form-control"
+                    >
+                        <label for="fecha-inicio-input" slot="before">Fecha y hora de inicio</label>
+                    </v-datetime>
+                </b-row>
+                <b-form-group
+                    id="lugar"
+                    label="Lugar"
+                    label-for="text-lugar"
+                >
+                    <b-form-input
+                        id="text-lugar"
+                        v-model="lugar"
+                        type="text"
+                        required
+                    >
+                    </b-form-input>
                 </b-form-group>
             </div>
         </b-form>
-        <div v-text="academiaSel"></div>
+        <div>
+            {{academiaSeleccionada}} <br>
+            {{fechaInicio}} <br>
+            {{lugar}} <br>
+        </div>
     </div>
 </template>
 
@@ -48,11 +76,20 @@
     export default {
         data() {
             return {
-                academiaSel: null,
-                estadoApi: ESTADO_API
+                academiaSeleccionada: null,
+                fechaInicio: null,
+                estadoApi: ESTADO_API,
+                limiteInferiorFecha: '',
+                frases: {
+                    ok: 'Aceptar',
+                    cancel: 'Cancelar'
+                },
+                lugar: '',
             }
         },
         mounted() {
+            let date = new Date();
+            this.limiteInferiorFecha = date.toISOString();
             this.leerAcademiasQuePreside(Laravel.authUserId);
             console.log(Laravel.authUserId);
             console.log(this.cAcademias);
@@ -61,6 +98,9 @@
             ...mapActions(
                 ['leerAcademiasQuePreside']
             ),
+            seleccionarAcademia(){
+                console.log(this.academiaSeleccionada);
+            },
         },
         computed:{
             ...mapGetters(

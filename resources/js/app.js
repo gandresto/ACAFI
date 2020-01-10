@@ -11,6 +11,7 @@ import VueAxios from 'vue-axios';
 import axios from 'axios';
 import BootstrapVue from 'bootstrap-vue';
 import store from './store/';
+import { Datetime } from 'vue-datetime';
 
 Vue.use(VueAxios, axios);
 Vue.use(BootstrapVue);
@@ -30,6 +31,7 @@ axios.defaults.headers.common = {
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
+Vue.component('v-datetime', Datetime);
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('buscar-usuario', require('./components/BuscarUsuario.vue').default);
 Vue.component('buscar-division', require('./components/BuscarDivision.vue').default);
