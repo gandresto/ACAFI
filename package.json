@@ -25,6 +25,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@trevoreyre/autocomplete-vue": "^2.0.4",
         "bootstrap-vue": "^2.1.0",
         "luxon": "^1.21.3",
         "nprogress": "^0.2.0",
