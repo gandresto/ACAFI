@@ -1847,6 +1847,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _enum_estado_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../enum-estado-api */ "./resources/js/enum-estado-api.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -1897,54 +1898,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    this.leerAcademiasQuePreside(1);
-  },
   data: function data() {
     return {
-      form: {
-        email: '',
-        name: '',
-        food: null,
-        checked: []
-      },
-      foods: [{
-        text: 'Select One',
-        value: null
-      }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
-      show: true
+      academiaSel: null,
+      estadoApi: _enum_estado_api__WEBPACK_IMPORTED_MODULE_1__["default"]
     };
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['leerAcademiasQuePreside']), {
-    onSubmit: function onSubmit(evt) {
-      evt.preventDefault();
-      alert(JSON.stringify(this.form));
-    },
-    onReset: function onReset(evt) {
-      var _this = this;
-
-      evt.preventDefault(); // Reset our form values
-
-      this.form.email = '';
-      this.form.name = '';
-      this.form.food = null;
-      this.form.checked = []; // Trick to reset/clear native browser form validation state
-
-      this.show = false;
-      this.$nextTick(function () {
-        _this.show = true;
-      });
+  mounted: function mounted() {
+    this.leerAcademiasQuePreside(Laravel.authUserId);
+    console.log(Laravel.authUserId);
+    console.log(this.cAcademias);
+  },
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['leerAcademiasQuePreside'])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['academias', 'estadoAcademias']), {
+    cAcademias: function cAcademias() {
+      return this.academias || null;
     }
   })
 });
@@ -70300,151 +70271,130 @@ var render = function() {
   return _c(
     "div",
     [
-      _vm.show
+      _vm.estadoAcademias == _vm.estadoApi.CARGANDO ||
+      _vm.estadoAcademias == _vm.estadoApi.INICIADO
+        ? _c("div", { staticClass: "d-flex justify-content-center" }, [
+            _vm._m(0)
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.estadoAcademias == _vm.estadoApi.ERROR
+        ? _c("div", { staticClass: "alert alert-danger" }, [
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: { type: "button", "data-dismiss": "alert" }
+              },
+              [_vm._v("×")]
+            ),
+            _vm._v(" "),
+            _c("strong", [
+              _vm._v("Hubo un problema, intenta de nuevo más tarde")
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.estadoAcademias == _vm.estadoApi.LISTO
         ? _c(
             "b-form",
-            { on: { submit: _vm.onSubmit, reset: _vm.onReset } },
             [
               _c(
                 "b-form-group",
                 {
                   attrs: {
-                    id: "input-group-1",
-                    label: "Email address:",
-                    "label-for": "input-1",
-                    description:
-                      "We'll never share your email with anyone else."
+                    id: "academia",
+                    label: "Academia",
+                    "label-for": "select-academia"
                   }
                 },
-                [
-                  _c("b-form-input", {
-                    attrs: {
-                      id: "input-1",
-                      type: "email",
-                      required: "",
-                      placeholder: "Enter email"
-                    },
-                    model: {
-                      value: _vm.form.email,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "email", $$v)
-                      },
-                      expression: "form.email"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "b-form-group",
-                {
-                  attrs: {
-                    id: "input-group-2",
-                    label: "Your Name:",
-                    "label-for": "input-2"
-                  }
-                },
-                [
-                  _c("b-form-input", {
-                    attrs: {
-                      id: "input-2",
-                      required: "",
-                      placeholder: "Enter name"
-                    },
-                    model: {
-                      value: _vm.form.name,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "name", $$v)
-                      },
-                      expression: "form.name"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "b-form-group",
-                {
-                  attrs: {
-                    id: "input-group-3",
-                    label: "Food:",
-                    "label-for": "input-3"
-                  }
-                },
-                [
-                  _c("b-form-select", {
-                    attrs: { id: "input-3", options: _vm.foods, required: "" },
-                    model: {
-                      value: _vm.form.food,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "food", $$v)
-                      },
-                      expression: "form.food"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "b-form-group",
-                { attrs: { id: "input-group-4" } },
                 [
                   _c(
-                    "b-form-checkbox-group",
+                    "select",
                     {
-                      attrs: { id: "checkboxes-4" },
-                      model: {
-                        value: _vm.form.checked,
-                        callback: function($$v) {
-                          _vm.$set(_vm.form, "checked", $$v)
-                        },
-                        expression: "form.checked"
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.academiaSel,
+                          expression: "academiaSel"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { id: "select-academia" },
+                      on: {
+                        change: [
+                          function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.academiaSel = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          },
+                          function($event) {
+                            return _vm.console.log(_vm.academia.id)
+                          }
+                        ]
                       }
                     },
                     [
-                      _c("b-form-checkbox", { attrs: { value: "me" } }, [
-                        _vm._v("Check me out")
-                      ]),
+                      _c(
+                        "option",
+                        { attrs: { disabled: "", selected: "", value: "" } },
+                        [_vm._v("Seleccione una academia")]
+                      ),
                       _vm._v(" "),
-                      _c("b-form-checkbox", { attrs: { value: "that" } }, [
-                        _vm._v("Check that out")
-                      ])
+                      _vm._l(_vm.cAcademias, function(academia) {
+                        return _c(
+                          "option",
+                          {
+                            key: academia.id,
+                            domProps: { value: academia.id }
+                          },
+                          [
+                            _vm._v(
+                              "\n                    " +
+                                _vm._s(academia.nombre) +
+                                "\n                "
+                            )
+                          ]
+                        )
+                      })
                     ],
-                    1
+                    2
                   )
-                ],
-                1
+                ]
               ),
               _vm._v(" "),
-              _c(
-                "b-button",
-                { attrs: { type: "submit", variant: "primary" } },
-                [_vm._v("Submit")]
-              ),
-              _vm._v(" "),
-              _c("b-button", { attrs: { type: "reset", variant: "danger" } }, [
-                _vm._v("Reset")
-              ])
+              _c("div", [_c("b-form-group")], 1)
             ],
             1
           )
         : _vm._e(),
       _vm._v(" "),
-      _c(
-        "b-card",
-        { staticClass: "mt-3", attrs: { header: "Form Data Result" } },
-        [_c("pre", { staticClass: "m-0" }, [_vm._v(_vm._s(_vm.form))])]
-      ),
-      _vm._v(" "),
-      _c("div")
+      _c("div", { domProps: { textContent: _vm._s(_vm.academiaSel) } })
     ],
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "spinner-border", attrs: { role: "status" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -84595,7 +84545,7 @@ __webpack_require__.r(__webpack_exports__);
     return new Promise(function (res, rej) {
       commit('colocarEstadoAcademias', _enum_estado_api__WEBPACK_IMPORTED_MODULE_2__["default"].CARGANDO);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(uri).then(function (r) {
-        return r.data;
+        return r.data.data;
       }).then(function (academias) {
         commit('colocarAcademias', academias);
         commit('colocarEstadoAcademias', _enum_estado_api__WEBPACK_IMPORTED_MODULE_2__["default"].LISTO);
