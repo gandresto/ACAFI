@@ -8,7 +8,7 @@
             placeholder="Buscar usuario"
             aria-label="Buscar usuario"
             :get-result-value="obtenerNombreCompleto"
-            @submit="agregarInvitado"
+            @submit="procesarInvitado"
         >
             <template #result="{ result, props }">
                 <li
@@ -45,6 +45,7 @@
 
 <script>
     import api from '../services/api';
+    import {mapGetters, mapActions} from 'vuex';
     export default {
         mounted() {
             console.log(api.baseURL);
@@ -54,10 +55,11 @@
                 // consulta: '',
                 camposTablaInvitados: ['invitado','email','acciones'],
                 invitadoSeleccionado: null,
-                invitados: [],
+                // invitados: [],
             }
         },
         methods: {
+            ...mapActions(['agregarInvitado']),
             buscarInvitado(consulta){
                 let uri = `${api.baseURL}/users/buscar/${consulta}`
                 return new Promise((res, rej) => {
@@ -76,15 +78,16 @@
             obtenerNombreCompleto(invitado){ // Obtengo solo lo que me interesa del resultado de búsqueda
                 return `${invitado.nombre} ${invitado.apellido_paterno} ${invitado.apellido_materno}`;
             },
-            agregarInvitado(invitado){
+            procesarInvitado(invitado){
                 if(this.invitados && invitado){
-                    !this.invitados.find(inv => invitado.id == inv.id) ? this.invitados.push(invitado) : null;
+                    !this.invitados.find(inv => invitado.id == inv.id) ? this.agregarInvitado(invitado) : null;
                     console.log(`${invitado.nombre} ${invitado.apellido_paterno} ${invitado.apellido_materno}`);
                 }
             }
 
         },
         computed: {
+            ...mapGetters(['invitados']),
         },
     }
 </script>

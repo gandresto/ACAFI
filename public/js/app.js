@@ -2700,6 +2700,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/api */ "./resources/js/services/api.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2746,6 +2753,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log(_services_api__WEBPACK_IMPORTED_MODULE_0__["default"].baseURL);
@@ -2754,11 +2762,11 @@ __webpack_require__.r(__webpack_exports__);
     return {
       // consulta: '',
       camposTablaInvitados: ['invitado', 'email', 'acciones'],
-      invitadoSeleccionado: null,
-      invitados: []
+      invitadoSeleccionado: null // invitados: [],
+
     };
   },
-  methods: {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['agregarInvitado']), {
     buscarInvitado: function buscarInvitado(consulta) {
       var uri = "".concat(_services_api__WEBPACK_IMPORTED_MODULE_0__["default"].baseURL, "/users/buscar/").concat(consulta);
       return new Promise(function (res, rej) {
@@ -2777,16 +2785,16 @@ __webpack_require__.r(__webpack_exports__);
       // Obtengo solo lo que me interesa del resultado de búsqueda
       return "".concat(invitado.nombre, " ").concat(invitado.apellido_paterno, " ").concat(invitado.apellido_materno);
     },
-    agregarInvitado: function agregarInvitado(invitado) {
+    procesarInvitado: function procesarInvitado(invitado) {
       if (this.invitados && invitado) {
         !this.invitados.find(function (inv) {
           return invitado.id == inv.id;
-        }) ? this.invitados.push(invitado) : null;
+        }) ? this.agregarInvitado(invitado) : null;
         console.log("".concat(invitado.nombre, " ").concat(invitado.apellido_paterno, " ").concat(invitado.apellido_materno));
       }
     }
-  },
-  computed: {}
+  }),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['invitados']))
 });
 
 /***/ }),
@@ -80700,7 +80708,7 @@ var render = function() {
               "aria-label": "Buscar usuario",
               "get-result-value": _vm.obtenerNombreCompleto
             },
-            on: { submit: _vm.agregarInvitado },
+            on: { submit: _vm.procesarInvitado },
             scopedSlots: _vm._u([
               {
                 key: "result",
@@ -95451,6 +95459,14 @@ __webpack_require__.r(__webpack_exports__);
       commit('colocarEstadoAcademia', _enum_estado_api__WEBPACK_IMPORTED_MODULE_2__["default"].ERROR);
       console.log(err); // rej();
     }); // });
+  },
+  agregarConvocado: function agregarConvocado(_ref3, convocado) {
+    var commit = _ref3.commit;
+    commit('colocarConvocado', convocado);
+  },
+  agregarInvitado: function agregarInvitado(_ref4, invitado) {
+    var commit = _ref4.commit;
+    commit('colocarInvitado', invitado);
   }
 });
 
@@ -95477,6 +95493,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   estadoAcademia: function estadoAcademia(state) {
     return state.estadoAcademia;
+  },
+  invitados: function invitados(state) {
+    return state.invitados;
+  },
+  convocados: function convocados(state) {
+    return state.convocados;
   }
 });
 
@@ -95535,6 +95557,18 @@ __webpack_require__.r(__webpack_exports__);
   },
   colocarEstadoAcademia: function colocarEstadoAcademia(state, estadoAcademia) {
     state.estadoAcademia = estadoAcademia;
+  },
+  colocarConvocados: function colocarConvocados(state, convocados) {
+    state.convocados = convocados;
+  },
+  colocarConvocado: function colocarConvocado(state, convocado) {
+    state.convocados.push(convocado);
+  },
+  colocarInvitados: function colocarInvitados(state, invitados) {
+    state.invitados = invitados;
+  },
+  colocarInvitado: function colocarInvitado(state, invitado) {
+    state.invitados.push(invitado);
   }
 });
 
@@ -95555,7 +95589,9 @@ __webpack_require__.r(__webpack_exports__);
   estadoAcademias: _enum_estado_api__WEBPACK_IMPORTED_MODULE_0__["default"].INICIADO,
   estadoAcademia: _enum_estado_api__WEBPACK_IMPORTED_MODULE_0__["default"].INICIADO,
   academias: null,
-  academia: null
+  academia: null,
+  convocados: [],
+  invitados: []
 });
 
 /***/ }),

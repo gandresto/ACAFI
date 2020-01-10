@@ -5,4 +5,6 @@ export default {
     estadoAcademia: ESTADO.INICIADO,
     academias: null,
     academia: null,
+    convocados: [],
+    invitados: [],
 };
