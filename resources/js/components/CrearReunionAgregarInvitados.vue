@@ -61,7 +61,7 @@
             buscarInvitado(consulta){
                 let uri = `${api.baseURL}/users/buscar/${consulta}`
                 return new Promise((res, rej) => {
-                    if (consulta.lenght<2 || !consulta) return res([]);
+                    if (!consulta || consulta.length<3) return res([]);
                     axios.get(uri)
                     .then(r => r.data.data)
                     .then(resultadoBusqueda => {
@@ -69,6 +69,7 @@
                     })
                     .catch(err=>{
                         console.log(err);
+                        res([]);
                     });
                 });
             },

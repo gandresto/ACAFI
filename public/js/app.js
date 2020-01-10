@@ -2762,13 +2762,14 @@ __webpack_require__.r(__webpack_exports__);
     buscarInvitado: function buscarInvitado(consulta) {
       var uri = "".concat(_services_api__WEBPACK_IMPORTED_MODULE_0__["default"].baseURL, "/users/buscar/").concat(consulta);
       return new Promise(function (res, rej) {
-        if (consulta.lenght < 2 || !consulta) return res([]);
+        if (!consulta || consulta.length < 3) return res([]);
         axios.get(uri).then(function (r) {
           return r.data.data;
         }).then(function (resultadoBusqueda) {
           res(resultadoBusqueda);
         })["catch"](function (err) {
           console.log(err);
+          res([]);
         });
       });
     },
@@ -80717,9 +80718,9 @@ var render = function() {
                       ),
                       [
                         _vm._v(
-                          "\r\n                    " +
+                          "\n                    " +
                             _vm._s(_vm.obtenerNombreCompleto(result)) +
-                            "\r\n                "
+                            "\n                "
                         )
                       ]
                     )
@@ -80749,9 +80750,9 @@ var render = function() {
                 fn: function(data) {
                   return [
                     _vm._v(
-                      "\r\n            " +
+                      "\n            " +
                         _vm._s(_vm.obtenerNombreCompleto(data.item)) +
-                        "\r\n        "
+                        "\n        "
                     )
                   ]
                 }
