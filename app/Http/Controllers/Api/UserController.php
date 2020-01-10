@@ -8,6 +8,7 @@ use App\User;
 use App\Http\Resources\User as UserResource;
 use App\Http\Resources\Academias as AcademiasResource;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class UserController extends Controller
 {
@@ -69,23 +70,25 @@ class UserController extends Controller
     public function buscar($consulta)
     {
         $consulta = urldecode($consulta);
-        $connection = config('database.default');
-        $driver = config("database.connections.{$connection}.driver");
-        if ($driver == 'sqlite') {
-            $users = User::where("email", "LIKE", "%". $consulta . "%")
-                                ->orWhereRaw("nombre || ' ' || apellido_pat || ' ' || apellido_mat LIKE '%" . $consulta . "%' ")
-                                ->orderBy('nombre', 'desc')
-                                ->limit(5)
-                                ->get();
-        } else {
-            $users = User::where("email", 'LIKE', "%". $consulta . "%")
-                                ->orWhereRaw("CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) LIKE '%" . $consulta . "%' ")
-                                ->orderBy('nombre', 'desc')
-                                ->limit(5)
-                                ->get();
-        }
-        // dd($users);
-        return $users->isNotEmpty() ? UserResource::collection($users) : response()->json(['message' => 'No se encontró ningún usuario'], 404);
+        return Cache::remember('user.buscar.'.$consulta, now()->addSeconds(30), function () use ($consulta){
+            $connection = config('database.default');
+            $driver = config("database.connections.{$connection}.driver");
+            if ($driver == 'sqlite') {
+                $users = User::where("email", "LIKE", "%". $consulta . "%")
+                                    ->orWhereRaw("nombre || ' ' || apellido_pat || ' ' || apellido_mat LIKE '%" . $consulta . "%' ")
+                                    ->orderBy('nombre', 'desc')
+                                    ->limit(5)
+                                    ->get();
+            } else {
+                $users = User::where("email", 'LIKE', "%". $consulta . "%")
+                                    ->orWhereRaw("CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) LIKE '%" . $consulta . "%' ")
+                                    ->orderBy('nombre', 'desc')
+                                    ->limit(5)
+                                    ->get();
+            }
+            // dd($users);
+            return $users->isNotEmpty() ? UserResource::collection($users) : response()->json(['message' => 'No se encontró ningún usuario con los criterios de búsqueda'], 404);
+        });
     }
 
     public function academiasQueHaPresidido(Request $request, int $user_id)
