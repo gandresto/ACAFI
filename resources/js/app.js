@@ -42,6 +42,7 @@ Vue.component('editar-division', require('./components/EditarDivision.vue').defa
 Vue.component('modal', require('./components/PlantillaModal.vue').default);
 
 Vue.component('crear-reunion', require('./components/CrearReunion.vue').default);
+Vue.component('crear-reunion-agregar-invitados', require('./components/CrearReunionAgregarInvitados.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
