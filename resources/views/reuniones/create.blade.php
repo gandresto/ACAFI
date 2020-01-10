@@ -6,13 +6,16 @@
 
 @section('content')
 
-<div class="row">
+{{-- <div class="row">
     <div class="col-sm-12">
         @include('flash-message')
     </div>
-</div>
+</div> --}}
 
-<form class="form-horizontal" method="POST">
+<crear-reunion></crear-reunion>
+
+
+{{-- <form class="form-horizontal" method="POST">
     <div class="form-group row">
         <label for="academia" class="col-md-4 col-form-label text-md-right">Academia</label>
         <div class="col-md-6">
@@ -43,7 +46,7 @@
         </div>
     </div>
 
-</form>
+</form> --}}
 
 {{-- <div class="row">
     <div class="col-sm-12">
