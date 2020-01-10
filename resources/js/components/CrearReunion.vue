@@ -46,8 +46,9 @@
             <button type="button" class="close" data-dismiss="alert">×</button>
             <strong>Hubo un problema, intenta de nuevo más tarde</strong>
         </div>
+        <!-- ----------- Formulario al seleccionar academia --------- -->
         <b-form v-if="academiaSeleccionada && estadoAcademia==estadoApi.LISTO">
-            <!-- Formulario al seleccionar academia -->
+            <!-- ----------- Fecha y hora --------- -->
             <b-row>
                 <v-datetime
                     class="form-group col-md-12"
@@ -62,6 +63,7 @@
                     <label for="fecha-inicio-input" slot="before">Fecha y hora de inicio</label>
                 </v-datetime>
             </b-row>
+            <!-- ----------- Lugar --------- -->
             <b-form-group
                 id="lugar"
                 label="Lugar"
@@ -75,14 +77,16 @@
                 >
                 </b-form-input>
             </b-form-group>
+            <hr>
+            <!-- ----------- Convocados --------- -->
             <b-form-group>
-                <label>Selecciona a los convocados a la reunión</label>
+                <label><strong>Selecciona a los convocados a la reunión</strong></label>
                 <b-table hover head-variant="dark"
-                    ref="selectableTable"
+                    ref="tablaConvocados"
                     selectable
                     select-mode="multi"
                     :items="cAcademia.miembrosActuales"
-                    :fields="campos"
+                    :fields="camposTablaConvocados"
                 >
                 <template v-slot:cell(convocado)="{ rowSelected }">
                     <template v-if="rowSelected">
@@ -96,12 +100,16 @@
                 </template>
                 </b-table>
             </b-form-group>
+            <hr>
+            <!-- ----------- Invitados --------- -->
+            <crear-reunion-agregar-invitados>
+            </crear-reunion-agregar-invitados>
             <b-row>
                 <b-container>
-                {{academiaSeleccionada}} <br>
-                {{fechaInicio}} <br>
-                {{lugar}} <br>
-                {{cAcademia}}<br>
+                <!-- {{academiaSeleccionada}} <br> -->
+                <!-- {{fechaInicio}} <br> -->
+                <!-- {{lugar}} <br> -->
+                <!-- {{cAcademia}}<br> -->
                 </b-container>
             </b-row>
         </b-form>
@@ -110,28 +118,12 @@
 
 <script>
     import {mapGetters, mapActions} from 'vuex';
-    import ESTADO_API from '../enum-estado-api'
+    import ESTADO_API from '../enum-estado-api';
+    // import API from '../services/api';
     export default {
         data() {
             return {
-                campos: [
-                    {
-                        key: 'convocado',
-                        label: 'Convocado'
-                    },
-                    {
-                        key: 'nombre',
-                        label: 'Nombre'
-                    },
-                    {
-                        key: 'apellido_pat',
-                        label: 'Apellido Paterno'
-                    },
-                    {
-                        key: 'apellido_mat',
-                        label: 'Apellido Materno'
-                    },
-                ],
+                camposTablaConvocados: ['convocado','nombre','apellido_paterno','apellido_materno'],
                 academiaSeleccionada: null,
                 fechaInicio: null,
                 estadoApi: ESTADO_API,
@@ -147,15 +139,16 @@
             let date = new Date();
             this.limiteInferiorFecha = date.toISOString();
             this.leerAcademiasQuePreside(Laravel.authUserId);
-            console.log(Laravel.authUserId);
-            console.log(this.cAcademias);
+            // console.log(API.baseURL);
+            // console.log(Laravel.authUserId);
+            // console.log(this.cAcademias);
         },
         methods: {
             ...mapActions(
                 ['leerAcademiasQuePreside', 'leerAcademia']
             ),
             seleccionarAcademia(){
-                console.log(this.academiaSeleccionada);
+                // console.log(this.academiaSeleccionada);
                 if(this.academiaSeleccionada) this.leerAcademia(this.academiaSeleccionada);
             },
         },

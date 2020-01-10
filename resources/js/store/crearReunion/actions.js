@@ -4,9 +4,9 @@ import ESTADO_API from '../../enum-estado-api'
 
 export default {
     leerAcademiasQuePreside({commit}, user){
-        console.log(api.baseURL);
+        // console.log(api.baseURL);
         let uri = `${api.baseURL}/users/${user}/academiasQueHaPresidido?actual=true`
-        return new Promise((res, rej) => {
+        // return new Promise((res, rej) => {
         commit('colocarEstadoAcademias', ESTADO_API.CARGANDO);
         axios
             .get(uri)
@@ -14,19 +14,19 @@ export default {
             .then(academias => {
                 commit('colocarAcademias', academias);
                 commit('colocarEstadoAcademias', ESTADO_API.LISTO);
-                res();
+                // res();
             })
             .catch(err=>{
                 commit('colocarEstadoAcademias', ESTADO_API.ERROR);
                 console.log(err);
-                rej();
+                // rej();
             });
-        });
+        // });
     },
     leerAcademia({commit}, id){
-        console.log(api.baseURL);
+        // console.log(api.baseURL);
         let uri = `${api.baseURL}/academias/${id}/`
-        return new Promise((res, rej) => {
+        // return new Promise((res, rej) => {
         commit('colocarEstadoAcademia', ESTADO_API.CARGANDO);
         axios
             .get(uri)
@@ -34,13 +34,13 @@ export default {
             .then(academia => {
                 commit('colocarAcademia', academia);
                 commit('colocarEstadoAcademia', ESTADO_API.LISTO);
-                res();
+                // res();
             })
             .catch(err=>{
                 commit('colocarEstadoAcademia', ESTADO_API.ERROR);
                 console.log(err);
-                rej();
+                // rej();
             });
-        });
+        // });
     },
 };
