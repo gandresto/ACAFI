@@ -20,6 +20,12 @@
             </template>
         </autocomplete>
     </b-form-group>
+    <div  v-if="error"
+            class="alert alert-danger"
+        >
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>{{error}}</strong>
+    </div>
     <b-form-group>
         <b-table
             head-variant="dark"
@@ -55,6 +61,7 @@
                 // consulta: '',
                 camposTablaInvitados: ['invitado','email','acciones'],
                 invitadoSeleccionado: null,
+                error: '',
                 // invitados: [],
             }
         },
@@ -67,27 +74,64 @@
                     axios.get(uri)
                     .then(r => r.data.data)
                     .then(resultadoBusqueda => {
+                        this.error = ''
                         res(resultadoBusqueda);
                     })
-                    .catch(err=>{
-                        console.log(err);
+                    .catch(error=>{
                         res([]);
-                    });
+                        // Error 😨
+                        if (error.response) {
+                            /*
+                            * The request was made and the server responded with a
+                            * status code that falls out of the range of 2xx
+                            */
+                            console.log(error.response.data);
+                            console.log(error.response.status);
+                            console.log(error.response.headers);
+                            if (error.response.status == 404){
+                                this.error = error.response.data.message;
+                            }
+                        } else if (error.request) {
+                            /*
+                            * The request was made but no response was received, `error.request`
+                            * is an instance of XMLHttpRequest in the browser and an instance
+                            * of http.ClientRequest in Node.js
+                            */
+                            console.log(error.request);
+                            this.error = error.message;
+                        } else {
+                            // Something happened in setting up the request and triggered an Error
+                            console.log('Error: ', error.message);
+                        }
+                        console.log(error.config);
+                                    });
                 });
             },
             obtenerNombreCompleto(invitado){ // Obtengo solo lo que me interesa del resultado de búsqueda
                 return `${invitado.nombre} ${invitado.apellido_paterno} ${invitado.apellido_materno}`;
             },
             procesarInvitado(invitado){
-                if(this.invitados && invitado){
-                    !this.invitados.find(inv => invitado.id == inv.id) ? this.agregarInvitado(invitado) : null;
+                if(this.invitados && invitado )// Si hay invitados en lista e invitado seleccionado para agregar
+                {
+                    if(this.invitados.find(inv => inv.id == invitado.id)) // si está en la lista de invitados
+                    {
+                        this.error = 'Error: El usuario ya está en la lista de invitados';
+                        return;
+                    }
+                    if (this.academia.miembrosActuales.find(miembro => miembro.id == invitado.id)) // Si el usuario es miembro de la academia
+                    {
+                        this.error = 'Error: Solo se pueden agregar usuarios que no sean miembros de la academia';
+                        return;
+                    }
+                    this.error = '';
+                    this.agregarInvitado(invitado);
                     console.log(`${invitado.nombre} ${invitado.apellido_paterno} ${invitado.apellido_materno}`);
                 }
             }
 
         },
         computed: {
-            ...mapGetters(['invitados']),
+            ...mapGetters(['invitados', 'academia']),
         },
     }
 </script>

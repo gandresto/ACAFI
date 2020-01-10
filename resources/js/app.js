@@ -43,6 +43,7 @@ Vue.component('modal', require('./components/PlantillaModal.vue').default);
 
 Vue.component('crear-reunion', require('./components/CrearReunion.vue').default);
 Vue.component('crear-reunion-agregar-invitados', require('./components/CrearReunionAgregarInvitados.vue').default);
+Vue.component('crear-reunion-agregar-convocados', require('./components/CrearReunionAgregarConvocados.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

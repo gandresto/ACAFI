@@ -79,32 +79,8 @@
             </b-form-group>
             <hr>
             <!-- ----------- Convocados --------- -->
-            <b-form-group>
-                <label><strong>Selecciona a los convocados a la reunión</strong></label>
-                <b-table hover head-variant="dark"
-                    ref="tablaConvocados"
-                    selectable
-                    select-mode="multi"
-                    :items="cAcademia.miembrosActuales"
-                    :fields="camposTablaConvocados"
-                    responsive="sm"
-                    @row-selected="actualizarConvocados"
-                >
-                    <template v-slot:cell(convocado)="{ rowSelected }">
-                        <template v-if="rowSelected">
-                        <span aria-hidden="true">&check;</span>
-                        <span class="sr-only">Convocado</span>
-                        </template>
-                        <template v-else>
-                        <span aria-hidden="true">&nbsp;</span>
-                        <span class="sr-only">No convocado</span>
-                        </template>
-                    </template>
-                    <template v-slot:cell(miembro)="data">
-                        {{`${data.item.nombre} ${data.item.apellido_paterno} ${data.item.apellido_materno}`}}
-                    </template>
-                </b-table>
-            </b-form-group>
+            <crear-reunion-agregar-convocados>
+            </crear-reunion-agregar-convocados>
             <hr>
             <!-- ----------- Invitados --------- -->
             <crear-reunion-agregar-invitados>
@@ -114,7 +90,7 @@
                 <!-- {{academiaSeleccionada}} <br> -->
                 <!-- {{fechaInicio}} <br> -->
                 <!-- {{lugar}} <br> -->
-                {{convocados}}<br>
+                <!-- {{convocados}}<br> -->
                 </b-container>
             </b-row>
         </b-form>
@@ -128,14 +104,6 @@
     export default {
         data() {
             return {
-                camposTablaConvocados: [
-                    {
-                        key:'convocado',
-                        label:'¿Convocado?'
-                    },
-                    'miembro',
-                    'email'
-                ],
                 academiaSeleccionada: null,
                 fechaInicio: null,
                 estadoApi: ESTADO_API,
@@ -145,28 +113,20 @@
                     cancel: 'Cancelar'
                 },
                 lugar: '',
-                convocados: [],
             }
         },
         mounted() {
             let date = new Date();
             this.limiteInferiorFecha = date.toISOString();
             this.leerAcademiasQuePreside(Laravel.authUserId);
-            // console.log(API.baseURL);
-            // console.log(Laravel.authUserId);
-            // console.log(this.cAcademias);
         },
         methods: {
             ...mapActions(
                 ['leerAcademiasQuePreside', 'leerAcademia']
             ),
             seleccionarAcademia(){
-                // console.log(this.academiaSeleccionada);
                 if(this.academiaSeleccionada) this.leerAcademia(this.academiaSeleccionada);
             },
-            actualizarConvocados(items){
-                this.convocados = items;
-            }
         },
         computed:{
             ...mapGetters(
@@ -174,9 +134,6 @@
             ),
             cAcademias(){
                 return this.academias || null;
-            },
-            cAcademia(){
-                return this.academia || null;
             },
         }
     }

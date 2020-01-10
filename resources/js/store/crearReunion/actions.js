@@ -43,6 +43,9 @@ export default {
             });
         // });
     },
+    ponerConvocados({commit}, convocados){
+        commit('colocarConvocados', convocados);
+    },
     agregarConvocado({commit}, convocado){
         commit('colocarConvocado', convocado);
     },

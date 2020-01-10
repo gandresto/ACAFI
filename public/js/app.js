@@ -2616,40 +2616,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
  // import API from '../services/api';
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      camposTablaConvocados: [{
-        key: 'convocado',
-        label: '¿Convocado?'
-      }, 'miembro', 'email'],
       academiaSeleccionada: null,
       fechaInicio: null,
       estadoApi: _enum_estado_api__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -2658,30 +2630,97 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         ok: 'Aceptar',
         cancel: 'Cancelar'
       },
-      lugar: '',
-      convocados: []
+      lugar: ''
     };
   },
   mounted: function mounted() {
     var date = new Date();
     this.limiteInferiorFecha = date.toISOString();
-    this.leerAcademiasQuePreside(Laravel.authUserId); // console.log(API.baseURL);
-    // console.log(Laravel.authUserId);
-    // console.log(this.cAcademias);
+    this.leerAcademiasQuePreside(Laravel.authUserId);
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['leerAcademiasQuePreside', 'leerAcademia']), {
     seleccionarAcademia: function seleccionarAcademia() {
-      // console.log(this.academiaSeleccionada);
       if (this.academiaSeleccionada) this.leerAcademia(this.academiaSeleccionada);
-    },
-    actualizarConvocados: function actualizarConvocados(items) {
-      this.convocados = items;
     }
   }),
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['academias', 'estadoAcademias', 'academia', 'estadoAcademia']), {
     cAcademias: function cAcademias() {
       return this.academias || null;
-    },
+    }
+  })
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CrearReunionAgregarConvocados.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CrearReunionAgregarConvocados.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    console.log('Component mounted.');
+  },
+  data: function data() {
+    return {
+      camposTablaConvocados: [{
+        key: 'convocado',
+        label: '¿Convocado?'
+      }, 'miembro', 'email']
+    };
+  },
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['ponerConvocados']), {
+    actualizarConvocados: function actualizarConvocados(items) {
+      this.ponerConvocados(items);
+    }
+  }),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['academia', 'convocados']), {
     cAcademia: function cAcademia() {
       return this.academia || null;
     }
@@ -2752,6 +2791,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2762,22 +2807,52 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       // consulta: '',
       camposTablaInvitados: ['invitado', 'email', 'acciones'],
-      invitadoSeleccionado: null // invitados: [],
+      invitadoSeleccionado: null,
+      error: '' // invitados: [],
 
     };
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['agregarInvitado']), {
     buscarInvitado: function buscarInvitado(consulta) {
+      var _this = this;
+
       var uri = "".concat(_services_api__WEBPACK_IMPORTED_MODULE_0__["default"].baseURL, "/users/buscar/").concat(consulta);
       return new Promise(function (res, rej) {
         if (!consulta || consulta.length < 3) return res([]);
         axios.get(uri).then(function (r) {
           return r.data.data;
         }).then(function (resultadoBusqueda) {
+          _this.error = '';
           res(resultadoBusqueda);
-        })["catch"](function (err) {
-          console.log(err);
-          res([]);
+        })["catch"](function (error) {
+          res([]); // Error 😨
+
+          if (error.response) {
+            /*
+            * The request was made and the server responded with a
+            * status code that falls out of the range of 2xx
+            */
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+
+            if (error.response.status == 404) {
+              _this.error = error.response.data.message;
+            }
+          } else if (error.request) {
+            /*
+            * The request was made but no response was received, `error.request`
+            * is an instance of XMLHttpRequest in the browser and an instance
+            * of http.ClientRequest in Node.js
+            */
+            console.log(error.request);
+            _this.error = error.message;
+          } else {
+            // Something happened in setting up the request and triggered an Error
+            console.log('Error: ', error.message);
+          }
+
+          console.log(error.config);
         });
       });
     },
@@ -2786,15 +2861,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return "".concat(invitado.nombre, " ").concat(invitado.apellido_paterno, " ").concat(invitado.apellido_materno);
     },
     procesarInvitado: function procesarInvitado(invitado) {
-      if (this.invitados && invitado) {
-        !this.invitados.find(function (inv) {
-          return invitado.id == inv.id;
-        }) ? this.agregarInvitado(invitado) : null;
-        console.log("".concat(invitado.nombre, " ").concat(invitado.apellido_paterno, " ").concat(invitado.apellido_materno));
-      }
+      if (this.invitados && invitado) // Si hay invitados en lista e invitado seleccionado para agregar
+        {
+          if (this.invitados.find(function (inv) {
+            return inv.id == invitado.id;
+          })) // si está en la lista de invitados
+            {
+              this.error = 'Error: El usuario ya está en la lista de invitados';
+              return;
+            }
+
+          if (this.academia.miembrosActuales.find(function (miembro) {
+            return miembro.id == invitado.id;
+          })) // Si el usuario es miembro de la academia
+            {
+              this.error = 'Error: Solo se pueden agregar usuarios que no sean miembros de la academia';
+              return;
+            }
+
+          this.error = '';
+          this.agregarInvitado(invitado);
+          console.log("".concat(invitado.nombre, " ").concat(invitado.apellido_paterno, " ").concat(invitado.apellido_materno));
+        }
     }
   }),
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['invitados']))
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['invitados', 'academia']))
 });
 
 /***/ }),
@@ -80542,102 +80633,13 @@ var render = function() {
               _vm._v(" "),
               _c("hr"),
               _vm._v(" "),
-              _c(
-                "b-form-group",
-                [
-                  _c("label", [
-                    _c("strong", [
-                      _vm._v("Selecciona a los convocados a la reunión")
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("b-table", {
-                    ref: "tablaConvocados",
-                    attrs: {
-                      hover: "",
-                      "head-variant": "dark",
-                      selectable: "",
-                      "select-mode": "multi",
-                      items: _vm.cAcademia.miembrosActuales,
-                      fields: _vm.camposTablaConvocados,
-                      responsive: "sm"
-                    },
-                    on: { "row-selected": _vm.actualizarConvocados },
-                    scopedSlots: _vm._u(
-                      [
-                        {
-                          key: "cell(convocado)",
-                          fn: function(ref) {
-                            var rowSelected = ref.rowSelected
-                            return [
-                              rowSelected
-                                ? [
-                                    _c(
-                                      "span",
-                                      { attrs: { "aria-hidden": "true" } },
-                                      [_vm._v("✓")]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("span", { staticClass: "sr-only" }, [
-                                      _vm._v("Convocado")
-                                    ])
-                                  ]
-                                : [
-                                    _c(
-                                      "span",
-                                      { attrs: { "aria-hidden": "true" } },
-                                      [_vm._v(" ")]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("span", { staticClass: "sr-only" }, [
-                                      _vm._v("No convocado")
-                                    ])
-                                  ]
-                            ]
-                          }
-                        },
-                        {
-                          key: "cell(miembro)",
-                          fn: function(data) {
-                            return [
-                              _vm._v(
-                                "\n                    " +
-                                  _vm._s(
-                                    data.item.nombre +
-                                      " " +
-                                      data.item.apellido_paterno +
-                                      " " +
-                                      data.item.apellido_materno
-                                  ) +
-                                  "\n                "
-                              )
-                            ]
-                          }
-                        }
-                      ],
-                      null,
-                      false,
-                      3649674766
-                    )
-                  })
-                ],
-                1
-              ),
+              _c("crear-reunion-agregar-convocados"),
               _vm._v(" "),
               _c("hr"),
               _vm._v(" "),
               _c("crear-reunion-agregar-invitados"),
               _vm._v(" "),
-              _c(
-                "b-row",
-                [
-                  _c("b-container", [
-                    _vm._v("\n            " + _vm._s(_vm.convocados)),
-                    _c("br")
-                  ])
-                ],
-                1
-              )
+              _c("b-row", [_c("b-container")], 1)
             ],
             1
           )
@@ -80668,6 +80670,110 @@ var staticRenderFns = [
     )
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CrearReunionAgregarConvocados.vue?vue&type=template&id=65016c84&":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CrearReunionAgregarConvocados.vue?vue&type=template&id=65016c84& ***!
+  \********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c(
+        "b-form-group",
+        [
+          _c("label", [
+            _c("strong", [_vm._v("Selecciona a los convocados a la reunión")])
+          ]),
+          _vm._v(" "),
+          _c("b-table", {
+            ref: "tablaConvocados",
+            attrs: {
+              hover: "",
+              "head-variant": "dark",
+              selectable: "",
+              "select-mode": "multi",
+              items: _vm.cAcademia.miembrosActuales,
+              fields: _vm.camposTablaConvocados,
+              responsive: "sm"
+            },
+            on: { "row-selected": _vm.actualizarConvocados },
+            scopedSlots: _vm._u([
+              {
+                key: "cell(convocado)",
+                fn: function(ref) {
+                  var rowSelected = ref.rowSelected
+                  return [
+                    rowSelected
+                      ? [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("✓")
+                          ]),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "sr-only" }, [
+                            _vm._v("Convocado")
+                          ])
+                        ]
+                      : [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v(" ")
+                          ]),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "sr-only" }, [
+                            _vm._v("No convocado")
+                          ])
+                        ]
+                  ]
+                }
+              },
+              {
+                key: "cell(miembro)",
+                fn: function(data) {
+                  return [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(
+                          data.item.nombre +
+                            " " +
+                            data.item.apellido_paterno +
+                            " " +
+                            data.item.apellido_materno
+                        ) +
+                        "\n            "
+                    )
+                  ]
+                }
+              }
+            ])
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("b-form-group", [
+        _vm._v("\n        " + _vm._s(_vm.convocados) + "\n    ")
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -80740,6 +80846,21 @@ var render = function() {
         ],
         1
       ),
+      _vm._v(" "),
+      _vm.error
+        ? _c("div", { staticClass: "alert alert-danger" }, [
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: { type: "button", "data-dismiss": "alert" }
+              },
+              [_vm._v("×")]
+            ),
+            _vm._v(" "),
+            _c("strong", [_vm._v(_vm._s(_vm.error))])
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _c(
         "b-form-group",
@@ -94806,6 +94927,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('editar-division', __webpac
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('modal', __webpack_require__(/*! ./components/PlantillaModal.vue */ "./resources/js/components/PlantillaModal.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('crear-reunion', __webpack_require__(/*! ./components/CrearReunion.vue */ "./resources/js/components/CrearReunion.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('crear-reunion-agregar-invitados', __webpack_require__(/*! ./components/CrearReunionAgregarInvitados.vue */ "./resources/js/components/CrearReunionAgregarInvitados.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('crear-reunion-agregar-convocados', __webpack_require__(/*! ./components/CrearReunionAgregarConvocados.vue */ "./resources/js/components/CrearReunionAgregarConvocados.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -95079,6 +95201,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunion_vue_vue_type_template_id_fd071940___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunion_vue_vue_type_template_id_fd071940___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/CrearReunionAgregarConvocados.vue":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/CrearReunionAgregarConvocados.vue ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CrearReunionAgregarConvocados_vue_vue_type_template_id_65016c84___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CrearReunionAgregarConvocados.vue?vue&type=template&id=65016c84& */ "./resources/js/components/CrearReunionAgregarConvocados.vue?vue&type=template&id=65016c84&");
+/* harmony import */ var _CrearReunionAgregarConvocados_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CrearReunionAgregarConvocados.vue?vue&type=script&lang=js& */ "./resources/js/components/CrearReunionAgregarConvocados.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CrearReunionAgregarConvocados_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CrearReunionAgregarConvocados_vue_vue_type_template_id_65016c84___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CrearReunionAgregarConvocados_vue_vue_type_template_id_65016c84___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/CrearReunionAgregarConvocados.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/CrearReunionAgregarConvocados.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/CrearReunionAgregarConvocados.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionAgregarConvocados_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./CrearReunionAgregarConvocados.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CrearReunionAgregarConvocados.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionAgregarConvocados_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/CrearReunionAgregarConvocados.vue?vue&type=template&id=65016c84&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/CrearReunionAgregarConvocados.vue?vue&type=template&id=65016c84& ***!
+  \**************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionAgregarConvocados_vue_vue_type_template_id_65016c84___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./CrearReunionAgregarConvocados.vue?vue&type=template&id=65016c84& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CrearReunionAgregarConvocados.vue?vue&type=template&id=65016c84&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionAgregarConvocados_vue_vue_type_template_id_65016c84___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionAgregarConvocados_vue_vue_type_template_id_65016c84___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -95460,12 +95651,16 @@ __webpack_require__.r(__webpack_exports__);
       console.log(err); // rej();
     }); // });
   },
-  agregarConvocado: function agregarConvocado(_ref3, convocado) {
+  ponerConvocados: function ponerConvocados(_ref3, convocados) {
     var commit = _ref3.commit;
+    commit('colocarConvocados', convocados);
+  },
+  agregarConvocado: function agregarConvocado(_ref4, convocado) {
+    var commit = _ref4.commit;
     commit('colocarConvocado', convocado);
   },
-  agregarInvitado: function agregarInvitado(_ref4, invitado) {
-    var commit = _ref4.commit;
+  agregarInvitado: function agregarInvitado(_ref5, invitado) {
+    var commit = _ref5.commit;
     commit('colocarInvitado', invitado);
   }
 });
