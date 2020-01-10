@@ -1926,11 +1926,62 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      campos: [{
+        key: 'convocado',
+        label: 'Convocado'
+      }, {
+        key: 'nombre',
+        label: 'Nombre'
+      }, {
+        key: 'apellido_pat',
+        label: 'Apellido Paterno'
+      }, {
+        key: 'apellido_mat',
+        label: 'Apellido Materno'
+      }],
       academiaSeleccionada: null,
       fechaInicio: null,
       estadoApi: _enum_estado_api__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -1949,14 +2000,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     console.log(Laravel.authUserId);
     console.log(this.cAcademias);
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['leerAcademiasQuePreside']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['leerAcademiasQuePreside', 'leerAcademia']), {
     seleccionarAcademia: function seleccionarAcademia() {
       console.log(this.academiaSeleccionada);
+      if (this.academiaSeleccionada) this.leerAcademia(this.academiaSeleccionada);
     }
   }),
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['academias', 'estadoAcademias']), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['academias', 'estadoAcademias', 'academia', 'estadoAcademia']), {
     cAcademias: function cAcademias() {
       return this.academias || null;
+    },
+    cAcademia: function cAcademia() {
+      return this.academia || null;
     }
   })
 });
@@ -79609,97 +79664,183 @@ var render = function() {
                     2
                   )
                 ]
-              ),
-              _vm._v(" "),
-              _vm.academiaSeleccionada
-                ? _c(
-                    "div",
-                    [
-                      _c(
-                        "b-row",
-                        [
-                          _c(
-                            "v-datetime",
-                            {
-                              staticClass: "form-group col-md-12",
-                              attrs: {
-                                "input-id": "fecha-inicio-input",
-                                type: "datetime",
-                                "min-datetime": _vm.limiteInferiorFecha,
-                                phrases: _vm.frases,
-                                required: "true",
-                                "input-class": "form-control"
-                              },
-                              model: {
-                                value: _vm.fechaInicio,
-                                callback: function($$v) {
-                                  _vm.fechaInicio = $$v
-                                },
-                                expression: "fechaInicio"
-                              }
-                            },
-                            [
-                              _c(
-                                "label",
-                                {
-                                  attrs: {
-                                    slot: "before",
-                                    for: "fecha-inicio-input"
-                                  },
-                                  slot: "before"
-                                },
-                                [_vm._v("Fecha y hora de inicio")]
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "b-form-group",
-                        {
-                          attrs: {
-                            id: "lugar",
-                            label: "Lugar",
-                            "label-for": "text-lugar"
-                          }
-                        },
-                        [
-                          _c("b-form-input", {
-                            attrs: {
-                              id: "text-lugar",
-                              type: "text",
-                              required: ""
-                            },
-                            model: {
-                              value: _vm.lugar,
-                              callback: function($$v) {
-                                _vm.lugar = $$v
-                              },
-                              expression: "lugar"
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                : _vm._e()
+              )
             ],
             1
           )
         : _vm._e(),
       _vm._v(" "),
-      _c("div", [
-        _vm._v("\n        " + _vm._s(_vm.academiaSeleccionada) + " "),
-        _c("br"),
-        _vm._v("\n        " + _vm._s(_vm.fechaInicio) + " "),
-        _c("br"),
-        _vm._v("\n        " + _vm._s(_vm.lugar) + " "),
-        _c("br")
-      ])
+      _vm.estadoAcademia == _vm.estadoApi.CARGANDO
+        ? _c("div", { staticClass: "d-flex justify-content-center" }, [
+            _vm._m(1)
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.estadoAcademia == _vm.estadoApi.ERROR
+        ? _c("div", { staticClass: "alert alert-danger" }, [
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: { type: "button", "data-dismiss": "alert" }
+              },
+              [_vm._v("×")]
+            ),
+            _vm._v(" "),
+            _c("strong", [
+              _vm._v("Hubo un problema, intenta de nuevo más tarde")
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.academiaSeleccionada && _vm.estadoAcademia == _vm.estadoApi.LISTO
+        ? _c(
+            "b-form",
+            [
+              _c(
+                "b-row",
+                [
+                  _c(
+                    "v-datetime",
+                    {
+                      staticClass: "form-group col-md-12",
+                      attrs: {
+                        "input-id": "fecha-inicio-input",
+                        type: "datetime",
+                        "min-datetime": _vm.limiteInferiorFecha,
+                        phrases: _vm.frases,
+                        required: "true",
+                        "input-class": "form-control"
+                      },
+                      model: {
+                        value: _vm.fechaInicio,
+                        callback: function($$v) {
+                          _vm.fechaInicio = $$v
+                        },
+                        expression: "fechaInicio"
+                      }
+                    },
+                    [
+                      _c(
+                        "label",
+                        {
+                          attrs: { slot: "before", for: "fecha-inicio-input" },
+                          slot: "before"
+                        },
+                        [_vm._v("Fecha y hora de inicio")]
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "b-form-group",
+                {
+                  attrs: {
+                    id: "lugar",
+                    label: "Lugar",
+                    "label-for": "text-lugar"
+                  }
+                },
+                [
+                  _c("b-form-input", {
+                    attrs: { id: "text-lugar", type: "text", required: "" },
+                    model: {
+                      value: _vm.lugar,
+                      callback: function($$v) {
+                        _vm.lugar = $$v
+                      },
+                      expression: "lugar"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "b-form-group",
+                [
+                  _c("label", [
+                    _vm._v("Selecciona a los convocados a la reunión")
+                  ]),
+                  _vm._v(" "),
+                  _c("b-table", {
+                    ref: "selectableTable",
+                    attrs: {
+                      hover: "",
+                      "head-variant": "dark",
+                      selectable: "",
+                      "select-mode": "multi",
+                      items: _vm.cAcademia.miembrosActuales,
+                      fields: _vm.campos
+                    },
+                    scopedSlots: _vm._u(
+                      [
+                        {
+                          key: "cell(convocado)",
+                          fn: function(ref) {
+                            var rowSelected = ref.rowSelected
+                            return [
+                              rowSelected
+                                ? [
+                                    _c(
+                                      "span",
+                                      { attrs: { "aria-hidden": "true" } },
+                                      [_vm._v("✓")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("span", { staticClass: "sr-only" }, [
+                                      _vm._v("Convocado")
+                                    ])
+                                  ]
+                                : [
+                                    _c(
+                                      "span",
+                                      { attrs: { "aria-hidden": "true" } },
+                                      [_vm._v(" ")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("span", { staticClass: "sr-only" }, [
+                                      _vm._v("No convocado")
+                                    ])
+                                  ]
+                            ]
+                          }
+                        }
+                      ],
+                      null,
+                      false,
+                      3248531164
+                    )
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "b-row",
+                [
+                  _c("b-container", [
+                    _vm._v(
+                      "\n            " + _vm._s(_vm.academiaSeleccionada) + " "
+                    ),
+                    _c("br"),
+                    _vm._v("\n            " + _vm._s(_vm.fechaInicio) + " "),
+                    _c("br"),
+                    _vm._v("\n            " + _vm._s(_vm.lugar) + " "),
+                    _c("br"),
+                    _vm._v("\n            " + _vm._s(_vm.cAcademia)),
+                    _c("br")
+                  ])
+                ],
+                1
+              )
+            ],
+            1
+          )
+        : _vm._e()
     ],
     1
   )
@@ -79712,7 +79853,17 @@ var staticRenderFns = [
     return _c(
       "div",
       { staticClass: "spinner-border", attrs: { role: "status" } },
-      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Cargando...")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "spinner-border", attrs: { role: "status" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Cargando...")])]
     )
   }
 ]
@@ -94312,6 +94463,25 @@ __webpack_require__.r(__webpack_exports__);
         rej();
       });
     });
+  },
+  leerAcademia: function leerAcademia(_ref2, id) {
+    var commit = _ref2.commit;
+    console.log(_services_api__WEBPACK_IMPORTED_MODULE_1__["default"].baseURL);
+    var uri = "".concat(_services_api__WEBPACK_IMPORTED_MODULE_1__["default"].baseURL, "/academias/").concat(id, "/");
+    return new Promise(function (res, rej) {
+      commit('colocarEstadoAcademia', _enum_estado_api__WEBPACK_IMPORTED_MODULE_2__["default"].CARGANDO);
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(uri).then(function (r) {
+        return r.data.data;
+      }).then(function (academia) {
+        commit('colocarAcademia', academia);
+        commit('colocarEstadoAcademia', _enum_estado_api__WEBPACK_IMPORTED_MODULE_2__["default"].LISTO);
+        res();
+      })["catch"](function (err) {
+        commit('colocarEstadoAcademia', _enum_estado_api__WEBPACK_IMPORTED_MODULE_2__["default"].ERROR);
+        console.log(err);
+        rej();
+      });
+    });
   }
 });
 
@@ -94332,6 +94502,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   estadoAcademias: function estadoAcademias(state) {
     return state.estadoAcademias;
+  },
+  academia: function academia(state) {
+    return state.academia;
+  },
+  estadoAcademia: function estadoAcademia(state) {
+    return state.estadoAcademia;
   }
 });
 
@@ -94384,6 +94560,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   colocarEstadoAcademias: function colocarEstadoAcademias(state, estadoAcademias) {
     state.estadoAcademias = estadoAcademias;
+  },
+  colocarAcademia: function colocarAcademia(state, academia) {
+    state.academia = academia;
+  },
+  colocarEstadoAcademia: function colocarEstadoAcademia(state, estadoAcademia) {
+    state.estadoAcademia = estadoAcademia;
   }
 });
 
@@ -94402,6 +94584,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   estadoAcademias: _enum_estado_api__WEBPACK_IMPORTED_MODULE_0__["default"].INICIADO,
+  estadoAcademia: _enum_estado_api__WEBPACK_IMPORTED_MODULE_0__["default"].INICIADO,
   academias: null,
   academia: null
 });

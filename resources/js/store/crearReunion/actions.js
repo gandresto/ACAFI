@@ -23,4 +23,24 @@ export default {
             });
         });
     },
+    leerAcademia({commit}, id){
+        console.log(api.baseURL);
+        let uri = `${api.baseURL}/academias/${id}/`
+        return new Promise((res, rej) => {
+        commit('colocarEstadoAcademia', ESTADO_API.CARGANDO);
+        axios
+            .get(uri)
+            .then(r => r.data.data)
+            .then(academia => {
+                commit('colocarAcademia', academia);
+                commit('colocarEstadoAcademia', ESTADO_API.LISTO);
+                res();
+            })
+            .catch(err=>{
+                commit('colocarEstadoAcademia', ESTADO_API.ERROR);
+                console.log(err);
+                rej();
+            });
+        });
+    },
 };

@@ -4,7 +4,7 @@
             class="d-flex justify-content-center"
         >
             <div class="spinner-border" role="status">
-                <span class="sr-only">Loading...</span>
+                <span class="sr-only">Cargando...</span>
             </div>
         </div>
         <div  v-if="estadoAcademias==estadoApi.ERROR"
@@ -32,41 +32,79 @@
                     </option>
                 </select>
             </b-form-group>
-            <div v-if="academiaSeleccionada">
-                <b-row>
-                    <v-datetime
-                        class="form-group col-md-12"
-                        input-id="fecha-inicio-input"
-                        type="datetime"
-                        :min-datetime="limiteInferiorFecha"
-                        v-model="fechaInicio"
-                        :phrases="frases"
-                        required="true"
-                        input-class="form-control"
-                    >
-                        <label for="fecha-inicio-input" slot="before">Fecha y hora de inicio</label>
-                    </v-datetime>
-                </b-row>
-                <b-form-group
-                    id="lugar"
-                    label="Lugar"
-                    label-for="text-lugar"
-                >
-                    <b-form-input
-                        id="text-lugar"
-                        v-model="lugar"
-                        type="text"
-                        required
-                    >
-                    </b-form-input>
-                </b-form-group>
-            </div>
         </b-form>
-        <div>
-            {{academiaSeleccionada}} <br>
-            {{fechaInicio}} <br>
-            {{lugar}} <br>
+        <div v-if="estadoAcademia==estadoApi.CARGANDO"
+            class="d-flex justify-content-center"
+        >
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Cargando...</span>
+            </div>
         </div>
+        <div  v-if="estadoAcademia==estadoApi.ERROR"
+            class="alert alert-danger"
+        >
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Hubo un problema, intenta de nuevo más tarde</strong>
+        </div>
+        <b-form v-if="academiaSeleccionada && estadoAcademia==estadoApi.LISTO">
+            <!-- Formulario al seleccionar academia -->
+            <b-row>
+                <v-datetime
+                    class="form-group col-md-12"
+                    input-id="fecha-inicio-input"
+                    type="datetime"
+                    :min-datetime="limiteInferiorFecha"
+                    v-model="fechaInicio"
+                    :phrases="frases"
+                    required="true"
+                    input-class="form-control"
+                >
+                    <label for="fecha-inicio-input" slot="before">Fecha y hora de inicio</label>
+                </v-datetime>
+            </b-row>
+            <b-form-group
+                id="lugar"
+                label="Lugar"
+                label-for="text-lugar"
+            >
+                <b-form-input
+                    id="text-lugar"
+                    v-model="lugar"
+                    type="text"
+                    required
+                >
+                </b-form-input>
+            </b-form-group>
+            <b-form-group>
+                <label>Selecciona a los convocados a la reunión</label>
+                <b-table hover head-variant="dark"
+                    ref="selectableTable"
+                    selectable
+                    select-mode="multi"
+                    :items="cAcademia.miembrosActuales"
+                    :fields="campos"
+                >
+                <template v-slot:cell(convocado)="{ rowSelected }">
+                    <template v-if="rowSelected">
+                    <span aria-hidden="true">&check;</span>
+                    <span class="sr-only">Convocado</span>
+                    </template>
+                    <template v-else>
+                    <span aria-hidden="true">&nbsp;</span>
+                    <span class="sr-only">No convocado</span>
+                    </template>
+                </template>
+                </b-table>
+            </b-form-group>
+            <b-row>
+                <b-container>
+                {{academiaSeleccionada}} <br>
+                {{fechaInicio}} <br>
+                {{lugar}} <br>
+                {{cAcademia}}<br>
+                </b-container>
+            </b-row>
+        </b-form>
     </div>
 </template>
 
@@ -76,6 +114,24 @@
     export default {
         data() {
             return {
+                campos: [
+                    {
+                        key: 'convocado',
+                        label: 'Convocado'
+                    },
+                    {
+                        key: 'nombre',
+                        label: 'Nombre'
+                    },
+                    {
+                        key: 'apellido_pat',
+                        label: 'Apellido Paterno'
+                    },
+                    {
+                        key: 'apellido_mat',
+                        label: 'Apellido Materno'
+                    },
+                ],
                 academiaSeleccionada: null,
                 fechaInicio: null,
                 estadoApi: ESTADO_API,
@@ -96,18 +152,22 @@
         },
         methods: {
             ...mapActions(
-                ['leerAcademiasQuePreside']
+                ['leerAcademiasQuePreside', 'leerAcademia']
             ),
             seleccionarAcademia(){
                 console.log(this.academiaSeleccionada);
+                if(this.academiaSeleccionada) this.leerAcademia(this.academiaSeleccionada);
             },
         },
         computed:{
             ...mapGetters(
-                ['academias', 'estadoAcademias']
+                ['academias', 'estadoAcademias', 'academia', 'estadoAcademia']
             ),
             cAcademias(){
                 return this.academias || null;
+            },
+            cAcademia(){
+                return this.academia || null;
             },
         }
     }
