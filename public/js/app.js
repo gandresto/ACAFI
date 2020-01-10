@@ -2832,13 +2832,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             * The request was made and the server responded with a
             * status code that falls out of the range of 2xx
             */
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
-
+            // console.log(error.response.data);
+            // console.log(error.response.status);
+            // console.log(error.response.headers);
             if (error.response.status == 404) {
               _this.error = error.response.data.message;
             }
+
+            _this.error = error.message;
           } else if (error.request) {
             /*
             * The request was made but no response was received, `error.request`
