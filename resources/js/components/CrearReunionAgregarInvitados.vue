@@ -3,30 +3,33 @@
     <b-form-group>
         <label><strong>Agregar invitados externos a la academia</strong></label>
     </b-form-group>
-    <autocomplete :search="buscarInvitado"
-        placeholder="Buscar usuario"
-        aria-label="Buscar usuario"
-        :get-result-value="obtenerNombreDeInvitado"
-        @submit="agregarInvitado"
-    >
-        <template #result="{ result, props }">
-            <li
-                v-bind="props"
-                class="autocomplete-result"
-            >
-                {{`${result.nombre} ${result.apellido_paterno} ${result.apellido_materno}`}}
-            </li>
-        </template>
-    </autocomplete>
+    <b-form-group>
+        <autocomplete :search="buscarInvitado"
+            placeholder="Buscar usuario"
+            aria-label="Buscar usuario"
+            :get-result-value="obtenerNombreCompleto"
+            @submit="agregarInvitado"
+        >
+            <template #result="{ result, props }">
+                <li
+                    v-bind="props"
+                    class="autocomplete-result"
+                >
+                    {{obtenerNombreCompleto(result)}}
+                </li>
+            </template>
+        </autocomplete>
+    </b-form-group>
     <b-form-group>
         <b-table
             head-variant="dark"
             ref="tablaInvitados"
             :fields="camposTablaInvitados"
             :items="invitados"
+            responsive="sm"
         >
         <template v-slot:cell(invitado)="data">
-            {{`${data.item.nombre} ${data.item.apellido_paterno} ${data.item.apellido_materno}`}}
+            {{obtenerNombreCompleto(data.item)}}
         </template>
         </b-table>
     </b-form-group>
@@ -69,7 +72,7 @@
                     });
                 });
             },
-            obtenerNombreDeInvitado(invitado){ // Obtengo solo lo que me interesa del resultado de búsqueda
+            obtenerNombreCompleto(invitado){ // Obtengo solo lo que me interesa del resultado de búsqueda
                 return `${invitado.nombre} ${invitado.apellido_paterno} ${invitado.apellido_materno}`;
             },
             agregarInvitado(invitado){

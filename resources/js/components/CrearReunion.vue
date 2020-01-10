@@ -87,6 +87,7 @@
                     select-mode="multi"
                     :items="cAcademia.miembrosActuales"
                     :fields="camposTablaConvocados"
+                    responsive="sm"
                     @row-selected="actualizarConvocados"
                 >
                     <template v-slot:cell(convocado)="{ rowSelected }">
