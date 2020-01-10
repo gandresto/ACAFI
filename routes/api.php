@@ -18,13 +18,21 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::resource('/divisions', 'Api\DivisionController')->middleware('auth:api');
+Route::resource('/divisions', 'Api\DivisionController')->middleware('auth:api')->except([
+    'create', 'edit'
+]);
 Route::get('/divisions/buscar/{consulta}', 'Api\DivisionController@buscar')->middleware('auth:api');
 
 Route::get('/users/yo', 'Api\UserController@yo')->middleware('auth:api');
-Route::resource('/users', 'Api\UserController')->middleware('auth:api');
+Route::resource('/users', 'Api\UserController')->middleware('auth:api')->except([
+    'create', 'edit'
+]);;
 Route::get('/users/buscar/{consulta}', 'Api\UserController@buscar')->middleware('auth:api');
 Route::get('/users/{user_id}/academiasQueHaPresidido', 'Api\UserController@academiasQueHaPresidido')->middleware('auth:api');
+
+Route::resource('/academias', 'Api\AcademiaController')->middleware('auth:api')->except([
+    'create', 'edit'
+]);
 
 Route::fallback(function(){
     return response()->json(['message' => '¡No se encontró el recurso! Verifica la url'], 404);
