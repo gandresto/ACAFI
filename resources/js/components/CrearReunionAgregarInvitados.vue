@@ -25,13 +25,16 @@
             :fields="camposTablaInvitados"
             :items="invitados"
         >
+        <template v-slot:cell(invitado)="data">
+            {{`${data.item.nombre} ${data.item.apellido_paterno} ${data.item.apellido_materno}`}}
+        </template>
         </b-table>
     </b-form-group>
     <b-row>
         <b-container>
             <!-- {{consulta}}<br> -->
             <!-- {{resultadoBusqueda}}<br> -->
-            {{invitados}}<br>
+            <!-- {{invitados}}<br> -->
         </b-container>
     </b-row>
 </div>
@@ -46,7 +49,7 @@
         data() {
             return {
                 // consulta: '',
-                camposTablaInvitados: ['nombre', 'apellido_paterno', 'apellido_materno', 'acciones'],
+                camposTablaInvitados: ['invitado','email','acciones'],
                 invitadoSeleccionado: null,
                 invitados: [],
             }

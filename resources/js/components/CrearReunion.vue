@@ -87,17 +87,21 @@
                     select-mode="multi"
                     :items="cAcademia.miembrosActuales"
                     :fields="camposTablaConvocados"
+                    @row-selected="actualizarConvocados"
                 >
-                <template v-slot:cell(convocado)="{ rowSelected }">
-                    <template v-if="rowSelected">
-                    <span aria-hidden="true">&check;</span>
-                    <span class="sr-only">Convocado</span>
+                    <template v-slot:cell(convocado)="{ rowSelected }">
+                        <template v-if="rowSelected">
+                        <span aria-hidden="true">&check;</span>
+                        <span class="sr-only">Convocado</span>
+                        </template>
+                        <template v-else>
+                        <span aria-hidden="true">&nbsp;</span>
+                        <span class="sr-only">No convocado</span>
+                        </template>
                     </template>
-                    <template v-else>
-                    <span aria-hidden="true">&nbsp;</span>
-                    <span class="sr-only">No convocado</span>
+                    <template v-slot:cell(miembro)="data">
+                        {{`${data.item.nombre} ${data.item.apellido_paterno} ${data.item.apellido_materno}`}}
                     </template>
-                </template>
                 </b-table>
             </b-form-group>
             <hr>
@@ -109,7 +113,7 @@
                 <!-- {{academiaSeleccionada}} <br> -->
                 <!-- {{fechaInicio}} <br> -->
                 <!-- {{lugar}} <br> -->
-                <!-- {{cAcademia}}<br> -->
+                {{convocados}}<br>
                 </b-container>
             </b-row>
         </b-form>
@@ -123,7 +127,14 @@
     export default {
         data() {
             return {
-                camposTablaConvocados: ['convocado','nombre','apellido_paterno','apellido_materno'],
+                camposTablaConvocados: [
+                    {
+                        key:'convocado',
+                        label:'¿Convocado?'
+                    },
+                    'miembro',
+                    'email'
+                ],
                 academiaSeleccionada: null,
                 fechaInicio: null,
                 estadoApi: ESTADO_API,
@@ -133,6 +144,7 @@
                     cancel: 'Cancelar'
                 },
                 lugar: '',
+                convocados: [],
             }
         },
         mounted() {
@@ -151,6 +163,9 @@
                 // console.log(this.academiaSeleccionada);
                 if(this.academiaSeleccionada) this.leerAcademia(this.academiaSeleccionada);
             },
+            actualizarConvocados(items){
+                this.convocados = items;
+            }
         },
         computed:{
             ...mapGetters(
