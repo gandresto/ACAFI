@@ -79,7 +79,7 @@
                     })
                     .catch(error=>{
                         res([]);
-                        // Error 😨
+                        // Error 😨 
                         if (error.response) {
                             /*
                             * The request was made and the server responded with a
@@ -90,8 +90,8 @@
                             // console.log(error.response.headers);
                             if (error.response.status == 404){
                                 this.error = error.response.data.message;
-                            }
-                            this.error=error.message;
+                            } else
+                                this.error=error.message;
                         } else if (error.request) {
                             /*
                             * The request was made but no response was received, `error.request`
