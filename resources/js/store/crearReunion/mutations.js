@@ -26,4 +26,13 @@ export default {
     removerInvitadoPorId(state, invitado_id){
         state.invitados = state.invitados.filter(inv => inv.id != invitado_id);
     },
+    colocarTema(state, tema){
+        state.temas.push(tema);
+    },
+    actualizarTema(state, tema){
+        state.temas = state.temas.map(t => t.id == tema.id ? tema : t); // Si el id coincide, actualizamos
+    },
+    removerTema(state, tema){
+        state.temas = state.temas.filter(t => t.id != tema.id);
+    }
 };

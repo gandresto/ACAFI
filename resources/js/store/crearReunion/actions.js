@@ -54,5 +54,14 @@ export default {
     },
     eliminarInvitadoPorId({commit}, invitado){
         commit('removerInvitadoPorId', invitado);
+    },
+    agregarTema({commit}, tema){
+        commit('colocarTema', tema);
+    },
+    eliminarTema({commit}, tema){
+        commit('removerTema', tema);
+    },
+    editarTema({commit}, tema){
+        commit('actualizarTema', tema);
     }
 };

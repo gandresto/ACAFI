@@ -5,4 +5,5 @@ export default {
     estadoAcademia: state=> state.estadoAcademia,
     invitados: state => state.invitados,
     convocados: state => state.convocados,
+    temas: state => state.temas,
 }

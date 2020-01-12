@@ -82,12 +82,12 @@
             </b-form-group>
             <hr>
             <!-- ----------- Convocados --------- -->
-            <crear-reunion-agregar-convocados>
-            </crear-reunion-agregar-convocados>
+            <crear-reunion-agregar-convocados></crear-reunion-agregar-convocados>
             <hr>
             <!-- ----------- Invitados --------- -->
-            <crear-reunion-agregar-invitados>
-            </crear-reunion-agregar-invitados>
+            <crear-reunion-agregar-invitados></crear-reunion-agregar-invitados>
+            <!-- ----------- Temas por revisar --------- -->
+            <crear-reunion-agregar-temas></crear-reunion-agregar-temas>
             <b-row>
                 <b-container>
                 <!-- {{academiaSeleccionada}} <br> -->

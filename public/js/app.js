@@ -2927,6 +2927,177 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CrearReunionAgregarTemas.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CrearReunionAgregarTemas.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {// console.log('Component mounted.')
+  },
+  data: function data() {
+    return {
+      nuevoTema: ''
+    };
+  },
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['agregarTema']), {
+    agregarNuevoTema: function agregarNuevoTema(tema) {
+      if (tema.length > 3) {
+        // console.log(tema);
+        this.agregarTema({
+          id: this.temas.length ? this.temas.length + 1 : 1,
+          descripcion: tema
+        });
+      }
+    }
+  }),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['temas']), {
+    temaValido: function temaValido() {
+      return this.nuevoTema.length > 3 ? true : false;
+    }
+  })
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CrearReunionAgregarTemasTemaItem.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CrearReunionAgregarTemasTemaItem.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['tema'],
+  mounted: function mounted() {// console.log('Component mounted.')
+  },
+  data: function data() {
+    return {
+      textoTemaEnEdicion: this.tema.descripcion,
+      modoEdicion: false
+    };
+  },
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['editarTema', 'eliminarTema']), {
+    editarDescripcionTema: function editarDescripcionTema(textoTema) {
+      if (textoTema.length > 3) {
+        // console.log(tema);
+        this.editarTema({
+          id: this.tema.id,
+          descripcion: textoTema
+        });
+        this.modoEdicion = false;
+      }
+    },
+    activarModoEdicion: function activarModoEdicion() {
+      this.modoEdicion = true;
+    }
+  }),
+  computed: {
+    temaValido: function temaValido() {
+      return this.textoTemaEnEdicion.length > 3 ? true : false;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/EditarDivision.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/EditarDivision.vue?vue&type=script&lang=js& ***!
@@ -38876,6 +39047,25 @@ Popper.Defaults = Defaults;
 
 }));
 //# sourceMappingURL=bootstrap.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CrearReunionAgregarTemasTemaItem.vue?vue&type=style&index=0&lang=scss&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/lib/loader.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CrearReunionAgregarTemasTemaItem.vue?vue&type=style&index=0&lang=scss& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".disabled-input {\n  background-color: #e9ecef;\n}", ""]);
+
+// exports
 
 
 /***/ }),
@@ -78647,6 +78837,36 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CrearReunionAgregarTemasTemaItem.vue?vue&type=style&index=0&lang=scss&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/lib/loader.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CrearReunionAgregarTemasTemaItem.vue?vue&type=style&index=0&lang=scss& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-2!../../../node_modules/sass-loader/lib/loader.js??ref--7-3!../../../node_modules/vue-loader/lib??vue-loader-options!./CrearReunionAgregarTemasTemaItem.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CrearReunionAgregarTemasTemaItem.vue?vue&type=style&index=0&lang=scss&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PlantillaModal.vue?vue&type=style&index=0&lang=css&":
 /*!************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PlantillaModal.vue?vue&type=style&index=0&lang=css& ***!
@@ -80676,6 +80896,8 @@ var render = function() {
               _vm._v(" "),
               _c("crear-reunion-agregar-invitados"),
               _vm._v(" "),
+              _c("crear-reunion-agregar-temas"),
+              _vm._v(" "),
               _c("b-row", [_c("b-container")], 1)
             ],
             1
@@ -80992,6 +81214,261 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("b-row", [_c("b-container")], 1)
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CrearReunionAgregarTemas.vue?vue&type=template&id=6902992f&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CrearReunionAgregarTemas.vue?vue&type=template&id=6902992f& ***!
+  \***************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("b-form-group", [
+        _c("strong", [_vm._v("Temas o asuntos por revisar en esta reunión")])
+      ]),
+      _vm._v(" "),
+      _c("b-form-group", [
+        _c(
+          "ol",
+          [
+            _vm._l(_vm.temas, function(tema) {
+              return _c(
+                "li",
+                { key: tema.id, staticClass: "my-2 px-2" },
+                [
+                  _c("crear-reunion-agregar-temas-tema-item", {
+                    attrs: { tema: tema }
+                  })
+                ],
+                1
+              )
+            }),
+            _vm._v(" "),
+            _c(
+              "li",
+              { staticClass: "my-2 px-2" },
+              [
+                _c(
+                  "b-input-group",
+                  [
+                    _c("b-form-input", {
+                      attrs: { state: _vm.temaValido, trim: "" },
+                      model: {
+                        value: _vm.nuevoTema,
+                        callback: function($$v) {
+                          _vm.nuevoTema = $$v
+                        },
+                        expression: "nuevoTema"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "b-input-group-append",
+                      [
+                        _c(
+                          "b-button",
+                          {
+                            attrs: {
+                              variant: "success",
+                              title: "Agregar tema",
+                              disabled: !_vm.temaValido
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.agregarNuevoTema(_vm.nuevoTema)
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "i",
+                              {
+                                staticClass: "fa fa-plus-circle",
+                                attrs: { "aria-hidden": "true" }
+                              },
+                              [
+                                _c("span", { staticClass: "sr-only" }, [
+                                  _vm._v("Agregar tema")
+                                ])
+                              ]
+                            )
+                          ]
+                        )
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          2
+        )
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CrearReunionAgregarTemasTemaItem.vue?vue&type=template&id=04979a72&":
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CrearReunionAgregarTemasTemaItem.vue?vue&type=template&id=04979a72& ***!
+  \***********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _vm.modoEdicion
+        ? _c(
+            "b-input-group",
+            [
+              _c("b-form-input", {
+                attrs: { state: _vm.temaValido, trim: "" },
+                model: {
+                  value: _vm.textoTemaEnEdicion,
+                  callback: function($$v) {
+                    _vm.textoTemaEnEdicion = $$v
+                  },
+                  expression: "textoTemaEnEdicion"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "b-input-group-append",
+                [
+                  _c(
+                    "b-button",
+                    {
+                      attrs: {
+                        variant: "success",
+                        title: "Agregar tema",
+                        disabled: !_vm.temaValido
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.editarDescripcionTema(
+                            _vm.textoTemaEnEdicion
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "i",
+                        {
+                          staticClass: "fa fa-check-circle",
+                          attrs: { "aria-hidden": "true" }
+                        },
+                        [
+                          _c("span", { staticClass: "sr-only" }, [
+                            _vm._v("Listo")
+                          ])
+                        ]
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        : _c(
+            "b-input-group",
+            [
+              _c(
+                "b-input-group-append",
+                { staticClass: "form-control disabled-input" },
+                [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(_vm.tema.descripcion) +
+                      "\n            "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "b-input-group-append",
+                [
+                  _c(
+                    "b-button",
+                    {
+                      attrs: { variant: "primary" },
+                      on: { click: _vm.activarModoEdicion }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-edit" }),
+                      _c("span", { staticClass: "sr-only" }, [
+                        _vm._v("Quitar tema")
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-button",
+                    {
+                      attrs: { variant: "danger" },
+                      on: {
+                        click: function($event) {
+                          return _vm.eliminarTema(_vm.tema)
+                        }
+                      }
+                    },
+                    [
+                      _c("i", {
+                        staticClass: "fa fa-trash",
+                        attrs: { "aria-hidden": "true" }
+                      }),
+                      _c("span", { staticClass: "sr-only" }, [
+                        _vm._v("Editar tema")
+                      ])
+                    ]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
     ],
     1
   )
@@ -95027,6 +95504,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('modal', __webpack_require_
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('crear-reunion', __webpack_require__(/*! ./components/CrearReunion.vue */ "./resources/js/components/CrearReunion.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('crear-reunion-agregar-invitados', __webpack_require__(/*! ./components/CrearReunionAgregarInvitados.vue */ "./resources/js/components/CrearReunionAgregarInvitados.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('crear-reunion-agregar-convocados', __webpack_require__(/*! ./components/CrearReunionAgregarConvocados.vue */ "./resources/js/components/CrearReunionAgregarConvocados.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('crear-reunion-agregar-temas', __webpack_require__(/*! ./components/CrearReunionAgregarTemas.vue */ "./resources/js/components/CrearReunionAgregarTemas.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('crear-reunion-agregar-temas-tema-item', __webpack_require__(/*! ./components/CrearReunionAgregarTemasTemaItem.vue */ "./resources/js/components/CrearReunionAgregarTemasTemaItem.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -95443,6 +95922,162 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/CrearReunionAgregarTemas.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/CrearReunionAgregarTemas.vue ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CrearReunionAgregarTemas_vue_vue_type_template_id_6902992f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CrearReunionAgregarTemas.vue?vue&type=template&id=6902992f& */ "./resources/js/components/CrearReunionAgregarTemas.vue?vue&type=template&id=6902992f&");
+/* harmony import */ var _CrearReunionAgregarTemas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CrearReunionAgregarTemas.vue?vue&type=script&lang=js& */ "./resources/js/components/CrearReunionAgregarTemas.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CrearReunionAgregarTemas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CrearReunionAgregarTemas_vue_vue_type_template_id_6902992f___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CrearReunionAgregarTemas_vue_vue_type_template_id_6902992f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/CrearReunionAgregarTemas.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/CrearReunionAgregarTemas.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/CrearReunionAgregarTemas.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionAgregarTemas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./CrearReunionAgregarTemas.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CrearReunionAgregarTemas.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionAgregarTemas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/CrearReunionAgregarTemas.vue?vue&type=template&id=6902992f&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/CrearReunionAgregarTemas.vue?vue&type=template&id=6902992f& ***!
+  \*********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionAgregarTemas_vue_vue_type_template_id_6902992f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./CrearReunionAgregarTemas.vue?vue&type=template&id=6902992f& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CrearReunionAgregarTemas.vue?vue&type=template&id=6902992f&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionAgregarTemas_vue_vue_type_template_id_6902992f___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionAgregarTemas_vue_vue_type_template_id_6902992f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/CrearReunionAgregarTemasTemaItem.vue":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/CrearReunionAgregarTemasTemaItem.vue ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CrearReunionAgregarTemasTemaItem_vue_vue_type_template_id_04979a72___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CrearReunionAgregarTemasTemaItem.vue?vue&type=template&id=04979a72& */ "./resources/js/components/CrearReunionAgregarTemasTemaItem.vue?vue&type=template&id=04979a72&");
+/* harmony import */ var _CrearReunionAgregarTemasTemaItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CrearReunionAgregarTemasTemaItem.vue?vue&type=script&lang=js& */ "./resources/js/components/CrearReunionAgregarTemasTemaItem.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _CrearReunionAgregarTemasTemaItem_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CrearReunionAgregarTemasTemaItem.vue?vue&type=style&index=0&lang=scss& */ "./resources/js/components/CrearReunionAgregarTemasTemaItem.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _CrearReunionAgregarTemasTemaItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CrearReunionAgregarTemasTemaItem_vue_vue_type_template_id_04979a72___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CrearReunionAgregarTemasTemaItem_vue_vue_type_template_id_04979a72___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/CrearReunionAgregarTemasTemaItem.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/CrearReunionAgregarTemasTemaItem.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/CrearReunionAgregarTemasTemaItem.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionAgregarTemasTemaItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./CrearReunionAgregarTemasTemaItem.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CrearReunionAgregarTemasTemaItem.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionAgregarTemasTemaItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/CrearReunionAgregarTemasTemaItem.vue?vue&type=style&index=0&lang=scss&":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/components/CrearReunionAgregarTemasTemaItem.vue?vue&type=style&index=0&lang=scss& ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionAgregarTemasTemaItem_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-2!../../../node_modules/sass-loader/lib/loader.js??ref--7-3!../../../node_modules/vue-loader/lib??vue-loader-options!./CrearReunionAgregarTemasTemaItem.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CrearReunionAgregarTemasTemaItem.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionAgregarTemasTemaItem_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionAgregarTemasTemaItem_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionAgregarTemasTemaItem_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionAgregarTemasTemaItem_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionAgregarTemasTemaItem_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/CrearReunionAgregarTemasTemaItem.vue?vue&type=template&id=04979a72&":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/components/CrearReunionAgregarTemasTemaItem.vue?vue&type=template&id=04979a72& ***!
+  \*****************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionAgregarTemasTemaItem_vue_vue_type_template_id_04979a72___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./CrearReunionAgregarTemasTemaItem.vue?vue&type=template&id=04979a72& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CrearReunionAgregarTemasTemaItem.vue?vue&type=template&id=04979a72&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionAgregarTemasTemaItem_vue_vue_type_template_id_04979a72___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionAgregarTemasTemaItem_vue_vue_type_template_id_04979a72___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/EditarDivision.vue":
 /*!****************************************************!*\
   !*** ./resources/js/components/EditarDivision.vue ***!
@@ -95765,6 +96400,18 @@ __webpack_require__.r(__webpack_exports__);
   eliminarInvitadoPorId: function eliminarInvitadoPorId(_ref6, invitado) {
     var commit = _ref6.commit;
     commit('removerInvitadoPorId', invitado);
+  },
+  agregarTema: function agregarTema(_ref7, tema) {
+    var commit = _ref7.commit;
+    commit('colocarTema', tema);
+  },
+  eliminarTema: function eliminarTema(_ref8, tema) {
+    var commit = _ref8.commit;
+    commit('removerTema', tema);
+  },
+  editarTema: function editarTema(_ref9, tema) {
+    var commit = _ref9.commit;
+    commit('actualizarTema', tema);
   }
 });
 
@@ -95797,6 +96444,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   convocados: function convocados(state) {
     return state.convocados;
+  },
+  temas: function temas(state) {
+    return state.temas;
   }
 });
 
@@ -95872,6 +96522,19 @@ __webpack_require__.r(__webpack_exports__);
     state.invitados = state.invitados.filter(function (inv) {
       return inv.id != invitado_id;
     });
+  },
+  colocarTema: function colocarTema(state, tema) {
+    state.temas.push(tema);
+  },
+  actualizarTema: function actualizarTema(state, tema) {
+    state.temas = state.temas.map(function (t) {
+      return t.id == tema.id ? tema : t;
+    }); // Si el id coincide, actualizamos
+  },
+  removerTema: function removerTema(state, tema) {
+    state.temas = state.temas.filter(function (t) {
+      return t.id != tema.id;
+    });
   }
 });
 
@@ -95894,7 +96557,8 @@ __webpack_require__.r(__webpack_exports__);
   academias: null,
   academia: null,
   convocados: [],
-  invitados: []
+  invitados: [],
+  temas: []
 });
 
 /***/ }),

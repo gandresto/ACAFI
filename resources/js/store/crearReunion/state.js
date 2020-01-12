@@ -7,4 +7,5 @@ export default {
     academia: null,
     convocados: [],
     invitados: [],
+    temas: [],
 };
