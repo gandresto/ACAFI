@@ -12,15 +12,18 @@ export default {
         state.estadoAcademia = estadoAcademia;
     },
     colocarConvocados(state, convocados){
-        state.convocados = convocados
+        state.convocados = convocados;
     },
     colocarConvocado(state, convocado){
-        state.convocados.push(convocado)
+        state.convocados.push(convocado);
     },
     colocarInvitados(state, invitados){
-        state.invitados = invitados
+        state.invitados = invitados;
     },
     colocarInvitado(state, invitado){
-        state.invitados.push(invitado)
+        state.invitados.push(invitado);
+    },
+    removerInvitadoPorId(state, invitado_id){
+        state.invitados = state.invitados.filter(inv => inv.id != invitado_id);
     },
 };

@@ -51,5 +51,8 @@ export default {
     },
     agregarInvitado({commit}, invitado){
         commit('colocarInvitado', invitado);
+    },
+    eliminarInvitadoPorId({commit}, invitado){
+        commit('removerInvitadoPorId', invitado);
     }
 };

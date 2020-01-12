@@ -37,6 +37,9 @@
         <template v-slot:cell(invitado)="data">
             {{obtenerNombreCompleto(data.item)}}
         </template>
+        <template v-slot:cell(acciones)="data">
+            <b-button @click="removerInvitacion(data.item.id)" variant="danger"><i class="fa fa-trash" aria-hidden="true"></i></b-button>
+        </template>
         </b-table>
     </b-form-group>
     <b-row>
@@ -54,7 +57,7 @@
     import {mapGetters, mapActions} from 'vuex';
     export default {
         mounted() {
-            console.log(api.baseURL);
+            // console.log(api.baseURL);
         },
         data() {
             return {
@@ -66,7 +69,10 @@
             }
         },
         methods: {
-            ...mapActions(['agregarInvitado']),
+            ...mapActions(['agregarInvitado', 'eliminarInvitadoPorId']),
+            removerInvitacion(id){
+                this.eliminarInvitadoPorId(id);
+            },
             buscarInvitado(consulta){
                 let uri = `${api.baseURL}/users/buscar/${consulta}`
                 return new Promise((res, rej) => {
@@ -79,7 +85,7 @@
                     })
                     .catch(error=>{
                         res([]);
-                        // Error 😨 
+                        // Error 😨
                         if (error.response) {
                             /*
                             * The request was made and the server responded with a
@@ -103,6 +109,7 @@
                         } else {
                             // Something happened in setting up the request and triggered an Error
                             console.log('Error: ', error.message);
+                            this.error = error.message;
                         }
                         console.log(error.config);
                     });
@@ -126,7 +133,7 @@
                     }
                     this.error = '';
                     this.agregarInvitado(invitado);
-                    console.log(`${invitado.nombre} ${invitado.apellido_paterno} ${invitado.apellido_materno}`);
+                    // console.log(`${invitado.nombre} ${invitado.apellido_paterno} ${invitado.apellido_materno}`);
                 }
             }
 

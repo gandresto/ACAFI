@@ -5,6 +5,7 @@
             <b-table hover head-variant="dark"
                 ref="tablaConvocados"
                 selectable
+                selected-variant="primary"
                 select-mode="multi"
                 :items="cAcademia.miembrosActuales"
                 :fields="camposTablaConvocados"
@@ -26,9 +27,9 @@
                 </template>
             </b-table>
         </b-form-group>
-        <b-form-group>
+        <!-- <b-form-group>
             {{convocados}}
-        </b-form-group>
+        </b-form-group> -->
     </div>
 </template>
 
