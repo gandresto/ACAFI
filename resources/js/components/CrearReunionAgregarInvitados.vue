@@ -38,10 +38,12 @@
             {{obtenerNombreCompleto(data.item)}}
         </template>
         <template v-slot:cell(acciones)="data">
-            <b-button @click="removerInvitacion(data.item.id)" variant="danger">
-                <i class="fa fa-trash" aria-hidden="true"></i>
-                <span class="sr-only">Eliminar Invitación</span>
-            </b-button>
+            <div class="w-100 text-right">
+                <b-button @click="removerInvitacion(data.item.id)" variant="danger">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                    <span class="sr-only">Eliminar Invitación</span>
+                </b-button>
+            </div>
         </template>
         </b-table>
     </b-form-group>

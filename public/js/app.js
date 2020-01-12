@@ -2833,6 +2833,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3025,6 +3027,11 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -81184,25 +81191,32 @@ var render = function() {
                 fn: function(data) {
                   return [
                     _c(
-                      "b-button",
-                      {
-                        attrs: { variant: "danger" },
-                        on: {
-                          click: function($event) {
-                            return _vm.removerInvitacion(data.item.id)
-                          }
-                        }
-                      },
+                      "div",
+                      { staticClass: "w-100 text-right" },
                       [
-                        _c("i", {
-                          staticClass: "fa fa-trash",
-                          attrs: { "aria-hidden": "true" }
-                        }),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "sr-only" }, [
-                          _vm._v("Eliminar Invitación")
-                        ])
-                      ]
+                        _c(
+                          "b-button",
+                          {
+                            attrs: { variant: "danger" },
+                            on: {
+                              click: function($event) {
+                                return _vm.removerInvitacion(data.item.id)
+                              }
+                            }
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "fa fa-trash",
+                              attrs: { "aria-hidden": "true" }
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "sr-only" }, [
+                              _vm._v("Eliminar Invitación")
+                            ])
+                          ]
+                        )
+                      ],
+                      1
                     )
                   ]
                 }
@@ -81374,6 +81388,27 @@ var render = function() {
               _c(
                 "b-input-group-append",
                 [
+                  _c(
+                    "b-button",
+                    {
+                      attrs: { variant: "danger" },
+                      on: {
+                        click: function($event) {
+                          _vm.modoEdicion = false
+                        }
+                      }
+                    },
+                    [
+                      _c("i", {
+                        staticClass: "fa fa-times-circle",
+                        attrs: { "aria-hidden": "true" }
+                      }),
+                      _c("span", { staticClass: "sr-only" }, [
+                        _vm._v("Cancelar")
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
                   _c(
                     "b-button",
                     {

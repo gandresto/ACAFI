@@ -7,6 +7,11 @@
             >
             </b-form-input>
             <b-input-group-append>
+                <b-button variant="danger"
+                    @click="modoEdicion = false"
+                >
+                    <i class="fa fa-times-circle" aria-hidden="true"></i><span class="sr-only">Cancelar</span>
+                </b-button>
                 <b-button variant="success"
                     title="Agregar tema"
                     @click="editarDescripcionTema(textoTemaEnEdicion)"
