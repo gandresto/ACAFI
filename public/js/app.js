@@ -2700,13 +2700,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
+  mounted: function mounted() {// console.log('Component mounted.')
   },
   data: function data() {
     return {
+      estanTodosConvocados: false,
+      estadoIndeterminado: false,
       camposTablaConvocados: [{
         key: 'convocado',
         label: '¿Convocado?'
@@ -2714,8 +2730,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['ponerConvocados']), {
-    actualizarConvocados: function actualizarConvocados(items) {
-      this.ponerConvocados(items);
+    actualizarConvocados: function actualizarConvocados(miembrosSeleccionados) {
+      // console.log(this.academia.miembrosActuales);
+      if (miembrosSeleccionados.length == 0) {
+        this.estadoIndeterminado = false;
+        this.estanTodosConvocados = false;
+      } else if (miembrosSeleccionados.length == this.academia.miembrosActuales.length) {
+        this.estadoIndeterminado = false;
+        this.estanTodosConvocados = true;
+      } else {
+        this.estadoIndeterminado = true;
+        this.estanTodosConvocados = false;
+      }
+
+      this.ponerConvocados(miembrosSeleccionados);
+    },
+    alternarSeleccionarTodos: function alternarSeleccionarTodos(checked) {
+      // console.log(checked);
+      if (checked) this.$refs.tablaConvocados.selectAllRows();else this.$refs.tablaConvocados.clearSelected();
     }
   }),
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['academia', 'convocados']), {
@@ -80697,73 +80729,117 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "b-form-group",
+    "div",
     [
-      _c("label", [
-        _c("strong", [_vm._v("Selecciona a los convocados a la reunión")])
+      _c("b-form-group", [
+        _c("strong", [
+          _vm._v("Selecciona a los miembros convocados para esta reunión")
+        ])
       ]),
       _vm._v(" "),
-      _c("b-table", {
-        ref: "tablaConvocados",
-        attrs: {
-          hover: "",
-          "head-variant": "dark",
-          selectable: "",
-          "selected-variant": "primary",
-          "select-mode": "multi",
-          items: _vm.cAcademia.miembrosActuales,
-          fields: _vm.camposTablaConvocados,
-          responsive: "sm"
-        },
-        on: { "row-selected": _vm.actualizarConvocados },
-        scopedSlots: _vm._u([
-          {
-            key: "cell(convocado)",
-            fn: function(ref) {
-              var rowSelected = ref.rowSelected
-              return [
-                rowSelected
-                  ? [
-                      _c("span", { attrs: { "aria-hidden": "true" } }, [
-                        _vm._v("✓")
-                      ]),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "sr-only" }, [
-                        _vm._v("Convocado")
-                      ])
-                    ]
-                  : [
-                      _c("span", { attrs: { "aria-hidden": "true" } }, [
-                        _vm._v(" ")
-                      ]),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "sr-only" }, [
-                        _vm._v("No convocado")
-                      ])
-                    ]
-              ]
-            }
-          },
-          {
-            key: "cell(miembro)",
-            fn: function(data) {
-              return [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(
-                      data.item.nombre +
-                        " " +
-                        data.item.apellido_paterno +
-                        " " +
-                        data.item.apellido_materno
-                    ) +
-                    "\n        "
-                )
-              ]
-            }
-          }
-        ])
-      })
+      _c(
+        "b-form-group",
+        [
+          _c(
+            "b-form-checkbox",
+            {
+              attrs: {
+                id: "checkbox-convocar-todos",
+                name: "checkbox-convocar-todos",
+                indeterminate: _vm.estadoIndeterminado
+              },
+              on: { change: _vm.alternarSeleccionarTodos },
+              model: {
+                value: _vm.estanTodosConvocados,
+                callback: function($$v) {
+                  _vm.estanTodosConvocados = $$v
+                },
+                expression: "estanTodosConvocados"
+              }
+            },
+            [
+              _vm._v(
+                "\n                " +
+                  _vm._s(
+                    _vm.estanTodosConvocados
+                      ? "Remover invitaciones"
+                      : "Convocar a todos"
+                  ) +
+                  "\n            "
+              )
+            ]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "b-form-group",
+        [
+          _c("b-table", {
+            ref: "tablaConvocados",
+            attrs: {
+              hover: "",
+              "head-variant": "dark",
+              selectable: "",
+              "selected-variant": "primary",
+              "select-mode": "multi",
+              items: _vm.cAcademia.miembrosActuales,
+              fields: _vm.camposTablaConvocados,
+              responsive: "sm"
+            },
+            on: { "row-selected": _vm.actualizarConvocados },
+            scopedSlots: _vm._u([
+              {
+                key: "cell(convocado)",
+                fn: function(ref) {
+                  var rowSelected = ref.rowSelected
+                  return [
+                    rowSelected
+                      ? [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("✓")
+                          ]),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "sr-only" }, [
+                            _vm._v("Convocado")
+                          ])
+                        ]
+                      : [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v(" ")
+                          ]),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "sr-only" }, [
+                            _vm._v("No convocado")
+                          ])
+                        ]
+                  ]
+                }
+              },
+              {
+                key: "cell(miembro)",
+                fn: function(data) {
+                  return [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(
+                          data.item.nombre +
+                            " " +
+                            data.item.apellido_paterno +
+                            " " +
+                            data.item.apellido_materno
+                        ) +
+                        "\n            "
+                    )
+                  ]
+                }
+              }
+            ])
+          })
+        ],
+        1
+      )
     ],
     1
   )
