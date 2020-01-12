@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!-- --------- Indicadores de carga y de error -----------  -->
         <div v-if="estadoAcademias==estadoApi.CARGANDO || estadoAcademias==estadoApi.INICIADO"
             class="d-flex justify-content-center"
         >
@@ -33,6 +34,8 @@
                 </select>
             </b-form-group>
         </b-form>
+
+        <!-- --------- Indicadores de carga y de error -----------  -->
         <div v-if="estadoAcademia==estadoApi.CARGANDO"
             class="d-flex justify-content-center"
         >
@@ -100,7 +103,7 @@
 <script>
     import {mapGetters, mapActions} from 'vuex';
     import ESTADO_API from '../enum-estado-api';
-    // import API from '../services/api';
+
     export default {
         data() {
             return {

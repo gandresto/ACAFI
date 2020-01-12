@@ -2616,8 +2616,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
- // import API from '../services/api';
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2668,10 +2670,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
 //
 //
 //
@@ -2797,11 +2795,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log(_services_api__WEBPACK_IMPORTED_MODULE_0__["default"].baseURL);
+  mounted: function mounted() {// console.log(api.baseURL);
   },
   data: function data() {
     return {
@@ -2812,7 +2815,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
     };
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['agregarInvitado']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['agregarInvitado', 'eliminarInvitadoPorId']), {
+    removerInvitacion: function removerInvitacion(id) {
+      this.eliminarInvitadoPorId(id);
+    },
     buscarInvitado: function buscarInvitado(consulta) {
       var _this = this;
 
@@ -2825,7 +2831,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this.error = '';
           res(resultadoBusqueda);
         })["catch"](function (error) {
-          res([]); // Error 😨 
+          res([]); // Error 😨
 
           if (error.response) {
             /*
@@ -2849,6 +2855,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           } else {
             // Something happened in setting up the request and triggered an Error
             console.log('Error: ', error.message);
+            _this.error = error.message;
           }
 
           console.log(error.config);
@@ -2879,8 +2886,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
 
           this.error = '';
-          this.agregarInvitado(invitado);
-          console.log("".concat(invitado.nombre, " ").concat(invitado.apellido_paterno, " ").concat(invitado.apellido_materno));
+          this.agregarInvitado(invitado); // console.log(`${invitado.nombre} ${invitado.apellido_paterno} ${invitado.apellido_materno}`);
         }
     }
   }),
@@ -80691,83 +80697,73 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    { staticClass: "container" },
+    "b-form-group",
     [
-      _c(
-        "b-form-group",
-        [
-          _c("label", [
-            _c("strong", [_vm._v("Selecciona a los convocados a la reunión")])
-          ]),
-          _vm._v(" "),
-          _c("b-table", {
-            ref: "tablaConvocados",
-            attrs: {
-              hover: "",
-              "head-variant": "dark",
-              selectable: "",
-              "select-mode": "multi",
-              items: _vm.cAcademia.miembrosActuales,
-              fields: _vm.camposTablaConvocados,
-              responsive: "sm"
-            },
-            on: { "row-selected": _vm.actualizarConvocados },
-            scopedSlots: _vm._u([
-              {
-                key: "cell(convocado)",
-                fn: function(ref) {
-                  var rowSelected = ref.rowSelected
-                  return [
-                    rowSelected
-                      ? [
-                          _c("span", { attrs: { "aria-hidden": "true" } }, [
-                            _vm._v("✓")
-                          ]),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "sr-only" }, [
-                            _vm._v("Convocado")
-                          ])
-                        ]
-                      : [
-                          _c("span", { attrs: { "aria-hidden": "true" } }, [
-                            _vm._v(" ")
-                          ]),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "sr-only" }, [
-                            _vm._v("No convocado")
-                          ])
-                        ]
-                  ]
-                }
-              },
-              {
-                key: "cell(miembro)",
-                fn: function(data) {
-                  return [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(
-                          data.item.nombre +
-                            " " +
-                            data.item.apellido_paterno +
-                            " " +
-                            data.item.apellido_materno
-                        ) +
-                        "\n            "
-                    )
-                  ]
-                }
-              }
-            ])
-          })
-        ],
-        1
-      ),
+      _c("label", [
+        _c("strong", [_vm._v("Selecciona a los convocados a la reunión")])
+      ]),
       _vm._v(" "),
-      _c("b-form-group", [
-        _vm._v("\n        " + _vm._s(_vm.convocados) + "\n    ")
-      ])
+      _c("b-table", {
+        ref: "tablaConvocados",
+        attrs: {
+          hover: "",
+          "head-variant": "dark",
+          selectable: "",
+          "selected-variant": "primary",
+          "select-mode": "multi",
+          items: _vm.cAcademia.miembrosActuales,
+          fields: _vm.camposTablaConvocados,
+          responsive: "sm"
+        },
+        on: { "row-selected": _vm.actualizarConvocados },
+        scopedSlots: _vm._u([
+          {
+            key: "cell(convocado)",
+            fn: function(ref) {
+              var rowSelected = ref.rowSelected
+              return [
+                rowSelected
+                  ? [
+                      _c("span", { attrs: { "aria-hidden": "true" } }, [
+                        _vm._v("✓")
+                      ]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "sr-only" }, [
+                        _vm._v("Convocado")
+                      ])
+                    ]
+                  : [
+                      _c("span", { attrs: { "aria-hidden": "true" } }, [
+                        _vm._v(" ")
+                      ]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "sr-only" }, [
+                        _vm._v("No convocado")
+                      ])
+                    ]
+              ]
+            }
+          },
+          {
+            key: "cell(miembro)",
+            fn: function(data) {
+              return [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(
+                      data.item.nombre +
+                        " " +
+                        data.item.apellido_paterno +
+                        " " +
+                        data.item.apellido_materno
+                    ) +
+                    "\n        "
+                )
+              ]
+            }
+          }
+        ])
+      })
     ],
     1
   )
@@ -80831,9 +80827,9 @@ var render = function() {
                       ),
                       [
                         _vm._v(
-                          "\r\n                    " +
+                          "\n                    " +
                             _vm._s(_vm.obtenerNombreCompleto(result)) +
-                            "\r\n                "
+                            "\n                "
                         )
                       ]
                     )
@@ -80878,9 +80874,37 @@ var render = function() {
                 fn: function(data) {
                   return [
                     _vm._v(
-                      "\r\n            " +
+                      "\n            " +
                         _vm._s(_vm.obtenerNombreCompleto(data.item)) +
-                        "\r\n        "
+                        "\n        "
+                    )
+                  ]
+                }
+              },
+              {
+                key: "cell(acciones)",
+                fn: function(data) {
+                  return [
+                    _c(
+                      "b-button",
+                      {
+                        attrs: { variant: "danger" },
+                        on: {
+                          click: function($event) {
+                            return _vm.removerInvitacion(data.item.id)
+                          }
+                        }
+                      },
+                      [
+                        _c("i", {
+                          staticClass: "fa fa-trash",
+                          attrs: { "aria-hidden": "true" }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "sr-only" }, [
+                          _vm._v("Eliminar Invitación")
+                        ])
+                      ]
                     )
                   ]
                 }
@@ -95661,6 +95685,10 @@ __webpack_require__.r(__webpack_exports__);
   agregarInvitado: function agregarInvitado(_ref5, invitado) {
     var commit = _ref5.commit;
     commit('colocarInvitado', invitado);
+  },
+  eliminarInvitadoPorId: function eliminarInvitadoPorId(_ref6, invitado) {
+    var commit = _ref6.commit;
+    commit('removerInvitadoPorId', invitado);
   }
 });
 
@@ -95763,6 +95791,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   colocarInvitado: function colocarInvitado(state, invitado) {
     state.invitados.push(invitado);
+  },
+  removerInvitadoPorId: function removerInvitadoPorId(state, invitado_id) {
+    state.invitados = state.invitados.filter(function (inv) {
+      return inv.id != invitado_id;
+    });
   }
 });
 
