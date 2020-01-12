@@ -3092,8 +3092,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.modoEdicion = false;
       }
     },
-    activarModoEdicion: function activarModoEdicion() {
-      this.modoEdicion = true;
+    cancelarEdicion: function cancelarEdicion() {
+      this.textoTemaEnEdicion = this.tema.descripcion;
+      this.modoEdicion = false;
     }
   }),
   computed: {
@@ -81392,11 +81393,7 @@ var render = function() {
                     "b-button",
                     {
                       attrs: { variant: "danger" },
-                      on: {
-                        click: function($event) {
-                          _vm.modoEdicion = false
-                        }
-                      }
+                      on: { click: _vm.cancelarEdicion }
                     },
                     [
                       _c("i", {
@@ -81468,12 +81465,16 @@ var render = function() {
                     "b-button",
                     {
                       attrs: { variant: "primary" },
-                      on: { click: _vm.activarModoEdicion }
+                      on: {
+                        click: function($event) {
+                          _vm.modoEdicion = true
+                        }
+                      }
                     },
                     [
                       _c("i", { staticClass: "fas fa-edit" }),
                       _c("span", { staticClass: "sr-only" }, [
-                        _vm._v("Quitar tema")
+                        _vm._v("Editar tema")
                       ])
                     ]
                   ),
@@ -81494,7 +81495,7 @@ var render = function() {
                         attrs: { "aria-hidden": "true" }
                       }),
                       _c("span", { staticClass: "sr-only" }, [
-                        _vm._v("Editar tema")
+                        _vm._v("Quitar tema")
                       ])
                     ]
                   )

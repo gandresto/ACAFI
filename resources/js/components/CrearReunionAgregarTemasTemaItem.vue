@@ -8,7 +8,7 @@
             </b-form-input>
             <b-input-group-append>
                 <b-button variant="danger"
-                    @click="modoEdicion = false"
+                    @click="cancelarEdicion"
                 >
                     <i class="fa fa-times-circle" aria-hidden="true"></i><span class="sr-only">Cancelar</span>
                 </b-button>
@@ -27,14 +27,14 @@
                 </b-input-group-append>
                 <b-input-group-append>
                     <b-button variant="primary"
-                        @click="activarModoEdicion"
+                        @click="modoEdicion = true"
                     >
-                        <i class="fas fa-edit"></i><span class="sr-only">Quitar tema</span>
+                        <i class="fas fa-edit"></i><span class="sr-only">Editar tema</span>
                     </b-button>
                     <b-button variant="danger"
                         @click="eliminarTema(tema)"
                     >
-                        <i class="fa fa-trash" aria-hidden="true"></i><span class="sr-only">Editar tema</span>
+                        <i class="fa fa-trash" aria-hidden="true"></i><span class="sr-only">Quitar tema</span>
                     </b-button>
                 </b-input-group-append>
         </b-input-group>
@@ -66,8 +66,9 @@
                     this.modoEdicion = false;
                 }
             },
-            activarModoEdicion(){
-                this.modoEdicion = true;
+            cancelarEdicion(){
+                this.textoTemaEnEdicion = this.tema.descripcion;
+                this.modoEdicion = false;
             },
 
         },
