@@ -28,6 +28,9 @@
                                 <i class="fa fa-plus-circle" aria-hidden="true"><span class="sr-only">Agregar tema</span></i>
                             </b-button>
                         </b-input-group-append>
+                        <div class="invalid-feedback">
+                            {{mensajeError}}
+                        </div>
                     </b-input-group>
                 </li>
             </ol>
@@ -63,7 +66,16 @@
             ...mapGetters(['temas']),
             temaValido(){
                 return this.nuevoTema.length > 3 ? true : false;
-            }
+            },
+             mensajeError() {
+                if (this.nuevoTema.length > 3) {
+                    return ''
+                } else if (this.nuevoTema.length > 0) {
+                    return 'Ingresa al menos 3 caracteres'
+                } else {
+                    return 'Ingresa un tema'
+                }
+            },
         },
     }
 </script>

@@ -2511,6 +2511,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _enum_estado_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../enum-estado-api */ "./resources/js/enum-estado-api.js");
+/* harmony import */ var _services_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/api */ "./resources/js/services/api.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2611,14 +2612,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2627,12 +2621,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       academiaSeleccionada: null,
       fechaInicio: null,
       estadoApi: _enum_estado_api__WEBPACK_IMPORTED_MODULE_1__["default"],
-      limiteInferiorFecha: '',
+      limiteInferiorFecha: "",
       frases: {
-        ok: 'Aceptar',
-        cancel: 'Cancelar'
+        ok: "Aceptar",
+        cancel: "Cancelar"
       },
-      lugar: ''
+      lugar: ""
     };
   },
   mounted: function mounted() {
@@ -2640,12 +2634,66 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.limiteInferiorFecha = date.toISOString();
     this.leerAcademiasQuePreside(Laravel.authUserId);
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['leerAcademiasQuePreside', 'leerAcademia']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["leerAcademiasQuePreside", "leerAcademia"]), {
     seleccionarAcademia: function seleccionarAcademia() {
       if (this.academiaSeleccionada) this.leerAcademia(this.academiaSeleccionada);
+    },
+    vistaPrevia: function vistaPrevia(evt) {
+      evt.preventDefault();
+      var url = _services_api__WEBPACK_IMPORTED_MODULE_2__["default"].baseURL + '/reuniones/crearPDFOrdenDelDia'; // alert(url);
+
+      var data = {
+        fechaInicio: this.fechaInicio,
+        lugar: this.lugar,
+        convocados: this.convocados,
+        invitados: this.invitados,
+        temas: this.temas
+      };
+      axios({
+        method: 'post',
+        responseType: 'blob',
+        url: url,
+        data: data
+      }) // .post(url, form)
+      .then(function (r) {
+        return r.data;
+      }).then(function (data) {
+        //Create a Blob from the PDF Stream
+        var file = new Blob([data], {
+          type: 'application/pdf'
+        }); //Build a URL from the file
+
+        var fileURL = URL.createObjectURL(file); //Open the URL on new Window
+
+        window.open(fileURL); //   console.log(data);
+      })["catch"](function (err) {
+        console.log(err);
+
+        if (err.response) {
+          // console.log(err.response);
+          // console.log(err.response.data);
+          var _data = new Blob([err.response.data], {
+            type: 'application/json'
+          });
+
+          var fr = new FileReader();
+
+          fr.onload = function () {
+            console.log(JSON.parse(this.result));
+          };
+
+          fr.readAsText(_data);
+          console.log(_data); //   console.log(error.message)
+        } // rej();
+
+      });
+    },
+    submitForm: function submitForm(evt) {
+      evt.preventDefault();
+      console.log('Submit form');
     }
   }),
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['academias', 'estadoAcademias', 'academia', 'estadoAcademia']), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["academias", "estadoAcademias", "academia", "estadoAcademia", "convocados", "invitados", "temas"]), {
     cAcademias: function cAcademias() {
       return this.academias || null;
     }
@@ -2982,6 +3030,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {// console.log('Component mounted.')
@@ -3005,6 +3056,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['temas']), {
     temaValido: function temaValido() {
       return this.nuevoTema.length > 3 ? true : false;
+    },
+    mensajeError: function mensajeError() {
+      if (this.nuevoTema.length > 3) {
+        return '';
+      } else if (this.nuevoTema.length > 0) {
+        return 'Ingresa al menos 3 caracteres';
+      } else {
+        return 'Ingresa un tema';
+      }
     }
   })
 });
@@ -3070,9 +3130,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['tema'],
+  props: ["tema"],
   mounted: function mounted() {// console.log('Component mounted.')
   },
   data: function data() {
@@ -3081,7 +3142,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       modoEdicion: false
     };
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['editarTema', 'eliminarTema']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["editarTema", "eliminarTema"]), {
     editarDescripcionTema: function editarDescripcionTema(textoTema) {
       if (textoTema.length > 3) {
         // console.log(tema);
@@ -3100,6 +3161,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: {
     temaValido: function temaValido() {
       return this.textoTemaEnEdicion.length > 3 ? true : false;
+    },
+    mensajeError: function mensajeError() {
+      if (this.textoTemaEnEdicion.length > 3) {
+        return '';
+      } else if (this.textoTemaEnEdicion.length > 0) {
+        return 'Ingresa al menos 3 caracteres';
+      } else {
+        return 'Ingresa algo';
+      }
     }
   }
 });
@@ -80731,6 +80801,7 @@ var render = function() {
       _vm.estadoAcademias == _vm.estadoApi.LISTO
         ? _c(
             "b-form",
+            { attrs: { target: "_blank" } },
             [
               _c(
                 "b-form-group",
@@ -80788,13 +80859,7 @@ var render = function() {
                             key: academia.id,
                             domProps: { value: academia.id }
                           },
-                          [
-                            _vm._v(
-                              "\n                    " +
-                                _vm._s(academia.nombre) +
-                                "\n                "
-                            )
-                          ]
+                          [_vm._v(_vm._s(academia.nombre))]
                         )
                       })
                     ],
@@ -80833,6 +80898,7 @@ var render = function() {
       _vm.academiaSeleccionada && _vm.estadoAcademia == _vm.estadoApi.LISTO
         ? _c(
             "b-form",
+            { on: { submit: _vm.submitForm } },
             [
               _c(
                 "b-row",
@@ -80906,11 +80972,33 @@ var render = function() {
               _vm._v(" "),
               _c("crear-reunion-agregar-temas"),
               _vm._v(" "),
-              _c("b-row", [_c("b-container")], 1)
+              _c(
+                "b-form-group",
+                { staticClass: "text-md-right" },
+                [
+                  _c(
+                    "b-button",
+                    {
+                      attrs: { variant: "secondary" },
+                      on: { click: _vm.vistaPrevia }
+                    },
+                    [_vm._v("Vista Previa de Orden del Día")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-button",
+                    { attrs: { type: "submit", variant: "primary" } },
+                    [_vm._v("Crear Reunión")]
+                  )
+                ],
+                1
+              )
             ],
             1
           )
-        : _vm._e()
+        : _vm._e(),
+      _vm._v(" "),
+      _c("b-row", [_c("b-container")], 1)
     ],
     1
   )
@@ -81133,9 +81221,9 @@ var render = function() {
                       ),
                       [
                         _vm._v(
-                          "\n                    " +
+                          "\r\n                    " +
                             _vm._s(_vm.obtenerNombreCompleto(result)) +
-                            "\n                "
+                            "\r\n                "
                         )
                       ]
                     )
@@ -81180,9 +81268,9 @@ var render = function() {
                 fn: function(data) {
                   return [
                     _vm._v(
-                      "\n            " +
+                      "\r\n            " +
                         _vm._s(_vm.obtenerNombreCompleto(data.item)) +
-                        "\n        "
+                        "\r\n        "
                     )
                   ]
                 }
@@ -81331,7 +81419,15 @@ var render = function() {
                         )
                       ],
                       1
-                    )
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "invalid-feedback" }, [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(_vm.mensajeError) +
+                          "\n                    "
+                      )
+                    ])
                   ],
                   1
                 )
@@ -81400,6 +81496,7 @@ var render = function() {
                         staticClass: "fa fa-times-circle",
                         attrs: { "aria-hidden": "true" }
                       }),
+                      _vm._v(" "),
                       _c("span", { staticClass: "sr-only" }, [
                         _vm._v("Cancelar")
                       ])
@@ -81439,7 +81536,11 @@ var render = function() {
                   )
                 ],
                 1
-              )
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "invalid-feedback" }, [
+                _vm._v("\n      " + _vm._s(_vm.mensajeError) + "\n    ")
+              ])
             ],
             1
           )
@@ -81449,13 +81550,7 @@ var render = function() {
               _c(
                 "b-input-group-append",
                 { staticClass: "form-control disabled-input" },
-                [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(_vm.tema.descripcion) +
-                      "\n            "
-                  )
-                ]
+                [_vm._v("\n      " + _vm._s(_vm.tema.descripcion) + "\n    ")]
               ),
               _vm._v(" "),
               _c(
@@ -81473,6 +81568,7 @@ var render = function() {
                     },
                     [
                       _c("i", { staticClass: "fas fa-edit" }),
+                      _vm._v(" "),
                       _c("span", { staticClass: "sr-only" }, [
                         _vm._v("Editar tema")
                       ])
@@ -81494,6 +81590,7 @@ var render = function() {
                         staticClass: "fa fa-trash",
                         attrs: { "aria-hidden": "true" }
                       }),
+                      _vm._v(" "),
                       _c("span", { staticClass: "sr-only" }, [
                         _vm._v("Quitar tema")
                       ])
@@ -95473,10 +95570,10 @@ var regionDayMap = {
 /*!*********************************************!*\
   !*** ./node_modules/weekstart/package.json ***!
   \*********************************************/
-/*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, bugs, bundleDependencies, deprecated, description, devDependencies, homepage, keywords, license, main, module, name, repository, scripts, types, umd:main, version, default */
+/*! exports provided: _args, _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _spec, _where, author, bugs, description, devDependencies, homepage, keywords, license, main, module, name, repository, scripts, types, umd:main, version, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"_from\":\"weekstart\",\"_id\":\"weekstart@1.0.1\",\"_inBundle\":false,\"_integrity\":\"sha512-h6B1HSJxg7sZEXqIpDqAtwiDBp3x5y2jY8WYcUSBhLTcTCy7laQzBmamqMuQM5fpvo1pgpma0OCRpE2W8xrA9A==\",\"_location\":\"/weekstart\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"tag\",\"registry\":true,\"raw\":\"weekstart\",\"name\":\"weekstart\",\"escapedName\":\"weekstart\",\"rawSpec\":\"\",\"saveSpec\":null,\"fetchSpec\":\"latest\"},\"_requiredBy\":[\"#USER\",\"/\"],\"_resolved\":\"https://registry.npmjs.org/weekstart/-/weekstart-1.0.1.tgz\",\"_shasum\":\"950970b48e5797e06fc1a762f3d0f013312321e1\",\"_spec\":\"weekstart\",\"_where\":\"C:\\\\agendav2\",\"author\":{\"name\":\"Denis Sikuler\"},\"bugs\":{\"url\":\"https://github.com/gamtiq/weekstart/issues\"},\"bundleDependencies\":false,\"deprecated\":false,\"description\":\"Library to get first day of week.\",\"devDependencies\":{\"@babel/preset-env\":\"7.6.3\",\"eslint\":\"6.5.1\",\"eslint-config-guard\":\"1.0.3\",\"ink-docstrap\":\"1.3.2\",\"jest\":\"24.9.0\",\"jsdoc\":\"3.6.3\",\"microbundle\":\"0.4.4\",\"version-bump-prompt\":\"5.0.5\"},\"homepage\":\"https://github.com/gamtiq/weekstart\",\"keywords\":[\"week\",\"start\",\"first\",\"day\",\"locale\",\"country\",\"region\"],\"license\":\"MIT\",\"main\":\"dist/commonjs/main.js\",\"module\":\"dist/es-module/main.js\",\"name\":\"weekstart\",\"repository\":{\"type\":\"git\",\"url\":\"git://github.com/gamtiq/weekstart.git\"},\"scripts\":{\"all\":\"npm run check-all && npm run doc && npm run build\",\"build\":\"npm run build-umd && npm run build-commonjs && npm run build-esm && npm run build-umd-min\",\"build-commonjs\":\"microbundle build \\\"src/!(*.test).js\\\" --output dist/commonjs --format cjs --strict --no-compress\",\"build-esm\":\"microbundle build \\\"src/!(*.test).js\\\" --output dist/es-module --format es --no-compress\",\"build-umd\":\"microbundle build src/main.js src/full.js --output dist --format umd --strict --no-compress\",\"build-umd-min\":\"microbundle build src/main.js src/full.js --output dist/min --format umd --strict\",\"check\":\"npm run lint && npm test\",\"check-all\":\"npm run lint-all && npm test\",\"doc\":\"jsdoc -c jsdoc-conf.json\",\"lint\":\"eslint --cache --max-warnings 0 \\\"**/*.js\\\"\",\"lint-all\":\"eslint --max-warnings 0 \\\"**/*.js\\\"\",\"lint-all-error\":\"eslint \\\"**/*.js\\\"\",\"lint-error\":\"eslint --cache \\\"**/*.js\\\"\",\"release\":\"bump patch --commit --tag --all --push package.json package-lock.json bower.json component.json\",\"release-major\":\"bump major --commit --tag --all --push package.json package-lock.json bower.json component.json\",\"release-minor\":\"bump minor --commit --tag --all --push package.json package-lock.json bower.json component.json\",\"test\":\"jest\"},\"types\":\"./index.d.ts\",\"umd:main\":\"dist/main.js\",\"version\":\"1.0.1\"}");
+module.exports = JSON.parse("{\"_args\":[[\"weekstart@1.0.1\",\"C:\\\\agendav2\"]],\"_from\":\"weekstart@1.0.1\",\"_id\":\"weekstart@1.0.1\",\"_inBundle\":false,\"_integrity\":\"sha512-h6B1HSJxg7sZEXqIpDqAtwiDBp3x5y2jY8WYcUSBhLTcTCy7laQzBmamqMuQM5fpvo1pgpma0OCRpE2W8xrA9A==\",\"_location\":\"/weekstart\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"weekstart@1.0.1\",\"name\":\"weekstart\",\"escapedName\":\"weekstart\",\"rawSpec\":\"1.0.1\",\"saveSpec\":null,\"fetchSpec\":\"1.0.1\"},\"_requiredBy\":[\"/\"],\"_resolved\":\"https://registry.npmjs.org/weekstart/-/weekstart-1.0.1.tgz\",\"_spec\":\"1.0.1\",\"_where\":\"C:\\\\agendav2\",\"author\":{\"name\":\"Denis Sikuler\"},\"bugs\":{\"url\":\"https://github.com/gamtiq/weekstart/issues\"},\"description\":\"Library to get first day of week.\",\"devDependencies\":{\"@babel/preset-env\":\"7.6.3\",\"eslint\":\"6.5.1\",\"eslint-config-guard\":\"1.0.3\",\"ink-docstrap\":\"1.3.2\",\"jest\":\"24.9.0\",\"jsdoc\":\"3.6.3\",\"microbundle\":\"0.4.4\",\"version-bump-prompt\":\"5.0.5\"},\"homepage\":\"https://github.com/gamtiq/weekstart\",\"keywords\":[\"week\",\"start\",\"first\",\"day\",\"locale\",\"country\",\"region\"],\"license\":\"MIT\",\"main\":\"dist/commonjs/main.js\",\"module\":\"dist/es-module/main.js\",\"name\":\"weekstart\",\"repository\":{\"type\":\"git\",\"url\":\"git://github.com/gamtiq/weekstart.git\"},\"scripts\":{\"all\":\"npm run check-all && npm run doc && npm run build\",\"build\":\"npm run build-umd && npm run build-commonjs && npm run build-esm && npm run build-umd-min\",\"build-commonjs\":\"microbundle build \\\"src/!(*.test).js\\\" --output dist/commonjs --format cjs --strict --no-compress\",\"build-esm\":\"microbundle build \\\"src/!(*.test).js\\\" --output dist/es-module --format es --no-compress\",\"build-umd\":\"microbundle build src/main.js src/full.js --output dist --format umd --strict --no-compress\",\"build-umd-min\":\"microbundle build src/main.js src/full.js --output dist/min --format umd --strict\",\"check\":\"npm run lint && npm test\",\"check-all\":\"npm run lint-all && npm test\",\"doc\":\"jsdoc -c jsdoc-conf.json\",\"lint\":\"eslint --cache --max-warnings 0 \\\"**/*.js\\\"\",\"lint-all\":\"eslint --max-warnings 0 \\\"**/*.js\\\"\",\"lint-all-error\":\"eslint \\\"**/*.js\\\"\",\"lint-error\":\"eslint --cache \\\"**/*.js\\\"\",\"release\":\"bump patch --commit --tag --all --push package.json package-lock.json bower.json component.json\",\"release-major\":\"bump major --commit --tag --all --push package.json package-lock.json bower.json component.json\",\"release-minor\":\"bump minor --commit --tag --all --push package.json package-lock.json bower.json component.json\",\"test\":\"jest\"},\"types\":\"./index.d.ts\",\"umd:main\":\"dist/main.js\",\"version\":\"1.0.1\"}");
 
 /***/ }),
 
