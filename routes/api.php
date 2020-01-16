@@ -34,6 +34,8 @@ Route::resource('/academias', 'Api\AcademiaController')->middleware('auth:api')-
     'create', 'edit'
 ]);
 
+Route::post('/reuniones/crearPDFOrdenDelDia', 'Api\ReunionesController@crearPDFOrdenDelDia')->middleware('auth:api');
+
 Route::fallback(function(){
     return response()->json(['message' => '¡No se encontró el recurso! Verifica la url'], 404);
 });
