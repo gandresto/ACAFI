@@ -16,4 +16,16 @@ class Acuerdo extends Model
         return $this->belongsToMany(Reunion::class)
                     ->withPivot('avance');
     }
+
+    public function getFechaDeUltimaRevisionAttribute()
+    {
+        return $this->reuniones()->latest()->first() ?
+                $this->reuniones()->latest()->first()->inicio :
+                $this->tema->reunion->inicio;
+    }
+
+    public function getAcademiaAttribute()
+    {
+        return $this->tema->reunion->academia;
+    }
 }
