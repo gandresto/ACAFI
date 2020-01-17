@@ -49,7 +49,7 @@
         v-if="academiaSeleccionada && estadoAcademia == estadoApi.LISTO"
         @submit="submitForm"
     >
-      <!-- ----------- Fecha y hora --------- -->
+      <!-- ----------- Fecha y hora de inicio --------- -->
       <b-row>
         <v-datetime
           class="form-group col-md-12"
@@ -64,11 +64,29 @@
           <label for="fecha-inicio-input" slot="before">Fecha y hora de inicio</label>
         </v-datetime>
       </b-row>
+
+      <!-- ----------- Fecha y hora de fin --------- -->
+      <b-row v-if="fechaInicio">
+        <v-datetime
+          class="form-group col-md-12"
+          input-id="fecha-inicio-input"
+          type="datetime"
+          :min-datetime="fechaInicio"
+          v-model="fechaFin"
+          :phrases="frases"
+          required="true"
+          input-class="form-control"
+        >
+          <label for="fecha-inicio-input" slot="before">Fecha y hora de finalizacion</label>
+        </v-datetime>
+      </b-row>
+
       <!-- ----------- Lugar --------- -->
       <b-form-group id="lugar" label="Lugar" label-for="text-lugar">
         <b-form-input id="text-lugar" v-model="lugar" type="text" required></b-form-input>
       </b-form-group>
       <hr />
+
       <!-- ----------- Convocados --------- -->
       <crear-reunion-agregar-convocados></crear-reunion-agregar-convocados>
       <hr />
@@ -102,6 +120,7 @@ export default {
     return {
       academiaSeleccionada: null,
       fechaInicio: null,
+      fechaFin: null,
       estadoApi: ESTADO_API,
       limiteInferiorFecha: "",
       frases: {
@@ -128,6 +147,7 @@ export default {
       // alert(url);
       let data = {
           fechaInicio : this.fechaInicio,
+          fechaFin : this.fechaFin,
           lugar: this.lugar,
           convocados: this.convocados,
           invitados: this.invitados,

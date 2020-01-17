@@ -51,7 +51,8 @@ class ReunionesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->authorize('update');
+        $data = $this->obtenerDatosValidadosReunion($request);
     }
 
     /**
@@ -67,26 +68,31 @@ class ReunionesController extends Controller
 
     public function crearPDFOrdenDelDia(Request $request)
     {
-        $data_val = $request->validate([
+        $data = $this->obtenerDatosValidadosReunion($request);
+        $pdf = \PDF::loadView('reuniones.ordendeldia', $data);
+        return $pdf->download('orden_del_dia.pdf');
+    }
+    public function obtenerDatosValidadosReunion(Request $request)
+    {
+        $val_data = $request->validate([
             'fechaInicio' => 'required|before:'. Carbon::now('UTC')->addMinutes(-15),
-            // 'duracion' => 'required',
+            'fechaFin' => 'required|after:fechaInicio',
             'lugar' => 'required',
             'convocados' => 'required',
             'convocados.*.id' => 'exists:users',
             'invitados.*.id' => 'exists:users',
             'temas' => 'required',
         ]);
-        // return response($data_val, 500);
-        $data = [
-            'fechaInicio' => Carbon::parse($data_val['fechaInicio'])->setTimeZone(config('app.timezone')),
-            'lugar' => $data_val['lugar'],
-            'convocados' => $data_val['convocados'],
-            'invitados' => $request->all()['invitados'],
-            'temas' => $data_val['temas'],
-            ];
 
-        $pdf = \PDF::loadView('reuniones.ordendeldia', $data);
-        // $pdf = \PDF::loadView('reuniones.ordendeldia', array($request->all()), $encoding = 'utf-8');
-        return $pdf->download('orden_del_dia.pdf');
+        // return response($data_val, 500);
+
+        return [
+            'fechaInicio' => Carbon::parse($val_data['fechaInicio'])->setTimeZone(config('app.timezone')),
+            'fechaFin' => Carbon::parse($val_data['fechaFin'])->setTimeZone(config('app.timezone')),
+            'lugar' => $val_data['lugar'],
+            'convocados' => $val_data['convocados'],
+            'invitados' => $request->all()['invitados'],
+            'temas' => $val_data['temas'],
+        ];
     }
 }

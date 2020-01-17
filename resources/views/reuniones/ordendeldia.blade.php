@@ -11,14 +11,39 @@
     <h1>
         Orden del día
     </h1>
-    @if ($convocados)
-        {{-- {{var_dump($convocados)}} --}}
-        {{-- {{var_dump($keys)}} --}}
-        {{-- {{$convocados}} --}}
-        {{-- {{json_decode($convocados)}} --}}
-        {{-- {{count($convocados)}} --}}
+    <div>
+        <strong>Lugar:</strong> {{$lugar}}
+    </div>
+    <div>
+        <strong>Inicia:</strong> {{$fechaInicio->format('d/m/y h:i A')}}
+    </div>
+    <div>
+        <strong>Finaliza:</strong> {{$fechaFin->format('d/m/y h:i A')}}
+    </div>
+    <h2>
+        Miembros de la academia convocados
+    </h2>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Nombre
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($convocados as $convocado)
+            <tr>
+                <td>
+                    {{"{$convocado['nombre']} {$convocado['apellido_paterno']} {$convocado['apellido_materno']}"}}
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+    @if ($invitados)
         <h2>
-            Miembros de la academia convocados
+            Invitados externos
         </h2>
         <table>
             <thead>
@@ -29,31 +54,26 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($convocados as $convocado)
+                @foreach ($invitados as $invitado)
                 <tr>
                     <td>
-                        {{"{$convocado['nombre']} {$convocado['apellido_paterno']} {$convocado['apellido_materno']}"}}
+                        {{"{$invitado['nombre']} {$invitado['apellido_paterno']} {$invitado['apellido_materno']}"}}
                     </td>
                 </tr>
                 @endforeach
-                {{-- @for ($i = 0; $i < count($convocados); $i++)
-                <tr>
-                    <td>
-                        {{$convocados[$i]}}
-                    </td>
-                </tr>
-                @endfor --}}
             </tbody>
         </table>
     @endif
-    {{-- @if ($invitados)
-        {{$invitados}}
-        @endif --}}
-    @if ($lugar)
-        {{$lugar}}
-    @endif
-    @if ($fechaInicio)
-        {{$fechaInicio}}
-    @endif
+    <h2>Temas por revisar</h2>
+    <ol>
+        @foreach ($temas as $tema)
+            <li>{{$tema['descripcion']}}</li>
+        @endforeach
+    </ol>
 </body>
+<style>
+    body, html{
+        width: 85%;
+    }
+</style>
 </html>

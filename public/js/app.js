@@ -2612,6 +2612,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2620,6 +2638,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       academiaSeleccionada: null,
       fechaInicio: null,
+      fechaFin: null,
       estadoApi: _enum_estado_api__WEBPACK_IMPORTED_MODULE_1__["default"],
       limiteInferiorFecha: "",
       frases: {
@@ -2644,6 +2663,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       var data = {
         fechaInicio: this.fechaInicio,
+        fechaFin: this.fechaFin,
         lugar: this.lugar,
         convocados: this.convocados,
         invitados: this.invitados,
@@ -80937,6 +80957,49 @@ var render = function() {
                 ],
                 1
               ),
+              _vm._v(" "),
+              _vm.fechaInicio
+                ? _c(
+                    "b-row",
+                    [
+                      _c(
+                        "v-datetime",
+                        {
+                          staticClass: "form-group col-md-12",
+                          attrs: {
+                            "input-id": "fecha-inicio-input",
+                            type: "datetime",
+                            "min-datetime": _vm.fechaInicio,
+                            phrases: _vm.frases,
+                            required: "true",
+                            "input-class": "form-control"
+                          },
+                          model: {
+                            value: _vm.fechaFin,
+                            callback: function($$v) {
+                              _vm.fechaFin = $$v
+                            },
+                            expression: "fechaFin"
+                          }
+                        },
+                        [
+                          _c(
+                            "label",
+                            {
+                              attrs: {
+                                slot: "before",
+                                for: "fecha-inicio-input"
+                              },
+                              slot: "before"
+                            },
+                            [_vm._v("Fecha y hora de finalizacion")]
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                : _vm._e(),
               _vm._v(" "),
               _c(
                 "b-form-group",
