@@ -6,6 +6,7 @@ use App\Academia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use Carbon\Carbon;
 
 class ReunionesController extends Controller
 {
@@ -66,19 +67,22 @@ class ReunionesController extends Controller
 
     public function crearPDFOrdenDelDia(Request $request)
     {
-        // $data = collect($request->all());
-        // $data = json_decode($request->all());
-        // return response(($request->all()), 500);
-        // return json_encode($request->all());
-        // $convocados = Academia::find(1)->miembrosActuales;
+        $data_val = $request->validate([
+            'fechaInicio' => 'required|before:'. Carbon::now('UTC')->addMinutes(-15),
+            // 'duracion' => 'required',
+            'lugar' => 'required',
+            'convocados' => 'required',
+            'convocados.*.id' => 'exists:users',
+            'invitados.*.id' => 'exists:users',
+            'temas' => 'required',
+        ]);
+        // return response($data_val, 500);
         $data = [
-            'fechaInicio' => $request->all()['fechaInicio'],
-            'lugar' => $request->all()['lugar'],
-            'convocados' => $request->all()['convocados'],
-            'keys' => array_keys($request->all()['convocados']),
-            // 'convocados' => $convocados,
+            'fechaInicio' => Carbon::parse($data_val['fechaInicio'])->setTimeZone(config('app.timezone')),
+            'lugar' => $data_val['lugar'],
+            'convocados' => $data_val['convocados'],
             'invitados' => $request->all()['invitados'],
-            'temas' => $request->all()['temas'],
+            'temas' => $data_val['temas'],
             ];
 
         $pdf = \PDF::loadView('reuniones.ordendeldia', $data);
