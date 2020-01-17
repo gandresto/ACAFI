@@ -48,4 +48,12 @@ class Academia extends Model
     {
         return $this->hasMany(Reunion::class);
     }
+
+    public function getAcuerdosPendientesAttribute()
+    {
+        $reuniones_ids = $this->reuniones->pluck('id');
+        $temas_reuniones_ids = Tema::whereIn('reunion_id', $reuniones_ids)->select('id');
+        return Acuerdo::where('resuelto', '=', false)->whereIn('tema_id', $temas_reuniones_ids)->get();
+    }
+
 }
