@@ -19,10 +19,14 @@ class CreateAcuerdosTable extends Migration
             $table->boolean('resuelto')->default(0);
             $table->string('resultado', 240)->nullable();
             $table->string('producto_esperado', 240);
+            $table->date('fecha_compromiso');
+            $table->date('fecha_resuelto')->nullable();
             $table->unsignedBigInteger('tema_id');
             $table->timestamps();
-            
+
             $table->index('tema_id');
+            $table->index('resuelto');
+            $table->index('fecha_compromiso');
         });
     }
 
