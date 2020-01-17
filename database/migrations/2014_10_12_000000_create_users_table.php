@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Str;
 use Carbon\Carbon;
 
 class CreateUsersTable extends Migration
@@ -24,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('api_token', 80)->unique()
                         ->nullable()
-                        ->default(null);
+                        ->default(Str::random(80));
             $table->rememberToken();
             $table->timestamps();
         });
