@@ -2633,11 +2633,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -2672,7 +2667,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     vistaPrevia: function vistaPrevia(evt) {
       var _this = this;
 
-      evt.preventDefault();
+      // evt.preventDefault();
       this.estadoVistaPrevia = _enum_estado_api__WEBPACK_IMPORTED_MODULE_1__["default"].CARGANDO;
       var url = _services_api__WEBPACK_IMPORTED_MODULE_2__["default"].baseURL + "/reuniones/crearPDFOrdenDelDia"; // alert(url);
 
@@ -2718,14 +2713,52 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             console.log(JSON.parse(this.result));
           };
 
-          fr.readAsText(_data);
-          console.log(_data); //   console.log(error.message)
+          fr.readAsText(_data); // console.log(data);
+          //   console.log(error.message)
         } else console.log(err);
       });
     },
     submitForm: function submitForm(evt) {
-      evt.preventDefault();
-      console.log("Submit form");
+      evt.preventDefault(); // this.estadoVistaPrevia = ESTADO_API.CARGANDO;
+
+      var url = _services_api__WEBPACK_IMPORTED_MODULE_2__["default"].baseURL + "/reuniones/"; // alert(url);
+
+      var data = {
+        fechaInicio: this.fechaInicio,
+        fechaFin: this.fechaFin,
+        lugar: this.lugar,
+        convocados: this.convocados,
+        invitados: this.invitados,
+        temas: this.temas,
+        acuerdosARevision: this.acuerdosARevision
+      };
+      axios.post(url, data).then(function (r) {
+        return r.data;
+      }).then(function (data) {
+        console.log(data);
+      })["catch"](function (error) {
+        if (error.response) {
+          /*
+           * The request was made and the server responded with a
+           * status code that falls out of the range of 2xx
+           */
+          console.log(error.response.data); // console.log(error.response.status);
+          // console.log(error.response.headers);
+          // if (error.response.status == 404) {
+          //   this.error = error.response.data.message;
+          // } else this.error = error.message;
+        } else if (error.request) {
+          /*
+           * The request was made but no response was received, `error.request`
+           * is an instance of XMLHttpRequest in the browser and an instance
+           * of http.ClientRequest in Node.js
+           */
+          console.log(error.request); // this.error = error.message;
+        } else {
+          // Something happened in setting up the request and triggered an Error
+          console.log("Error: ", error.message); // this.error = error.message;
+        }
+      });
     }
   }),
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["academias", "estadoAcademias", "academia", "estadoAcademia", "convocados", "invitados", "temas", "acuerdosPendientes", "acuerdosARevision"]), {
@@ -2912,12 +2945,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2925,14 +2952,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      // consulta: '',
-      camposTablaInvitados: ['invitado', 'email', 'acciones'],
+      camposTablaInvitados: ["invitado", "email", "acciones"],
       invitadoSeleccionado: null,
-      error: '' // invitados: [],
-
+      error: ""
     };
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['agregarInvitado', 'eliminarInvitadoPorId']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(["agregarInvitado", "eliminarInvitadoPorId"]), {
     removerInvitacion: function removerInvitacion(id) {
       this.eliminarInvitadoPorId(id);
     },
@@ -2945,16 +2970,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         axios.get(uri).then(function (r) {
           return r.data.data;
         }).then(function (resultadoBusqueda) {
-          _this.error = '';
+          _this.error = "";
           res(resultadoBusqueda);
         })["catch"](function (error) {
           res([]); // Error 😨
 
           if (error.response) {
             /*
-            * The request was made and the server responded with a
-            * status code that falls out of the range of 2xx
-            */
+             * The request was made and the server responded with a
+             * status code that falls out of the range of 2xx
+             */
             // console.log(error.response.data);
             // console.log(error.response.status);
             // console.log(error.response.headers);
@@ -2963,15 +2988,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             } else _this.error = error.message;
           } else if (error.request) {
             /*
-            * The request was made but no response was received, `error.request`
-            * is an instance of XMLHttpRequest in the browser and an instance
-            * of http.ClientRequest in Node.js
-            */
+             * The request was made but no response was received, `error.request`
+             * is an instance of XMLHttpRequest in the browser and an instance
+             * of http.ClientRequest in Node.js
+             */
             console.log(error.request);
             _this.error = error.message;
           } else {
             // Something happened in setting up the request and triggered an Error
-            console.log('Error: ', error.message);
+            console.log("Error: ", error.message);
             _this.error = error.message;
           }
 
@@ -2984,30 +3009,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return "".concat(invitado.nombre, " ").concat(invitado.apellido_paterno, " ").concat(invitado.apellido_materno);
     },
     procesarInvitado: function procesarInvitado(invitado) {
-      if (this.invitados && invitado) // Si hay invitados en lista e invitado seleccionado para agregar
-        {
-          if (this.invitados.find(function (inv) {
-            return inv.id == invitado.id;
-          })) // si está en la lista de invitados
-            {
-              this.error = 'Error: El usuario ya está en la lista de invitados';
-              return;
-            }
-
-          if (this.academia.miembrosActuales.find(function (miembro) {
-            return miembro.id == invitado.id;
-          })) // Si el usuario es miembro de la academia
-            {
-              this.error = 'Error: Solo se pueden agregar usuarios que no sean miembros de la academia';
-              return;
-            }
-
-          this.error = '';
-          this.agregarInvitado(invitado); // console.log(`${invitado.nombre} ${invitado.apellido_paterno} ${invitado.apellido_materno}`);
+      if (this.invitados && invitado) {
+        // Si hay invitados en lista e invitado seleccionado para agregar
+        if (this.invitados.find(function (inv) {
+          return inv.id == invitado.id;
+        })) {
+          // si está en la lista de invitados
+          this.error = "Error: El usuario ya está en la lista de invitados";
+          return;
         }
+
+        if (this.academia.miembrosActuales.find(function (miembro) {
+          return miembro.id == invitado.id;
+        })) {
+          // Si el usuario es miembro de la academia
+          this.error = "Error: Solo se pueden agregar usuarios que no sean miembros de la academia";
+          return;
+        }
+
+        this.error = "";
+        this.agregarInvitado(invitado); // console.log(`${invitado.nombre} ${invitado.apellido_paterno} ${invitado.apellido_materno}`);
+      }
     }
   }),
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['invitados', 'academia']))
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(["invitados", "academia"]))
 });
 
 /***/ }),
@@ -81196,7 +81221,7 @@ var render = function() {
                             ]
                           )
                         : _vm._e(),
-                      _vm._v("\n        Vista Previa de Orden del Día\n      ")
+                      _vm._v("Vista Previa de Orden del Día\n      ")
                     ]
                   ),
                   _vm._v(" "),
@@ -81211,9 +81236,7 @@ var render = function() {
             ],
             1
           )
-        : _vm._e(),
-      _vm._v(" "),
-      _c("b-row", [_c("b-container")], 1)
+        : _vm._e()
     ],
     1
   )
@@ -81434,13 +81457,7 @@ var render = function() {
                         props,
                         false
                       ),
-                      [
-                        _vm._v(
-                          "\r\n                    " +
-                            _vm._s(_vm.obtenerNombreCompleto(result)) +
-                            "\r\n                "
-                        )
-                      ]
+                      [_vm._v(_vm._s(_vm.obtenerNombreCompleto(result)))]
                     )
                   ]
                 }
@@ -81481,13 +81498,7 @@ var render = function() {
               {
                 key: "cell(invitado)",
                 fn: function(data) {
-                  return [
-                    _vm._v(
-                      "\r\n            " +
-                        _vm._s(_vm.obtenerNombreCompleto(data.item)) +
-                        "\r\n        "
-                    )
-                  ]
+                  return [_vm._v(_vm._s(_vm.obtenerNombreCompleto(data.item)))]
                 }
               },
               {

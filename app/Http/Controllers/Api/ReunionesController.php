@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Academia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Reunion;
 use App\User;
 use Carbon\Carbon;
 
@@ -28,7 +29,9 @@ class ReunionesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('create', Reunion::class);
+        $data = $this->obtenerDatosValidadosReunion($request);
+        return $data;
     }
 
     /**
@@ -51,7 +54,7 @@ class ReunionesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->authorize('update');
+        $this->authorize('update', Reunion::find($id));
         $data = $this->obtenerDatosValidadosReunion($request);
     }
 
@@ -68,6 +71,7 @@ class ReunionesController extends Controller
 
     public function crearPDFOrdenDelDia(Request $request)
     {
+        $this->authorize('create', Reunion::class);
         $data = $this->obtenerDatosValidadosReunion($request);
         $pdf = \PDF::loadView('reuniones.ordendeldia', $data);
         return $pdf->download('orden_del_dia.pdf');

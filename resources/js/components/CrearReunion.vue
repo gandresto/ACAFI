@@ -99,22 +99,17 @@
       <!-- ------- Botones de vista previa y enviar formulario ----- -->
       <b-form-group class="text-md-right">
         <b-button variant="secondary" @click="vistaPrevia">
-          <div  v-if="estadoVistaPrevia == estadoApi.CARGANDO" class="spinner-border spinner-border-sm mx-1" role="status">
+          <div
+            v-if="estadoVistaPrevia == estadoApi.CARGANDO"
+            class="spinner-border spinner-border-sm mx-1"
+            role="status"
+          >
             <span class="sr-only">Cargando vista previa...</span>
-          </div>
-          Vista Previa de Orden del Día
+          </div>Vista Previa de Orden del Día
         </b-button>
         <b-button type="submit" variant="primary">Crear Reunión</b-button>
       </b-form-group>
     </b-form>
-    <b-row>
-      <b-container>
-        <!-- {{academiaSeleccionada}} <br> -->
-        <!-- {{fechaInicio}} <br> -->
-        <!-- {{lugar}} <br> -->
-        <!-- {{convocados}}<br> -->
-      </b-container>
-    </b-row>
   </div>
 </template>
 
@@ -130,7 +125,7 @@ export default {
       fechaInicio: null,
       fechaFin: null,
       estadoApi: ESTADO_API,
-      estadoVistaPrevia : ESTADO_API.INICIADO,
+      estadoVistaPrevia: ESTADO_API.INICIADO,
       limiteInferiorFecha: "",
       frases: {
         ok: "Aceptar",
@@ -145,7 +140,11 @@ export default {
     this.leerAcademiasQuePreside(Laravel.authUserId);
   },
   methods: {
-    ...mapActions(["leerAcademiasQuePreside", "leerAcademia", "leerAcuerdosPendientes"]),
+    ...mapActions([
+      "leerAcademiasQuePreside",
+      "leerAcademia",
+      "leerAcuerdosPendientes"
+    ]),
     seleccionarAcademia() {
       if (this.academiaSeleccionada) {
         this.leerAcademia(this.academiaSeleccionada);
@@ -153,7 +152,7 @@ export default {
       }
     },
     vistaPrevia(evt) {
-      evt.preventDefault();
+      // evt.preventDefault();
       this.estadoVistaPrevia = ESTADO_API.CARGANDO;
       let url = API.baseURL + "/reuniones/crearPDFOrdenDelDia";
       // alert(url);
@@ -164,14 +163,15 @@ export default {
         convocados: this.convocados,
         invitados: this.invitados,
         temas: this.temas,
-        acuerdosARevision: this.acuerdosARevision,
+        acuerdosARevision: this.acuerdosARevision
       };
       axios({
         method: "post",
         responseType: "blob",
         url,
         data
-      }).then(r => r.data)
+      })
+        .then(r => r.data)
         .then(data => {
           this.estadoVistaPrevia = ESTADO_API.LISTO;
           //Create a Blob from the PDF Stream
@@ -195,15 +195,57 @@ export default {
               console.log(JSON.parse(this.result));
             };
             fr.readAsText(data);
-            console.log(data);
+            // console.log(data);
             //   console.log(error.message)
-          } else
-            console.log(err);
+          } else console.log(err);
         });
     },
     submitForm(evt) {
       evt.preventDefault();
-      console.log("Submit form");
+      // this.estadoVistaPrevia = ESTADO_API.CARGANDO;
+      let url = API.baseURL + "/reuniones/";
+      // alert(url);
+      let data = {
+        fechaInicio: this.fechaInicio,
+        fechaFin: this.fechaFin,
+        lugar: this.lugar,
+        convocados: this.convocados,
+        invitados: this.invitados,
+        temas: this.temas,
+        acuerdosARevision: this.acuerdosARevision
+      };
+      axios
+        .post(url, data)
+        .then(r => r.data)
+        .then(data => {
+          console.log(data);
+        })
+        .catch(error => {
+          if (error.response) {
+            /*
+             * The request was made and the server responded with a
+             * status code that falls out of the range of 2xx
+             */
+            console.log(error.response.data);
+            // console.log(error.response.status);
+            // console.log(error.response.headers);
+            // if (error.response.status == 404) {
+            //   this.error = error.response.data.message;
+            // } else this.error = error.message;
+          } else if (error.request) {
+            /*
+             * The request was made but no response was received, `error.request`
+             * is an instance of XMLHttpRequest in the browser and an instance
+             * of http.ClientRequest in Node.js
+             */
+            console.log(error.request);
+            // this.error = error.message;
+          } else {
+            // Something happened in setting up the request and triggered an Error
+            console.log("Error: ", error.message);
+            // this.error = error.message;
+          }
+        });
     }
   },
   computed: {
@@ -216,7 +258,7 @@ export default {
       "invitados",
       "temas",
       "acuerdosPendientes",
-      "acuerdosARevision",
+      "acuerdosARevision"
     ]),
     cAcademias() {
       return this.academias || null;
