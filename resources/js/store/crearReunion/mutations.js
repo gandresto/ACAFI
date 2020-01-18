@@ -34,5 +34,12 @@ export default {
     },
     removerTema(state, tema){
         state.temas = state.temas.filter(t => t.id != tema.id);
-    }
+    },
+    colocarAcuerdosPendientes(state, acuerdos){
+        state.acuerdosPendientes = acuerdos;
+    },
+    colocarAcuerdosARevision(state, acuerdos){
+        state.acuerdosARevision = acuerdos;
+    },
+
 };

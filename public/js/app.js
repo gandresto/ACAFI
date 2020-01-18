@@ -2630,6 +2630,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2653,13 +2656,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.limiteInferiorFecha = date.toISOString();
     this.leerAcademiasQuePreside(Laravel.authUserId);
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["leerAcademiasQuePreside", "leerAcademia"]), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["leerAcademiasQuePreside", "leerAcademia", "leerAcuerdosPendientes"]), {
     seleccionarAcademia: function seleccionarAcademia() {
-      if (this.academiaSeleccionada) this.leerAcademia(this.academiaSeleccionada);
+      if (this.academiaSeleccionada) {
+        this.leerAcademia(this.academiaSeleccionada);
+        this.leerAcuerdosPendientes(this.academiaSeleccionada);
+      }
     },
     vistaPrevia: function vistaPrevia(evt) {
       evt.preventDefault();
-      var url = _services_api__WEBPACK_IMPORTED_MODULE_2__["default"].baseURL + '/reuniones/crearPDFOrdenDelDia'; // alert(url);
+      var url = _services_api__WEBPACK_IMPORTED_MODULE_2__["default"].baseURL + "/reuniones/crearPDFOrdenDelDia"; // alert(url);
 
       var data = {
         fechaInicio: this.fechaInicio,
@@ -2667,11 +2673,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         lugar: this.lugar,
         convocados: this.convocados,
         invitados: this.invitados,
-        temas: this.temas
+        temas: this.temas,
+        acuerdosARevisar: this.acuerdosARevisar
       };
       axios({
-        method: 'post',
-        responseType: 'blob',
+        method: "post",
+        responseType: "blob",
         url: url,
         data: data
       }) // .post(url, form)
@@ -2680,7 +2687,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }).then(function (data) {
         //Create a Blob from the PDF Stream
         var file = new Blob([data], {
-          type: 'application/pdf'
+          type: "application/pdf"
         }); //Build a URL from the file
 
         var fileURL = URL.createObjectURL(file); //Open the URL on new Window
@@ -2693,7 +2700,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           // console.log(err.response);
           // console.log(err.response.data);
           var _data = new Blob([err.response.data], {
-            type: 'application/json'
+            type: "application/json"
           });
 
           var fr = new FileReader();
@@ -2710,10 +2717,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     submitForm: function submitForm(evt) {
       evt.preventDefault();
-      console.log('Submit form');
+      console.log("Submit form");
     }
   }),
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["academias", "estadoAcademias", "academia", "estadoAcademia", "convocados", "invitados", "temas"]), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["academias", "estadoAcademias", "academia", "estadoAcademia", "convocados", "invitados", "temas", "acuerdosARevisar"]), {
     cAcademias: function cAcademias() {
       return this.academias || null;
     }
@@ -3192,6 +3199,123 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     }
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CrearReunionTablaAcuerdos.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CrearReunionTablaAcuerdos.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {// console.log("Component mounted.");
+  },
+  data: function data() {
+    return {
+      estanTodosMarcados: false,
+      estadoIndeterminado: false,
+      camposTablaAcuerdos: [{
+        key: "revisar",
+        label: "¿Revisar en reunión?"
+      }, {
+        key: "descripcion",
+        label: "Acuerdo"
+      }, {
+        key: "fecha_compromiso",
+        label: "Fecha comprimiso de resolución"
+      }, {
+        key: "ultima_revision",
+        label: "Fecha de última revisión"
+      }]
+    };
+  },
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["ponerConvocados"]), {
+    alternarSeleccionarTodos: function alternarSeleccionarTodos(checked) {
+      // console.log(checked);
+      if (checked) this.$refs.tablaAcuerdos.selectAllRows();else this.$refs.tablaAcuerdos.clearSelected();
+    },
+    actualizarAcuerdos: function actualizarAcuerdos(acuerdos) {
+      if (acuerdos.length == 0) {
+        this.estadoIndeterminado = false;
+        this.estanTodosConvocados = false;
+      } else if (acuerdos.length == this.acuerdosPendientes.length) {
+        this.estadoIndeterminado = false;
+        this.estanTodosConvocados = true;
+      } else {
+        this.estadoIndeterminado = true;
+        this.estanTodosConvocados = false;
+      } //   console.log(acuerdos);
+
+
+      this.ponerConvocados(acuerdos);
+    }
+  }),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["acuerdosPendientes"]), {
+    cAcuerdosPendientes: function cAcuerdosPendientes() {
+      return this.acuerdosPendientes ? this.acuerdosPendientes : [];
+    }
+  })
 });
 
 /***/ }),
@@ -81029,11 +81153,11 @@ var render = function() {
               _vm._v(" "),
               _c("crear-reunion-agregar-convocados"),
               _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
               _c("crear-reunion-agregar-invitados"),
               _vm._v(" "),
               _c("crear-reunion-agregar-temas"),
+              _vm._v(" "),
+              _c("crear-reunion-tabla-acuerdos"),
               _vm._v(" "),
               _c(
                 "b-form-group",
@@ -81665,6 +81789,124 @@ var render = function() {
             ],
             1
           )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CrearReunionTablaAcuerdos.vue?vue&type=template&id=58d4673c&":
+/*!****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CrearReunionTablaAcuerdos.vue?vue&type=template&id=58d4673c& ***!
+  \****************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("b-form-group", [
+        _c("strong", [_vm._v("Acuerdos pendientes de otras reuniones")])
+      ]),
+      _vm._v(" "),
+      _c(
+        "b-form-group",
+        [
+          _c(
+            "b-form-checkbox",
+            {
+              attrs: {
+                id: "checkbox-revisar-todos",
+                name: "checkbox-revisar-todos",
+                indeterminate: _vm.estadoIndeterminado
+              },
+              on: { change: _vm.alternarSeleccionarTodos },
+              model: {
+                value: _vm.estanTodosMarcados,
+                callback: function($$v) {
+                  _vm.estanTodosMarcados = $$v
+                },
+                expression: "estanTodosMarcados"
+              }
+            },
+            [
+              _vm._v(
+                "\n      " +
+                  _vm._s(
+                    _vm.estanTodosMarcados
+                      ? "No dar seguimiento a ninguno"
+                      : "Revisar todos"
+                  ) +
+                  "\n    "
+              )
+            ]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "b-form-group",
+        [
+          _c("b-table", {
+            ref: "tablaAcuerdos",
+            attrs: {
+              hover: "",
+              "head-variant": "dark",
+              selectable: "",
+              "selected-variant": "primary",
+              "select-mode": "multi",
+              items: _vm.cAcuerdosPendientes,
+              fields: _vm.camposTablaAcuerdos,
+              responsive: "sm"
+            },
+            on: { "row-selected": _vm.actualizarAcuerdos },
+            scopedSlots: _vm._u([
+              {
+                key: "cell(revisar)",
+                fn: function(ref) {
+                  var rowSelected = ref.rowSelected
+                  return [
+                    rowSelected
+                      ? [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("✓")
+                          ]),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "sr-only" }, [
+                            _vm._v("Revisar")
+                          ])
+                        ]
+                      : [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v(" ")
+                          ]),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "sr-only" }, [
+                            _vm._v("No revisar")
+                          ])
+                        ]
+                  ]
+                }
+              }
+            ])
+          })
+        ],
+        1
+      )
     ],
     1
   )
@@ -95700,6 +95942,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('modal', __webpack_require_
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('crear-reunion', __webpack_require__(/*! ./components/CrearReunion.vue */ "./resources/js/components/CrearReunion.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('crear-reunion-agregar-invitados', __webpack_require__(/*! ./components/CrearReunionAgregarInvitados.vue */ "./resources/js/components/CrearReunionAgregarInvitados.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('crear-reunion-agregar-convocados', __webpack_require__(/*! ./components/CrearReunionAgregarConvocados.vue */ "./resources/js/components/CrearReunionAgregarConvocados.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('crear-reunion-tabla-acuerdos', __webpack_require__(/*! ./components/CrearReunionTablaAcuerdos.vue */ "./resources/js/components/CrearReunionTablaAcuerdos.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('crear-reunion-agregar-temas', __webpack_require__(/*! ./components/CrearReunionAgregarTemas.vue */ "./resources/js/components/CrearReunionAgregarTemas.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('crear-reunion-agregar-temas-tema-item', __webpack_require__(/*! ./components/CrearReunionAgregarTemasTemaItem.vue */ "./resources/js/components/CrearReunionAgregarTemasTemaItem.vue")["default"]);
 /**
@@ -96274,6 +96517,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/CrearReunionTablaAcuerdos.vue":
+/*!***************************************************************!*\
+  !*** ./resources/js/components/CrearReunionTablaAcuerdos.vue ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CrearReunionTablaAcuerdos_vue_vue_type_template_id_58d4673c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CrearReunionTablaAcuerdos.vue?vue&type=template&id=58d4673c& */ "./resources/js/components/CrearReunionTablaAcuerdos.vue?vue&type=template&id=58d4673c&");
+/* harmony import */ var _CrearReunionTablaAcuerdos_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CrearReunionTablaAcuerdos.vue?vue&type=script&lang=js& */ "./resources/js/components/CrearReunionTablaAcuerdos.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CrearReunionTablaAcuerdos_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CrearReunionTablaAcuerdos_vue_vue_type_template_id_58d4673c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CrearReunionTablaAcuerdos_vue_vue_type_template_id_58d4673c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/CrearReunionTablaAcuerdos.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/CrearReunionTablaAcuerdos.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/CrearReunionTablaAcuerdos.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionTablaAcuerdos_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./CrearReunionTablaAcuerdos.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CrearReunionTablaAcuerdos.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionTablaAcuerdos_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/CrearReunionTablaAcuerdos.vue?vue&type=template&id=58d4673c&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/CrearReunionTablaAcuerdos.vue?vue&type=template&id=58d4673c& ***!
+  \**********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionTablaAcuerdos_vue_vue_type_template_id_58d4673c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./CrearReunionTablaAcuerdos.vue?vue&type=template&id=58d4673c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CrearReunionTablaAcuerdos.vue?vue&type=template&id=58d4673c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionTablaAcuerdos_vue_vue_type_template_id_58d4673c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CrearReunionTablaAcuerdos_vue_vue_type_template_id_58d4673c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/EditarDivision.vue":
 /*!****************************************************!*\
   !*** ./resources/js/components/EditarDivision.vue ***!
@@ -96551,9 +96863,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   leerAcademiasQuePreside: function leerAcademiasQuePreside(_ref, user) {
     var commit = _ref.commit;
-    // console.log(api.baseURL);
-    var uri = "".concat(_services_api__WEBPACK_IMPORTED_MODULE_1__["default"].baseURL, "/users/").concat(user, "/academiasQueHaPresidido?actual=true"); // return new Promise((res, rej) => {
-
+    var uri = "".concat(_services_api__WEBPACK_IMPORTED_MODULE_1__["default"].baseURL, "/users/").concat(user, "/academiasQueHaPresidido?actual=true");
     commit('colocarEstadoAcademias', _enum_estado_api__WEBPACK_IMPORTED_MODULE_2__["default"].CARGANDO);
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(uri).then(function (r) {
       return r.data.data;
@@ -96562,8 +96872,8 @@ __webpack_require__.r(__webpack_exports__);
       commit('colocarEstadoAcademias', _enum_estado_api__WEBPACK_IMPORTED_MODULE_2__["default"].LISTO); // res();
     })["catch"](function (err) {
       commit('colocarEstadoAcademias', _enum_estado_api__WEBPACK_IMPORTED_MODULE_2__["default"].ERROR);
-      console.log(err); // rej();
-    }); // });
+      console.log(err);
+    });
   },
   leerAcademia: function leerAcademia(_ref2, id) {
     var commit = _ref2.commit;
@@ -96608,6 +96918,23 @@ __webpack_require__.r(__webpack_exports__);
   editarTema: function editarTema(_ref9, tema) {
     var commit = _ref9.commit;
     commit('actualizarTema', tema);
+  },
+  leerAcuerdosPendientes: function leerAcuerdosPendientes(_ref10, academia_id) {
+    var commit = _ref10.commit;
+    var uri = "".concat(_services_api__WEBPACK_IMPORTED_MODULE_1__["default"].baseURL, "/academias/").concat(academia_id, "/acuerdosPendientes"); // commit('colocarEstadoAcademiasPendientes', ESTADO_API.CARGANDO);
+
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(uri).then(function (r) {
+      return r.data.data;
+    }).then(function (acuerdos) {
+      commit('colocarAcuerdosPendientes', acuerdos); // commit('colocarEstadoAcademias', ESTADO_API.LISTO);
+    })["catch"](function (err) {
+      // commit('colocarEstadoAcademias', ESTADO_API.ERROR);
+      console.log(err);
+    });
+  },
+  ponerAcuerdosARevision: function ponerAcuerdosARevision(_ref11, acuerdos) {
+    var commit = _ref11.commit;
+    commit('colocarAcuerdosARevision', acuerdos);
   }
 });
 
@@ -96643,6 +96970,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   temas: function temas(state) {
     return state.temas;
+  },
+  acuerdosPendientes: function acuerdosPendientes(state) {
+    return state.acuerdosPendientes;
+  },
+  acuerdosARevision: function acuerdosARevision(state) {
+    return state.acuerdosARevision;
   }
 });
 
@@ -96731,6 +97064,12 @@ __webpack_require__.r(__webpack_exports__);
     state.temas = state.temas.filter(function (t) {
       return t.id != tema.id;
     });
+  },
+  colocarAcuerdosPendientes: function colocarAcuerdosPendientes(state, acuerdos) {
+    state.acuerdosPendientes = acuerdos;
+  },
+  colocarAcuerdosARevision: function colocarAcuerdosARevision(state, acuerdos) {
+    state.acuerdosARevision = acuerdos;
   }
 });
 
@@ -96754,7 +97093,9 @@ __webpack_require__.r(__webpack_exports__);
   academia: null,
   convocados: [],
   invitados: [],
-  temas: []
+  temas: [],
+  acuerdosPendientes: [],
+  acuerdosARevision: []
 });
 
 /***/ }),

@@ -4,9 +4,7 @@ import ESTADO_API from '../../enum-estado-api'
 
 export default {
     leerAcademiasQuePreside({commit}, user){
-        // console.log(api.baseURL);
-        let uri = `${api.baseURL}/users/${user}/academiasQueHaPresidido?actual=true`
-        // return new Promise((res, rej) => {
+        let uri = `${api.baseURL}/users/${user}/academiasQueHaPresidido?actual=true`;
         commit('colocarEstadoAcademias', ESTADO_API.CARGANDO);
         axios
             .get(uri)
@@ -19,13 +17,11 @@ export default {
             .catch(err=>{
                 commit('colocarEstadoAcademias', ESTADO_API.ERROR);
                 console.log(err);
-                // rej();
             });
-        // });
     },
     leerAcademia({commit}, id){
         // console.log(api.baseURL);
-        let uri = `${api.baseURL}/academias/${id}/`
+        let uri = `${api.baseURL}/academias/${id}/`;
         // return new Promise((res, rej) => {
         commit('colocarEstadoAcademia', ESTADO_API.CARGANDO);
         axios
@@ -63,5 +59,24 @@ export default {
     },
     editarTema({commit}, tema){
         commit('actualizarTema', tema);
-    }
+    },
+    leerAcuerdosPendientes({commit}, academia_id){
+        let uri = `${api.baseURL}/academias/${academia_id}/acuerdosPendientes`;
+        // commit('colocarEstadoAcademiasPendientes', ESTADO_API.CARGANDO);
+        axios
+            .get(uri)
+            .then(r => r.data.data)
+            .then(acuerdos => {
+                commit('colocarAcuerdosPendientes', acuerdos);
+                // commit('colocarEstadoAcademias', ESTADO_API.LISTO);
+            })
+            .catch(err=>{
+                // commit('colocarEstadoAcademias', ESTADO_API.ERROR);
+                console.log(err);
+        });
+
+    },
+    ponerAcuerdosARevision({commit}, acuerdos){
+        commit('colocarAcuerdosARevision', acuerdos);
+    },
 };

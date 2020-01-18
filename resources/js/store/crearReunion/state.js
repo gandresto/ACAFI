@@ -8,4 +8,6 @@ export default {
     convocados: [],
     invitados: [],
     temas: [],
+    acuerdosPendientes: [],
+    acuerdosARevision: [],
 };

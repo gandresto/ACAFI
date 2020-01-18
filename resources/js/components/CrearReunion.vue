@@ -45,10 +45,7 @@
       <strong>Hubo un problema, intenta de nuevo más tarde</strong>
     </div>
     <!-- ----------- Formulario al seleccionar academia --------- -->
-    <b-form
-        v-if="academiaSeleccionada && estadoAcademia == estadoApi.LISTO"
-        @submit="submitForm"
-    >
+    <b-form v-if="academiaSeleccionada && estadoAcademia == estadoApi.LISTO" @submit="submitForm">
       <!-- ----------- Fecha y hora de inicio --------- -->
       <b-row>
         <v-datetime
@@ -89,14 +86,20 @@
 
       <!-- ----------- Convocados --------- -->
       <crear-reunion-agregar-convocados></crear-reunion-agregar-convocados>
-      <hr />
+
       <!-- ----------- Invitados --------- -->
       <crear-reunion-agregar-invitados></crear-reunion-agregar-invitados>
+
       <!-- ----------- Temas por revisar --------- -->
       <crear-reunion-agregar-temas></crear-reunion-agregar-temas>
+
+      <!-- -- Acuerdos de reuniones pasadas sin resolver -- -->
+      <crear-reunion-tabla-acuerdos></crear-reunion-tabla-acuerdos>
+
+      <!-- ------- Botones de vista previa y enviar formulario ----- -->
       <b-form-group class="text-md-right">
-           <b-button variant="secondary" @click="vistaPrevia">Vista Previa de Orden del Día</b-button>
-           <b-button type="submit" variant="primary">Crear Reunión</b-button>
+        <b-button variant="secondary" @click="vistaPrevia">Vista Previa de Orden del Día</b-button>
+        <b-button type="submit" variant="primary">Crear Reunión</b-button>
       </b-form-group>
     </b-form>
     <b-row>
@@ -113,7 +116,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import ESTADO_API from "../enum-estado-api";
-import API from "../services/api"
+import API from "../services/api";
 
 export default {
   data() {
@@ -136,49 +139,54 @@ export default {
     this.leerAcademiasQuePreside(Laravel.authUserId);
   },
   methods: {
-    ...mapActions(["leerAcademiasQuePreside", "leerAcademia"]),
+    ...mapActions(["leerAcademiasQuePreside", "leerAcademia", "leerAcuerdosPendientes"]),
     seleccionarAcademia() {
-      if (this.academiaSeleccionada)
+      if (this.academiaSeleccionada) {
         this.leerAcademia(this.academiaSeleccionada);
+        this.leerAcuerdosPendientes(this.academiaSeleccionada);
+      }
     },
-    vistaPrevia(evt){
+    vistaPrevia(evt) {
       evt.preventDefault();
-      let url = API.baseURL + '/reuniones/crearPDFOrdenDelDia';
+      let url = API.baseURL + "/reuniones/crearPDFOrdenDelDia";
       // alert(url);
       let data = {
-          fechaInicio : this.fechaInicio,
-          fechaFin : this.fechaFin,
-          lugar: this.lugar,
-          convocados: this.convocados,
-          invitados: this.invitados,
-          temas: this.temas,
+        fechaInicio: this.fechaInicio,
+        fechaFin: this.fechaFin,
+        lugar: this.lugar,
+        convocados: this.convocados,
+        invitados: this.invitados,
+        temas: this.temas,
+        acuerdosARevisar: this.acuerdosARevisar,
       };
       axios({
-          method: 'post',
-          responseType: 'blob',
-          url,
-          data,
+        method: "post",
+        responseType: "blob",
+        url,
+        data
       })
         // .post(url, form)
         .then(r => r.data)
         .then(data => {
           //Create a Blob from the PDF Stream
-          const file = new Blob([data], {type: 'application/pdf'});
+          const file = new Blob([data], { type: "application/pdf" });
           //Build a URL from the file
           const fileURL = URL.createObjectURL(file);
           //Open the URL on new Window
           window.open(fileURL);
-        //   console.log(data);
+          //   console.log(data);
         })
-        .catch(err=>{
+        .catch(err => {
           console.log(err);
-          if(err.response){
+          if (err.response) {
             // console.log(err.response);
             // console.log(err.response.data);
-            const data = new Blob([err.response.data], {type: 'application/json'});
+            const data = new Blob([err.response.data], {
+              type: "application/json"
+            });
             let fr = new FileReader();
             fr.onload = function() {
-              console.log(JSON.parse(this.result))
+              console.log(JSON.parse(this.result));
             };
             fr.readAsText(data);
             console.log(data);
@@ -187,9 +195,9 @@ export default {
           // rej();
         });
     },
-    submitForm(evt){
-        evt.preventDefault()
-        console.log('Submit form')
+    submitForm(evt) {
+      evt.preventDefault();
+      console.log("Submit form");
     }
   },
   computed: {
@@ -201,6 +209,7 @@ export default {
       "convocados",
       "invitados",
       "temas",
+      "acuerdosARevisar"
     ]),
     cAcademias() {
       return this.academias || null;

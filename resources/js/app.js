@@ -44,6 +44,7 @@ Vue.component('modal', require('./components/PlantillaModal.vue').default);
 Vue.component('crear-reunion', require('./components/CrearReunion.vue').default);
 Vue.component('crear-reunion-agregar-invitados', require('./components/CrearReunionAgregarInvitados.vue').default);
 Vue.component('crear-reunion-agregar-convocados', require('./components/CrearReunionAgregarConvocados.vue').default);
+Vue.component('crear-reunion-tabla-acuerdos', require('./components/CrearReunionTablaAcuerdos.vue').default);
 Vue.component('crear-reunion-agregar-temas', require('./components/CrearReunionAgregarTemas.vue').default);
 Vue.component('crear-reunion-agregar-temas-tema-item', require('./components/CrearReunionAgregarTemasTemaItem.vue').default);
 
