@@ -41,12 +41,12 @@ class EstructuraFITableSeeder extends Seeder
 
     public function crearEstructuraFI($num_jefes = 4, $num_miembros = 7, $num_reuniones = 3)
     {
-        $hoy = Carbon::now();
+        // Carbon::now() = Carbon::now();
         $users = App\User::all();
         echo ' Creando divisiones... ';
         factory(App\Division::class, 5)->create()
             ->each(function ($division)
-            use ($users, $num_jefes, $num_miembros, $hoy) {
+            use ($users, $num_jefes, $num_miembros) {
                 //Seleccionar 4 usuarios al azar para hacerlos jefes de division
                 $jefes_rand = $users->random($num_jefes)->pluck('id')->toArray();
                 //Jefe Activo (por defecto el jefe guardado es el actual)
@@ -56,8 +56,8 @@ class EstructuraFITableSeeder extends Seeder
                     $division->jefes()->attach(
                         array($jefes_rand[$i] => [
                             'actual' => false,
-                            'fecha_ingreso' => $hoy->subMonths($i), // Agrego fecha de ingreso gradual por meses
-                            'fecha_egreso' => $hoy->subMonths($i - 1),
+                            'fecha_ingreso' => Carbon::now()->subMonths($i), // Agrego fecha de ingreso gradual por meses
+                            'fecha_egreso' => Carbon::now()->subMonths($i - 1),
                         ])
                     );
                 }
@@ -65,7 +65,7 @@ class EstructuraFITableSeeder extends Seeder
                 $division->departamentos()->saveMany(factory(App\Departamento::class, 4)->make());
                 $division->departamentos
                     ->each(function ($departamento)
-                    use ($users, $num_jefes, $num_miembros, $hoy) {
+                    use ($users, $num_jefes, $num_miembros) {
                         //echo 'Creando academias para Dpto. '.$departamento->nombre .'\n';
                         //Seleccionar 4 usuarios al azar
                         $jefes_rand = $users->random($num_jefes)->pluck('id')->toArray();
@@ -75,15 +75,15 @@ class EstructuraFITableSeeder extends Seeder
                             $departamento->jefes()->attach(
                                 array($jefes_rand[$i] =>  [
                                     'actual' => false,
-                                    'fecha_ingreso' => $hoy->subMonths($i), // Agrego fecha de ingreso gradual por meses
-                                    'fecha_egreso' => $hoy->subMonths($i - 1),
+                                    'fecha_ingreso' => Carbon::now()->subMonths($i), // Agrego fecha de ingreso gradual por meses
+                                    'fecha_egreso' => Carbon::now()->subMonths($i - 1),
                                 ])
                             );
                         }
                         echo 'Creando academias para el Departamento de ' . $departamento->nombre . '... ';
                         $departamento->academias()->saveMany(factory(App\Academia::class, 10)->make()); // Creamos 10 academias nuevas
                         $departamento->academias->each(
-                            function ($academia) use ($users, $num_jefes, $num_miembros, $hoy) {
+                            function ($academia) use ($users, $num_jefes, $num_miembros) {
                                 //Seleccionar 4 usuarios al azar para hacerlos presidentes de academia
                                 $presidentes_rand = $users->random($num_jefes)->pluck('id')->toArray();
                                 //Jefe activo
@@ -92,8 +92,8 @@ class EstructuraFITableSeeder extends Seeder
                                     $academia->presidentes()->attach(
                                         array($presidentes_rand[$i] =>  [
                                             'actual' => false,
-                                            'fecha_ingreso' => $hoy->subMonths($i), // Agrego fecha de ingreso gradual por meses
-                                            'fecha_egreso' => $hoy->subMonths($i - 1),
+                                            'fecha_ingreso' => Carbon::now()->subMonths($i), // Agrego fecha de ingreso gradual por meses
+                                            'fecha_egreso' => Carbon::now()->subMonths($i - 1),
                                         ])
                                     );
                                 }
