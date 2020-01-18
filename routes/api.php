@@ -32,7 +32,8 @@ Route::get('/users/{user_id}/academiasQueHaPresidido', 'Api\UserController@acade
 
 Route::resource('/academias', 'Api\AcademiaController')->middleware('auth:api')->except([
     'create', 'edit'
-]);
+    ]);
+Route::get('/academias/{academia_id}/acuerdosPendientes', 'Api\AcademiaController@acuerdosPendientes')->middleware('auth:api');
 
 Route::post('/reuniones/crearPDFOrdenDelDia', 'Api\ReunionesController@crearPDFOrdenDelDia')->middleware('auth:api');
 

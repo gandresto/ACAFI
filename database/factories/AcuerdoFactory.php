@@ -12,10 +12,11 @@ $factory->define(Acuerdo::class, function (Faker $faker) {
     $resuelto = $faker->boolean($chanceOfGettingTrue = 30);
     $fecha_comprimiso = Carbon::now()->addDays(5);
     $fecha_resuelto = $resuelto ? Carbon::now() : null;
+    $resultado = $resuelto ? $faker->sentence(9) : null;
     return [
         "descripcion" => $faker->sentence(6),
         "resuelto" => $resuelto,
-        "resultado" => $faker->sentence(9),
+        "resultado" => $resultado,
         "producto_esperado" => $faker->sentence(9),
         "fecha_compromiso" => $fecha_comprimiso,
         "fecha_resuelto" => $fecha_resuelto,

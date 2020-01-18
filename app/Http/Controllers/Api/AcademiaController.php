@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Academia;
 use App\Http\Resources\Academia as AcademiaResource;
+use App\Http\Resources\AcuerdoPendienteResource;
 use Illuminate\Support\Facades\Cache;
 
 class AcademiaController extends Controller
@@ -66,5 +67,9 @@ class AcademiaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function acuerdosPendientes(int $academia_id){
+        return AcuerdoPendienteResource::collection(Academia::findOrFail($academia_id)->acuerdosPendientes);
     }
 }

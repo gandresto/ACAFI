@@ -21,7 +21,7 @@ class Acuerdo extends Model
     {
         return $this->reuniones()->latest()->first() ?
                 $this->reuniones()->latest()->first()->inicio :
-                $this->tema->reunion->inicio;
+                null;
     }
 
     public function getAcademiaAttribute()
