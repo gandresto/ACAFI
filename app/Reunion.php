@@ -16,15 +16,25 @@ class Reunion extends Model
         return $this->hasMany(Tema::class);
     }
 
-    public function invitados()
+    public function convocados()
     {
-        return $this->belongsToMany(User::class)
-                    ->withPivot('asistio');
+        return $this->belongsToMany(User::class, 
+        'convocado_reunion', 'reunion_id', 'convocado_id')
+        ->as('asistencia')
+        ->withPivot('asistio');
     }
-
+    
+    public function invitadosExternos()
+    {
+        return $this->belongsToMany(User::class, 
+        'invitado_reunion', 'reunion_id', 'invitado_id')
+        ->as('asistencia')
+        ->withPivot('asistio');
+    }
+    
     public function acuerdos()
     {
         return $this->belongsToMany(Acuerdo::class)
-                    ->withPivot('avance');
+        ->withPivot('avance');
     }
 }

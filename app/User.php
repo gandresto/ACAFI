@@ -112,9 +112,19 @@ class User extends Authenticatable
                     ->withPivot('activo', 'fecha_ingreso', 'fecha_egreso');
     }
 
-    public function reuniones()
+    public function reunionesComoConvocado()
     {
-        return $this->belongsToMany(Reunion::class)
-                    ->withPivot('asistio');
+        return $this->belongsToMany(Reunion::class, 
+            'convocado_reunion', 'convocado_id', 'reunion_id')
+            ->as('asistencia')
+            ->withPivot('asistio');
+    }
+
+    public function reunionesComoInvitadoExterno()
+    {
+        return $this->belongsToMany(Reunion::class, 
+            'invitado_reunion', 'invitado_id', 'reunion_id')
+            ->as('asistencia')
+            ->withPivot('asistio');
     }
 }
