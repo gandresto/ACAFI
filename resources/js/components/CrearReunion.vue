@@ -98,7 +98,12 @@
 
       <!-- ------- Botones de vista previa y enviar formulario ----- -->
       <b-form-group class="text-md-right">
-        <b-button variant="secondary" @click="vistaPrevia">Vista Previa de Orden del Día</b-button>
+        <b-button variant="secondary" @click="vistaPrevia">
+          <div  v-if="estadoVistaPrevia == estadoApi.CARGANDO" class="spinner-border spinner-border-sm mx-1" role="status">
+            <span class="sr-only">Cargando vista previa...</span>
+          </div>
+          Vista Previa de Orden del Día
+        </b-button>
         <b-button type="submit" variant="primary">Crear Reunión</b-button>
       </b-form-group>
     </b-form>
@@ -125,6 +130,7 @@ export default {
       fechaInicio: null,
       fechaFin: null,
       estadoApi: ESTADO_API,
+      estadoVistaPrevia : ESTADO_API.INICIADO,
       limiteInferiorFecha: "",
       frases: {
         ok: "Aceptar",
@@ -148,6 +154,7 @@ export default {
     },
     vistaPrevia(evt) {
       evt.preventDefault();
+      this.estadoVistaPrevia = ESTADO_API.CARGANDO;
       let url = API.baseURL + "/reuniones/crearPDFOrdenDelDia";
       // alert(url);
       let data = {
@@ -157,17 +164,16 @@ export default {
         convocados: this.convocados,
         invitados: this.invitados,
         temas: this.temas,
-        acuerdosARevisar: this.acuerdosARevisar,
+        acuerdosARevision: this.acuerdosARevision,
       };
       axios({
         method: "post",
         responseType: "blob",
         url,
         data
-      })
-        // .post(url, form)
-        .then(r => r.data)
+      }).then(r => r.data)
         .then(data => {
+          this.estadoVistaPrevia = ESTADO_API.LISTO;
           //Create a Blob from the PDF Stream
           const file = new Blob([data], { type: "application/pdf" });
           //Build a URL from the file
@@ -177,7 +183,7 @@ export default {
           //   console.log(data);
         })
         .catch(err => {
-          console.log(err);
+          this.estadoVistaPrevia = ESTADO_API.ERROR;
           if (err.response) {
             // console.log(err.response);
             // console.log(err.response.data);
@@ -191,8 +197,8 @@ export default {
             fr.readAsText(data);
             console.log(data);
             //   console.log(error.message)
-          }
-          // rej();
+          } else
+            console.log(err);
         });
     },
     submitForm(evt) {
@@ -209,7 +215,7 @@ export default {
       "convocados",
       "invitados",
       "temas",
-      "acuerdosARevisar"
+      "acuerdosARevision"
     ]),
     cAcademias() {
       return this.academias || null;

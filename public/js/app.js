@@ -2633,6 +2633,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -2643,6 +2648,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       fechaInicio: null,
       fechaFin: null,
       estadoApi: _enum_estado_api__WEBPACK_IMPORTED_MODULE_1__["default"],
+      estadoVistaPrevia: _enum_estado_api__WEBPACK_IMPORTED_MODULE_1__["default"].INICIADO,
       limiteInferiorFecha: "",
       frases: {
         ok: "Aceptar",
@@ -2664,7 +2670,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     vistaPrevia: function vistaPrevia(evt) {
+      var _this = this;
+
       evt.preventDefault();
+      this.estadoVistaPrevia = _enum_estado_api__WEBPACK_IMPORTED_MODULE_1__["default"].CARGANDO;
       var url = _services_api__WEBPACK_IMPORTED_MODULE_2__["default"].baseURL + "/reuniones/crearPDFOrdenDelDia"; // alert(url);
 
       var data = {
@@ -2674,18 +2683,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         convocados: this.convocados,
         invitados: this.invitados,
         temas: this.temas,
-        acuerdosARevisar: this.acuerdosARevisar
+        acuerdosARevision: this.acuerdosARevision
       };
       axios({
         method: "post",
         responseType: "blob",
         url: url,
         data: data
-      }) // .post(url, form)
-      .then(function (r) {
+      }).then(function (r) {
         return r.data;
       }).then(function (data) {
-        //Create a Blob from the PDF Stream
+        _this.estadoVistaPrevia = _enum_estado_api__WEBPACK_IMPORTED_MODULE_1__["default"].LISTO; //Create a Blob from the PDF Stream
+
         var file = new Blob([data], {
           type: "application/pdf"
         }); //Build a URL from the file
@@ -2694,7 +2703,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         window.open(fileURL); //   console.log(data);
       })["catch"](function (err) {
-        console.log(err);
+        _this.estadoVistaPrevia = _enum_estado_api__WEBPACK_IMPORTED_MODULE_1__["default"].ERROR;
 
         if (err.response) {
           // console.log(err.response);
@@ -2711,8 +2720,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
           fr.readAsText(_data);
           console.log(_data); //   console.log(error.message)
-        } // rej();
-
+        } else console.log(err);
       });
     },
     submitForm: function submitForm(evt) {
@@ -2720,7 +2728,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       console.log("Submit form");
     }
   }),
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["academias", "estadoAcademias", "academia", "estadoAcademia", "convocados", "invitados", "temas", "acuerdosARevisar"]), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["academias", "estadoAcademias", "academia", "estadoAcademia", "convocados", "invitados", "temas", "acuerdosARevision"]), {
     cAcademias: function cAcademias() {
       return this.academias || null;
     }
@@ -81169,7 +81177,24 @@ var render = function() {
                       attrs: { variant: "secondary" },
                       on: { click: _vm.vistaPrevia }
                     },
-                    [_vm._v("Vista Previa de Orden del Día")]
+                    [
+                      _vm.estadoVistaPrevia == _vm.estadoApi.CARGANDO
+                        ? _c(
+                            "div",
+                            {
+                              staticClass:
+                                "spinner-border spinner-border-sm mx-1",
+                              attrs: { role: "status" }
+                            },
+                            [
+                              _c("span", { staticClass: "sr-only" }, [
+                                _vm._v("Cargando vista previa...")
+                              ])
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v("\n        Vista Previa de Orden del Día\n      ")
+                    ]
                   ),
                   _vm._v(" "),
                   _c(
