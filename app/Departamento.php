@@ -23,9 +23,8 @@ class Departamento extends Model
     public function jefes()
     {
         return $this->belongsToMany(User::class, 'departamento_jefe',
-                                    'departamento_id', 'jefe_id')#,
-                                    #'id', 'user_id')
-                    ->withPivot('actual', 'fecha_ingreso', 'fecha_egreso');;
+                                    'departamento_id', 'jefe_id')
+                    ->withPivot('actual', 'fecha_ingreso', 'fecha_egreso');
     }
 
     public function academias()
