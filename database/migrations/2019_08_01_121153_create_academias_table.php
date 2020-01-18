@@ -14,7 +14,7 @@ class CreateAcademiasTable extends Migration
     public function up()
     {
         Schema::create('academias', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('nombre');
             $table->boolean('activa')->default(True);
             //$table->unsignedBigInteger('presidente_id');
@@ -23,6 +23,7 @@ class CreateAcademiasTable extends Migration
 
             //$table->index('presidente_id');
             $table->index('departamento_id');
+            $table->foreign('departamento_id')->references('id')->on('departamentos');
         });
     }
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAcuerdoReunionPivotTable extends Migration
+class CrearTablaPivoteConvocadoReunion extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateAcuerdoReunionPivotTable extends Migration
      */
     public function up()
     {
-        Schema::create('acuerdo_reunion', function (Blueprint $table) {
+        Schema::create('convocado_reunion', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('acuerdo_id');
+            $table->unsignedBigInteger('convocado_id');
             $table->unsignedBigInteger('reunion_id');
-            $table->string('avance')->nullable();
+            $table->boolean('asistio')->default(false);
 
-            $table->index('acuerdo_id');
-            $table->foreign('acuerdo_id')->references('id')->on('acuerdos');
+            $table->index('convocado_id');
+            $table->foreign('convocado_id')->references('id')->on('users');
             $table->index('reunion_id');
             $table->foreign('reunion_id')->references('id')->on('reunions');
         });
@@ -33,6 +33,6 @@ class CreateAcuerdoReunionPivotTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('acuerdo_reunion');
+        Schema::dropIfExists('convocado_reunion');
     }
 }

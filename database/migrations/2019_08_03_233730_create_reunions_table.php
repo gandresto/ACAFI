@@ -14,7 +14,7 @@ class CreateReunionsTable extends Migration
     public function up()
     {
         Schema::create('reunions', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('academia_id');
             $table->string('lugar');
             $table->dateTime('inicio');
@@ -24,6 +24,7 @@ class CreateReunionsTable extends Migration
             $table->timestamps();
 
             $table->index('academia_id');
+            $table->foreign('academia_id')->references('id')->on('academias');
         });
     }
 

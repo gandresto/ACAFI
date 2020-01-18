@@ -22,9 +22,12 @@ class CreateDivisionJefePivotTable extends Migration
             $table->date('fecha_ingreso')->default(Carbon::now());
             $table->date('fecha_egreso')->nullable();
 
-            $table->index('division_id');
-            $table->index('jefe_id');
             $table->index('actual');
+
+            $table->index('division_id');
+            $table->foreign('division_id')->references('id')->on('divisions');
+            $table->index('jefe_id');
+            $table->foreign('jefe_id')->references('id')->on('users');
         });
     }
 

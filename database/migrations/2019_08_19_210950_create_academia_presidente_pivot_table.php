@@ -22,9 +22,12 @@ class CreateAcademiaPresidentePivotTable extends Migration
             $table->date('fecha_ingreso')->default(Carbon::now());
             $table->date('fecha_egreso')->nullable();
 
-            $table->index('academia_id');
-            $table->index('presidente_id');
             $table->index('actual');
+
+            $table->index('academia_id');
+            $table->foreign('academia_id')->references('id')->on('academias');
+            $table->index('presidente_id');
+            $table->foreign('presidente_id')->references('id')->on('users');
         });
     }
 

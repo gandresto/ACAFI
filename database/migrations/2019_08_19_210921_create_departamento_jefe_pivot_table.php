@@ -22,9 +22,12 @@ class CreateDepartamentoJefePivotTable extends Migration
             $table->date('fecha_ingreso')->default(Carbon::now());
             $table->date('fecha_egreso')->nullable();
 
-            $table->index('departamento_id');
-            $table->index('jefe_id');
             $table->index('actual');
+
+            $table->index('departamento_id');
+            $table->foreign('departamento_id')->references('id')->on('departamentos');
+            $table->index('jefe_id');
+            $table->foreign('jefe_id')->references('id')->on('users');
         });
     }
 

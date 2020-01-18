@@ -15,7 +15,7 @@ class CreateAcademiaMiembroPivotTable extends Migration
     public function up()
     {
         Schema::create('academia_miembro', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('academia_id');
             $table->unsignedBigInteger('miembro_id');
             $table->boolean('activo')->default(true);
@@ -23,7 +23,9 @@ class CreateAcademiaMiembroPivotTable extends Migration
             $table->date('fecha_egreso')->nullable();
 
             $table->index('academia_id');
+            $table->foreign('academia_id')->references('id')->on('academias');
             $table->index('miembro_id');
+            $table->foreign('miembro_id')->references('id')->on('users');
             $table->index('activo');
         });
     }

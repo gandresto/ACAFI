@@ -14,7 +14,7 @@ class CreateDepartamentosTable extends Migration
     public function up()
     {
         Schema::create('departamentos', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('nombre', 50)->unique();
             $table->boolean('activo')->default(True);
             //$table->unsignedBigInteger('jefe_dpto_id');
@@ -23,6 +23,7 @@ class CreateDepartamentosTable extends Migration
 
             //$table->index('jefe_dpto_id');
             $table->index('division_id');
+            $table->foreign('division_id')->references('id')->on('divisions');
             $table->index('nombre');
         });
     }

@@ -14,7 +14,7 @@ class CreateAcuerdosTable extends Migration
     public function up()
     {
         Schema::create('acuerdos', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('descripcion', 240);
             $table->boolean('resuelto')->default(0);
             $table->string('resultado', 240)->nullable();
@@ -24,9 +24,11 @@ class CreateAcuerdosTable extends Migration
             $table->unsignedBigInteger('tema_id');
             $table->timestamps();
 
-            $table->index('tema_id');
             $table->index('resuelto');
             $table->index('fecha_compromiso');
+
+            $table->index('tema_id');
+            $table->foreign('tema_id')->references('id')->on('temas');
         });
     }
 

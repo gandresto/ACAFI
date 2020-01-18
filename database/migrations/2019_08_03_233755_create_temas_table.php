@@ -14,13 +14,15 @@ class CreateTemasTable extends Migration
     public function up()
     {
         Schema::create('temas', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('descripcion');
             $table->string('comentario');
             $table->unsignedBigInteger('reunion_id');
             $table->timestamps();
 
             $table->index('reunion_id');
+            $table->foreign('reunion_id')->references('id')->on('reunions');
+
         });
     }
 
