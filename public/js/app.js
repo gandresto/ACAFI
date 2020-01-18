@@ -2728,7 +2728,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       console.log("Submit form");
     }
   }),
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["academias", "estadoAcademias", "academia", "estadoAcademia", "convocados", "invitados", "temas", "acuerdosARevision"]), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["academias", "estadoAcademias", "academia", "estadoAcademia", "convocados", "invitados", "temas", "acuerdosPendientes", "acuerdosARevision"]), {
     cAcademias: function cAcademias() {
       return this.academias || null;
     }
@@ -3085,6 +3085,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           id: this.temas.length ? this.temas.length + 1 : 1,
           descripcion: tema
         });
+        this.nuevoTema = '';
       }
     }
   }),
@@ -3298,7 +3299,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }]
     };
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["ponerConvocados"]), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["ponerAcuerdosARevision"]), {
     alternarSeleccionarTodos: function alternarSeleccionarTodos(checked) {
       // console.log(checked);
       if (checked) this.$refs.tablaAcuerdos.selectAllRows();else this.$refs.tablaAcuerdos.clearSelected();
@@ -3306,17 +3307,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     actualizarAcuerdos: function actualizarAcuerdos(acuerdos) {
       if (acuerdos.length == 0) {
         this.estadoIndeterminado = false;
-        this.estanTodosConvocados = false;
+        this.estanTodosMarcados = false;
       } else if (acuerdos.length == this.acuerdosPendientes.length) {
         this.estadoIndeterminado = false;
-        this.estanTodosConvocados = true;
+        this.estanTodosMarcados = true;
       } else {
         this.estadoIndeterminado = true;
-        this.estanTodosConvocados = false;
+        this.estanTodosMarcados = false;
       } //   console.log(acuerdos);
 
 
-      this.ponerConvocados(acuerdos);
+      this.ponerAcuerdosARevision(acuerdos);
     }
   }),
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["acuerdosPendientes"]), {
@@ -81165,7 +81166,9 @@ var render = function() {
               _vm._v(" "),
               _c("crear-reunion-agregar-temas"),
               _vm._v(" "),
-              _c("crear-reunion-tabla-acuerdos"),
+              _vm.acuerdosPendientes.length > 0
+                ? _c("crear-reunion-tabla-acuerdos")
+                : _vm._e(),
               _vm._v(" "),
               _c(
                 "b-form-group",

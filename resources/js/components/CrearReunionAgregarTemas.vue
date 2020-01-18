@@ -58,6 +58,7 @@
                         id: this.temas.length ? this.temas.length + 1 : 1,
                         descripcion: tema,
                     });
+                    this.nuevoTema = '';
                 }
             }
 

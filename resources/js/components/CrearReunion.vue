@@ -94,7 +94,7 @@
       <crear-reunion-agregar-temas></crear-reunion-agregar-temas>
 
       <!-- -- Acuerdos de reuniones pasadas sin resolver -- -->
-      <crear-reunion-tabla-acuerdos></crear-reunion-tabla-acuerdos>
+      <crear-reunion-tabla-acuerdos v-if="acuerdosPendientes.length > 0"></crear-reunion-tabla-acuerdos>
 
       <!-- ------- Botones de vista previa y enviar formulario ----- -->
       <b-form-group class="text-md-right">
@@ -215,7 +215,8 @@ export default {
       "convocados",
       "invitados",
       "temas",
-      "acuerdosARevision"
+      "acuerdosPendientes",
+      "acuerdosARevision",
     ]),
     cAcademias() {
       return this.academias || null;

@@ -70,6 +70,14 @@
             <li>{{$tema['descripcion']}}</li>
         @endforeach
     </ol>
+    @if ($acuerdosARevision)
+        <h2>Acuerdos a seguimiento</h2>
+        <ol>
+            @foreach ($acuerdosARevision as $acuerdo)
+            <li>{{$acuerdo['descripcion']}}</li>
+            @endforeach
+        </ol>
+    @endif
 </body>
 <style>
     body, html{

@@ -77,7 +77,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["ponerConvocados"]),
+    ...mapActions(["ponerAcuerdosARevision"]),
     alternarSeleccionarTodos(checked) {
       // console.log(checked);
       if (checked) this.$refs.tablaAcuerdos.selectAllRows();
@@ -86,16 +86,16 @@ export default {
     actualizarAcuerdos(acuerdos) {
       if (acuerdos.length == 0) {
         this.estadoIndeterminado = false;
-        this.estanTodosConvocados = false;
+        this.estanTodosMarcados = false;
       } else if (acuerdos.length == this.acuerdosPendientes.length) {
         this.estadoIndeterminado = false;
-        this.estanTodosConvocados = true;
+        this.estanTodosMarcados = true;
       } else {
         this.estadoIndeterminado = true;
-        this.estanTodosConvocados = false;
+        this.estanTodosMarcados = false;
       }
     //   console.log(acuerdos);
-      this.ponerConvocados(acuerdos);
+      this.ponerAcuerdosARevision(acuerdos);
     }
   },
   computed: {

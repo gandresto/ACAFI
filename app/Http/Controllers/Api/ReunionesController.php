@@ -93,6 +93,7 @@ class ReunionesController extends Controller
             'convocados' => $val_data['convocados'],
             'invitados' => $request->all()['invitados'],
             'temas' => $val_data['temas'],
+            'acuerdosARevision' => $request->all()['acuerdosARevision']
         ];
     }
 }
