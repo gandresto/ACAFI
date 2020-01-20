@@ -70,7 +70,7 @@ class EstructuraFITableSeeder extends Seeder
                         //Seleccionar 4 usuarios al azar
                         $jefes_rand = $users->random($num_jefes)->pluck('id')->toArray();
                         //Jefe activo
-                        $departamento->jefes()->attach($jefes_rand);
+                        $departamento->jefes()->attach($jefes_rand[0]);
                         for ($i = $num_jefes-1; $i > 0; $i--) {
                             $departamento->jefes()->attach(
                                 array($jefes_rand[$i] =>  [
@@ -86,8 +86,8 @@ class EstructuraFITableSeeder extends Seeder
                             function ($academia) use ($users, $num_jefes, $num_miembros) {
                                 //Seleccionar 4 usuarios al azar para hacerlos presidentes de academia
                                 $presidentes_rand = $users->random($num_jefes)->pluck('id')->toArray();
-                                //Jefe activo
-                                $academia->presidentes()->attach($presidentes_rand);
+                                // --------- Presidente activo -----------
+                                $academia->presidentes()->attach($presidentes_rand[0]);
                                 for ($i = $num_jefes-1; $i > 0; $i--) {
                                     $academia->presidentes()->attach(
                                         array($presidentes_rand[$i] =>  [
@@ -97,8 +97,9 @@ class EstructuraFITableSeeder extends Seeder
                                         ])
                                     );
                                 }
-                                $miembros_rand = $users->random($num_miembros)->pluck('id')->toArray();
-                                $academia->miembros()->attach($miembros_rand);
+                                // ------------ Miembros de academia -------------
+                                $miembros_rand = $users->random($num_miembros)->pluck('id')->toArray(); // Seleccionamos un número de usuarios al azar 
+                                $academia->miembros()->attach($miembros_rand); // Y los hacemos miembros
 
                                 // ------ Reuniones --------
                                 echo 'Creando reuniones para academia ' . $academia->nombre . '... ';

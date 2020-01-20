@@ -9,14 +9,10 @@ use Faker\Generator as Faker;
 
 $factory->define(Reunion::class, function (Faker $faker) {
     $horas = $faker->numberBetween($min = -240, $max = 240);
-    $inicio = Carbon::now()->addHours($horas);
-    $fin = $inicio->addHour();
-    // $academias = Academia::all()->pluck('id');
     return [
-        // "academia_id" => $faker->randomElement($academias),
         "lugar" => "Sala de Juntas",
-        "inicio" => $inicio,
-        "fin" => $fin,
+        "inicio" => Carbon::now()->addHours($horas),
+        "fin" => Carbon::now()->addHours($horas)->addHour(),
         "orden_del_dia" => null,
         "minuta" => null,
         "created_at" => Carbon::now(),
