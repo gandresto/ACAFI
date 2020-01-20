@@ -5,83 +5,107 @@
     {{-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> --}}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-grid-only@1.0.0/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <title>Orden del Día</title>
 </head>
 <body>
-    <h1>
-        Orden del día
-    </h1>
-    <div>
-        <strong>Lugar:</strong> {{$lugar}}
+    <div class="container">
+        <div id="header" class="row">
+            <div class="logo col-xs-2 col-md-2 text-center">
+                <div class="mx-auto">
+                    <img src="https://picsum.photos/150" alt="Logo FI" srcset="">
+                </div>
+            </div>
+            <div class="col-xs-8 col-md-8 text-center">
+                Universidad Nacional Autónoma de México <br>
+                Facultad de Ingeniería <br>
+                {{App\Academia::find(1)->departamento->division->nombre}} <br>
+                <strong>Academia de {{App\Academia::find(1)->nombre}}</strong><br>
+                <br>
+                Reunión: {{$fechaInicio->format('d/m/y')}} <br>
+                Lugar: {{$lugar}}  <br>
+                Inicia: {{$fechaInicio->format('h:i A')}}  <br>
+                Finaliza: {{$fechaInicio->format('h:i A')}}  <br>
+            </div>
+            <div class="logo col-xs-2 col-md-2 text-center">
+                <div class="mx-auto">
+                    <img src="https://picsum.photos/150" alt="Logo Academia" srcset="">
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-12 text-center">
+            </div>
+        </div>
+        <div class="row">
+        </div>
+        <div class="row">
+            <div class="col-xs-6 col-md-6">
+                <strong>Miembros convocados</strong>
+                <div>
+                    <ul>
+                        @foreach ($convocados as $convocado)
+                            <li>{{"{$convocado['grado']} {$convocado['nombre']} {$convocado['apellido_paterno']} {$convocado['apellido_materno']}"}}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-6 col-md-6">
+                <strong>Invitados</strong>
+                <div>
+                    <ul>
+                        @foreach ($invitados as $invitado)
+                        <li> {{"{$invitado['grado']} {$invitado['nombre']} {$invitado['apellido_paterno']} {$invitado['apellido_materno']}"}}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <h2>Orden del día</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <ol>
+                    @foreach ($temas as $tema)
+                        <li>{{$tema['descripcion']}}</li>
+                    @endforeach
+
+                    @if ($acuerdosARevision)
+                        <li>
+                            Seguimiento a acuerdos
+                            <ol>
+                                @foreach ($acuerdosARevision as $acuerdo)
+                                <li>{{$acuerdo['descripcion']}}</li>
+                                @endforeach
+                            </ol>
+                        </li>
+                    @endif
+                </ol>
+            </div>
+        </div>
     </div>
-    <div>
-        <strong>Inicia:</strong> {{$fechaInicio->format('d/m/y h:i A')}}
-    </div>
-    <div>
-        <strong>Finaliza:</strong> {{$fechaFin->format('d/m/y h:i A')}}
-    </div>
-    <h2>
-        Miembros de la academia convocados
-    </h2>
-    <table>
-        <thead>
-            <tr>
-                <th>
-                    Nombre
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($convocados as $convocado)
-            <tr>
-                <td>
-                    {{"{$convocado['nombre']} {$convocado['apellido_paterno']} {$convocado['apellido_materno']}"}}
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-    @if ($invitados)
-        <h2>
-            Invitados externos
-        </h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>
-                        Nombre
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($invitados as $invitado)
-                <tr>
-                    <td>
-                        {{"{$invitado['nombre']} {$invitado['apellido_paterno']} {$invitado['apellido_materno']}"}}
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    @endif
-    <h2>Temas por revisar</h2>
-    <ol>
-        @foreach ($temas as $tema)
-            <li>{{$tema['descripcion']}}</li>
-        @endforeach
-    </ol>
-    @if ($acuerdosARevision)
-        <h2>Acuerdos a seguimiento</h2>
-        <ol>
-            @foreach ($acuerdosARevision as $acuerdo)
-            <li>{{$acuerdo['descripcion']}}</li>
-            @endforeach
-        </ol>
-    @endif
 </body>
 <style>
-    body, html{
-        width: 85%;
+    @page { 
+        size: letter
+    }
+    #header{
+        height: 170px;
+    }
+    /* body, html, #pdf{
+        width: 8.5in;
+    } */
+    .text-center{
+        text-align: center;
+    }
+    .mx-auto {
+        margin-right: auto !important;
+        margin-left: auto !important;
+    }
+    .row{
+        margin-top: 2mm;
+        margin-bottom: 2mm;
     }
 </style>
 </html>
