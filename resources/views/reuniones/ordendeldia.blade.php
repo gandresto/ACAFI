@@ -13,7 +13,7 @@
         <div id="header" class="row">
             <div class="logo col-xs-2 col-md-2 text-center">
                 <div class="mx-auto">
-                    <img src="https://picsum.photos/150" alt="Logo FI" srcset="">
+                    <img src="https://picsum.photos/140" alt="Logo FI" srcset="">
                 </div>
             </div>
             <div class="col-xs-8 col-md-8 text-center">
@@ -22,21 +22,20 @@
                 {{App\Academia::find(1)->departamento->division->nombre}} <br>
                 <strong>Academia de {{App\Academia::find(1)->nombre}}</strong><br>
                 <br>
-                Reunión: {{$fechaInicio->format('d/m/y')}} <br>
-                Lugar: {{$lugar}}  <br>
+                Reunión del {{$fechaInicio->format('d/m/y')}} <br>
+                {{$lugar}}  <br>
                 Inicia: {{$fechaInicio->format('h:i A')}}  <br>
-                Finaliza: {{$fechaInicio->format('h:i A')}}  <br>
+                Finaliza: {{$fechaFin->format('h:i A')}}  <br>
             </div>
             <div class="logo col-xs-2 col-md-2 text-center">
                 <div class="mx-auto">
-                    <img src="https://picsum.photos/150" alt="Logo Academia" srcset="">
+                    <img src="https://picsum.photos/140" alt="Logo Academia" srcset="">
                 </div>
             </div>
             <div class="col-xs-12 col-md-12 text-center">
             </div>
         </div>
-        <div class="row">
-        </div>
+        <hr>
         <div class="row">
             <div class="col-xs-6 col-md-6">
                 <strong>Miembros convocados</strong>
@@ -59,13 +58,9 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-12 text-center">
-                <h2>Orden del día</h2>
-            </div>
-        </div>
-        <div class="row">
+        <div id="temas-orden text-center" class="row">
             <div class="col-xs-12">
+                <div><strong>Orden del día:</strong></div>
                 <ol>
                     @foreach ($temas as $tema)
                         <li>{{$tema['descripcion']}}</li>
