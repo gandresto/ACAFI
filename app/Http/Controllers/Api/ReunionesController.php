@@ -139,6 +139,7 @@ class ReunionesController extends Controller
             'convocados.*.id' => 'exists:users',
             'invitados.*.id' => 'exists:users',
             'temas' => 'required',
+            'temas.*.descripcion' => 'min:3|max:191',
         ]);
 
         // return response($data_val, 500);
