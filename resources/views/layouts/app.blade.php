@@ -99,7 +99,7 @@
         <main class="py-4">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-sm-12 col-md-12 col-lg-10">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="pt-2">
@@ -137,5 +137,6 @@
             'authUserId' => Auth::user()->id ?? null,
         ]) !!};
      </script>
+     @stack('estilos')
 </body>
 </html>
