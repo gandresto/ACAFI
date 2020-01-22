@@ -80,7 +80,7 @@ class ReunionesController extends Controller
     {
         $val_data = $request->validate([
             'academia_id' => 'required',
-            'fechaInicio' => 'required|after:'. Carbon::now('UTC')->addMinutes(-15),
+            'fechaInicio' => 'required|after:'. Carbon::now()->subMinutes(30),
             'fechaFin' => 'required|after:fechaInicio',
             'lugar' => 'required',
             'convocados' => 'required',
