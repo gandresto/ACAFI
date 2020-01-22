@@ -10,7 +10,7 @@ class Division extends Model
         'siglas', 'nombre', 'url', 'logo'
     ];
 
-    public function getJefeActualAttribute()
+    public function getJefeAttribute()
     {
         return $this->jefes()->wherePivot('actual', '=', true)->first();
     }

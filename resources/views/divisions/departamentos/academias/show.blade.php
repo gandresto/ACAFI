@@ -15,13 +15,13 @@
                 </tr>
                 <tr>
                     <td scope="row">Presidente de academia</td>
-                    <td>{{ $academia->presidenteActual->gradoNombreCompleto }}</td>
+                    <td>{{ $academia->presidente->gradoNombreCompleto }}</td>
                 </tr>
                 <tr>
                     <td scope="row">Correo</td>
                     <td>
-                        <a href="mailto:{{ $academia->presidenteActual->email }}">
-                            {{ $academia->presidenteActual->email }}
+                        <a href="mailto:{{ $academia->presidente->email }}">
+                            {{ $academia->presidente->email }}
                         </a>
                     </td>
                 </tr>

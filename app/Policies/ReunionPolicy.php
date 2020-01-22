@@ -36,10 +36,11 @@ class ReunionPolicy
     public function view(User $user, Reunion $reunion)
     {
         // Presidente de academia, jefe de departamento, jefe de division e invitados pueden ver reunión
-        return $reunion->academia->presidenteActual->id == $user->id ||
-                $reunion->academia->departamento->jefeActual->id == $user->id ||
-                $reunion->academia->departamento->division->jefe->id == $user->id ||
-                $reunion->invitados->contains($user);
+        return $reunion->academia->presidente->id == $user->id 
+                || $reunion->academia->departamento->jefe->id == $user->id
+                || $reunion->academia->departamento->division->jefe->id == $user->id
+                || $reunion->invitadosExternos->contains($user)
+                || $reunion->convocados->contains($user);
     }
 
     /**
@@ -64,7 +65,7 @@ class ReunionPolicy
     public function update(User $user, Reunion $reunion)
     {
         // Solo el presidente actual de la academia puede editar reuniones
-        return $reunion->academia->presidenteActual->id == $user->id;
+        return $reunion->academia->presidente->id == $user->id;
     }
 
     /**
@@ -77,7 +78,7 @@ class ReunionPolicy
     public function delete(User $user, Reunion $reunion)
     {
         // Solo el presidente actual de la academia puede eliminar reuniones
-        return $reunion->academia->presidenteActual->id == $user->id;
+        return $reunion->academia->presidente->id == $user->id;
     }
 
     /**

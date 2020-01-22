@@ -23,7 +23,7 @@
 @section('contenido_documento')
 <div class="row">
     <div class="col-xs-12">
-        <strong>Presidente: </strong>{{$academia->presidenteActual->gradoNombreCompleto}}
+        <strong>Presidente: </strong>{{$academia->presidente->gradoNombreCompleto}}
     </div>
 </div>
     <div class="row">

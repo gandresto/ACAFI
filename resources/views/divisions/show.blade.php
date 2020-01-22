@@ -35,13 +35,13 @@
                 </tr>
                 <tr>
                     <td scope="row">Jefe de División</td>
-                    <td>{{$division->jefe_actual->grado_nombre_completo}}</td>
+                    <td>{{$division->jefe->grado_nombre_completo}}</td>
                 </tr>
                 <tr>
                     <td scope="row">Correo</td>
                     <td>
-                        <a href="mailto:{{ $division->jefe_actual->email }}">
-                            {{ $division->jefe_actual->email }}
+                        <a href="mailto:{{ $division->jefe->email }}">
+                            {{ $division->jefe->email }}
                         </a>
                     </td>
                 </tr>
@@ -107,7 +107,7 @@
                         @foreach ($division->departamentos as $departamento)
                             <tr>
                                 <td>{{$departamento->nombre}}</td>
-                                <td>{{$departamento->jefeActual->grado_nombre_completo}}</td>
+                                <td>{{$departamento->jefe->grado_nombre_completo}}</td>
                                 {{-- @can('create', App\Academia::class) --}}
                                     <td>
                                         <form action="{{ route('divisions.departamentos.destroy', [$division->id, $departamento->id]) }}" method="POST">

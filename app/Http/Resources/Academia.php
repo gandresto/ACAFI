@@ -20,7 +20,7 @@ class Academia extends JsonResource
                 'nombre' => $this->nombre,
                 'activa' => $this->activa,
                 'departamento' => $this->departamento,
-                'presidente' => new UserResource($this->presidenteActual),
+                'presidente' => new UserResource($this->presidente),
                 'miembrosActuales' => UserResource::collection($this->miembrosActuales),
             ];
     }

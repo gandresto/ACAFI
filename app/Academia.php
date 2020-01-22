@@ -15,7 +15,7 @@ class Academia extends Model
         return $this->belongsTo(Departamento::class);
     }
 
-    public function getPresidenteActualAttribute()
+    public function getPresidenteAttribute()
     {
         return $this->presidentes()->wherePivot('actual', '=', true)->first();
     }
