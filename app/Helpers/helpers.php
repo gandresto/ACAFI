@@ -22,4 +22,10 @@ function normaliza($cadena){
     return utf8_encode($cadena);
 }
 
+function nombre_completo($usuario, $orden='nombre', $con_grado=false){
+    $grado = $con_grado ? $usuario->grado : "";
+    return $orden == 'apellido' ? "{$usuario->apellido_pat} {$usuario->apellido_mat} {$usuario->nombre} {$grado}"
+                              : "{$grado} {$usuario->nombre} {$usuario->apellido_pat} {$usuario->apellido_mat}";
+}
+
 ?>
