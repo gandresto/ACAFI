@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reunion extends Model
 {
+    protected $fillable = [
+        'academia_id', 'lugar', 'inicio', 'fin', 'orden_del_dia', 'minuta'
+    ];
+
     public function academia()
     {
         return $this->belongsTo(Academia::class);
@@ -35,6 +39,7 @@ class Reunion extends Model
     public function acuerdos()
     {
         return $this->belongsToMany(Acuerdo::class)
+        ->as('seguimiento')
         ->withPivot('avance');
     }
 }
