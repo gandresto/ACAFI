@@ -66,7 +66,7 @@
       <b-row v-if="fechaInicio">
         <v-datetime
           class="form-group col-md-12"
-          input-id="fecha-inicio-input"
+          input-id="fecha-fin-input"
           type="datetime"
           :min-datetime="fechaInicio"
           v-model="fechaFin"
@@ -74,7 +74,7 @@
           required="true"
           input-class="form-control"
         >
-          <label for="fecha-inicio-input" slot="before">Fecha y hora de finalizacion</label>
+          <label for="fecha-fin-input" slot="before">Fecha y hora de finalizacion</label>
         </v-datetime>
       </b-row>
 
@@ -157,6 +157,7 @@ export default {
       let url = API.baseURL + "/reuniones/crearPDFOrdenDelDia";
       // alert(url);
       let data = {
+        academia_id: this.academia.id,
         fechaInicio: this.fechaInicio,
         fechaFin: this.fechaFin,
         lugar: this.lugar,
@@ -206,6 +207,7 @@ export default {
       let url = API.baseURL + "/reuniones/";
       // alert(url);
       let data = {
+        academia_id: this.academia.id,
         fechaInicio: this.fechaInicio,
         fechaFin: this.fechaFin,
         lugar: this.lugar,
