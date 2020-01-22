@@ -3091,23 +3091,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {// console.log('Component mounted.')
   },
   data: function data() {
     return {
-      nuevoTema: ''
+      nuevoTema: ""
     };
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['agregarTema']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(["agregarTema"]), {
     agregarNuevoTema: function agregarNuevoTema(tema) {
       if (tema.length > 3) {
         // console.log(tema);
@@ -3115,22 +3108,28 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           id: this.temas.length ? this.temas.length + 1 : 1,
           descripcion: tema
         });
-        this.nuevoTema = '';
+        this.nuevoTema = "";
       }
     }
   }),
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['temas']), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["temas"]), {
     temaValido: function temaValido() {
-      return this.nuevoTema.length > 3 ? true : false;
+      return this.nuevoTema.length > 3 && this.nuevoTema.length < 191 ? true : false;
     },
     mensajeError: function mensajeError() {
-      if (this.nuevoTema.length > 3) {
-        return '';
-      } else if (this.nuevoTema.length > 0) {
-        return 'Ingresa al menos 3 caracteres';
-      } else {
-        return 'Ingresa un tema';
+      if (this.nuevoTema.length > 3 && this.nuevoTema.length < 191) {
+        return "";
       }
+
+      if (this.nuevoTema.length < 4) {
+        return "Ingresa al menos 4 caracteres";
+      }
+
+      if (this.nuevoTema.length > 190) {
+        return "El campo debe tener longitud menor a 190 caracteres";
+      }
+
+      return "Ingresa un tema";
     }
   })
 });
@@ -3153,8 +3152,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
 //
 //
 //
@@ -3226,16 +3223,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }),
   computed: {
     temaValido: function temaValido() {
-      return this.textoTemaEnEdicion.length > 3 ? true : false;
+      return this.textoTemaEnEdicion.length > 3 && this.textoTemaEnEdicion.length < 191 ? true : false;
     },
     mensajeError: function mensajeError() {
-      if (this.textoTemaEnEdicion.length > 3) {
-        return '';
-      } else if (this.textoTemaEnEdicion.length > 0) {
-        return 'Ingresa al menos 3 caracteres';
-      } else {
-        return 'Ingresa algo';
+      if (this.textoTemaEnEdicion.length > 3 && this.textoTemaEnEdicion.length < 191) {
+        return "";
       }
+
+      if (this.textoTemaEnEdicion.length < 4) {
+        return "Ingresa al menos 4 caracteres";
+      }
+
+      if (this.textoTemaEnEdicion.length > 190) {
+        return "El campo debe tener longitud menor a 190 caracteres";
+      }
+
+      return "Ingresa un tema";
     }
   }
 });
@@ -81652,11 +81655,7 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "invalid-feedback" }, [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(_vm.mensajeError) +
-                          "\n                    "
-                      )
+                      _vm._v(_vm._s(_vm.mensajeError))
                     ])
                   ],
                   1
@@ -81769,7 +81768,7 @@ var render = function() {
               ),
               _vm._v(" "),
               _c("div", { staticClass: "invalid-feedback" }, [
-                _vm._v("\n      " + _vm._s(_vm.mensajeError) + "\n    ")
+                _vm._v(_vm._s(_vm.mensajeError))
               ])
             ],
             1

@@ -18,9 +18,7 @@
           </i>
         </b-button>
       </b-input-group-append>
-      <div class="invalid-feedback">
-        {{mensajeError}}
-      </div>
+      <div class="invalid-feedback">{{mensajeError}}</div>
     </b-input-group>
     <b-input-group v-else>
       <b-input-group-append class="form-control disabled-input">
@@ -62,29 +60,38 @@ export default {
         // console.log(tema);
         this.editarTema({
           id: this.tema.id,
-          descripcion: textoTema,
+          descripcion: textoTema
         });
         this.modoEdicion = false;
       }
     },
-    cancelarEdicion(){
+    cancelarEdicion() {
       this.textoTemaEnEdicion = this.tema.descripcion;
       this.modoEdicion = false;
-    },
+    }
   },
   computed: {
     temaValido() {
-      return this.textoTemaEnEdicion.length > 3 ? true : false;
+      return this.textoTemaEnEdicion.length > 3 &&
+        this.textoTemaEnEdicion.length < 191
+        ? true
+        : false;
     },
     mensajeError() {
-        if (this.textoTemaEnEdicion.length > 3) {
-          return ''
-        } else if (this.textoTemaEnEdicion.length > 0) {
-          return 'Ingresa al menos 3 caracteres'
-        } else {
-          return 'Ingresa algo'
-        }
-      },
+      if (
+        this.textoTemaEnEdicion.length > 3 &&
+        this.textoTemaEnEdicion.length < 191
+      ) {
+        return "";
+      }
+      if (this.textoTemaEnEdicion.length < 4) {
+        return "Ingresa al menos 4 caracteres";
+      }
+      if (this.textoTemaEnEdicion.length > 190) {
+        return "El campo debe tener longitud menor a 190 caracteres";
+      }
+      return "Ingresa un tema";
+    }
   }
 };
 </script>
