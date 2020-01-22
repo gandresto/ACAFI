@@ -37,6 +37,7 @@
     }
     #header{
         height: 175px;
+        margin-bottom: 1cm; 
     }
     .text-center{
         text-align: center;
