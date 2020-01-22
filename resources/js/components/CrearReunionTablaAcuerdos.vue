@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-form-group>
-      <strong>Acuerdos pendientes de otras reuniones</strong>
+      <strong>Dar seguimiento a acuerdos pendientes</strong>
     </b-form-group>
     <b-form-group>
       <b-form-checkbox
@@ -14,7 +14,7 @@
         {{
         estanTodosMarcados
         ? "No dar seguimiento a ninguno"
-        : "Revisar todos"
+        : "Dar seguimiento a todos"
         }}
       </b-form-checkbox>
     </b-form-group>
@@ -34,11 +34,11 @@
         <template v-slot:cell(revisar)="{ rowSelected }">
           <template v-if="rowSelected">
             <span aria-hidden="true">&check;</span>
-            <span class="sr-only">Revisar</span>
+            <span class="sr-only">Dar seguimiento</span>
           </template>
           <template v-else>
             <span aria-hidden="true">&nbsp;</span>
-            <span class="sr-only">No revisar</span>
+            <span class="sr-only">No dar seguimiento</span>
           </template>
         </template>
       </b-table>
@@ -59,7 +59,7 @@ export default {
       camposTablaAcuerdos: [
         {
           key: "revisar",
-          label: "¿Revisar en reunión?"
+          label: "¿Dar seguimiento?"
         },
         {
           key: "descripcion",

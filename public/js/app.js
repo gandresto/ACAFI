@@ -3313,7 +3313,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       estadoIndeterminado: false,
       camposTablaAcuerdos: [{
         key: "revisar",
-        label: "¿Revisar en reunión?"
+        label: "¿Dar seguimiento?"
       }, {
         key: "descripcion",
         label: "Acuerdo"
@@ -81859,7 +81859,7 @@ var render = function() {
     "div",
     [
       _c("b-form-group", [
-        _c("strong", [_vm._v("Acuerdos pendientes de otras reuniones")])
+        _c("strong", [_vm._v("Dar seguimiento a acuerdos pendientes")])
       ]),
       _vm._v(" "),
       _c(
@@ -81888,7 +81888,7 @@ var render = function() {
                   _vm._s(
                     _vm.estanTodosMarcados
                       ? "No dar seguimiento a ninguno"
-                      : "Revisar todos"
+                      : "Dar seguimiento a todos"
                   ) +
                   "\n    "
               )
@@ -81927,7 +81927,7 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("span", { staticClass: "sr-only" }, [
-                            _vm._v("Revisar")
+                            _vm._v("Dar seguimiento")
                           ])
                         ]
                       : [
@@ -81936,7 +81936,7 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("span", { staticClass: "sr-only" }, [
-                            _vm._v("No revisar")
+                            _vm._v("No dar seguimiento")
                           ])
                         ]
                   ]
