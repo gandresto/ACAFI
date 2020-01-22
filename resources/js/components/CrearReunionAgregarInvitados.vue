@@ -41,13 +41,13 @@
         </template>
       </b-table>
     </b-form-group>
-    <b-row>
+    <!-- <b-row>
       <b-container>
-        <!-- {{consulta}}<br> -->
-        <!-- {{resultadoBusqueda}}<br> -->
-        <!-- {{invitados}}<br> -->
+        {{academia.presidente}}<br>
+        {{resultadoBusqueda}}<br>
+        {{invitados}}<br>
       </b-container>
-    </b-row>
+    </b-row> -->
   </div>
 </template>
 
@@ -132,6 +132,10 @@ export default {
           // Si el usuario es miembro de la academia
           this.error =
             "Error: Solo se pueden agregar usuarios que no sean miembros de la academia";
+          return;
+        } if (invitado.id == this.academia.presidente.id){
+          this.error =
+            "Error: Ya estás convocado a la reunión";
           return;
         }
         this.error = "";

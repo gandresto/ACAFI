@@ -1,7 +1,7 @@
 <template>
     <div>
         <b-form-group>
-            <strong>Selecciona a los miembros convocados para esta reunión</strong>
+            <strong>Selecciona a los miembros convocados para esta reunión *</strong>
         </b-form-group>
         <b-form-group>
                 <b-form-checkbox

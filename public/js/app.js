@@ -2634,6 +2634,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2645,12 +2669,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       fechaFin: null,
       estadoApi: _enum_estado_api__WEBPACK_IMPORTED_MODULE_1__["default"],
       estadoVistaPrevia: _enum_estado_api__WEBPACK_IMPORTED_MODULE_1__["default"].INICIADO,
+      estadoCreacionReunion: _enum_estado_api__WEBPACK_IMPORTED_MODULE_1__["default"].INICIADO,
       limiteInferiorFecha: "",
       frases: {
         ok: "Aceptar",
         cancel: "Cancelar"
       },
-      lugar: ""
+      lugar: "",
+      urlVistaPrevia: "#"
     };
   },
   mounted: function mounted() {
@@ -2698,7 +2724,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         var fileURL = URL.createObjectURL(file); //Open the URL on new Window
 
-        window.open(fileURL); //   console.log(data);
+        _this.urlVistaPrevia = fileURL; // window.open(fileURL);
+        //   console.log(data);
       })["catch"](function (err) {
         _this.estadoVistaPrevia = _enum_estado_api__WEBPACK_IMPORTED_MODULE_1__["default"].ERROR;
 
@@ -2721,8 +2748,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     submitForm: function submitForm(evt) {
-      evt.preventDefault(); // this.estadoVistaPrevia = ESTADO_API.CARGANDO;
+      var _this2 = this;
 
+      evt.preventDefault();
+      this.estadoCreacionReunion = _enum_estado_api__WEBPACK_IMPORTED_MODULE_1__["default"].CARGANDO;
       var url = _services_api__WEBPACK_IMPORTED_MODULE_2__["default"].baseURL + "/reuniones/"; // alert(url);
 
       var data = {
@@ -2738,15 +2767,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       axios.post(url, data).then(function (r) {
         return r.data;
       }).then(function (data) {
-        console.log(data);
+        // console.log(data);
+        _this2.estadoCreacionReunion = _enum_estado_api__WEBPACK_IMPORTED_MODULE_1__["default"].LISTO;
         alert('Reunión creada satisfactoriamente');
         window.location = "http://localhost:8000" + '/reuniones';
       })["catch"](function (error) {
         if (error.response) {
+          _this2.estadoCreacionReunion = _enum_estado_api__WEBPACK_IMPORTED_MODULE_1__["default"].ERROR;
           /*
            * The request was made and the server responded with a
            * status code that falls out of the range of 2xx
            */
+
           console.log(error.response.data); // console.log(error.response.status);
           // console.log(error.response.headers);
           // if (error.response.status == 404) {
@@ -3029,6 +3061,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         })) {
           // Si el usuario es miembro de la academia
           this.error = "Error: Solo se pueden agregar usuarios que no sean miembros de la academia";
+          return;
+        }
+
+        if (invitado.id == this.academia.presidente.id) {
+          this.error = "Error: Ya estás convocado a la reunión";
           return;
         }
 
@@ -81116,7 +81153,7 @@ var render = function() {
                           attrs: { slot: "before", for: "fecha-inicio-input" },
                           slot: "before"
                         },
-                        [_vm._v("Fecha y hora de inicio")]
+                        [_vm._v("Fecha y hora de inicio *")]
                       )
                     ]
                   )
@@ -81155,7 +81192,7 @@ var render = function() {
                               attrs: { slot: "before", for: "fecha-fin-input" },
                               slot: "before"
                             },
-                            [_vm._v("Fecha y hora de finalizacion")]
+                            [_vm._v("Fecha y hora de finalizacion *")]
                           )
                         ]
                       )
@@ -81169,7 +81206,7 @@ var render = function() {
                 {
                   attrs: {
                     id: "lugar",
-                    label: "Lugar",
+                    label: "Lugar *",
                     "label-for": "text-lugar"
                   }
                 },
@@ -81226,14 +81263,66 @@ var render = function() {
                             ]
                           )
                         : _vm._e(),
-                      _vm._v("Vista Previa de Orden del Día\n      ")
+                      _vm._v(
+                        "\n        Generar vista previa de Orden del Día\n      "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-button",
+                    {
+                      attrs: {
+                        disabled: _vm.estadoVistaPrevia != _vm.estadoApi.LISTO,
+                        variant: "danger",
+                        href: _vm.urlVistaPrevia,
+                        target: "__blank"
+                      }
+                    },
+                    [
+                      _vm.estadoVistaPrevia == _vm.estadoApi.ERROR
+                        ? _c(
+                            "i",
+                            {
+                              staticClass: "fa fa-times mr-1",
+                              attrs: { "aria-hidden": "true" }
+                            },
+                            [
+                              _c("span", { staticClass: "sr-only" }, [
+                                _vm._v("Error al cargar vista previa...")
+                              ])
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("i", { staticClass: "fas fa-file-pdf mr-1" }),
+                      _vm._v("\n        Vista Previa\n      ")
                     ]
                   ),
                   _vm._v(" "),
                   _c(
                     "b-button",
                     { attrs: { type: "submit", variant: "primary" } },
-                    [_vm._v("Crear Reunión")]
+                    [
+                      _vm.estadoCreacionReunion == _vm.estadoApi.CARGANDO
+                        ? _c(
+                            "div",
+                            {
+                              staticClass:
+                                "spinner-border spinner-border-sm mx-1",
+                              attrs: { role: "status" }
+                            },
+                            [
+                              _c("span", { staticClass: "sr-only" }, [
+                                _vm._v("Creando reunión...")
+                              ])
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("i", { staticClass: "fa fa-calendar-check mr-1" }),
+                      _vm._v("\n        Crear Reunión\n      ")
+                    ]
                   )
                 ],
                 1
@@ -81294,7 +81383,7 @@ var render = function() {
     [
       _c("b-form-group", [
         _c("strong", [
-          _vm._v("Selecciona a los miembros convocados para esta reunión")
+          _vm._v("Selecciona a los miembros convocados para esta reunión *")
         ])
       ]),
       _vm._v(" "),
@@ -81547,9 +81636,7 @@ var render = function() {
           })
         ],
         1
-      ),
-      _vm._v(" "),
-      _c("b-row", [_c("b-container")], 1)
+      )
     ],
     1
   )
@@ -81580,7 +81667,7 @@ var render = function() {
     "div",
     [
       _c("b-form-group", [
-        _c("strong", [_vm._v("Temas o asuntos por revisar en esta reunión")])
+        _c("strong", [_vm._v("Temas o asuntos por revisar en esta reunión *")])
       ]),
       _vm._v(" "),
       _c("b-form-group", [

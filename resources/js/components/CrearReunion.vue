@@ -59,7 +59,7 @@
           required="true"
           input-class="form-control"
         >
-          <label for="fecha-inicio-input" slot="before">Fecha y hora de inicio</label>
+          <label for="fecha-inicio-input" slot="before">Fecha y hora de inicio *</label>
         </v-datetime>
       </b-row>
 
@@ -75,12 +75,12 @@
           required="true"
           input-class="form-control"
         >
-          <label for="fecha-fin-input" slot="before">Fecha y hora de finalizacion</label>
+          <label for="fecha-fin-input" slot="before">Fecha y hora de finalizacion *</label>
         </v-datetime>
       </b-row>
 
       <!-- ----------- Lugar --------- -->
-      <b-form-group id="lugar" label="Lugar" label-for="text-lugar">
+      <b-form-group id="lugar" label="Lugar *" label-for="text-lugar">
         <b-form-input id="text-lugar" v-model="lugar" type="text" required></b-form-input>
       </b-form-group>
       <hr />
@@ -106,9 +106,33 @@
             role="status"
           >
             <span class="sr-only">Cargando vista previa...</span>
-          </div>Vista Previa de Orden del Día
+          </div>
+          Generar vista previa de Orden del Día
         </b-button>
-        <b-button type="submit" variant="primary">Crear Reunión</b-button>
+        <b-button :disabled="estadoVistaPrevia != estadoApi.LISTO"
+          variant="danger" 
+          :href="urlVistaPrevia"
+          target="__blank"
+        >
+          <i v-if="estadoVistaPrevia == estadoApi.ERROR" 
+            class="fa fa-times mr-1" 
+            aria-hidden="true"
+          >
+            <span class="sr-only">Error al cargar vista previa...</span>
+          </i>
+          <i class="fas fa-file-pdf mr-1"></i>
+          Vista Previa
+        </b-button>
+        <b-button type="submit" variant="primary">
+          <div
+            v-if="estadoCreacionReunion == estadoApi.CARGANDO"
+            class="spinner-border spinner-border-sm mx-1"
+            role="status"
+          ><span class="sr-only">Creando reunión...</span>
+          </div>
+          <i class="fa fa-calendar-check mr-1"></i>
+          Crear Reunión
+        </b-button>
       </b-form-group>
     </b-form>
   </div>
@@ -127,12 +151,14 @@ export default {
       fechaFin: null,
       estadoApi: ESTADO_API,
       estadoVistaPrevia: ESTADO_API.INICIADO,
+      estadoCreacionReunion: ESTADO_API.INICIADO,
       limiteInferiorFecha: "",
       frases: {
         ok: "Aceptar",
         cancel: "Cancelar"
       },
-      lugar: ""
+      lugar: "",
+      urlVistaPrevia: "#",
     };
   },
   mounted() {
@@ -181,7 +207,8 @@ export default {
           //Build a URL from the file
           const fileURL = URL.createObjectURL(file);
           //Open the URL on new Window
-          window.open(fileURL);
+          this.urlVistaPrevia = fileURL;
+          // window.open(fileURL);
           //   console.log(data);
         })
         .catch(err => {
@@ -204,7 +231,7 @@ export default {
     },
     submitForm(evt) {
       evt.preventDefault();
-      // this.estadoVistaPrevia = ESTADO_API.CARGANDO;
+      this.estadoCreacionReunion = ESTADO_API.CARGANDO;
       let url = API.baseURL + "/reuniones/";
       // alert(url);
       let data = {
@@ -221,12 +248,14 @@ export default {
         .post(url, data)
         .then(r => r.data)
         .then(data => {
-          console.log(data);
+          // console.log(data);
+          this.estadoCreacionReunion = ESTADO_API.LISTO;
           alert('Reunión creada satisfactoriamente');
           window.location = process.env.MIX_APP_URL+'/reuniones';
         })
         .catch(error => {
           if (error.response) {
+            this.estadoCreacionReunion = ESTADO_API.ERROR;
             /*
              * The request was made and the server responded with a
              * status code that falls out of the range of 2xx

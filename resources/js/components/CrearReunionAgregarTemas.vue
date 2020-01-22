@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-form-group>
-      <strong>Temas o asuntos por revisar en esta reunión</strong>
+      <strong>Temas o asuntos por revisar en esta reunión *</strong>
     </b-form-group>
     <b-form-group>
       <ol>
