@@ -100,17 +100,17 @@ class AcademiaPolicy
     public function viewMiembros(User $user, Academia $academia)
     {
         return $user->esMiembroActual($academia) || // Miembros de la academia pueden ver miembros
-                $academia->presidenteActual->id == $user->id || // Presidente de academia también
-                $academia->departamento->jefeActual->id == $user->id || // Jefe de departamento también
-                $academia->departamento->division->jefeActual->id == $user->id; // Jefe de división también
+                $academia->presidente->id == $user->id || // Presidente de academia también
+                $academia->departamento->jefe->id == $user->id || // Jefe de departamento también
+                $academia->departamento->division->jefe->id == $user->id; // Jefe de división también
     }
 
     public function addMiembro(User $user, Academia $academia)
     {
-        return $academia->presidenteActual->id == $user->id; // Solo el presidente de la academia puede agregar miembros
+        return $academia->presidente->id == $user->id; // Solo el presidente de la academia puede agregar miembros
     }
 
     public function darDeBajaCualquierMiembro(User $user, Academia $academia){
-        return $academia->presidenteActual->id == $user->id;
+        return $academia->presidente->id == $user->id;
     }
 }

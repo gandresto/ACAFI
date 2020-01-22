@@ -15,7 +15,7 @@ class Departamento extends Model
         return $this->belongsTo(Division::class);
     }
 
-    public function getJefeActualAttribute()
+    public function getJefeAttribute()
     {
         return $this->jefes()->wherePivot('actual', '=', true)->first();
     }

@@ -44,7 +44,7 @@
                         <tr>
                             <th scope="row">{{$division->siglas}}</th>
                             <td>{{$division->nombre}}</td>
-                            <td>{{$division->jefe_actual->grado_nombre_completo}}</td>
+                            <td>{{$division->jefe->grado_nombre_completo}}</td>
                             <td>
                                 <form action="{{ route('divisions.destroy', $division->id) }}" method="POST">
                                     <div class="btn-group" role="group" aria-label="Modificar division">

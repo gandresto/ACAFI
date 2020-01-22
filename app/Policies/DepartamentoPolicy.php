@@ -60,7 +60,7 @@ class DepartamentoPolicy
     public function update(User $user, Departamento $departamento)
     {
         return ($user->id == $departamento->id_jefe_dpto
-                || $user->id == $departamento->division->jefe_actual->id
+                || $user->id == $departamento->division->jefe->id
                 || $user->id == $departamento->id_jefe_dpto);
     }
 
@@ -73,7 +73,7 @@ class DepartamentoPolicy
      */
     public function delete(User $user, Departamento $departamento)
     {
-        return $user->id == $departamento->division->jefe_actual->id;
+        return $user->id == $departamento->division->jefe->id;
     }
 
     /**
