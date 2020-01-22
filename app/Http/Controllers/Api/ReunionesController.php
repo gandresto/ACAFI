@@ -69,18 +69,21 @@ class ReunionesController extends Controller
 
             // ------ Guardar el PDF ----------
             $pdf = \PDF::loadView('reuniones.ordendeldia', $data);
-            // "storage\app\reuniones\ordenes_del_dia"
-            // reuniones/ordenes_del_dia/
             $academia = Academia::find($data['academia_id']);
             $fecha_str = mb_ereg_replace("([^\w\s\d\~,;\[\]\(\).])", '', $data['fechaInicio']);
             $fecha_str = str_replace(' ', '_', $fecha_str);
             $nombre_archivo = "Divisiones/{$academia->departamento->division->id}/";
             $nombre_archivo .= "Departamentos/{$academia->departamento->id}/";
             $nombre_archivo .= "Academias/{$academia->id}/od{$reunion->id}_{$fecha_str}.pdf";
+            
+            // ------- Actualizar el nombre del archivo -----------
+            $reunion->orden_del_dia = $nombre_archivo;
+            $reunion->save();
+
             $content = $pdf->download()->getOriginalContent();
             Storage::put($nombre_archivo, $content, 'private');
         });
-        
+
         return $data;
     }
 
