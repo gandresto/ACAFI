@@ -25,7 +25,7 @@
 
 <hr>
 
-@if ($reunionesComoConvocado)
+@if ($reunionesComoConvocado->isNotEmpty())
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <h4>Reuniones como miembro de academia</h4>
@@ -56,7 +56,7 @@
 </div>
 @endif
 
-@if ($reunionesComoPresidente)
+@if ($reunionesComoPresidente->isNotEmpty())
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <h4>Reuniones como presidente de academia</h4>
@@ -87,7 +87,7 @@
 </div>
 @endif
 
-@if ($reunionesComoInvitadoExterno)
+@if ($reunionesComoInvitadoExterno->isNotEmpty())
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <h4>Reuniones como invitado externo</h4>
