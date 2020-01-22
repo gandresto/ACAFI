@@ -127,4 +127,9 @@ class User extends Authenticatable
             ->as('asistencia')
             ->withPivot('asistio');
     }
+
+    public function getReunionesAttribute()
+    {
+        return $this->reunionesComoConvocado->merge($this->reunionesComoInvitadoExterno);
+    }
 }
