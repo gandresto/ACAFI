@@ -46,6 +46,13 @@ class ReunionesController extends Controller
         return view('reuniones.create');
     }
     
+    public function show(int $reunion_id)
+    {
+        $reunion = Reunion::findOrFail($reunion_id);
+        $this->authorize('view', $reunion);
+        return view('reuniones.show', compact('reunion'));
+    }
+    
     public function descargarOrdenDelDia(int $id_reunion)
     {
         $reunion = Reunion::findOrFail($id_reunion);
