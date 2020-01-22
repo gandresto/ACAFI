@@ -1,3 +1,7 @@
+@php
+    $academia = App\Academia::find($academia_id);
+@endphp
+
 @extends('layouts.pdf')
 
 @section('nombre_archivo')
@@ -5,8 +9,8 @@
 @endsection
 
 @section('academia_division')
-    {{App\Academia::find($academia_id)->departamento->division->nombre}} <br>
-    <strong>Academia de {{App\Academia::find($academia_id)->nombre}}</strong><br>
+    {{$academia->departamento->division->nombre}} <br>
+    <strong>Academia de {{$academia->nombre}}</strong><br>
 @endsection
 
 @section('contenido_encabezado')
@@ -16,7 +20,12 @@
     Finaliza: {{$fechaFin->format('h:i A')}}  <br>
 @endsection
 
-@section('contenido_documento')    
+@section('contenido_documento')
+<div class="row">
+    <div class="col-xs-12">
+        <strong>Presidente: </strong>{{$academia->presidenteActual->gradoNombreCompleto}}
+    </div>
+</div>
     <div class="row">
         <div class="col-xs-6 col-md-6">
             <strong>Miembros convocados</strong>
