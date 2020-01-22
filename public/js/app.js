@@ -2633,6 +2633,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -2738,6 +2739,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return r.data;
       }).then(function (data) {
         console.log(data);
+        alert('Reunión creada satisfactoriamente');
+        window.location = "http://localhost:8000" + '/reuniones';
       })["catch"](function (error) {
         if (error.response) {
           /*

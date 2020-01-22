@@ -16,6 +16,7 @@
       <button type="button" class="close" data-dismiss="alert">×</button>
       <strong>Hubo un problema, intenta de nuevo más tarde</strong>
     </div>
+    <!-- --------- Formulario para seleccionar academia --------------- -->
     <b-form v-if="estadoAcademias == estadoApi.LISTO" target="_blank">
       <b-form-group id="academia" label="Academia" label-for="select-academia">
         <select
@@ -221,6 +222,8 @@ export default {
         .then(r => r.data)
         .then(data => {
           console.log(data);
+          alert('Reunión creada satisfactoriamente');
+          window.location = process.env.MIX_APP_URL+'/reuniones';
         })
         .catch(error => {
           if (error.response) {
