@@ -79,7 +79,8 @@ class ReunionesController extends Controller
     public function obtenerDatosValidadosReunion(Request $request)
     {
         $val_data = $request->validate([
-            'fechaInicio' => 'required|before:'. Carbon::now('UTC')->addMinutes(-15),
+            'academia_id' => 'required',
+            'fechaInicio' => 'required|after:'. Carbon::now('UTC')->addMinutes(-15),
             'fechaFin' => 'required|after:fechaInicio',
             'lugar' => 'required',
             'convocados' => 'required',
@@ -91,6 +92,7 @@ class ReunionesController extends Controller
         // return response($data_val, 500);
 
         return [
+            'academia_id' => $val_data['academia_id'],
             'fechaInicio' => Carbon::parse($val_data['fechaInicio'])->setTimeZone(config('app.timezone')),
             'fechaFin' => Carbon::parse($val_data['fechaFin'])->setTimeZone(config('app.timezone')),
             'lugar' => $val_data['lugar'],
