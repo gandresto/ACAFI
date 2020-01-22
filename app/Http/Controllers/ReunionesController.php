@@ -18,10 +18,26 @@ class ReunionesController extends Controller
     {
         // $this->authorize('viewAny', Reunion::class);
         // $reuniones = Auth::user()->reuniones;
-        $reuniones = Auth::user()->reuniones->sortBy('inicio')->filter(function ($reunion) {
-            return $reunion->fin < Carbon::now();
+        $user = Auth::user();
+        $reunionesComoConvocado = $user->reunionesComoConvocado->sortBy('inicio')->filter(function ($reunion) {
+            return Carbon::createFromFormat('Y-m-d H:i:s', 
+                                            $reunion->fin, 
+                                            config('app.timezone'))
+                                            ->isAfter(Carbon::now());
         });
-        return view('reuniones.index', compact('reuniones'));
+        $reunionesComoInvitadoExterno = $user->reunionesComoInvitadoExterno->sortBy('inicio')->filter(function ($reunion) {
+            return Carbon::createFromFormat('Y-m-d H:i:s', 
+                                            $reunion->fin, 
+                                            config('app.timezone'))
+                                            ->isAfter(Carbon::now());
+        });
+        $reunionesComoPresidente = $user->reunionesComoPresidente->sortBy('inicio')->filter(function ($reunion) {
+            return Carbon::createFromFormat('Y-m-d H:i:s', 
+                                            $reunion->fin, 
+                                            config('app.timezone'))
+                                            ->isAfter(Carbon::now());
+        });
+        return view('reuniones.index', compact('reunionesComoConvocado', 'reunionesComoInvitadoExterno', 'reunionesComoPresidente'));
     }
 
     public function create(Request $request)

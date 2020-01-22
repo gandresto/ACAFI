@@ -132,4 +132,9 @@ class User extends Authenticatable
     {
         return $this->reunionesComoConvocado->merge($this->reunionesComoInvitadoExterno);
     }
+
+    public function getReunionesComoPresidenteAttribute()
+    {
+        return Reunion::whereIn('academia_id', $this->academiasQuePreside->pluck('id'))->get();
+    }
 }
