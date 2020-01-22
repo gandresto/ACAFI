@@ -25,24 +25,6 @@
 
 {{--
 -- Barra de búsqueda aún no lista para implementación --
-
-<div class="col-md-6 py-2">
-    <div class="input-group">
-        <input type="text" class="form-control" placeholder="Buscar" aria-describedby="basic-addon2">
-        <span class="input-group-btn">
-            <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-        </span>
-    </div>
-</div>
-
-<div class="col-md-4 py-2">
-    <select name="sel-columna" id="inputsel-columna" class="form-control">
-        <option value="">Buscar por</option>
-        @foreach (Schema::getColumnListing('users') as $columna)
-            <option value="{{$columna}}">{{$columna}}</option>
-        @endforeach
-    </select>
-</div>
 --}}
 <div class="row">
     <div class="col-sm-12">

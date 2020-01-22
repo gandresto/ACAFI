@@ -14,12 +14,12 @@ class EstructuraFITableSeeder extends Seeder
     public function run()
     {
         // ------------------- Creando usuarios -------------------
-        
         $this->crearUsuarios(300);
 
         // ----------- Creamos divisiones, departamentos y academias. ---------------
         $this->crearEstructuraFI();
     }
+    
     public function crearUsuarios($num_usuarios=200)
     {   
         $faker = \Faker\Factory::create($locale = 'es_ES');
