@@ -6,8 +6,12 @@ use App\Academia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Reunion;
+use App\Tema;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ReunionesController extends Controller
 {
@@ -31,6 +35,52 @@ class ReunionesController extends Controller
     {
         $this->authorize('create', Reunion::class);
         $data = $this->obtenerDatosValidadosReunion($request);
+
+        DB::transaction(function () use ($data) {
+            // ------ Guardo los datos de la reunión ------
+            $data_reunion = [
+                'academia_id' => $data['academia_id'],
+                'lugar' => $data['lugar'],
+                'inicio' => $data['fechaInicio'],
+                'fin' => $data['fechaFin'],
+            ];
+            $reunion = Reunion::create($data_reunion);
+
+            // -------- Guardar convocados ----------
+            $ids_convocados = Arr::pluck($data['convocados'], 'id');
+            $reunion->convocados()->sync($ids_convocados);
+
+            // ------ Guardar invitados --------
+            $ids_invitados = Arr::pluck($data['invitados'], 'id');
+            $reunion->invitadosExternos()->sync($ids_invitados);
+
+            // ------- Guardar temas --------
+            $descripciones = collect(Arr::pluck($data['temas'], 'descripcion'));
+            $descripciones->each(function ($descripcion) use ($reunion){
+                Tema::create([
+                    'descripcion' => $descripcion,
+                    'reunion_id' => $reunion->id,
+                ]);
+            });
+
+            // ------- Guardar acuerdos a seguimiento --------
+            $ids_acuerdos = Arr::pluck($data['acuerdosARevision'], 'id');
+            $reunion->acuerdos()->sync($ids_acuerdos);
+
+            // ------ Guardar el PDF ----------
+            $pdf = \PDF::loadView('reuniones.ordendeldia', $data);
+            // "storage\app\reuniones\ordenes_del_dia"
+            // reuniones/ordenes_del_dia/
+            $academia = Academia::find($data['academia_id']);
+            $fecha_str = mb_ereg_replace("([^\w\s\d\~,;\[\]\(\).])", '', $data['fechaInicio']);
+            $fecha_str = str_replace(' ', '_', $fecha_str);
+            $nombre_archivo = "Divisiones/{$academia->departamento->division->id}/";
+            $nombre_archivo .= "Departamentos/{$academia->departamento->id}/";
+            $nombre_archivo .= "Academias/{$academia->id}/od{$reunion->id}_{$fecha_str}.pdf";
+            $content = $pdf->download()->getOriginalContent();
+            Storage::put($nombre_archivo, $content, 'private');
+        });
+        
         return $data;
     }
 
@@ -55,7 +105,6 @@ class ReunionesController extends Controller
     public function update(Request $request, $id)
     {
         $this->authorize('update', Reunion::find($id));
-        $data = $this->obtenerDatosValidadosReunion($request);
     }
 
     /**
