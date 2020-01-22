@@ -36,12 +36,22 @@ class Academia extends Model
 
     public function getMiembrosActualesAttribute()
     {
-        return $this->miembros()->wherePivot('fecha_egreso', '=', null)->get();
+        return $this->miembros()
+                    ->wherePivot('fecha_egreso', '=', null)
+                    ->get()
+                    ->sortBy(function ($miembro){
+                        return nombre_completo($miembro, $ordenarPor = 'apellido');
+                    });
     }
 
     public function getMiembrosActivosAttribute()
     {
-        return $this->miembros()->wherePivot('activo', '=', true)->get();
+        return $this->miembros()
+                    ->wherePivot('activo', '=', true)
+                    ->get()
+                    ->sortBy(function ($miembro){
+                        return nombre_completo($miembro, $ordenarPor = 'apellido');
+                    });
     }
 
     public function reuniones()
