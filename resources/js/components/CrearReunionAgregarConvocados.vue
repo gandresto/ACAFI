@@ -36,7 +36,7 @@
                     </template>
                 </template>
                 <template v-slot:cell(miembro)="data">
-                    {{`${data.item.nombre} ${data.item.apellido_paterno} ${data.item.apellido_materno}`}}
+                    {{`${data.item.apellido_paterno} ${data.item.apellido_materno} ${data.item.nombre} ${data.item.grado}`}}
                 </template>
             </b-table>
         </b-form-group>

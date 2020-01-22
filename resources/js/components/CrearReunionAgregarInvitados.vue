@@ -114,7 +114,7 @@ export default {
     },
     obtenerNombreCompleto(invitado) {
       // Obtengo solo lo que me interesa del resultado de búsqueda
-      return `${invitado.nombre} ${invitado.apellido_paterno} ${invitado.apellido_materno}`;
+      return `${invitado.apellido_paterno} ${invitado.apellido_materno} ${invitado.nombre} ${invitado.grado}`;
     },
     procesarInvitado(invitado) {
       if (this.invitados && invitado) {
