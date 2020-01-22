@@ -17,8 +17,8 @@ class CreateReunionsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('academia_id');
             $table->string('lugar');
-            $table->dateTime('inicio');
-            $table->dateTime('fin');
+            $table->dateTimeTz('inicio');
+            $table->dateTimeTz('fin');
             $table->string('orden_del_dia')->nullable();
             $table->string('minuta')->nullable();
             $table->timestamps();
