@@ -96,8 +96,8 @@ class UserController extends Controller
         $user = User::findOrFail($user_id);
         $actual = $request->input('actual');
         if($actual && ($actual=="true" || $actual==1))
-            return new AcademiasResource($user->academiasQuePreside);
-        return new AcademiasResource($user->academiasQuePresido);
+            return new AcademiasResource($user->academiasQuePreside->sortBy('nombre'));
+        return new AcademiasResource($user->academiasQuePresido->sortBy('nombre'));
     }
 
     public function yo(Request $request)
