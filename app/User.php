@@ -69,28 +69,28 @@ class User extends Authenticatable
 
     /*  Relaciones con otras tablas */
 
-    public function jefeDeDivisiones()
+    public function divisionesQueHaDirigido()
     {
         return $this->belongsToMany(Division::class, 'division_jefe',
                                     'jefe_id', 'division_id')
                     ->withPivot('actual', 'fecha_ingreso', 'fecha_egreso');
     }
 
-    public function getJefeActualDeDivisionesAttribute()
+    public function getDivisionesQueDirigeAttribute()
     {
-        return $this->jefeDeDivisiones()->wherePivot('actual', '=', true)->get();
+        return $this->divisionesQueHaDirigido()->wherePivot('actual', '=', true)->get();
     }
 
-    public function jefeDeDepartamentos()
+    public function departamentosQueHaDirigido()
     {
         return $this->belongsToMany(Departamento::class, 'departamento_jefe',
                                         'jefe_id', 'departamento_id')
                     ->withPivot('actual', 'fecha_ingreso', 'fecha_egreso');
     }
 
-    public function getJefeActualDeDepartamentosAttribute()
+    public function getDepartamentosQueDirigeAttribute()
     {
-        return $this->jefeDeDepartamentos()->wherePivot('actual', '=', true)->get();
+        return $this->departamentosQueHaDirigido()->wherePivot('actual', '=', true)->get();
     }
 
     public function getAcademiasQuePresidoAttribute()
@@ -127,14 +127,31 @@ class User extends Authenticatable
             ->as('asistencia')
             ->withPivot('asistio');
     }
-
-    public function getReunionesAttribute()
-    {
-        return $this->reunionesComoConvocado->merge($this->reunionesComoInvitadoExterno);
-    }
-
+    
     public function getReunionesComoPresidenteAttribute()
     {
         return Reunion::whereIn('academia_id', $this->academiasQuePreside->pluck('id'))->get();
+    }
+    
+    public function getReunionesComoJefeDeDepartamentoAttribute()
+    {
+        return Reunion::whereIn('departamento_id', $this->departamentosQueDirige->pluck('id'))->get();
+    }
+    
+    public function getReunionesComoJefeDeDivisionAttribute()
+    {
+        return Reunion::whereIn('division_id', $this->divisionesQueDirige->pluck('id'))->get();
+    }
+
+    public function getReunionesAttribute()
+    {
+        // Union entre todas las consultas
+        return $this->reunionesComoConvocado->merge(
+            $this->reunionesComoInvitadoExterno->merge(
+                $this->reunionesComoJefeDeDepartamento->merge(
+                    $this->reunionesComoJefeDeDivision
+                )
+            )
+        );
     }
 }
