@@ -26,7 +26,9 @@ Route::get('/divisions/buscar/{consulta}', 'Api\DivisionController@buscar')->mid
 Route::get('/users/yo', 'Api\UserController@yo')->middleware('auth:api');
 Route::resource('/users', 'Api\UserController')->middleware('auth:api')->except([
     'create', 'edit'
-]);;
+    ]);;
+Route::get('/users/{user_id}/reuniones', 'Api\UserController@reuniones')->middleware('auth:api');
+
 Route::get('/users/buscar/{consulta}', 'Api\UserController@buscar')->middleware('auth:api');
 Route::get('/users/{user_id}/academiasQueHaPresidido', 'Api\UserController@academiasQueHaPresidido')->middleware('auth:api');
 

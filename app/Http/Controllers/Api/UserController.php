@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Http\Resources\User as UserResource;
 use App\Http\Resources\Academias as AcademiasResource;
+use App\Http\Resources\ReunionResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
@@ -104,5 +105,10 @@ class UserController extends Controller
     {
         // return json_encode(['mensaje'=> 'yo mero :D']);
         return new UserResource(Auth::user());
+    }
+
+    public function reuniones(int $user_id)
+    {
+        return ReunionResource::collection(User::findOrFail($user_id)->reuniones);
     }
 }
