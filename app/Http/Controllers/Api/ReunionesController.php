@@ -35,8 +35,8 @@ class ReunionesController extends Controller
     {
         $this->authorize('create', Reunion::class);
         $data = $this->obtenerDatosValidadosReunion($request);
-
-        DB::transaction(function () use ($data) {
+        $reunion = new Reunion;
+        DB::transaction(function () use ($data, $reunion) {
             // ------ Guardo los datos de la reunión ------
             $data_reunion = [
                 'academia_id' => $data['academia_id'],
@@ -83,8 +83,7 @@ class ReunionesController extends Controller
             $content = $pdf->download()->getOriginalContent();
             Storage::put($nombre_archivo, $content, 'private');
         });
-
-        return $data;
+        return response($reunion, 200);
     }
 
     /**
