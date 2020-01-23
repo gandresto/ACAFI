@@ -23,34 +23,38 @@
 @section('contenido_documento')
 <div class="row">
     <div class="col-xs-12">
-        <strong>Presidente: </strong>{{$academia->presidente->gradoNombreCompleto}}
+        <p><strong>Presidente: </strong>{{$academia->presidente->gradoNombreCompleto}}</p>
     </div>
 </div>
     <div class="row">
         <div class="col-xs-6 col-md-6">
             <strong>Miembros convocados</strong>
             <div>
-                <ul>
+                <p>
                     @foreach ($convocados as $convocado)
-                        <li>{{"{$convocado['grado']} {$convocado['nombre']} {$convocado['apellido_paterno']} {$convocado['apellido_materno']}"}}</li>
+                        {{"{$convocado['grado']} {$convocado['nombre']} {$convocado['apellido_paterno']} {$convocado['apellido_materno']}"}} <br>
                     @endforeach
-                </ul>
+                </p>
             </div>
         </div>
         <div class="col-xs-6 col-md-6">
-            <strong>Invitados</strong>
-            <div>
-                <ul>
-                    @foreach ($invitados as $invitado)
-                    <li> {{"{$invitado['grado']} {$invitado['nombre']} {$invitado['apellido_paterno']} {$invitado['apellido_materno']}"}}</li>
-                    @endforeach
-                </ul>
-            </div>
+            @if ($invitados)
+                <strong>Invitados</strong>
+                <div>
+                    <p>
+                        @foreach ($invitados as $invitado)
+                        {{"{$invitado['grado']} {$invitado['nombre']} {$invitado['apellido_paterno']} {$invitado['apellido_materno']}"}}<br>
+                        @endforeach
+                    </p>
+                </div>
+            @endif
         </div>
     </div>
     <div id="temas-orden" class="row">
         <div class="col-xs-12">
-            <div class="text-center"><strong>Orden del día:</strong></div>
+            <div class="text-center">
+                <p><strong>Orden del día:</strong></p>
+            </div>
             <ol>
                 @foreach ($temas as $tema)
                     <li>{{$tema['descripcion']}}</li>
@@ -59,7 +63,7 @@
                 @if ($acuerdosARevision)
                     <li>
                         Seguimiento a acuerdos
-                        <ol>
+                        <ol style="margin-top:1.2mm">
                             @foreach ($acuerdosARevision as $acuerdo)
                             <li>{{$acuerdo['descripcion']}}</li>
                             @endforeach
