@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Reunion;
 use App\Tema;
-use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -127,6 +126,7 @@ class ReunionesController extends Controller
         $pdf = \PDF::loadView('reuniones.ordendeldia', $data);
         return $pdf->download('orden_del_dia.pdf');
     }
+
     public function obtenerDatosValidadosReunion(Request $request)
     {
         $val_data = $request->validate([

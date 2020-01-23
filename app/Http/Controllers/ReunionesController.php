@@ -16,28 +16,14 @@ class ReunionesController extends Controller
 
     public function index(Request $request)
     {
-        // $this->authorize('viewAny', Reunion::class);
-        // $reuniones = Auth::user()->reuniones;
         $user = Auth::user();
-        $reunionesComoConvocado = $user->reunionesComoConvocado->sortBy('inicio')->filter(function ($reunion) {
+        $reuniones = $user->reuniones->sortBy('inicio')->filter(function ($reunion) {
             return Carbon::createFromFormat('Y-m-d H:i:s', 
                                             $reunion->fin, 
                                             config('app.timezone'))
                                             ->isAfter(Carbon::now());
-        });
-        $reunionesComoInvitadoExterno = $user->reunionesComoInvitadoExterno->sortBy('inicio')->filter(function ($reunion) {
-            return Carbon::createFromFormat('Y-m-d H:i:s', 
-                                            $reunion->fin, 
-                                            config('app.timezone'))
-                                            ->isAfter(Carbon::now());
-        });
-        $reunionesComoPresidente = $user->reunionesComoPresidente->sortBy('inicio')->filter(function ($reunion) {
-            return Carbon::createFromFormat('Y-m-d H:i:s', 
-                                            $reunion->fin, 
-                                            config('app.timezone'))
-                                            ->isAfter(Carbon::now());
-        });
-        return view('reuniones.index', compact('reunionesComoConvocado', 'reunionesComoInvitadoExterno', 'reunionesComoPresidente'));
+        })->paginate(12);
+        return view('reuniones.index', compact('reuniones'));
     }
 
     public function create(Request $request)
