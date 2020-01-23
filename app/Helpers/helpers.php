@@ -28,4 +28,9 @@ function nombre_completo($usuario, $ordenarPor='nombre', $con_grado=false){
                               : "{$grado} {$usuario->nombre} {$usuario->apellido_pat} {$usuario->apellido_mat}";
 }
 
+function esVerdadero($valor)
+{
+    return in_array($valor, [1, "1", "true", "y", "s"]);
+}
+
 ?>
