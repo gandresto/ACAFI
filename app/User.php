@@ -148,8 +148,10 @@ class User extends Authenticatable
         // Union entre todas las consultas
         return $this->reunionesComoConvocado->merge(
             $this->reunionesComoInvitadoExterno->merge(
-                $this->reunionesComoJefeDeDepartamento->merge(
-                    $this->reunionesComoJefeDeDivision
+                $this->ReunionesComoPresidente->merge(
+                    $this->reunionesComoJefeDeDepartamento->merge(
+                        $this->reunionesComoJefeDeDivision
+                    )
                 )
             )
         );
