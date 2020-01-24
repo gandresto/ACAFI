@@ -48,6 +48,9 @@ Vue.component('buscar-division', require('./components/BuscarDivision.vue').defa
 Vue.component('editar-division', require('./components/EditarDivision.vue').default);
 Vue.component('modal', require('./components/PlantillaModal.vue').default);
 
+Vue.component('calendario-index', require('./views/Calendario.vue').default);
+// Vue.component('crear-reunion', require('./components/CrearReunion.vue').default);
+
 Vue.component('crear-reunion', require('./components/CrearReunion.vue').default);
 Vue.component('crear-reunion-agregar-invitados', require('./components/CrearReunionAgregarInvitados.vue').default);
 Vue.component('crear-reunion-agregar-convocados', require('./components/CrearReunionAgregarConvocados.vue').default);
