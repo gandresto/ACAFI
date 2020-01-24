@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -31,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         Blade::withoutDoubleEncoding();
+        Carbon::setLocale(config('app.locale'));
         //if(env('FORCE_HTTPS')) {
         //    URL::forceScheme('https');
         //}
