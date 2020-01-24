@@ -135,12 +135,22 @@ class User extends Authenticatable
     
     public function getReunionesComoJefeDeDepartamentoAttribute()
     {
-        return Reunion::whereIn('departamento_id', $this->departamentosQueDirige->pluck('id'))->get();
+        return Reunion::whereIn('academia_id', // Consulta principal (reuniones de las academias)
+                Academia::whereIn('departamento_id', // Subconsulta 1 (academias del departamento)
+                                $this->departamentosQueDirige->pluck('id') 
+                            )->get()->pluck('id')
+                        )->get();
     }
     
     public function getReunionesComoJefeDeDivisionAttribute()
     {
-        return Reunion::whereIn('division_id', $this->divisionesQueDirige->pluck('id'))->get();
+        return Reunion::whereIn('academia_id', // Consulta principal (reuniones de las academias)
+                Academia::whereIn('departamento_id', // Subconsulta 1 (academias de departamentos que dirige)
+                    Departamento::whereIn('division_id', // Subconsulta 2 (departamentos de divisiones que dirige)
+                        $this->divisionesQueDirige->pluck('id') 
+                    )->get()->pluck('id')
+                )->get()->pluck('id')
+            )->get();
     }
 
     public function getReunionesAttribute()
