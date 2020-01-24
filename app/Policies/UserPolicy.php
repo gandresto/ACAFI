@@ -22,7 +22,7 @@ class UserPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->esAdmin;
+        return false;
     }
 
     /**
@@ -45,8 +45,9 @@ class UserPolicy
      */
     public function create(User $user)
     {
-        App\Division::all();
-        //return $user->email == config('admin.email');
+        return $user->academiasQuePreside->isNotEmpty()
+                && $user->departamentosQueDirige->isNotEmpty()
+                && $user->divisionesQueDirige->isNotEmpty();
     }
 
     /**
@@ -70,7 +71,7 @@ class UserPolicy
      */
     public function delete(User $user, User $model)
     {
-        //
+        return false;
     }
 
     /**
