@@ -25,22 +25,71 @@
 @endcan
 
 {{-- Filtrado de reuniones --}}
-{{-- <div class="row my-2">
+<div class="row py-2">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <form class="form-inline" action="{{url('/reuniones')}}" method="get">
-            <div class="form-check form-check-inline">
-                <label class="form-check-label">
-                    <input class="form-check-input" type="checkbox" name="minuta" id="check-minuta" value="1"> Con minuta
-                </label>
-            </div>
-            <button type="submit" class="btn btn-primary">Aplicar Filtros</button>
-        </form>
-    </div>
-</div> --}}
+        <div class="card">
+            <div class="card-body" style="background-color: #ececec">
+                <h5 class="card-title">Filtrar reuniones</h5> 
+                <form action="{{url('/reuniones')}}" method="get" class="container">
+                    <div class="form-row">
+                        <div class="form-group col-sm-12 col-md-4">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    @if ($minuta == 1)
+                                        <input type="radio" class="form-check-input" name="minuta" id="check-con-minuta" value="1" checked>
+                                    @else
+                                        <input type="radio" class="form-check-input" name="minuta" id="check-con-minuta" value="1">
+                                    @endif
+                                    Reuniones con minuta realizada
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    @if ($minuta == 0)
+                                        <input type="radio" class="form-check-input" name="minuta" id="check-sin-minuta" value="0" checked>
+                                    @else
+                                        <input type="radio" class="form-check-input" name="minuta" id="check-sin-minuta" value="0">
+                                    @endif
+                                    Reuniones sin minuta
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    @if ($minuta == null)
+                                        <input type="radio" class="form-check-input" name="minuta" id="check-todas" value checked>
+                                    @else
+                                        <input type="radio" class="form-check-input" name="minuta" id="check-todas" value>
+                                    @endif
+                                    Todas
+                                </label>
+                            </div>
+                        </div>
 
+                        <div class="form-group col-sm-12 col-md-4">
+                            <label for="despuesde">Despues de</label>
+                            <input type="date" class="form-control" name="despuesde" id="despuesde" value="{{$despuesde ?: ""}}">
+                        </div>
+                        
+                        <div class="form-group col-sm-12 col-md-4">
+                            <label for="antesde">Antes de</label>
+                            <input type="date" class="form-control" name="antesde" id="antesde" value="{{$antesde ?: ""}}">
+                        </div>
+
+                        <div class="form-group col-sm-12 col-md-4">
+                            <button type="submit" class="btn btn-secondary">Aplicar Filtros</button>
+                            <a name="btn-index-reuniones" id="btn-index-reuniones" class="btn btn-primary" href="{{route('reuniones.index')}}" role="button">
+                                Limpiar filtros
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @if ($reuniones->isNotEmpty())
-<div class="row">
+<div class="row py-2">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <h4>Reuniones</h4>
     </div>
@@ -71,23 +120,22 @@
                     </a>
                 </p>
                 @endif
+
+                {{-- Condiciones para botones de minuta --}}
                 @if ($reunion->minuta)
-                <p class="card-text">
                     <a name="" id="descargar-minuta-{{$reunion->id}}" class="btn btn-danger" href="#" role="button" target="__blank">
                         <i class="fas fa-file-pdf"></i>
                         <span class="ml-1">Minuta</span>
                     </a>
-                </p>
-                <p class="card-text">
-                    {{$reunion->minuta}}
-                </p>
                 @else
-                <p class="card-text">
-                    <a name="" id="crear-minuta-{{$reunion->id}}" class="btn btn-primary" href="#" role="button">
-                        <i class="fas fa-file-pdf"></i>
-                        <span class="ml-1">Crear minuta</span>
-                    </a>
-                </p>
+                    @if ($reunion->minutaPendiente())
+                        <p class="card-text">
+                            <a name="" id="crear-minuta-{{$reunion->id}}" class="btn btn-primary" href="#" role="button">
+                                <i class="fas fa-file"></i>
+                                <span class="ml-1">Crear minuta</span>
+                            </a>
+                        </p>
+                    @endif
                 @endif
             </div>
         </div>
