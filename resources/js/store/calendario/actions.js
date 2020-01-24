@@ -4,7 +4,7 @@ import ESTADO_API from '../../enum-estado-api'
 
 export default {
     leerReunionesDeUsuario({commit}, user){
-        let uri = `api/users/${user}/reuniones?vuecal=1`;
+        let uri = `${api.baseURL}/users/${user}/reuniones?vuecal=1`;
         commit('colocarEstadoReuniones', ESTADO_API.CARGANDO);
         axios
             .get(uri)

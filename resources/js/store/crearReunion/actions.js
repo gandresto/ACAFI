@@ -4,7 +4,7 @@ import ESTADO_API from '../../enum-estado-api'
 
 export default {
     leerAcademiasQuePreside({commit}, user){
-        let uri = `${api.baseURL}/users/${user}/academiasQueHaPresidido?actual=true`;
+        let uri = `${api.baseURL}/users/${user}/academiasQueHaPresidido?actual=1`;
         commit('colocarEstadoAcademias', ESTADO_API.CARGANDO);
         axios
             .get(uri)

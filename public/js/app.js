@@ -2509,7 +2509,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _enum_estado_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../enum-estado-api */ "./resources/js/enum-estado-api.js");
 /* harmony import */ var _services_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/api */ "./resources/js/services/api.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -2770,7 +2770,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         // console.log(data);
         _this2.estadoCreacionReunion = _enum_estado_api__WEBPACK_IMPORTED_MODULE_1__["default"].LISTO;
         alert('Reunión creada satisfactoriamente');
-        window.location = process.env.MIX_APP_URL + '/reuniones';
+        window.location = "http://localhost:8000" + '/reuniones';
       })["catch"](function (error) {
         if (error.response) {
           _this2.estadoCreacionReunion = _enum_estado_api__WEBPACK_IMPORTED_MODULE_1__["default"].ERROR;
@@ -2804,7 +2804,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   })
 });
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node_modules/process/browser.js */ "./node_modules/process/browser.js")))
 
 /***/ }),
 
@@ -109217,10 +109216,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(process) {/* harmony default export */ __webpack_exports__["default"] = ({
-  baseURL: "".concat(process.env.MIX_APP_URL, "/api")
+/* harmony default export */ __webpack_exports__["default"] = ({
+  baseURL: "".concat("http://localhost:8000", "/api")
 });
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node_modules/process/browser.js */ "./node_modules/process/browser.js")))
 
 /***/ }),
 
@@ -109243,7 +109241,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   leerReunionesDeUsuario: function leerReunionesDeUsuario(_ref, user) {
     var commit = _ref.commit;
-    var uri = "api/users/".concat(user, "/reuniones?vuecal=1");
+    var uri = "".concat(_services_api__WEBPACK_IMPORTED_MODULE_1__["default"].baseURL, "/users/").concat(user, "/reuniones?vuecal=1");
     commit('colocarEstadoReuniones', _enum_estado_api__WEBPACK_IMPORTED_MODULE_2__["default"].CARGANDO);
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(uri).then(function (r) {
       return r.data.data;
@@ -109368,7 +109366,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   leerAcademiasQuePreside: function leerAcademiasQuePreside(_ref, user) {
     var commit = _ref.commit;
-    var uri = "".concat(_services_api__WEBPACK_IMPORTED_MODULE_1__["default"].baseURL, "/users/").concat(user, "/academiasQueHaPresidido?actual=true");
+    var uri = "".concat(_services_api__WEBPACK_IMPORTED_MODULE_1__["default"].baseURL, "/users/").concat(user, "/academiasQueHaPresidido?actual=1");
     commit('colocarEstadoAcademias', _enum_estado_api__WEBPACK_IMPORTED_MODULE_2__["default"].CARGANDO);
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(uri).then(function (r) {
       return r.data.data;
