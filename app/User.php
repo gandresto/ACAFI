@@ -93,7 +93,7 @@ class User extends Authenticatable
         return $this->departamentosQueHaDirigido()->wherePivot('actual', '=', true)->get();
     }
 
-    public function getAcademiasQuePresidoAttribute()
+    public function academiasQueHaPresidido()
     {
         return $this->belongsToMany(Academia::class, 'academia_presidente',
                                         'presidente_id', 'academia_id')
@@ -102,7 +102,7 @@ class User extends Authenticatable
 
     public function getAcademiasQuePresideAttribute()
     {
-        return $this->academiasQuePresido->wherePivot('actual', '=', true)->get();
+        return $this->academiasQueHaPresidido()->wherePivot('actual', '=', true)->get();
     }
 
     public function academias()

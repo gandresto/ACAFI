@@ -98,7 +98,7 @@ class UserController extends Controller
         $actual = $request->input('actual');
         if($actual && ($actual=="true" || $actual==1))
             return new AcademiasResource($user->academiasQuePreside->sortBy('nombre'));
-        return new AcademiasResource($user->academiasQuePresido->sortBy('nombre'));
+        return new AcademiasResource($user->academiasQueHaPresidido->sortBy('nombre'));
     }
 
     public function yo(Request $request)
