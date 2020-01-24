@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Reunion extends Model
@@ -41,5 +42,16 @@ class Reunion extends Model
         return $this->belongsToMany(Acuerdo::class)
         ->as('seguimiento')
         ->withPivot('avance');
+    }
+
+    /**
+     * Devuelve true si no se ha hecho la minuta y la reunión ya terminó
+     * 
+     * @return bool
+     */
+    public function minutaPendiente()
+    {
+        // Ya terminó la reunión y aún no se hacen minutas
+        return ($this->fin < Carbon::now()) && ! $this->minuta;
     }
 }
