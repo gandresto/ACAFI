@@ -5,6 +5,8 @@
  */
 
 require('./bootstrap');
+import 'vue-cal/dist/i18n/es.js';
+
 
 import Vue from 'vue';
 import VueAxios from 'vue-axios';
@@ -14,10 +16,12 @@ import store from './store/';
 
 import { Datetime } from 'vue-datetime';
 import Autocomplete from '@trevoreyre/autocomplete-vue'
+import VueCal from 'vue-cal';
 
 Vue.use(VueAxios, axios);
 Vue.use(BootstrapVue);
 Vue.use(Autocomplete);
+Vue.use(VueCal);
 
 axios.defaults.headers.common = {
     'X-CSRF-TOKEN': Laravel.csrfToken,
@@ -34,7 +38,10 @@ axios.defaults.headers.common = {
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
+// Componentes de dependencias
 Vue.component('v-datetime', Datetime);
+Vue.component('v-calendar', VueCal);
+
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('buscar-usuario', require('./components/BuscarUsuario.vue').default);
 Vue.component('buscar-division', require('./components/BuscarDivision.vue').default);

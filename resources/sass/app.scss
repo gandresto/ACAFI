@@ -7,10 +7,15 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+// Font awesome 4
 @import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
 @import '~@fortawesome/fontawesome-free/scss/solid.scss';
-@import '~vue-datetime/dist/vue-datetime.css';
+
+// Componentes vue
 @import '~@trevoreyre/autocomplete-vue/dist/style.css';
+@import '~vue-datetime/dist/vue-datetime.css';
+@import '~vue-cal/dist/vuecal.css';
 
 .page-footer{
     background-color: $rojofacultad;
