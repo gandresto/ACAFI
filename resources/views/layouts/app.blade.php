@@ -39,8 +39,23 @@
                                     Calendario
                                 </a>
                             </li>
-
-                            <li class="nav-item dropdown">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('reuniones.index')}}">
+                                    Reuniones
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    Minutas
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    Reportes
+                                </a>
+                            </li>
+                            
+                            {{-- <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Reuniones y Documentos
                                 </a>
@@ -50,15 +65,15 @@
                                     <a class="dropdown-item" href="#">Órdenes del día</a>
                                     <a class="dropdown-item" href="#">Asuntos Pendientes</a>
                                 </div>
-                            </li>
+                            </li> --}}
 
                             <li class="nav-item">
-                                <a class="nav-link" href="{{route('divisions.index')}}">Estructura de la FI</a>
+                                <a class="nav-link" href="{{route('divisions.index')}}">Estructura FI</a>
                             </li>
 
                             @can('viewAny', App\User::class)
                             <li class="nav-item">
-                                    <a class="nav-link" href="{{route('users.index')}}">Usuarios</a>
+                                <a class="nav-link" href="{{route('users.index')}}">Usuarios</a>
                             </li>
                             @endcan
                         </ul>
@@ -79,6 +94,9 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="#">
+                                        Perfil
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
