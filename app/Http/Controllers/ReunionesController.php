@@ -17,25 +17,25 @@ class ReunionesController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-
+        // dd($request->query('minuta'));
         $quieroMinuta = esVerdadero($request->query('minuta'));
-        $quieroOrdenDelDia = esVerdadero($request->query('od'));
-
-        // dd(esVerdadero($tieneMinuta));
-        // return Carbon::createFromFormat(
-        //     'Y-m-d H:i:s',
-        //     $reunion->fin,
-        //     config('app.timezone')
-        // )->isAfter(Carbon::now())
+        $antesde = $request->query('antesde') ? Carbon::parse($request->query('antesde')) : null;
+        $despuesde = $request->query('despuesde') ? Carbon::parse($request->query('despuesde')) : null;
 
         $reuniones = $user->reuniones
                             ->sortBy('inicio')
-                            ->filter(function ($reunion) use ($quieroMinuta, $quieroOrdenDelDia) 
+                            ->filter(function ($reunion) use ($quieroMinuta, $antesde, $despuesde) 
                             {
                                 return ($quieroMinuta ? $reunion->minuta : $reunion->minuta == null)
-                                    && ($quieroOrdenDelDia ? $reunion->orden_del_dia : $reunion->orden_del_dia == null);
+                                        && ($antesde ? $antesde > $reunion->inicio : true)
+                                        && ($despuesde ? $despuesde < $reunion->inicio : true);
                             });
-        return view('reuniones.index', compact('reuniones'));
+        return view('reuniones.index', [
+            'reuniones' => $reuniones,
+            'minuta' => $request->query('minuta'),
+            'antesde' => $request->query('antesde'),
+            'despuesde' => $request->query('despuesde'),
+        ]);
     }
 
     public function create(Request $request)
