@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/calendario', 'HomeController@index')->name('calendario');
+Route::get('/calendario', 'CalendarioController@index')->name('calendario');
 
 // ----- DIVISIONES -------
 Route::resource('divisions', 'DivisionController');
