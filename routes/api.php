@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-// ----------- Rutas para DIvisiones -------------
+// ----------- Rutas para Divisiones -------------
 Route::resource('/divisions', 'Api\DivisionController')->middleware('auth:api')->except([
     'create', 'edit'
 ]);
@@ -44,6 +44,11 @@ Route::get('/academias/{academia_id}/acuerdosPendientes', 'Api\AcademiaControlle
 // ----------- Rutas para Reuniones -------------
 Route::post('/reuniones/crearPDFOrdenDelDia', 'Api\ReunionesController@crearPDFOrdenDelDia')->middleware('auth:api');
 Route::resource('/reuniones', 'Api\ReunionesController')->middleware('auth:api')->except([
+    'create', 'edit'
+]);
+
+// ---------- Rutas para grados
+Route::resource('/grados', 'Api\GradosController')->middleware('auth:api')->except([
     'create', 'edit'
 ]);
 
