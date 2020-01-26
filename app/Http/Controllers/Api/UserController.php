@@ -44,7 +44,10 @@ class UserController extends Controller
         );
         $user = User::create($data);
         $user->rollApiKey();
-        return new UserResource($user);
+        return response([
+            'usuario_creado' => new UserResource($user),
+            'message' => 'Usuario creado safisfactoriamente',
+        ], 200);
     }
 
     /**
