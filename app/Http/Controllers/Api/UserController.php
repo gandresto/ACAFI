@@ -31,7 +31,20 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('create', User::class);
+        $data = request()->validate(
+            [
+                'email' => 'required|string|email|max:50|unique:users',
+                'password' => 'required|string|min:6|confirmed',
+                'grado' => 'required|max:8|string',
+                'nombre' => 'required|max:50|string',
+                'apellido_pat' => 'required|max:50|string',
+                'apellido_mat' => 'required|max:50|string'
+            ]
+        );
+        $user = User::create($data);
+        $user->rollApiKey();
+        return new UserResource($user);
     }
 
     /**
