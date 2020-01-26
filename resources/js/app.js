@@ -58,6 +58,9 @@ Vue.component('crear-reunion-tabla-acuerdos', require('./components/CrearReunion
 Vue.component('crear-reunion-agregar-temas', require('./components/CrearReunionAgregarTemas.vue').default);
 Vue.component('crear-reunion-agregar-temas-tema-item', require('./components/CrearReunionAgregarTemasTemaItem.vue').default);
 
+Vue.component('crear-usuario-modal', require('./components/CrearUsuarioModal.vue').default);
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

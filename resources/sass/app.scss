@@ -35,6 +35,22 @@
 .bg-red{
     background-color: $rojofacultad;
 }
-body, html{
+body{
     background-color: $fondooscuro;
+}
+
+// #mute {
+//     position: absolute;
+// }
+
+// #mute.on {
+//     opacity: 0.7;
+//     z-index: 10000;
+//     background: white;
+//     height: 100%;
+//     width: 100%;
+// }
+
+.modal-backdrop{
+    background-color: rgba(1,1,1,0.6);
 }

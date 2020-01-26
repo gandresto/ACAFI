@@ -18580,8 +18580,11 @@ readers do not read off random characters that represent icons */
   background-color: #cd171e;
 }
 
-body,
-html {
+body {
   background-color: #5a5a5a;
+}
+
+.modal-backdrop {
+  background-color: rgba(1, 1, 1, 0.6);
 }
 
