@@ -11,6 +11,20 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class, 50)->create();
+        $faker = \Faker\Factory::create($locale = 'es_ES');
+        $password = bcrypt('123456789'); // password fija para no calcularla cada vez
+        
+        for ($i = 0; $i < 300; $i++) {
+            $user = App\User::create([
+                'grado' => $faker->randomElement(array('Ing.', 'Dr.', 'M.I.')),
+                'nombre' => $faker->firstName,
+                'apellido_pat' => $faker->lastName,
+                'apellido_mat' => $faker->lastName,
+                'email' => $faker->unique()->safeEmail,
+                'password' => $password,
+                'remember_token' => Str::random(10),
+            ]);
+            $user->rollApiKey();
+        }
     }
 }

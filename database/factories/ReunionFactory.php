@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Faker\Generator as Faker;
 
 $factory->define(Reunion::class, function (Faker $faker) {
-    $horas = $faker->numberBetween($min = -240, $max = 240);
+    $horas = $faker->numberBetween($min = -240, $max = 600);
     return [
         "lugar" => "Sala de Juntas",
         "inicio" => Carbon::now()->addHours($horas),
