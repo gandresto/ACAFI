@@ -23,9 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('apellido_mat');
             $table->string('email', 50)->unique();
             $table->string('password');
-            $table->string('api_token', 80)->unique()
-                        ->nullable()
-                        ->default(Str::random(80));
+            $table->string('api_token', 80)->unique()->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
