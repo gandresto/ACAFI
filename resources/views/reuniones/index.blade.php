@@ -130,7 +130,7 @@
                 @else
                     @if ($reunion->minutaPendiente())
                         <p class="card-text">
-                            <a name="" id="crear-minuta-{{$reunion->id}}" class="btn btn-primary" href="#" role="button">
+                            <a name="" id="crear-minuta-{{$reunion->id}}" class="btn btn-primary" href="{{route('reuniones.minuta.create', $reunion->id)}}" role="button">
                                 <i class="fas fa-file"></i>
                                 <span class="ml-1">Crear minuta</span>
                             </a>

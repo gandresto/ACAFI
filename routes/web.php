@@ -41,6 +41,8 @@ Route::resource('users', 'UsersController');
 Route::get('/users/buscar/{consulta}', 'UsersController@buscar')->name('users.buscar');
 
 // ------ REUNIONES -----------
-Route::resource('/reuniones', 'ReunionesController',
-    ['except' => ['store', 'update', 'destroy']]);
+Route::resource('/reuniones', 'ReunionesController')
+->except(['store', 'update', 'destroy']);
 Route::get('/reuniones/{id}/descargarOrdenDelDia', 'ReunionesController@descargarOrdenDelDia')->name('reuniones.ordendeldia.descargar');
+Route::resource('reuniones.minuta', 'ReunionesMinutasController')
+        ->except(['store', 'update', 'destroy']);
