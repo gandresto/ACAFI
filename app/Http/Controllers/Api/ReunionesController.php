@@ -94,7 +94,9 @@ class ReunionesController extends Controller
      */
     public function show(int $id)
     {
-        return (new ReunionResource(Reunion::findOrFail($id)));
+        $reunion = Reunion::findOrFail($id);
+        $this->authorize('view', $reunion);
+        return (new ReunionResource($reunion));
     }
 
     /**
