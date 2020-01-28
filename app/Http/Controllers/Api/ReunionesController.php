@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Academia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ReunionResource;
 use App\Reunion;
 use App\Tema;
 use Carbon\Carbon;
@@ -91,9 +92,9 @@ class ReunionesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
-        //
+        return (new ReunionResource(Reunion::findOrFail($id)));
     }
 
     /**

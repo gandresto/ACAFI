@@ -14,6 +14,20 @@ class ReunionResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'academia' => [
+                'id' => $this->academia->id,
+                'nombre' => $this->academia->nombre
+            ],
+            'lugar' => $this->lugar,
+            'inicio' => $this->inicio,
+            'fin' => $this->fin,
+            'orden_del_dia' => $this->orden_del_dia,
+            'minuta' => $this->minuta,
+            'invitados' => $this->invitados ? User::collection($this->invitados) : [],
+            'convocados' => $this->convocados ? User::collection($this->convocados) : [],
+            'temas' => $this->temas ? TemaResource::collection($this->temas) : [],
+        ];
     }
 }
