@@ -5,9 +5,7 @@
 @endsection
 
 @section('content')
-    {{$reunion}} <br>
-    {{$reunion->inicio}} <br>
-    {{$reunion->fin}} <br>
-    {{$reunion->lugar}} <br>
-    {{$reunion->academia}} <br>
+    <crear-minuta
+        :reunion-resource="{{json_encode(new App\Http\Resources\ReunionResource($reunion))}}"
+    ></crear-minuta>    
 @endsection

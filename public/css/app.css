@@ -18588,3 +18588,10 @@ body {
   background-color: rgba(1, 1, 1, 0.6);
 }
 
+.small-title {
+  font-size: 0.96rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
