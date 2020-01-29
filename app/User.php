@@ -166,4 +166,9 @@ class User extends Authenticatable
             )
         );
     }
+
+    public function acuerdos()
+    {
+        return $this->hasMany(Acuerdo::class, 'responsable_id', 'id');
+    }
 }

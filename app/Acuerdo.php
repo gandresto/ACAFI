@@ -34,4 +34,9 @@ class Acuerdo extends Model
     {
         return $this->tema->reunion->academia;
     }
+
+    public function responsable()
+    {
+        return $this->belongsTo(User::class, 'responsable_id');
+    }
 }
