@@ -252,10 +252,8 @@ export default {
     nombreCompleto: function (usuario) {
       return usuario.id ? `${usuario.apellido_paterno} ${usuario.apellido_materno} ${usuario.nombre} ${usuario.grado}` : '';
     },
-    filters: {
-      fecha: function (ISOstring) {
-        return format(parseISO(ISOstring), 'd/m/y');
-      }
+    fecha: function (ISOstring) {
+      return format(parseISO(ISOstring), 'dd/MM/y');
     },
   },
 };

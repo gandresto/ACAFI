@@ -54,7 +54,7 @@ export default {
   },
   filters: {
     fecha: function (ISOstring) {
-      return format(parseISO(ISOstring), 'd/m/y');
+      return format(parseISO(ISOstring), 'dd/MM/y');
     }
   }
 };
