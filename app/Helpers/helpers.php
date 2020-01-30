@@ -33,4 +33,12 @@ function esVerdadero($valor)
     return in_array($valor, [1, "1", "true", "y", "s"]);
 }
 
+function dar_formato_de_fecha($fecha){
+    return Carbon\Carbon::parse($fecha)->format('d/m/Y');
+}
+
+function dar_formato_de_hora($fecha){
+    return Carbon\Carbon::parse($fecha)->format('h:i A');
+}
+
 ?>
