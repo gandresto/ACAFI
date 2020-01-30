@@ -11,6 +11,7 @@
         placeholder="Buscar usuario"
         aria-label="Buscar usuario"
         :get-result-value="obtenerNombreCompleto"
+        :debounceTime="500"
         @submit="procesarInvitado"
       >
         <template #result="{ result, props }">
