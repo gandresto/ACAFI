@@ -18,7 +18,8 @@ class ReunionResource extends JsonResource
             'id' => $this->id,
             'academia' => [
                 'id' => $this->academia->id,
-                'nombre' => $this->academia->nombre
+                'nombre' => $this->academia->nombre,
+                'presidente' => new User($this->academia->presidente),
             ],
             'lugar' => $this->lugar,
             'inicio' => $this->inicio,
