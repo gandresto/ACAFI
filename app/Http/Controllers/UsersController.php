@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\AvisoUsuarioCreado;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Validation\Validator;
 use App\User;
@@ -64,7 +65,10 @@ class UsersController extends Controller
             ]
         );
         #dd($data);
-        $user = User::create($data);       
+        $user = User::create($data);
+        $user->rollApiKey();
+        $user->notify(new AvisoUsuarioCreado(['rawPass' => $data['password']])); // Avisamos al usuario por correo
+            
         return redirect()->route('users.index')
                         ->with('success', 'Usuario con nombre ' . $user->nombre_completo . ' creado satisfactoriamente.');
     }
