@@ -4,4 +4,5 @@ export default {
     estadoReunion: ESTADO.INICIADO,
     reunion: [],
     asistentes: [],
+    nuevosAcuerdos: [],
 };

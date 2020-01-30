@@ -17,6 +17,10 @@
 @import '~vue-datetime/dist/vue-datetime.css';
 @import '~vue-cal/dist/vuecal.css';
 
+.fondo-rojo-claro{
+    background-color: $rojoclaro;
+}
+
 .page-footer{
     background-color: $rojofacultad;
     color: white;
@@ -27,9 +31,6 @@
 }
 .reunion-invitado{
     background-color: lightblue;
-}
-.reunion-presidente{
-    background-color: $rojoclaro;
 }
 
 .bg-red{

@@ -18559,6 +18559,10 @@ readers do not read off random characters that represent icons */
   font-weight: 900;
 }
 
+.fondo-rojo-claro {
+  background-color: #ffe7e6;
+}
+
 .page-footer {
   background-color: #cd171e;
   color: white;
@@ -18570,10 +18574,6 @@ readers do not read off random characters that represent icons */
 
 .reunion-invitado {
   background-color: lightblue;
-}
-
-.reunion-presidente {
-  background-color: #FFC2BF;
 }
 
 .bg-red {
