@@ -7,9 +7,31 @@ use Illuminate\Database\Eloquent\Model;
 class Acuerdo extends Model
 {
     protected $fillable = [
-        'descripcion', 'resuelto', 'resultado', 'producto_esperado', 
+        'descripcion', 'resultado', 'producto_esperado', 
         'fecha_compromiso', 'fecha_resuelto', 'tema_id',
     ];
+
+    /**
+     * Filtrar una consulta para incluir solo asuntos resueltos.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFinalizados($query)
+    {
+        return $query->where('fecha_finalizado', 'NOT', null);
+    }
+
+    /**
+     * Filtrar una consulta para incluir solo asuntos pendientes.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePendientes($query)
+    {
+        return $query->where('fecha_finalizado', '=', null);
+    }
     
     public function tema()
     {
