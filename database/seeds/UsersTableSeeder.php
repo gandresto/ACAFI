@@ -13,8 +13,8 @@ class UsersTableSeeder extends Seeder
     {
         $faker = \Faker\Factory::create($locale = 'es_ES');
         $password = bcrypt('123456789'); // password fija para no calcularla cada vez
-        
-        for ($i = 0; $i < 300; $i++) {
+        $num_usuarios = 150;
+        for ($i = 0; $i < $num_usuarios; $i++) {
             $user = App\User::create([
                 'grado' => $faker->randomElement(array('Ing.', 'Dr.', 'M.I.')),
                 'nombre' => $faker->firstName,

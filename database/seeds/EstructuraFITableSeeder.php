@@ -18,7 +18,7 @@ class EstructuraFITableSeeder extends Seeder
         
         $users = App\User::all();
         $this->command->getOutput()->writeln("<info>Creando divisiones...</info>");
-        factory(App\Division::class, 5)->create()
+        factory(App\Division::class, 2)->create()
             ->each(function ($division)
             use ($users, $num_jefes, $num_miembros) {
                 //Seleccionar 4 usuarios al azar para hacerlos jefes de division
@@ -29,14 +29,13 @@ class EstructuraFITableSeeder extends Seeder
                 for ($i = $num_jefes-1; $i > 0; $i--) {
                     $division->jefes()->attach(
                         array($jefes_rand[$i] => [
-                            'actual' => false,
                             'fecha_ingreso' => Carbon::now()->subMonths($i), // Agrego fecha de ingreso gradual por meses
                             'fecha_egreso' => Carbon::now()->subMonths($i - 1),
                         ])
                     );
                 }
                 $this->command->getOutput()->writeln('<info>  Creando departamentos para la ' . $division->nombre . '...</info>');
-                $division->departamentos()->saveMany(factory(App\Departamento::class, 4)->make());
+                $division->departamentos()->saveMany(factory(App\Departamento::class, 2)->make());
                 $division->departamentos
                     ->each(function ($departamento)
                     use ($users, $num_jefes, $num_miembros) {
@@ -47,14 +46,13 @@ class EstructuraFITableSeeder extends Seeder
                         for ($i = $num_jefes-1; $i > 0; $i--) {
                             $departamento->jefes()->attach(
                                 array($jefes_rand[$i] =>  [
-                                    'actual' => false,
                                     'fecha_ingreso' => Carbon::now()->subMonths($i), // Agrego fecha de ingreso gradual por meses
                                     'fecha_egreso' => Carbon::now()->subMonths($i - 1),
                                 ])
                             );
                         }
                         $this->command->getoutput()->writeln( '<info>    Creando academias para el Departamento de ' . $departamento->nombre . '...</info>');
-                        $departamento->academias()->saveMany(factory(App\Academia::class, 10)->make()); // Creamos 10 academias nuevas
+                        $departamento->academias()->saveMany(factory(App\Academia::class, 3)->make()); // Creamos 10 academias nuevas
                         $departamento->academias->each(
                             function ($academia) use ($users, $num_jefes, $num_miembros) {
                                 //Seleccionar 4 usuarios al azar para hacerlos presidentes de academia
@@ -64,7 +62,6 @@ class EstructuraFITableSeeder extends Seeder
                                 for ($i = $num_jefes-1; $i > 0; $i--) {
                                     $academia->presidentes()->attach(
                                         array($presidentes_rand[$i] =>  [
-                                            'actual' => false,
                                             'fecha_ingreso' => Carbon::now()->subMonths($i), // Agrego fecha de ingreso gradual por meses
                                             'fecha_egreso' => Carbon::now()->subMonths($i - 1),
                                         ])
