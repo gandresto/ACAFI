@@ -42,19 +42,20 @@ axios.defaults.headers.common = {
 Vue.component('v-datetime', Datetime);
 Vue.component('v-calendar', VueCal);
 
+// Componentes propios
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('buscar-usuario', require('./components/BuscarUsuario.vue').default);
 Vue.component('buscar-division', require('./components/BuscarDivision.vue').default);
 Vue.component('editar-division', require('./components/EditarDivision.vue').default);
 Vue.component('modal', require('./components/PlantillaModal.vue').default);
-
-Vue.component('calendario-index', require('./views/Calendario.vue').default);
-
-Vue.component('crear-reunion', require('./views/CrearReunion.vue').default);
-
 Vue.component('crear-usuario-modal', require('./components/CrearUsuarioModal.vue').default);
+Vue.component('aviso-error', require('./components/AvisoDeError.vue').default);
 
+// Componentes "vista"
+Vue.component('calendario-index', require('./views/Calendario.vue').default);
+Vue.component('crear-reunion', require('./views/CrearReunion.vue').default);
 Vue.component('crear-minuta', require('./views/CrearMinuta.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
