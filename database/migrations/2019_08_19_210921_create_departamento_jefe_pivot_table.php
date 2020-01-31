@@ -18,16 +18,22 @@ class CreateDepartamentoJefePivotTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('departamento_id');
             $table->unsignedBigInteger('jefe_id');
-            $table->boolean('actual')->default(true);
-            $table->date('fecha_ingreso')->default(Carbon::now());
-            $table->date('fecha_egreso')->nullable();
+            $table->timestamp('fecha_ingreso')->useCurrent();
+            $table->timestamp('fecha_egreso')->nullable();
 
-            $table->index('actual');
-
+            $table->index('fecha_egreso');
             $table->index('departamento_id');
-            $table->foreign('departamento_id')->references('id')->on('departamentos');
             $table->index('jefe_id');
-            $table->foreign('jefe_id')->references('id')->on('users');
+
+            $table->foreign('departamento_id')
+                    ->references('id')
+                    ->on('departamentos')
+                    ->onDelete('cascade');
+
+            $table->foreign('jefe_id')
+                    ->references('id')
+                    ->on('users')
+                    ->onDelete('cascade');
         });
     }
 

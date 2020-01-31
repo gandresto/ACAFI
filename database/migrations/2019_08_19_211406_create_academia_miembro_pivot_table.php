@@ -18,15 +18,22 @@ class CreateAcademiaMiembroPivotTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('academia_id');
             $table->unsignedBigInteger('miembro_id');
-            $table->boolean('activo')->default(true);
-            $table->date('fecha_ingreso')->default(Carbon::now());;
-            $table->date('fecha_egreso')->nullable();
+            $table->timestamp('fecha_ingreso')->useCurrent();
+            $table->timestamp('fecha_egreso')->nullable();
+            $table->index('fecha_egreso');
 
             $table->index('academia_id');
-            $table->foreign('academia_id')->references('id')->on('academias');
             $table->index('miembro_id');
-            $table->foreign('miembro_id')->references('id')->on('users');
-            $table->index('activo');
+
+            $table->foreign('academia_id')
+                    ->references('id')
+                    ->on('academias')
+                    ->onDelete('cascade');
+
+            $table->foreign('miembro_id')
+                    ->references('id')
+                    ->on('users')
+                    ->onDelete('cascade');
         });
     }
 

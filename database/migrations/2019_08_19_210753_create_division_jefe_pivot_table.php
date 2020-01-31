@@ -18,16 +18,22 @@ class CreateDivisionJefePivotTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('division_id');
             $table->unsignedBigInteger('jefe_id');
-            $table->boolean('actual')->default(true);
-            $table->date('fecha_ingreso')->default(Carbon::now());
-            $table->date('fecha_egreso')->nullable();
+            $table->timestamp('fecha_ingreso')->useCurrent();
+            $table->timestamp('fecha_egreso')->nullable();
 
-            $table->index('actual');
-
+            $table->index('fecha_egreso');
             $table->index('division_id');
-            $table->foreign('division_id')->references('id')->on('divisions');
             $table->index('jefe_id');
-            $table->foreign('jefe_id')->references('id')->on('users');
+
+            $table->foreign('division_id')
+                    ->references('id')
+                    ->on('divisions')
+                    ->onDelete('cascade');
+
+            $table->foreign('jefe_id')
+                    ->references('id')
+                    ->on('users')
+                    ->onDelete('cascade');
         });
     }
 

@@ -18,16 +18,22 @@ class CreateAcademiaPresidentePivotTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('academia_id');
             $table->unsignedBigInteger('presidente_id');
-            $table->boolean('actual')->default(true);
-            $table->date('fecha_ingreso')->default(Carbon::now());
-            $table->date('fecha_egreso')->nullable();
+            $table->timestamp('fecha_ingreso')->useCurrent();
+            $table->timestamp('fecha_egreso')->nullable();
 
-            $table->index('actual');
-
+            $table->index('fecha_egreso');
             $table->index('academia_id');
-            $table->foreign('academia_id')->references('id')->on('academias');
             $table->index('presidente_id');
-            $table->foreign('presidente_id')->references('id')->on('users');
+
+            $table->foreign('academia_id')
+                    ->references('id')
+                    ->on('academias')
+                    ->onDelete('cascade');
+
+            $table->foreign('presidente_id')
+                    ->references('id')
+                    ->on('users')
+                    ->onDelete('cascade');
         });
     }
 
