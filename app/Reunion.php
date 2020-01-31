@@ -8,8 +8,48 @@ use Illuminate\Database\Eloquent\Model;
 class Reunion extends Model
 {
     protected $fillable = [
-        'academia_id', 'lugar', 'inicio', 'fin', 'orden_del_dia', 'minuta'
+        'academia_id', 'lugar', 'inicio', 'fin', 'orden_del_dia', 'minuta', 'cancelada'
     ];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['inicio', 'fin'];
+
+    /**
+     * Filtrar una consulta para incluir solo reuniones canceladas.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeCanceladas($query)
+    {
+        return $query->where('cancelada', '=', false);
+    }
+
+    /**
+     * Filtrar una consulta para incluir reuniones próximas.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeProximas($query)
+    {
+        return $query->whereDate('inicio', '>', Carbon::now());
+    }
+
+    /**
+     * Filtrar una consulta para incluir reuniones pasadas.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePasadas($query)
+    {
+        return $query->whereDate('fin', '<', Carbon::now());
+    }
 
     public function academia()
     {
