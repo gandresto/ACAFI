@@ -42,4 +42,8 @@ export default {
         state.acuerdosARevision = acuerdos;
     },
 
+    colocarErroresDeValidacion(state, errores){
+        state.erroresDeValidacion = errores;
+    },
+
 };

@@ -8,10 +8,10 @@
     <b-form-group>
       <autocomplete
         :search="buscarInvitado"
+        :debounce-time="500"
         placeholder="Buscar usuario"
         aria-label="Buscar usuario"
         :get-result-value="obtenerNombreCompleto"
-        :debounceTime="500"
         @submit="procesarInvitado"
       >
         <template #result="{ result, props }">
@@ -66,10 +66,19 @@ export default {
     removerInvitacion(id) {
       this.eliminarInvitadoPorId(id);
     },
+    // debounce(func, delay) {
+    //   let inDebounce
+    //   return function() {
+    //     const context = this
+    //     const args = arguments
+    //     clearTimeout(inDebounce)
+    //     inDebounce = setTimeout(() => func.apply(context, args), delay)
+    //   }
+    // },
     buscarInvitado(consulta) {
-      let uri = `${api.baseURL}/users/buscar/${consulta}`;
       return new Promise((res, rej) => {
         if (!consulta || consulta.length < 3) return res([]);
+        let uri = `${api.baseURL}/users/buscar/${consulta}`;
         axios
           .get(uri)
           .then(r => r.data.data)

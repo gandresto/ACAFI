@@ -10,4 +10,5 @@ export default {
     temas: [],
     acuerdosPendientes: [],
     acuerdosARevision: [],
+    erroresDeValidacion: {},
 };

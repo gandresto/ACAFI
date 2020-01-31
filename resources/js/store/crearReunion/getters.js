@@ -8,4 +8,5 @@ export default {
     temas: state => state.temas,
     acuerdosPendientes: state => state.acuerdosPendientes,
     acuerdosARevision: state => state.acuerdosARevision,
+    erroresDeValidacion: state => state.erroresDeValidacion,
 }

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <!-- --------- Indicadores de carga y de error -----------  -->
     <div
       v-if="estadoAcademias == estadoApi.CARGANDO ||
@@ -43,7 +43,7 @@
       <button type="button" class="close" data-dismiss="alert">×</button>
       <strong>Hubo un problema, intenta de nuevo más tarde</strong>
     </div>
-    <!-- ----------- Formulario al seleccionar academia --------- -->
+    <!-- ----------- Formulario para crear la reunión (desplegable al seleccionar academia) --------- -->
     <b-form v-if="academiaSeleccionada && estadoAcademia == estadoApi.LISTO" @submit="submitForm">
       <!-- ----------- Fecha y hora de inicio --------- -->
       <b-row>
@@ -55,9 +55,12 @@
           v-model="fechaInicio"
           :phrases="frases"
           required="true"
-          input-class="form-control"
+          :input-class="claseValidacion('fechaInicio')"
         >
           <label for="fecha-inicio-input" slot="before">Fecha y hora de inicio *</label>
+          <span v-if="tieneError('fechaInicio')" class="invalid-feedback" role="alert" slot="after">
+            <strong>{{erroresDeValidacion.fechaInicio[0]}}</strong>
+          </span>
         </v-datetime>
       </b-row>
 
@@ -71,27 +74,49 @@
           v-model="fechaFin"
           :phrases="frases"
           required="true"
-          input-class="form-control"
+          :input-class="claseValidacion('fechaFin')"
         >
           <label for="fecha-fin-input" slot="before">Fecha y hora de finalizacion *</label>
+          <span v-if="tieneError('fechaFin')" class="invalid-feedback" role="alert" slot="after">
+            <strong>{{erroresDeValidacion.fechaFin[0]}}</strong>
+          </span>
         </v-datetime>
       </b-row>
 
       <!-- ----------- Lugar --------- -->
       <b-form-group id="lugar" label="Lugar *" label-for="text-lugar">
-        <b-form-input id="text-lugar" v-model="lugar" type="text" required></b-form-input>
+        <b-form-input id="text-lugar" v-model="lugar" type="text" required :class="claseValidacion('lugar')"></b-form-input>
+        <span v-if="tieneError('lugar')" class="invalid-feedback" role="alert">
+          <strong>{{erroresDeValidacion.lugar[0]}}</strong>
+        </span>
       </b-form-group>
       <hr />
 
+      <aviso-error 
+        v-if="tieneError('convocados')"
+        :error="erroresDeValidacion.convocados[0]">
+      </aviso-error>
       <!-- ----------- Convocados --------- -->
       <agregar-convocados></agregar-convocados>
 
+      <aviso-error 
+        v-if="tieneError('invitados')"
+        :error="erroresDeValidacion.convocados[0]">
+      </aviso-error>
       <!-- ----------- Invitados --------- -->
       <agregar-invitados></agregar-invitados>
 
+      <aviso-error 
+        v-if="tieneError('temas')"
+        :error="erroresDeValidacion.temas[0]">
+      </aviso-error>
       <!-- ----------- Temas por revisar --------- -->
       <agregar-temas></agregar-temas>
 
+      <aviso-error 
+        v-if="tieneError('acuerdos')"
+        :error="erroresDeValidacion.acuerdos[0]">
+      </aviso-error>
       <!-- -- Acuerdos de reuniones pasadas sin resolver -- -->
       <tabla-acuerdos v-if="acuerdosPendientes.length > 0"></tabla-acuerdos>
 
@@ -132,6 +157,10 @@
           Crear Reunión
         </b-button>
       </b-form-group>
+      <aviso-error 
+        v-if="hayErrorDeValidacion"
+        :error="'Error: revisa tu formulario y corrige los campos que tienen errores'">
+      </aviso-error>
     </b-form>
   </div>
 </template>
@@ -141,7 +170,7 @@ import ESTADO_API from "../enum-estado-api";
 import API from "../services/api";
 
 import { createNamespacedHelpers } from 'vuex';
-const { mapGetters, mapActions } = createNamespacedHelpers('crearReunion');
+const { mapGetters, mapActions, mapMutations } = createNamespacedHelpers('crearReunion');
 
 import AgregarInvitados from './../components/CrearReunion/AgregarInvitados.vue';
 import AgregarConvocados from './../components/CrearReunion/AgregarConvocados.vue';
@@ -170,6 +199,7 @@ export default {
       },
       lugar: "",
       urlVistaPrevia: "#",
+      hayErrorDeValidacion: false,
     };
   },
   mounted() {
@@ -178,11 +208,18 @@ export default {
     this.leerAcademiasQuePreside(Laravel.authUserId);
   },
   methods: {
+    ...mapMutations(['colocarErroresDeValidacion']),
     ...mapActions([
       "leerAcademiasQuePreside",
       "leerAcademia",
       "leerAcuerdosPendientes"
     ]),
+    tieneError(campo) {
+      return this.erroresDeValidacion[campo] ? true : false;
+    },
+    claseValidacion(campo) {
+      return "form-control" + (this.tieneError(campo) ? " is-invalid" : "");
+    },
     seleccionarAcademia() {
       if (this.academiaSeleccionada) {
         this.leerAcademia(this.academiaSeleccionada);
@@ -191,6 +228,7 @@ export default {
     },
     vistaPrevia(evt) {
       // evt.preventDefault();
+      this.hayErrorDeValidacion = false;
       this.estadoVistaPrevia = ESTADO_API.CARGANDO;
       let url = API.baseURL + "/reuniones/crearPDFOrdenDelDia";
       // alert(url);
@@ -224,23 +262,19 @@ export default {
         })
         .catch(err => {
           this.estadoVistaPrevia = ESTADO_API.ERROR;
-          if (err.response) {
-            // console.log(err.response);
-            // console.log(err.response.data);
-            const data = new Blob([err.response.data], {
-              type: "application/json"
+          if (err.response && err.response.status == 422){
+            err.response.data.text().then(datosStr=>{
+              let datosObj = JSON.parse(datosStr);
+              // console.log(datosObj);
+              this.colocarErroresDeValidacion(datosObj.errors);
+              this.hayErrorDeValidacion = true;
             });
-            let fr = new FileReader();
-            fr.onload = function() {
-              console.log(JSON.parse(this.result));
-            };
-            fr.readAsText(data);
-            // console.log(data);
-            //   console.log(error.message)
-          } else console.log(err);
+          } 
+          else console.log(err);
         });
     },
     submitForm(evt) {
+      this.hayErrorDeValidacion = false;
       evt.preventDefault();
       this.estadoCreacionReunion = ESTADO_API.CARGANDO;
       let url = API.baseURL + "/reuniones/";
@@ -271,7 +305,10 @@ export default {
              * The request was made and the server responded with a
              * status code that falls out of the range of 2xx
              */
-            if(err.response.status = 422) this.erroresDeValidacion = err.response.data.errors;
+            if(err.response.status = 422){
+              this.colocarErroresDeValidacion(err.response.data.errors);
+              this.hayErrorDeValidacion = true;
+            }
             else this.error = err.message;
             console.log(error.response.data);
             // console.log(error.response.status);
@@ -305,7 +342,8 @@ export default {
       "invitados",
       "temas",
       "acuerdosPendientes",
-      "acuerdosARevision"
+      "acuerdosARevision",
+      "erroresDeValidacion",
     ]),
     cAcademias() {
       return this.academias || null;
