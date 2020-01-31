@@ -2,13 +2,14 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Acuerdo extends Model
 {
     protected $fillable = [
         'descripcion', 'resultado', 'producto_esperado', 
-        'fecha_compromiso', 'fecha_resuelto', 'tema_id',
+        'fecha_compromiso', 'fecha_finalizado', 'tema_id',
     ];
 
     /**
@@ -31,6 +32,17 @@ class Acuerdo extends Model
     public function scopePendientes($query)
     {
         return $query->where('fecha_finalizado', '=', null);
+    }
+
+    /**
+     * Filtrar una consulta para incluir solo asuntos atrasados.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAtrasados($query)
+    {
+        return $query->whereDate('fecha_compromiso', '<', Carbon::now());
     }
     
     public function tema()
