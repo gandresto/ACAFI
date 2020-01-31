@@ -16,19 +16,28 @@ class CreateAcuerdosTable extends Migration
         Schema::create('acuerdos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('descripcion', 240);
-            $table->boolean('resuelto')->default(0);
             $table->string('resultado', 240)->nullable();
             $table->string('producto_esperado', 240);
-            $table->date('fecha_compromiso');
-            $table->date('fecha_resuelto')->nullable();
-            $table->unsignedBigInteger('tema_id');
+            $table->timestamp('fecha_compromiso')->useCurrent();
+            $table->timestamp('fecha_finalizado')->nullable();
             $table->timestamps();
 
-            $table->index('resuelto');
+            // Campos para relaciones por llave foránea
+            $table->unsignedBigInteger('tema_id');
+            $table->unsignedBigInteger('responsable_id');
+            
+            // Índices
+            $table->index('responsable_id');
+            $table->index('fecha_finalizado');
             $table->index('fecha_compromiso');
-
             $table->index('tema_id');
-            $table->foreign('tema_id')->references('id')->on('temas');
+            
+            // Constraints de foreign key
+            $table->foreign('responsable_id')->references('id')->on('users');
+            $table->foreign('tema_id')
+                    ->references('id')
+                    ->on('temas')
+                    ->onDelete('cascade');
         });
     }
 
