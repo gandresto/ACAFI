@@ -63,11 +63,11 @@ export default {
   .vuecal__event{
     background-color: rgba(0,165,188,.3);
   }
-  /* .vuecal__cell-events-count {
-    width: 4px;
+  .vuecal__cell-events-count {
+    width: 1.5rem;
     min-width: 0;
-    height: 4px;
-    padding: 0;
-    color: transparent;
-   } */
+    height: 1.5rem;
+    font-size: 0.9rem;
+    padding-top: 0.4rem;
+   }
 </style>

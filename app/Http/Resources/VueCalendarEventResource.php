@@ -16,8 +16,8 @@ class VueCalendarEventResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'start' => $this->inicio,
-            'end' => $this->fin,
+            'start' => $this->inicio->format('Y-m-d H:i'),
+            'end' => $this->fin->format('Y-m-d H:i'),
             'title' => "{$this->academia->nombre}",
             'content' => "Lugar: {$this->lugar}",
             // 'class' => $this->inicio,
