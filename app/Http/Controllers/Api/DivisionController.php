@@ -7,8 +7,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Division;
-use App\Http\Resources\Division as DivisionResource;
-use App\Http\Resources\Divisions as DivisionsCollection;
+use App\Http\Resources\DivisionResource;
+use App\Http\Resources\DivisionsCollection;
 
 class DivisionController extends Controller
 {

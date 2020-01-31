@@ -19,15 +19,15 @@ class ReunionResource extends JsonResource
             'academia' => [
                 'id' => $this->academia->id,
                 'nombre' => $this->academia->nombre,
-                'presidente' => new User($this->academia->presidente),
+                'presidente' => new UserResource($this->academia->presidente),
             ],
             'lugar' => $this->lugar,
             'inicio' => $this->inicio,
             'fin' => $this->fin,
             'orden_del_dia' => $this->orden_del_dia,
             'minuta' => $this->minuta,
-            'invitados' => $this->invitados ? User::collection($this->invitados) : [],
-            'convocados' => $this->convocados ? User::collection($this->convocados) : [],
+            'invitados' => $this->invitados ? UserResource::collection($this->invitados) : [],
+            'convocados' => $this->convocados ? UserResource::collection($this->convocados) : [],
             'temas' => $this->temas ? TemaResource::collection($this->temas) : [],
         ];
     }

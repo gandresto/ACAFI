@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Academia;
-use App\Http\Resources\Academia as AcademiaResource;
+use App\Http\Resources\AcademiaResource;
 use App\Http\Resources\AcuerdoPendienteResource;
 use Illuminate\Support\Facades\Cache;
 

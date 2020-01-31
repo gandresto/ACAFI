@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
-use App\Http\Resources\User as UserResource;
-use App\Http\Resources\Academias as AcademiasResource;
+use App\Http\Resources\UserResource;
+use App\Http\Resources\AcademiasCollection;
 use App\Http\Resources\ReunionResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -113,8 +113,8 @@ class UserController extends Controller
         $user = User::findOrFail($user_id);
         $actual = $request->input('actual');
         if($actual && ($actual=="true" || $actual==1))
-            return new AcademiasResource($user->academiasQuePreside->sortBy('nombre'));
-        return new AcademiasResource($user->academiasQueHaPresidido->sortBy('nombre'));
+            return new AcademiasCollection($user->academiasQuePreside->sortBy('nombre'));
+        return new AcademiasCollection($user->academiasQueHaPresidido->sortBy('nombre'));
     }
 
     public function yo(Request $request)
