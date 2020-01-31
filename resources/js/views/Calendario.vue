@@ -22,9 +22,9 @@
             <h4>Cargando calendario...</h4>
           </div>
         </div>
+          <!-- class="vuecal--blue-theme" -->
         <v-calendar
           v-if="estadoReuniones == estadoApi.LISTO"
-          class="vuecal--blue-theme"
           style="height: 600px"
           locale="es"
           default-view="month"
@@ -60,14 +60,26 @@ export default {
 };
 </script>
 <style lang="css">
-  .vuecal__event{
-    background-color: rgba(0,165,188,.3);
-  }
   .vuecal__cell-events-count {
     width: 1.5rem;
     min-width: 0;
     height: 1.5rem;
     font-size: 0.9rem;
     padding-top: 0.4rem;
-   }
+  }
+
+  .vuecal__event{
+    cursor: pointer;
+  }
+
+  /* Colores del tema */
+  .vuecal__event{background-color: rgba(167, 78, 78, 0.3);}
+  .vuecal__menu, .vuecal__cell-events-count {background-color: #cd171e;}
+  .vuecal__menu button {border-bottom-color: #fff;color: #fff;}
+  .vuecal__menu button.active {background-color: rgba(255, 255, 255, 0.15);}
+  .vuecal__title-bar {background-color: #f5e4e4;}
+  .vuecal__cell.today, .vuecal__cell.current {background-color: rgba(255, 254, 240, 0.4);}
+  .vuecal:not(.vuecal--day-view) .vuecal__cell.selected {background-color: rgba(255, 235, 235, 0.4);}
+  .vuecal__cell.selected:before {border-color: rgba(168, 20, 20, 0.5);}
+
 </style>
