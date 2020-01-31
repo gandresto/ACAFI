@@ -19,8 +19,7 @@ class CreateDivisionsTable extends Migration
             $table->string('nombre', 50)->unique();
             $table->string('url', 128);
             $table->string('logo', 128)->nullable();
-            $table->boolean('activa')->default(True);
-            #$table->unsignedBigInteger('jefe_div_id');
+            $table->softDeletes();
             $table->timestamps();
 
             $table->index('nombre');
