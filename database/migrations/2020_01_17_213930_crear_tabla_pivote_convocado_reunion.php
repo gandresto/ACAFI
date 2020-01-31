@@ -20,9 +20,16 @@ class CrearTablaPivoteConvocadoReunion extends Migration
             $table->boolean('asistio')->default(false);
 
             $table->index('convocado_id');
-            $table->foreign('convocado_id')->references('id')->on('users');
             $table->index('reunion_id');
-            $table->foreign('reunion_id')->references('id')->on('reunions');
+
+            $table->foreign('convocado_id')
+                    ->references('id')
+                    ->on('users')
+                    ->onDelete('cascade');
+            $table->foreign('reunion_id')
+                    ->references('id')
+                    ->on('reunions')
+                    ->onDelete('cascade');
         });
     }
 

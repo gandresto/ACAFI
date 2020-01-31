@@ -15,14 +15,22 @@ class CreateAcuerdoReunionPivotTable extends Migration
     {
         Schema::create('acuerdo_reunion', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('avance')->nullable();
             $table->unsignedBigInteger('acuerdo_id');
             $table->unsignedBigInteger('reunion_id');
-            $table->string('avance')->nullable();
 
             $table->index('acuerdo_id');
-            $table->foreign('acuerdo_id')->references('id')->on('acuerdos');
             $table->index('reunion_id');
-            $table->foreign('reunion_id')->references('id')->on('reunions');
+
+            $table->foreign('acuerdo_id')
+                    ->references('id')
+                    ->on('acuerdos')
+                    ->onDelete('cascade');
+
+            $table->foreign('reunion_id')
+                    ->references('id')
+                    ->on('reunions')
+                    ->onDelete('cascade');
         });
     }
 
