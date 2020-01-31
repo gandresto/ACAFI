@@ -67,50 +67,57 @@ class User extends Authenticatable
         return "{$this->grado} {$this->nombre} {$this->apellido_pat} {$this->apellido_mat}";
     }
 
-    /*  Relaciones con otras tablas */
+    /* --------  Relaciones con tablas de jerarquía de la FI --------------- */
 
     public function divisionesQueHaDirigido()
     {
         return $this->belongsToMany(Division::class, 'division_jefe',
                                     'jefe_id', 'division_id')
-                    ->withPivot('actual', 'fecha_ingreso', 'fecha_egreso');
+                    ->withPivot('fecha_ingreso', 'fecha_egreso');
     }
 
     public function getDivisionesQueDirigeAttribute()
     {
-        return $this->divisionesQueHaDirigido()->wherePivot('actual', '=', true)->get();
+        return $this->divisionesQueHaDirigido()->wherePivot('fecha_egreso', '=', null)->get();
     }
 
     public function departamentosQueHaDirigido()
     {
         return $this->belongsToMany(Departamento::class, 'departamento_jefe',
                                         'jefe_id', 'departamento_id')
-                    ->withPivot('actual', 'fecha_ingreso', 'fecha_egreso');
+                    ->withPivot('fecha_ingreso', 'fecha_egreso');
     }
 
     public function getDepartamentosQueDirigeAttribute()
     {
-        return $this->departamentosQueHaDirigido()->wherePivot('actual', '=', true)->get();
+        return $this->departamentosQueHaDirigido()->wherePivot('fecha_egreso', '=', null)->get();
     }
 
     public function academiasQueHaPresidido()
     {
         return $this->belongsToMany(Academia::class, 'academia_presidente',
                                         'presidente_id', 'academia_id')
-                    ->withPivot('actual', 'fecha_ingreso', 'fecha_egreso');
+                    ->withPivot('fecha_ingreso', 'fecha_egreso');
     }
 
     public function getAcademiasQuePresideAttribute()
     {
-        return $this->academiasQueHaPresidido()->wherePivot('actual', '=', true)->get();
+        return $this->academiasQueHaPresidido()->wherePivot('fecha_egreso', '=', null)->get();
     }
 
     public function academias()
     {
         return $this->belongsToMany(Academia::class, 'academia_miembro',
                                     'miembro_id', 'academia_id')
-                    ->withPivot('activo', 'fecha_ingreso', 'fecha_egreso');
+                    ->withPivot('fecha_ingreso', 'fecha_egreso');
     }
+
+    public function getAcademiasComoMiembroActivoAttribute()
+    {
+        return $this->academias()->wherePivot('fecha_egreso', '=', null)->get();
+    }
+
+    /* --------  Relaciones con tablas de reuniones, acuerdos, etc --------------- */
 
     public function reunionesComoConvocado()
     {
