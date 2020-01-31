@@ -18,7 +18,6 @@ class AcademiaResource extends JsonResource
         return [
                 'id' => $this->id,
                 'nombre' => $this->nombre,
-                'activa' => $this->activa,
                 'departamento' => $this->departamento,
                 'presidente' => new UserResource($this->presidente),
                 'miembrosActuales' => UserResource::collection($this->miembrosActuales),

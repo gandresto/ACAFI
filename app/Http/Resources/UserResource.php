@@ -32,7 +32,6 @@ class UserResource extends JsonResource
             }),
             'info_presidente' => $this->whenPivotLoaded('academia_presidente', function () {
                 return [
-                    'activo' => $this->pivot->activo,
                     'fecha_ingreso' => $this->pivot->fecha_ingreso,
                     'fecha_egreso' =>  $this->pivot->fecha_egreso,
                 ];

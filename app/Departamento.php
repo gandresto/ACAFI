@@ -10,7 +10,7 @@ class Departamento extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'division_id', 'nombre', 'activo'
+        'division_id', 'nombre', 'url', 'logo'
     ];
 
     /**
