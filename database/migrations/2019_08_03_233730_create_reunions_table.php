@@ -15,16 +15,26 @@ class CreateReunionsTable extends Migration
     {
         Schema::create('reunions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('academia_id');
             $table->string('lugar');
-            $table->dateTimeTz('inicio');
-            $table->dateTimeTz('fin');
+            $table->timestamp('inicio')->useCurrent();
+            $table->timestamp('fin')->useCurrent();
             $table->string('orden_del_dia')->nullable();
             $table->string('minuta')->nullable();
+            $table->boolean('cancelada')->default(false);
             $table->timestamps();
+            
+            // Campos para llaves foráneas
+            $table->unsignedBigInteger('academia_id');
 
+            //Índices 
+            $table->index('cancelada');
             $table->index('academia_id');
-            $table->foreign('academia_id')->references('id')->on('academias');
+
+            // Constraints de foreign key
+            $table->foreign('academia_id')
+                    ->references('id')
+                    ->on('academias')
+                    ->onDelete('cascade');
         });
     }
 
