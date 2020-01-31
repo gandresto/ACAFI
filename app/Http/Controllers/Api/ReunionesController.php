@@ -35,7 +35,7 @@ class ReunionesController extends Controller
     {
         $this->authorize('create', Reunion::class);
         $data = $this->obtenerDatosValidadosReunion($request);
-        $reunion = new Reunion;
+        $reunion = false;
         DB::transaction(function () use ($data, $reunion) {
             // ------ Guardo los datos de la reunión ------
             $data_reunion = [
@@ -68,22 +68,9 @@ class ReunionesController extends Controller
             $reunion->acuerdos()->sync($ids_acuerdos);
 
             // ------ Guardar el PDF ----------
-            $pdf = \PDF::loadView('reuniones.ordendeldia', $data);
-            $academia = Academia::find($data['academia_id']);
-            $fecha_str = mb_ereg_replace("([^\w\s\d\~,;\[\]\(\).])", '', $data['fechaInicio']);
-            $fecha_str = str_replace(' ', '_', $fecha_str);
-            $nombre_archivo = "Divisiones/{$academia->departamento->division->id}/";
-            $nombre_archivo .= "Departamentos/{$academia->departamento->id}/";
-            $nombre_archivo .= "Academias/{$academia->id}/od{$reunion->id}_{$fecha_str}.pdf";
-            
-            // ------- Actualizar el nombre del archivo -----------
-            $reunion->orden_del_dia = $nombre_archivo;
-            $reunion->save();
-
-            $content = $pdf->download()->getOriginalContent();
-            Storage::put($nombre_archivo, $content, 'private');
+            $reunion->crearPDFOrdenDelDia();
         });
-        return response($reunion, 200);
+        return $reunion ? response($reunion, 200) : response(['message' => 'Error al crear la reunión'], 500);
     }
 
     /**
@@ -122,11 +109,27 @@ class ReunionesController extends Controller
         //
     }
 
+    public function actualizarPDFOrdenDelDia(int $reunion_id)
+    {
+        // ------ Generar un nuevo documento pdf con datos existentes de la base de datos ----------
+        $reunion = Reunion::findOrFail($reunion_id);
+        $this->authorize('update', $reunion);
+
+        $archivos_actualizados = $reunion->crearPDFOrdenDelDia();
+        if($archivos_actualizados){
+            return response([
+                'message' => 'El archivo se actualizó exitosamente',
+                'data' => $archivos_actualizados,
+            ]);
+        } else return response(['message' => 'Error al crear la reunión'], 500);
+        
+    }
+
     public function crearPDFOrdenDelDia(Request $request)
     {
         $this->authorize('create', Reunion::class);
         $data = $this->obtenerDatosValidadosReunion($request);
-        $pdf = \PDF::loadView('reuniones.ordendeldia', $data);
+        $pdf = \PDF::loadView('reuniones.ordendeldia.vistaprevia', $data);
         return $pdf->download('orden_del_dia.pdf');
     }
 

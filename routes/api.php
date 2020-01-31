@@ -46,6 +46,8 @@ Route::post('/reuniones/crearPDFOrdenDelDia', 'Api\ReunionesController@crearPDFO
 Route::resource('/reuniones', 'Api\ReunionesController')->middleware('auth:api')->except([
     'create', 'edit'
 ]);
+// Route::get('/reuniones/{reunion_id}/actualizarPDFOrdenDelDia', 'Api\ReunionesController@actualizarPDFOrdenDelDia')->middleware('auth:api');
+
 
 // ---------- Rutas para grados
 Route::resource('/grados', 'Api\GradosController')->middleware('auth:api')->except([

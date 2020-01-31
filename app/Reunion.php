@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Reunion extends Model
 {
@@ -77,7 +78,7 @@ class Reunion extends Model
         ->withPivot('asistio');
     }
     
-    public function acuerdos()
+    public function acuerdosARevision()
     {
         return $this->belongsToMany(Acuerdo::class)
         ->as('seguimiento')
@@ -93,5 +94,30 @@ class Reunion extends Model
     {
         // Ya terminó la reunión y aún no se hacen minutas
         return ($this->fin < Carbon::now()) && ! $this->minuta;
+    }
+
+    public function crearPDFOrdenDelDia()
+    {
+        $pdf = \PDF::loadView('reuniones.ordendeldia', ['reunion' => $this]);
+        // Generar nombre del archivo a guardar
+        $fecha_str = $this->inicio->format('Ymd_His'); // Formato de fecha
+        $id_str = sprintf("%04d", $this->id); // Relleno con 4 ceros
+        $nombre_archivo = "Divisiones/{$this->academia->departamento->division->id}/";
+        $nombre_archivo .= "Departamentos/{$this->academia->departamento->id}/";
+        $nombre_archivo .= "Academias/{$this->academia->id}/od{$id_str}_{$fecha_str}.pdf";
+        
+        $archivo_antiguo = $this->orden_del_dia; // Guardo el nombre anterior
+        // dd($archivo_antiguo);
+        $this->orden_del_dia = $nombre_archivo; // Sustituyo el nombre
+        $content = $pdf->download()->getOriginalContent(); // Obtengo el contenido del archivo en memoria
+        if($archivo_antiguo && Storage::exists($archivo_antiguo)){
+            Storage::delete($archivo_antiguo); // Borramos el archivo anterior
+        }
+        Storage::put($nombre_archivo, $content, 'private'); // Guardo el nuevo archivo
+        $this->save();
+        return [
+            'borrado' => $archivo_antiguo,
+            'creado' => $nombre_archivo,
+        ];
     }
 }

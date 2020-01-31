@@ -1,3 +1,7 @@
+@php
+    $academia = App\Academia::find($academia_id);
+@endphp
+
 @extends('layouts.pdf')
 
 @section('nombre_archivo')
@@ -5,21 +9,21 @@
 @endsection
 
 @section('academia_division')
-    {{$reunion->academia->departamento->division->nombre}} <br>
-    <strong>Academia de {{$reunion->academia->nombre}}</strong><br>
+    {{$academia->departamento->division->nombre}} <br>
+    <strong>Academia de {{$academia->nombre}}</strong><br>
 @endsection
 
 @section('contenido_encabezado')
-    Reunión del {{$reunion->inicio->format('d/m/y')}} <br>
-    {{$reunion->lugar}}  <br>
-    Inicia: {{$reunion->inicio->format('h:i A')}}  <br>
-    Finaliza: {{$reunion->fin->format('h:i A')}}  <br>
+    Reunión del {{$fechaInicio->format('d/m/y')}} <br>
+    {{$lugar}}  <br>
+    Inicia: {{$fechaInicio->format('h:i A')}}  <br>
+    Finaliza: {{$fechaFin->format('h:i A')}}  <br>
 @endsection
 
 @section('contenido_documento')
 <div class="row">
     <div class="col-xs-12">
-        <p><strong>Presidente: </strong>{{$reunion->academia->presidente->gradoNombreCompleto}}</p>
+        <p><strong>Presidente: </strong>{{$academia->presidente->gradoNombreCompleto}}</p>
     </div>
 </div>
     <div class="row">
@@ -27,19 +31,19 @@
             <strong>Miembros convocados</strong>
             <div>
                 <p>
-                    @foreach ($reunion->convocados as $convocado)
-                        {{$convocado->gradoNombreCompleto}} <br>
+                    @foreach ($convocados as $convocado)
+                        {{"{$convocado['grado']} {$convocado['nombre']} {$convocado['apellido_paterno']} {$convocado['apellido_materno']}"}} <br>
                     @endforeach
                 </p>
             </div>
         </div>
         <div class="col-xs-6 col-md-6">
-            @if ($reunion->invitadosExternos)
+            @if ($invitados)
                 <strong>Invitados</strong>
                 <div>
                     <p>
-                        @foreach ($reunion->invitadosExternos as $invitado)
-                        {{$invitado->gradoNombreCompleto}}<br>
+                        @foreach ($invitados as $invitado)
+                        {{"{$invitado['grado']} {$invitado['nombre']} {$invitado['apellido_paterno']} {$invitado['apellido_materno']}"}}<br>
                         @endforeach
                     </p>
                 </div>
@@ -52,16 +56,16 @@
                 <p><strong>Orden del día:</strong></p>
             </div>
             <ol>
-                @foreach ($reunion->temas as $tema)
-                    <li>{{$tema->descripcion}}</li>
+                @foreach ($temas as $tema)
+                    <li>{{$tema['descripcion']}}</li>
                 @endforeach
 
-                @if ($reunion->acuerdosARevision)
+                @if ($acuerdosARevision)
                     <li>
                         Seguimiento a acuerdos
                         <ol style="margin-top:1.2mm">
-                            @foreach ($reunion->acuerdosARevision as $acuerdo)
-                            <li>{{$acuerdo->descripcion}}</li>
+                            @foreach ($acuerdosARevision as $acuerdo)
+                            <li>{{$acuerdo['descripcion']}}</li>
                             @endforeach
                         </ol>
                     </li>
