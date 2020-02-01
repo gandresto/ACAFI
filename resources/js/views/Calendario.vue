@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <!-- <div class="row justify-content-center"> -->
     <div class="row">
       <div class="col-xs-12 col-md-12">
@@ -70,6 +70,7 @@ export default {
 
   .vuecal__event{
     cursor: pointer;
+    color: #212529;
   }
 
   /* Colores del tema */

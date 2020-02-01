@@ -21,6 +21,8 @@
 </head>
 <body>
     <div id="app">
+        
+        {{-- -------------- --------- BARRA DE NAVEGACIÓN ---------------------------------- --}}
         <nav class="navbar navbar-expand-md navbar-dark bg-red shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -114,6 +116,7 @@
             </div>
         </nav>
 
+        {{-- -----------------------    CONTENIDO PRINCIPAL    ------------------- --}}
         <main class="py-4">
             <div class="container">
                 <div class="row justify-content-center">
@@ -125,7 +128,9 @@
                                 </h5>
                             </div>
                             <div class="card-body">
-                                @yield('content')
+                                <div class="container">
+                                    @yield('content')
+                                </div>
                             </div>
                         </div>
                     </div>

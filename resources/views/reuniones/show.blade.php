@@ -25,11 +25,11 @@
                     <tbody>
                         <tr>
                             <td scope="row">Inicio</td>
-                            <td>{{Carbon\Carbon::parse($reunion->inicio)->toDayDateTimeString()}}</td>
+                            <td>{{$reunion->inicio->format('d/m/Y h:i A')}}</td>
                         </tr>
                         <tr>
                             <td scope="row">Fin</td>
-                            <td>{{$reunion->fin}}</td>
+                            <td>{{$reunion->fin->format('d/m/Y h:i A')}}</td>
                         </tr>
                         <tr>
                             <td scope="row">Academia</td>
@@ -59,6 +59,17 @@
             <i class="fas fa-file-pdf"></i>
             <span class="ml-1">Minuta</span>
         </a>
+        @else
+
+        @can('update', $reunion)
+            @if ($reunion->minutaPendiente())
+            <a name="" id="crear-minuta-{{$reunion->id}}" class="btn btn-primary" href="{{route('reuniones.minuta.create', $reunion->id)}}" role="button">
+                <i class="fas fa-file"></i>
+                <span class="ml-1">Crear minuta</span>
+            </a>
+            @endif
+        @endcan
+
         @endif
     </div>
 </div>
@@ -126,11 +137,11 @@
                 <li>{{$tema->descripcion}}</li>
             @endforeach
 
-            @if ($reunion->acuerdos->isNotEmpty())
+            @if ($reunion->acuerdosARevision->isNotEmpty())
                 <li>
                     Seguimiento a acuerdos
                     <ol>
-                        @foreach ($reunion->acuerdos as $acuerdo)
+                        @foreach ($reunion->acuerdosARevision as $acuerdo)
                         <li>{{$acuerdo->descripcion}}</li>
                         @endforeach
                     </ol>
@@ -139,6 +150,7 @@
         </ol>
     </div>
 </div>
+
 @endsection
 {{-- @push('estilos')
 <style>

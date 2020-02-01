@@ -56,7 +56,7 @@
                     <li>{{$tema->descripcion}}</li>
                 @endforeach
 
-                @if ($reunion->acuerdosARevision)
+                @if ($reunion->acuerdosARevision->isNotEmpty())
                     <li>
                         Seguimiento a acuerdos
                         <ol style="margin-top:1.2mm">
