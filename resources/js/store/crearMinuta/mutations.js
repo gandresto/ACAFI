@@ -26,4 +26,7 @@ export default {
         acuerdo.uuid = uuidv4();
         state.nuevosAcuerdos.push(acuerdo);
     },
+    eliminarAcuerdoPorUUID(state, uuid){
+        state.nuevosAcuerdos = state.nuevosAcuerdos.filter(acuerdo => acuerdo.uuid != uuid); 
+    },
 };

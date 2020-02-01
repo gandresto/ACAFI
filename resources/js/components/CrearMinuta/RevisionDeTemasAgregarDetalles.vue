@@ -128,7 +128,7 @@
           <div class="card fondo-rojo-claro">
             <div class="card-header">
               <b>Acuerdo {{index+1}}</b>
-              <button type="button" class="close">×</button>
+              <button type="button" class="close" @click.prevent="quitarAcuerdoPorUUID(acuerdo.uuid)">×</button>
             </div>
             <div class="card-body">
               <h5 class="card-title">{{acuerdo.descripcion}}</h5>
@@ -178,8 +178,10 @@ export default {
   },
   methods: {
     // ...mapMutations(['colocarNuevoAcuerdo']),
-    ...mapActions(['ponerComentarioEnTema', 'ponerNuevoAcuerdo']),
+    ...mapActions(['ponerComentarioEnTema', 'ponerNuevoAcuerdo', 'quitarAcuerdoPorUUID']),
+
     obtenerNombreCompleto,
+
     actualizarComentario() {
       if (this.comentario.length >= 10 && this.comentario.length <= 500) {
         // console.log(this.temaId, this.comentario);
@@ -227,6 +229,7 @@ export default {
       }
       return resultado;
     },
+    // Función llamada al presionar alguna de las opciones del autocompletado
     procesarResponsable(responsable){
       this.nuevoAcuerdo.responsable = responsable;
     },
