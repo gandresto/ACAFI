@@ -20,11 +20,11 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
-const { mapGetters, mapActions } = createNamespacedHelpers('crearMinuta')
-// import { mapActions, mapGetters, mapMutations } from "vuex";
 import ESTADO_API from "../enum-estado-api";
 import {format, parseISO} from 'date-fns';
+
+import { createNamespacedHelpers } from 'vuex'
+const { mapGetters, mapActions } = createNamespacedHelpers('crearMinuta')
 import ListaDeAsistencia from '../components/CrearMinuta/ListaDeAsistencia.vue'
 import RevisionDeTemas from '../components/CrearMinuta/RevisionDeTemas.vue'
 
@@ -40,14 +40,11 @@ export default {
     }
   },
   mounted() {
-    // console.log(this.reunionResource);
-    // JSON.parseISO(this.reunionResource);
     this.ponerReunion(this.reunionResource);
     console.log();
   },
   methods: {
     ...mapActions(["ponerReunion"]),
-    // ...mapMutations(["colocarReunion"]),
   },
   computed: {
     ...mapGetters(["reunion"])

@@ -1,5 +1,7 @@
 <template>
   <div class="my-2">
+
+    <!-- ------ Formulario para agregar comentario ---------------  -->
     <b-form-group>
       <label :for="'textarea-comentario-'+temaId">Comentarios generales</label>
       <b-form-textarea
@@ -16,6 +18,7 @@
       <small class="text-muted form-text">{{comentario.length}}/500</small>
     </b-form-group>
 
+    <!-- ------ Checkbox para mostrar el formulario de acuerdos ---------------  -->
     <b-form-group>
       <b-form-checkbox v-model="generarAcuerdos" name="check-button" switch>
         <b>¿Se llegó a algún acuerdo referente a este tema?</b>
@@ -40,7 +43,7 @@
           <b-form-input 
             :id="'descripcion-txt-'+temaId" 
             :name="'descripcion-txt-'+temaId" 
-            v-model="descripcion"
+            v-model="nuevoAcuerdo.descripcion"
             trim
           ></b-form-input>
         </div>
@@ -79,7 +82,7 @@
           <b-form-input
             :id="'producto-esperado-txt'+temaId"
             :name="'producto-esperado-txt'+temaId"
-            v-model="productoEsperado"
+            v-model="nuevoAcuerdo.producto_esperado"
             trim
           ></b-form-input>
         </div>
@@ -96,7 +99,7 @@
           class="col-sm-12 col-md-6"
           type="date"
           :min-datetime="hoy"
-          v-model="fechaCompromiso"
+          v-model="nuevoAcuerdo.fecha_compromiso"
           :phrases="frases"
           input-class="form-control"
         >
@@ -114,13 +117,13 @@
     </div>
 
     <!-- ----------------- Lista de acuerdos generados ---------------  -->
-    <div v-if="generarAcuerdos" class="container-fluid py-2">
+    <div v-if="generarAcuerdos && listaDeAcuerdos" class="container-fluid py-2">
       <b-row>
       <!-- <transition-group name="tarjeta-acuerdo" tag="b-row"> -->
         <b-col 
           sm="6" md="4" lg="3"
           v-for="(acuerdo, index) in listaDeAcuerdos" 
-          :key="`tema-${temaId}-acuerdo-${index}`"
+          :key="acuerdo.uuid"
         >
           <div class="card fondo-rojo-claro">
             <div class="card-header">
@@ -131,7 +134,7 @@
               <h5 class="card-title">{{acuerdo.descripcion}}</h5>
               <p class="card-text"><b>Fecha comprimiso de resolución:</b> {{acuerdo.fecha_compromiso | fecha}}</p>
               <p class="card-text"><b>Resultado/producto esperado:</b> {{acuerdo.producto_esperado}}</p>
-              <p class="card-text"><b>Responsable:</b> {{acuerdo.responsable_id}}</p>
+              <p class="card-text"><b>Responsable:</b> {{acuerdo.responsable | nombreCompleto}}</p>
             </div>
           </div>
         </b-col>
@@ -142,14 +145,16 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
 import {format, parseISO} from 'date-fns';
+import { obtenerNombreCompleto } from '../../helpers';
+
+import { createNamespacedHelpers } from 'vuex'
 const { mapActions, mapGetters, mapMutations } = createNamespacedHelpers('crearMinuta')
 
 export default {
   props: ["temaId"],
   mounted() {
-    // console.log('Component mounted.')
+    // console.log()
   },
   data() {
     return {
@@ -157,20 +162,24 @@ export default {
       comentario: "",
       generarAcuerdos: false,
       mostrarBusqueda: true,
-      descripcion: "",
-      responsable: null,
-      productoEsperado: "",
-      fechaCompromiso: "",
       frases: {
         ok: "Aceptar",
         cancel: "Cancelar"
       },
+      nuevoAcuerdo: {
+        uuid: '',
+        tema_id: this.temaId,
+        responsable: null,
+        descripcion: '',
+        producto_esperado: '',
+        fecha_compromiso: null,
+      }
     };
   },
   methods: {
-    ...mapMutations(['colocarNuevoAcuerdo']),
-    ...mapActions(['ponerComentarioEnTema']),
-
+    // ...mapMutations(['colocarNuevoAcuerdo']),
+    ...mapActions(['ponerComentarioEnTema', 'ponerNuevoAcuerdo']),
+    obtenerNombreCompleto,
     actualizarComentario() {
       if (this.comentario.length >= 10 && this.comentario.length <= 500) {
         // console.log(this.temaId, this.comentario);
@@ -183,42 +192,43 @@ export default {
 
     // ------ Método para agregar acuerdo a la lista de acuerdos en el estado -----------
     agregarAcuerdo() {
-      this.colocarNuevoAcuerdo(this.acuerdo);
+      // this.nuevoAcuerdo.uuid = uuidv4();
+      let payload = { ...this.nuevoAcuerdo };
+      this.ponerNuevoAcuerdo(payload);
       // Limpiar formulario
-      this.descripcion = "";
-      this.responsable = null;
-      this.productoEsperado = "";
-      this.fechaCompromiso = "";
+      this.nuevoAcuerdo.uuid = '';
+      this.nuevoAcuerdo.descripcion = '';
+      this.nuevoAcuerdo.responsable = null;
+      this.nuevoAcuerdo.producto_esperado = '';
+      this.nuevoAcuerdo.fecha_compromiso = '';
+      // Un cambio entre mostrar limpia el formulario de búsqueda
       this.mostrarBusqueda = false;
       this.$nextTick(() => {
           this.mostrarBusqueda = true
       });
     },
-    
-    obtenerNombreCompleto(usuario) {
-      return usuario.id ? `${usuario.apellido_paterno} ${usuario.apellido_materno} ${usuario.nombre} ${usuario.grado}` : '';
-    },
 
     buscarResponsable(busqueda){
+      // Los responsables pueden ser convocados a la reunión o el mismo presidente de la academia
       let resultado = [this.reunion.academia.presidente, ...this.reunion.convocados];
       if(busqueda){
         busqueda = busqueda.toLowerCase()
-        // Busco el nombre del presidente
-        let resultadoPresidente = this.obtenerNombreCompleto(this.reunion.academia.presidente)
+        // Busco el nombre del presidente (paso todo a minúsculas)
+        let resultadoPresidente = obtenerNombreCompleto(this.reunion.academia.presidente)
                                       .toLowerCase()
                                       .includes(busqueda) 
                                       ? [this.reunion.academia.presidente] : [];
 
-        // Busco el nombre en los convocados
+        // Busco el nombre en los convocados (paso todo a minúsculas)
         let resultadoConvocados = this.reunion.convocados.filter(
-          convocado => this.obtenerNombreCompleto(convocado).toLowerCase().includes(busqueda)
+          convocado => obtenerNombreCompleto(convocado).toLowerCase().includes(busqueda)
         )
         resultado = [...resultadoPresidente, ...resultadoConvocados];
       }
       return resultado;
     },
     procesarResponsable(responsable){
-      this.responsable = responsable;
+      this.nuevoAcuerdo.responsable = responsable;
     },
     longitudDeCadenaValida(cadena){
       return cadena 
@@ -228,21 +238,12 @@ export default {
   },
   computed: {
     ...mapGetters(['reunion', 'nuevosAcuerdos']),
-    acuerdo(){
-      return {
-        tema_id: this.temaId,
-        responsable_id: this.responsable ? (this.responsable.id ? this.responsable.id : null) : null,
-        descripcion: this.descripcion,
-        producto_esperado: this.productoEsperado,
-        fecha_compromiso: this.fechaCompromiso,
-      };
-    },
     botonAgregarDeshabilitado(){
-      return !(this.acuerdo.tema_id 
-            && this.acuerdo.responsable_id
-            && this.longitudDeCadenaValida(this.acuerdo.descripcion)
-            && this.longitudDeCadenaValida(this.acuerdo.producto_esperado)
-            && this.acuerdo.fecha_compromiso);
+      return !(this.nuevoAcuerdo.tema_id 
+            && this.nuevoAcuerdo.responsable
+            && this.longitudDeCadenaValida(this.nuevoAcuerdo.descripcion)
+            && this.longitudDeCadenaValida(this.nuevoAcuerdo.producto_esperado)
+            && this.nuevoAcuerdo.fecha_compromiso);
     },
     listaDeAcuerdos(){
       return this.nuevosAcuerdos.filter(acuerdo => acuerdo.tema_id == this.temaId);
@@ -258,26 +259,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-// @import './../../../sass/variables';
-  // .tarjeta-acuerdo-item {
-  //   background-color: rgba(52, 207, 52, 0.164);
-  //   border-color: rgba(0, 189, 0, 0.12);
-  // }
-  // .tarjeta-acuerdo-enter-active, .tarjeta-acuerdo-leave-active {
-  //   transition: all 2s;
-  // }
-  // .tarjeta-acuerdo-enter {
-  //   // opacity: 0.5;
-  //   background-color: rgba(52, 207, 52, 0.466);
-  //   border-color: rgb(0, 189, 0);
-  // }
-  // .tarjeta-acuerdo-leave {
-  //   background-color: rgba(255, 30, 30, 0.562);
-  //   border-color: red;
-  // }
-  // .tarjeta-acuerdo-leave-to {
-  //   opacity: 0;
-  // }
-</style>

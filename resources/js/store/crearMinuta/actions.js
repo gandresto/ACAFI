@@ -1,6 +1,6 @@
-import axios from 'axios'
-import api from '../../services/api'
-import ESTADO_API from '../../enum-estado-api'
+// import axios from 'axios'
+// import api from '../../services/api'
+// import ESTADO_API from '../../enum-estado-api'
 
 export default {
     // leerReunionesDeUsuario({commit}, user){

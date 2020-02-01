@@ -19,7 +19,6 @@
 import { createNamespacedHelpers } from 'vuex'
 const { mapGetters, mapActions } = createNamespacedHelpers('crearMinuta')
 import AgregarDetalles from "./RevisionDeTemasAgregarDetalles.vue";
-// import GenerarAcuerdos from "./RevisionDeTemasGenerarAcuerdos.vue";
 
 export default {
   components:{

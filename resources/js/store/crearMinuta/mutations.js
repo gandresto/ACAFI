@@ -1,3 +1,5 @@
+import { uuidv4} from '../../helpers';
+
 export default {
     colocarAsistentes(state, asistentes){
         state.asistentes = asistentes;
@@ -21,6 +23,7 @@ export default {
         });
     },
     colocarNuevoAcuerdo(state, acuerdo){
+        acuerdo.uuid = uuidv4();
         state.nuevosAcuerdos.push(acuerdo);
     },
 };
