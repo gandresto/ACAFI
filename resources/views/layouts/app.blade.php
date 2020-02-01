@@ -11,13 +11,16 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-
+    @yield('page-scripts')
+    
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css">
-
+    
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @stack('page-styles')
+
 </head>
 <body>
     <div id="app">
@@ -160,6 +163,5 @@
             'authUserId' => Auth::user()->id ?? null,
         ]) !!};
      </script>
-     @stack('estilos')
 </body>
 </html>

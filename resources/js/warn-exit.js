@@ -1,0 +1,1 @@
+window.onbeforeunload = () => '¿Seguro que deseas abandonar la página, los cambios hechos se perderán?';
