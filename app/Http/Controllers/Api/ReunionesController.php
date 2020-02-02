@@ -35,8 +35,7 @@ class ReunionesController extends Controller
     {
         $this->authorize('create', Reunion::class);
         $data = $this->obtenerDatosValidadosReunion($request);
-        $reunion = false;
-        DB::transaction(function () use ($data, $reunion) {
+        return DB::transaction(function () use ($data) {
             // ------ Guardo los datos de la reunión ------
             $data_reunion = [
                 'academia_id' => $data['academia_id'],
@@ -65,12 +64,12 @@ class ReunionesController extends Controller
 
             // ------- Guardar acuerdos a seguimiento --------
             $ids_acuerdos = Arr::pluck($data['acuerdosARevision'], 'id');
-            $reunion->acuerdos()->sync($ids_acuerdos);
+            $reunion->acuerdosARevision()->sync($ids_acuerdos);
 
             // ------ Guardar el PDF ----------
             $reunion->crearPDFOrdenDelDia();
+            return $reunion ? response($reunion, 200) : response(['message' => 'Error al crear la reunión'], 500);
         });
-        return $reunion ? response($reunion, 200) : response(['message' => 'Error al crear la reunión'], 500);
     }
 
     /**
