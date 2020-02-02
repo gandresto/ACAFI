@@ -262,12 +262,15 @@ export default {
         })
         .catch(err => {
           this.estadoVistaPrevia = ESTADO_API.ERROR;
-          if (err.response && err.response.status == 422){
+          if (err.response){
             err.response.data.text().then(datosStr=>{
               let datosObj = JSON.parse(datosStr);
-              // console.log(datosObj);
-              this.colocarErroresDeValidacion(datosObj.errors);
-              this.hayErrorDeValidacion = true;
+              if(err.response.status == 422){
+                this.colocarErroresDeValidacion(datosObj.errors);
+                this.hayErrorDeValidacion = true;
+              } else {
+                console.log(datosObj);
+              }
             });
           } 
           else console.log(err);
