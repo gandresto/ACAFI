@@ -72,12 +72,13 @@ class EstructuraFITableSeeder extends Seeder
                                 $academia->miembros()->attach($miembros_rand); // Y los hacemos miembros
 
                                 // ------ Reuniones --------
-                                $this->command->getoutput()->writeln('<info>      Creando reuniones para academia ' . $academia->nombre . '... </info>');
+                                $this->command->getoutput()->writeln('<info>      Creando reuniones para la Academia de ' . $academia->nombre . '... </info>');
                                 $academia->reuniones()->saveMany(factory(App\Reunion::class, 3)->make()); // Creamos 3 reuniones para cada academia
                                 $academia->reuniones->each(function ($reunion) use ($users) {
                                     $reunion->temas()->saveMany(factory(App\Tema::class, 4)->make()); // Creamos 4 temas para cada reunión
                                     $reunion->convocados()->saveMany($reunion->academia->miembros); // Convocamos a todos los miembros a la reunion
                                     $reunion->invitadosExternos()->save($users->random()); // Convocamos a un usuario al azar como invitado externo
+                                    $reunion->crearPDFOrdenDelDia();
                                 });
                             }
                         );
