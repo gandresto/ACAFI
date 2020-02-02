@@ -73,7 +73,7 @@ class Academia extends Model
     {
         $reuniones_ids = $this->reuniones->pluck('id');
         $temas_reuniones_ids = Tema::whereIn('reunion_id', $reuniones_ids)->select('id');
-        return Acuerdo::finalizados()->whereIn('tema_id', $temas_reuniones_ids)->get();
+        return Acuerdo::pendientes()->whereIn('tema_id', $temas_reuniones_ids)->get();
     }
 
 }
