@@ -61,7 +61,7 @@ export default {
         commit('actualizarTema', tema);
     },
     leerAcuerdosPendientes({commit}, academia_id){
-        let uri = `${api.baseURL}/academias/${academia_id}/acuerdosPendientes`;
+        let uri = `${api.baseURL}/academias/${academia_id}/acuerdos?estadofin=pend`;
         // commit('colocarEstadoAcademiasPendientes', ESTADO_API.CARGANDO);
         axios
             .get(uri)
