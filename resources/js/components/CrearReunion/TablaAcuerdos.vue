@@ -41,6 +41,14 @@
             <span class="sr-only">No dar seguimiento</span>
           </template>
         </template>
+
+        <template v-slot:cell(fecha_compromiso)="{value}">
+          {{formatoFecha(value)}}
+        </template>
+
+        <template v-slot:cell(ultima_revision)="{value}">
+          {{value ? formatoFecha(value) : 'No se le ha dado seguimiento'}}
+        </template>
       </b-table>
     </b-form-group>
   </div>
@@ -48,6 +56,7 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
+import {formatoFecha} from '../../helpers';
 const { mapGetters, mapActions } = createNamespacedHelpers('crearReunion');
 export default {
   mounted() {
@@ -79,6 +88,7 @@ export default {
   },
   methods: {
     ...mapActions(["ponerAcuerdosARevision"]),
+    formatoFecha,
     alternarSeleccionarTodos(checked) {
       // console.log(checked);
       if (checked) this.$refs.tablaAcuerdos.selectAllRows();
