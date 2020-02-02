@@ -59,8 +59,8 @@ class UsersController extends Controller
                 'password' => 'required|string|min:6|confirmed',
                 'grado' => 'required|max:8|string',
                 'nombre' => 'required|max:50|string',
-                'apellido_pat' => 'required|max:50|string',
-                'apellido_mat' => 'required|max:50|string'
+                'apellido_paterno' => 'required|max:50|string',
+                'apellido_materno' => 'required|max:50|string'
             ]
         );
         #dd($data);
@@ -113,8 +113,8 @@ class UsersController extends Controller
         $data = request()->validate([
             'grado' => 'required|max:8|string',
             'nombre' => 'required|max:50|string',
-            'apellido_pat' => 'required|max:50|string',
-            'apellido_mat' => 'required|max:50|string',
+            'apellido_paterno' => 'required|max:50|string',
+            'apellido_materno' => 'required|max:50|string',
             'email' => 'required|string|email|max:50|unique:users,email,'.$user->id,
         ]);
 
@@ -122,8 +122,8 @@ class UsersController extends Controller
             [
                 'grado' => $data['grado'],
                 'nombre' => $data['nombre'],
-                'apellido_pat' =>  $data['apellido_pat'],
-                'apellido_mat' => $data['apellido_mat'],
+                'apellido_paterno' =>  $data['apellido_paterno'],
+                'apellido_materno' => $data['apellido_materno'],
                 'email' => $data['email'],
             ]
         );
@@ -156,13 +156,13 @@ class UsersController extends Controller
         $driver = config("database.connections.{$connection}.driver");
         if ($driver == 'sqlite') {
             $users = User::where("email", "like", "%". $consulta . "%")
-                                ->orWhereRaw("nombre || ' ' || apellido_pat || ' ' || apellido_mat like '%" . $consulta . "%' ")
+                                ->orWhereRaw("nombre || ' ' || apellido_paterno || ' ' || apellido_materno like '%" . $consulta . "%' ")
                                 ->orderBy('nombre', 'desc')
                                 ->limit(5)
                                 ->get();
         } else {
             $users = User::where("email", 'like', "%". $consulta . "%")
-                                ->orWhereRaw("concat(nombre, ' ', apellido_pat, ' ', apellido_mat) like '%" . $consulta . "%' ")
+                                ->orWhereRaw("concat(nombre, ' ', apellido_paterno, ' ', apellido_materno) like '%" . $consulta . "%' ")
                                 ->orderBy('nombre', 'desc')
                                 ->limit(5)
                                 ->get();

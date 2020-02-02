@@ -53,8 +53,8 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'grado_id' => 'required|max:8|string|exists:grados,id',
             'nombre' => 'required|max:50|string',
-            'apellido_pat' => 'required|max:50|string',
-            'apellido_mat' => 'required|max:50|string',
+            'apellido_paterno' => 'required|max:50|string',
+            'apellido_materno' => 'required|max:50|string',
             'email' => 'required|string|email|max:50|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -72,8 +72,8 @@ class RegisterController extends Controller
         $this->authorize('viewAny', Academico::class);
         $academico = new Academico;
         $academico->nombre = $data['nombre'];
-        $academico->apellido_pat = $data['apellido_pat'];
-        $academico->apellido_mat = $data['apellido_mat'];
+        $academico->apellido_paterno = $data['apellido_paterno'];
+        $academico->apellido_materno = $data['apellido_materno'];
         $academico->grado_id = $data['grado_id'];
         $academico->push();
 

@@ -53,8 +53,8 @@
                             <th scope="row">{{$user->id}}</td>
                             <td>{{$user->grado}}</td>
                             <td>{{$user->nombre}}</td>
-                            <td>{{$user->apellido_pat}}</td>
-                            <td>{{$user->apellido_mat}}</td>
+                            <td>{{$user->apellido_paterno}}</td>
+                            <td>{{$user->apellido_materno}}</td>
                             <td>{{$user->email}}</td>
                             <td>
                                 <form action="{{ route('users.destroy',$user->id) }}" method="POST">

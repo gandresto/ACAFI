@@ -19,8 +19,8 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'grado' =>  $this->grado,
             'nombre' =>  $this->nombre,
-            'apellido_paterno' =>  $this->apellido_pat,
-            'apellido_materno' =>  $this->apellido_mat,
+            'apellido_paterno' =>  $this->apellido_paterno,
+            'apellido_materno' =>  $this->apellido_materno,
             'email' =>  $this->email,
             // 'api_token' => $this->when(Auth::user()->esAdmin, $this->api_token),
             'info_miembro' => $this->whenPivotLoaded('academia_miembro', function () {

@@ -18,8 +18,8 @@ class UsersTableSeeder extends Seeder
             $user = App\User::create([
                 'grado' => $faker->randomElement(array('Ing.', 'Dr.', 'M.I.')),
                 'nombre' => $faker->firstName,
-                'apellido_pat' => $faker->lastName,
-                'apellido_mat' => $faker->lastName,
+                'apellido_paterno' => $faker->lastName,
+                'apellido_materno' => $faker->lastName,
                 'email' => $faker->unique()->safeEmail,
                 'password' => $password,
                 'remember_token' => Str::random(10),

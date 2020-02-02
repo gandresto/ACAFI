@@ -46,12 +46,12 @@
         </div>
 
         <div class="form-group row">
-            <label for="apellido_pat" class="col-md-4 control-label text-md-right">Apellido Paterno</label>
+            <label for="apellido_paterno" class="col-md-4 control-label text-md-right">Apellido Paterno</label>
 
             <div class="col-md-6">
-                <input id="apellido_pat" type="text" class="form-control @error('apellido_pat') is-invalid @enderror" name="apellido_pat" value="{{ $user->apellido_pat }}" required>
+                <input id="apellido_paterno" type="text" class="form-control @error('apellido_paterno') is-invalid @enderror" name="apellido_paterno" value="{{ $user->apellido_paterno }}" required>
 
-                @error('apellido_pat')
+                @error('apellido_paterno')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -60,12 +60,12 @@
         </div>
 
         <div class="form-group row">
-            <label for="apellido_mat" class="col-md-4 control-label text-md-right">Apellido Materno</label>
+            <label for="apellido_materno" class="col-md-4 control-label text-md-right">Apellido Materno</label>
 
             <div class="col-md-6">
-                <input id="apellido_mat" type="text" class="form-control @error('apellido_mat') is-invalid @enderror" name="apellido_mat" value="{{  $user->apellido_mat }}" required>
+                <input id="apellido_materno" type="text" class="form-control @error('apellido_materno') is-invalid @enderror" name="apellido_materno" value="{{  $user->apellido_materno }}" required>
 
-                @error('apellido_mat')
+                @error('apellido_materno')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>

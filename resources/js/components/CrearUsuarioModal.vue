@@ -73,38 +73,38 @@
 
           <!-- ------------- Apellido Paterno ---------------- -->
           <div class="form-group row">
-            <label for="apellido_pat" class="col-md-4 control-label text-md-right">Apellido Paterno</label>
+            <label for="apellido_paterno" class="col-md-4 control-label text-md-right">Apellido Paterno</label>
             <div class="col-md-6">
               <input
-                id="apellido_pat"
+                id="apellido_paterno"
                 type="text"
-                :class="claseValidacion('apellido_pat')"
-                name="apellido_pat"
-                v-model="form.apellido_pat"
+                :class="claseValidacion('apellido_paterno')"
+                name="apellido_paterno"
+                v-model="form.apellido_paterno"
                 value
                 required
               />
-              <span v-if="tieneError('apellido_pat')" class="invalid-feedback" role="alert">
-                <strong>{{erroresDeValidacion.apellido_pat[0]}}</strong>
+              <span v-if="tieneError('apellido_paterno')" class="invalid-feedback" role="alert">
+                <strong>{{erroresDeValidacion.apellido_paterno[0]}}</strong>
               </span>
             </div>
           </div>
 
           <!-- ------------- Apellido Materno ---------------- -->
           <div class="form-group row">
-            <label for="apellido_mat" class="col-md-4 control-label text-md-right">Apellido Materno</label>
+            <label for="apellido_materno" class="col-md-4 control-label text-md-right">Apellido Materno</label>
             <div class="col-md-6">
               <input
-                id="apellido_mat"
+                id="apellido_materno"
                 type="text"
-                :class="claseValidacion('apellido_mat')"
-                name="apellido_mat"
-                v-model="form.apellido_mat"
+                :class="claseValidacion('apellido_materno')"
+                name="apellido_materno"
+                v-model="form.apellido_materno"
                 value
                 required
               />
-              <span v-if="tieneError('apellido_mat')" class="invalid-feedback" role="alert">
-                <strong>{{erroresDeValidacion.apellido_mat[0]}}</strong>
+              <span v-if="tieneError('apellido_materno')" class="invalid-feedback" role="alert">
+                <strong>{{erroresDeValidacion.apellido_materno[0]}}</strong>
               </span>
             </div>
           </div>
@@ -207,8 +207,8 @@ export default {
       erroresDeValidacion: {
         grado: "",
         nombre: "",
-        apellido_pat: "",
-        apellido_mat: "",
+        apellido_paterno: "",
+        apellido_materno: "",
         email: "",
         password: "",
       },
@@ -217,8 +217,8 @@ export default {
       form: {
         grado: "",
         nombre: "",
-        apellido_pat: "",
-        apellido_mat: "",
+        apellido_paterno: "",
+        apellido_materno: "",
         email: "",
         password: "",
         password_confirmation: ""
@@ -267,8 +267,8 @@ export default {
       this.erroresDeValidacion = {
         grado: "",
         nombre: "",
-        apellido_pat: "",
-        apellido_mat: "",
+        apellido_paterno: "",
+        apellido_materno: "",
         email: "",
         password: "",
       },
@@ -282,8 +282,8 @@ export default {
           this.form = {
             grado: "",
             nombre: "",
-            apellido_pat: "",
-            apellido_mat: "",
+            apellido_paterno: "",
+            apellido_materno: "",
             email: "",
             password: "",
             password_confirmation: ""

@@ -38,8 +38,8 @@ class UserController extends Controller
                 'password' => 'required|string|min:6|confirmed',
                 'grado' => 'required|max:8|string',
                 'nombre' => 'required|max:50|string',
-                'apellido_pat' => 'required|max:50|string',
-                'apellido_mat' => 'required|max:50|string'
+                'apellido_paterno' => 'required|max:50|string',
+                'apellido_materno' => 'required|max:50|string'
             ]
         );
         $user = User::create($data);
@@ -92,13 +92,13 @@ class UserController extends Controller
             $driver = config("database.connections.{$connection}.driver");
             if ($driver == 'sqlite') {
                 $users = User::where("email", "LIKE", "%". $consulta . "%")
-                                    ->orWhereRaw("nombre || ' ' || apellido_pat || ' ' || apellido_mat LIKE '%" . $consulta . "%' ")
+                                    ->orWhereRaw("nombre || ' ' || apellido_paterno || ' ' || apellido_materno LIKE '%" . $consulta . "%' ")
                                     ->orderBy('nombre', 'desc')
                                     ->limit(5)
                                     ->get();
             } else {
                 $users = User::where("email", 'LIKE', "%". $consulta . "%")
-                                    ->orWhereRaw("CONCAT(nombre, ' ', apellido_pat, ' ', apellido_mat) LIKE '%" . $consulta . "%' ")
+                                    ->orWhereRaw("CONCAT(nombre, ' ', apellido_paterno, ' ', apellido_materno) LIKE '%" . $consulta . "%' ")
                                     ->orderBy('nombre', 'desc')
                                     ->limit(5)
                                     ->get();

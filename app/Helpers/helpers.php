@@ -24,8 +24,8 @@ function normaliza($cadena){
 
 function nombre_completo($usuario, $ordenarPor='nombre', $con_grado=false){
     $grado = $con_grado ? $usuario->grado : "";
-    return $ordenarPor == 'apellido' ? "{$usuario->apellido_pat} {$usuario->apellido_mat} {$usuario->nombre} {$grado}"
-                              : "{$grado} {$usuario->nombre} {$usuario->apellido_pat} {$usuario->apellido_mat}";
+    return $ordenarPor == 'apellido' ? "{$usuario->apellido_paterno} {$usuario->apellido_materno} {$usuario->nombre} {$grado}"
+                              : "{$grado} {$usuario->nombre} {$usuario->apellido_paterno} {$usuario->apellido_materno}";
 }
 
 function es_verdadero($valor)

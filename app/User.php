@@ -18,7 +18,7 @@ class User extends Authenticatable
     protected $fillable = [
         'email', 'password',
         'grado', 'nombre',
-        'apellido_pat', 'apellido_mat'
+        'apellido_paterno', 'apellido_materno'
     ];
 
     /**
@@ -59,12 +59,12 @@ class User extends Authenticatable
 
     public function getNombreCompletoAttribute()
     {
-        return "{$this->nombre} {$this->apellido_pat} {$this->apellido_mat}";
+        return "{$this->nombre} {$this->apellido_paterno} {$this->apellido_materno}";
     }
 
     public function getGradoNombreCompletoAttribute()
     {
-        return "{$this->grado} {$this->nombre} {$this->apellido_pat} {$this->apellido_mat}";
+        return "{$this->grado} {$this->nombre} {$this->apellido_paterno} {$this->apellido_materno}";
     }
 
     /* --------  Relaciones con tablas de jerarquía de la FI --------------- */

@@ -22,7 +22,7 @@
                                 :value="[user.id]" 
                                 required
                                 :checked="index==0">
-                            {{ user.grado + ' ' + user.nombre + ' ' + user.apellido_pat + ' ' + user.apellido_mat}}
+                            {{ user.grado + ' ' + user.nombre + ' ' + user.apellido_paterno + ' ' + user.apellido_materno}}
                     </label>
                 </div>
 
