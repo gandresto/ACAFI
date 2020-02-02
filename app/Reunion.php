@@ -96,6 +96,11 @@ class Reunion extends Model
         return ($this->fin < Carbon::now()) && ! $this->minuta;
     }
 
+    /**
+     * Crea un nuevo pdf de orden del día con la información actual de la reunión
+     * 
+     * @return array
+     */
     public function crearPDFOrdenDelDia()
     {
         $pdf = \PDF::loadView('reuniones.ordendeldia', ['reunion' => $this]);

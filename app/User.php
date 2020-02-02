@@ -30,7 +30,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-        /**
+    /**
      * The attributes that should be cast to native types.
      *
      * @var array
@@ -39,29 +39,56 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Genera un api_token único y guarda al usuario.
+     *
+     * @return bool
+     */
     public function rollApiKey(){
         do{
            $this->api_token = str_random(80);
         }while($this->where('api_token', $this->api_token)->exists());
         $this->save();
-     }
+        return true;
+    }
 
+    /**
+     * Retorna true si el usuario es miembro actual de la $academia dada.
+     *
+     * @param App\Academia $academia
+     * @return bool
+     */
     public function esMiembroActual(Academia $academia)
     {
         if ($academia->miembrosActuales->isEmpty()) return false;
         return $academia->miembrosActuales->contains($this); // Checa si hay registros donde el miembro siga activo
     }
 
+    /**
+     * Retorna true si el usuario es administrador del sistema.
+     *
+     * @return bool
+     */
     public function getEsAdminAttribute()
     {
         return $this->email == config('admin.email');
     }
 
+    /**
+     * Retorna el nombre completo (iniciando por nombre) del usuario.
+     *
+     * @return string
+     */
     public function getNombreCompletoAttribute()
     {
         return "{$this->nombre} {$this->apellido_paterno} {$this->apellido_materno}";
     }
 
+    /**
+     * Retorna el nombre completo (iniciando por nombre) con grado académico del usuario.
+     *
+     * @return string
+     */
     public function getGradoNombreCompletoAttribute()
     {
         return "{$this->grado} {$this->nombre} {$this->apellido_paterno} {$this->apellido_materno}";
