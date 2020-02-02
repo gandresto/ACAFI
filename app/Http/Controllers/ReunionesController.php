@@ -18,7 +18,7 @@ class ReunionesController extends Controller
     {
         $user = Auth::user();
         // dd($request->query('minuta'));
-        $quieroMinuta = esVerdadero($request->query('minuta'));
+        $quieroMinuta = es_verdadero($request->query('minuta'));
         $antesde = $request->query('antesde') ? Carbon::parse($request->query('antesde')) : null;
         $despuesde = $request->query('despuesde') ? Carbon::parse($request->query('despuesde')) : null;
 
