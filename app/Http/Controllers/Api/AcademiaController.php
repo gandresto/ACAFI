@@ -68,8 +68,4 @@ class AcademiaController extends Controller
     {
         //
     }
-
-    public function acuerdosPendientes(int $academia_id){
-        return AcuerdoPendienteResource::collection(Academia::findOrFail($academia_id)->acuerdosPendientes);
-    }
 }
