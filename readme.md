@@ -32,11 +32,15 @@ Agenda para las academias de la FI. Hecho sobre el framework de Laravel 5.8 con 
 
     ```$ php artisan key:generate```
 
-5. Correr las migraciones con el comando: 
+5. Generar la caché de los archivos de configuración con el comando:
+
+    ```$ php artisan config:cache```
+
+6. Correr las migraciones con el comando: 
 
     ```$ php artisan migrate```
     
-6. ¡Listo!
+7. ¡Listo!
 
 <!-- ## Manual de usuario -->
 
