@@ -1,0 +1,51 @@
+@page {
+  size: letter;
+  margin-top: 1in;
+  margin-bottom: 1.5in;
+  margin-left: 1in;
+  margin-right: 1in;
+}
+
+#header {
+  height: 175px;
+  margin-bottom: 1cm;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mx-auto {
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+.row {
+  margin-top: 2mm;
+  margin-bottom: 2mm;
+}
+
+footer {
+  position: fixed;
+  bottom: -1.5in;
+  left: 0px;
+  right: 0px;
+  height: 0.5in;
+  font-size: 9pt;
+}
+
+#marca-de-agua {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  height: 5.5in;
+  z-index: 1000;
+}
+
+#marca-de-agua .text-center {
+  transform: rotate(-45deg);
+  color: rgba(0, 0, 0, 0.3);
+  font-size: 65pt;
+  font-weight: 600;
+}
+
