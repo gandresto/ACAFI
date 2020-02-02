@@ -117,7 +117,7 @@ class DivisionDepartamentoController extends Controller
         $this->authorize('delete', $departamento);
         //dd('Removiendo departamento '. $departamento_id);
         if ($departamento->academias->isEmpty()){
-            $departamento->delete();
+            $departamento->forceDelete();
             return redirect()->route('divisions.show', $division_id)
                         ->with('success', 'División eliminada.');
         } else{

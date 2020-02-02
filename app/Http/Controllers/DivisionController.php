@@ -91,7 +91,7 @@ class DivisionController extends Controller
         $this->authorize('delete', $division);
 
         if ($division->departamentos->isEmpty()){
-            $division->delete();
+            $division->forceDelete();
             return redirect()->route('divisions.index')
                         ->with('success', 'División eliminada.');
         } else{

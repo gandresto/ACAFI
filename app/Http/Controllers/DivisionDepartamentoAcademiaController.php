@@ -118,7 +118,7 @@ class DivisionDepartamentoAcademiaController extends Controller
         $this->authorize('delete', $academia);
 
         if ($academia->miembros->isEmpty()){
-            $academia->delete();
+            $academia->forceDelete();
             return redirect()->route('divisions.departamentos.show', compact('division_id', 'departamento_id'))
                         ->with('success', 'Academia eliminada.');
         } else{
