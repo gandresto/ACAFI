@@ -20,6 +20,10 @@
     Finaliza: {{$fechaFin->format('h:i A')}}  <br>
 @endsection
 
+@section('marca-de-agua')
+    <div class="text-center">VISTA PREVIA</div>
+@endsection
+
 @section('contenido_documento')
 <div class="row">
     <div class="col-xs-12">
@@ -74,4 +78,3 @@
         </div>
     </div>
 @endsection
-

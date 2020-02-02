@@ -68,6 +68,18 @@
                 @endif
             </ol>
         </div>
+        {{-- <p style="page-break-after: always;">
+            Content Page 1
+        </p>
+        <p style="page-break-after: never;">
+            Content Page 2
+        </p> --}}
     </div>
+@endsection
+
+@section('footer-content')
+<div class="text-center">
+    Última actualización {{$reunion->updated_at->format('d/m/y h:i A')}}
+</div>    
 @endsection
 

@@ -129,7 +129,7 @@ class ReunionesController extends Controller
     {
         $this->authorize('create', Reunion::class);
         $data = $this->obtenerDatosValidadosReunion($request);
-        $pdf = \PDF::loadView('reuniones.ordendeldia.vistaprevia', $data);
+        $pdf = \PDF::loadView('reuniones.ordendeldia-vistaprevia', $data);
         return $pdf->download('orden_del_dia.pdf');
     }
 

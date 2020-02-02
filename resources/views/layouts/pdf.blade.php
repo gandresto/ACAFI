@@ -2,10 +2,17 @@
 <html lang="es">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-grid-only@1.0.0/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <title>@yield('nombre_archivo')</title>
+    <link href="css/pdf.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-grid-only@1.0.0/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 </head>
 <body>
+    <div id="marca-de-agua">
+        @yield('marca-de-agua')
+    </div>
+    <footer>
+        @yield('footer-content')
+    </footer>
     <div class="container">
         <div id="header" class="row">
             <div class="logo col-xs-2 col-md-2 text-center">
@@ -30,25 +37,4 @@
         @yield('contenido_documento')
     </div>
 </body>
-<style>
-    @page { 
-        size: letter;
-        margin: 1in;
-    }
-    #header{
-        height: 175px;
-        margin-bottom: 1cm; 
-    }
-    .text-center{
-        text-align: center;
-    }
-    .mx-auto {
-        margin-right: auto !important;
-        margin-left: auto !important;
-    }
-    .row{
-        margin-top: 2mm;
-        margin-bottom: 2mm;
-    }
-</style>
 </html>
