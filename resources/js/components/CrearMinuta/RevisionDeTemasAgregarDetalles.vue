@@ -1,23 +1,5 @@
 <template>
   <div class="my-2">
-
-    <!-- ------ Formulario para agregar comentario ---------------  -->
-    <b-form-group>
-      <label :for="'textarea-comentario-'+temaId">Comentarios generales</label>
-      <b-form-textarea
-        :id="'textarea-comentario-'+temaId"
-        :name="'textarea-comentario-'+temaId"
-        debounce="600"
-        v-model="comentario"
-        :state="comentario.length >= 10 && comentario.length <= 500"
-        placeholder="Descripción breve de lo hablado en la reunión acerca de este tema..."
-        @change="actualizarComentario()"
-        rows="3"
-        trim
-      ></b-form-textarea>
-      <small class="text-muted form-text">{{comentario.length}}/500</small>
-    </b-form-group>
-
     <!-- ------ Checkbox para mostrar el formulario de acuerdos ---------------  -->
     <b-form-group>
       <b-form-checkbox v-model="generarAcuerdos" name="check-button" switch>
@@ -141,6 +123,28 @@
       </b-row>
       <!-- </transition-group> -->
     </div>
+
+    <!-- ------ Formulario para agregar comentario ---------------  -->
+    <b-form-group>
+      <label :for="'textarea-comentario-'+temaId">Comentarios generales</label>
+      <b-form-textarea
+        :id="'textarea-comentario-'+temaId"
+        :name="'textarea-comentario-'+temaId"
+        debounce="600"
+        v-model="comentario"
+        :state="comentario.length >= 10 && comentario.length <= 500"
+        placeholder="Descripción breve de lo hablado en la reunión acerca de este tema..."
+        @change="actualizarComentario()"
+        rows="3"
+        trim
+      ></b-form-textarea>
+      <small class="text-muted form-text">{{comentario.length}}/500</small>
+    </b-form-group>
+    
+    <!-- <b-modal id="modal-crear-usuario" hide-footer size="lg" title="Crear usuario">
+      <div class="d-block">
+      </div>
+    </b-modal> -->
   </div>
 </template>
 

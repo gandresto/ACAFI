@@ -15,6 +15,8 @@
       <div class="col-sm-12" v-if="reunion.temas">
         <revision-de-temas></revision-de-temas>
       </div>
+
+      
     </div>
   </div>
 </template>
