@@ -298,6 +298,7 @@ export default {
         .then(data => {
           // console.log(data);
           this.estadoCreacionReunion = ESTADO_API.LISTO;
+          window.onbeforeunload = null;
           alert('Reunión creada satisfactoriamente');
           window.location = process.env.MIX_APP_URL+'/reuniones';
         })
@@ -308,11 +309,11 @@ export default {
              * The request was made and the server responded with a
              * status code that falls out of the range of 2xx
              */
-            if(err.response.status = 422){
-              this.colocarErroresDeValidacion(err.response.data.errors);
+            if(error.response.status = 422){
+              this.colocarErroresDeValidacion(error.response.data.errors);
               this.hayErrorDeValidacion = true;
             }
-            else this.error = err.message;
+            else this.error = error.message;
             console.log(error.response.data);
             // console.log(error.response.status);
             // console.log(error.response.headers);
