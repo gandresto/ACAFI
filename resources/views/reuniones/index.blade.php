@@ -107,14 +107,14 @@
                 <p class="card-text">Lugar: {{$reunion->lugar}} </p>
                 <p class="card-text">Academia: {{$reunion->academia->nombre}}</p>
                 <p class="card-text">
-                    <a name="" id="ver-reunion-{{$reunion->id}}" class="btn btn-success" href="{{route('reuniones.show', $reunion->id)}}" role="button">
+                    <a name="ver-reunion-{{$reunion->id}}" id="ver-reunion-{{$reunion->id}}" class="btn btn-success" href="{{route('reuniones.show', $reunion->id)}}" role="button">
                         <i class="fa fa-calendar" aria-hidden="true"></i>
                         <span class="ml-1">Ver detalles</span>
                     </a>
                 </p>
                 @if ($reunion->orden_del_dia)
                 <p class="card-text">
-                    <a name="" id="descargar-od-{{$reunion->id}}" class="btn btn-danger" href="{{route('reuniones.ordendeldia.descargar', $reunion->id)}}" role="button" target="__blank">
+                    <a name="descargar-od-{{$reunion->id}}" id="descargar-od-{{$reunion->id}}" class="btn btn-danger" href="{{route('reuniones.ordendeldia.descargar', $reunion->id)}}" role="button" target="__blank">
                         <i class="fas fa-file-pdf"></i>
                         <span class="ml-1">Orden del Día</span>
                     </a>
@@ -123,19 +123,21 @@
 
                 {{-- Condiciones para botones de minuta --}}
                 @if ($reunion->minuta)
-                    <a name="" id="descargar-minuta-{{$reunion->id}}" class="btn btn-danger" href="#" role="button" target="__blank">
+                    <a name="descargar-minuta-{{$reunion->id}}" id="descargar-minuta-{{$reunion->id}}" class="btn btn-danger" href="#" role="button" target="__blank">
                         <i class="fas fa-file-pdf"></i>
                         <span class="ml-1">Minuta</span>
                     </a>
                 @else
-                    @if ($reunion->minutaPendiente())
-                        <p class="card-text">
-                            <a name="" id="crear-minuta-{{$reunion->id}}" class="btn btn-primary" href="{{route('reuniones.minuta.create', $reunion->id)}}" role="button">
-                                <i class="fas fa-file"></i>
-                                <span class="ml-1">Crear minuta</span>
-                            </a>
-                        </p>
-                    @endif
+                    @can('update', $reunion)
+                        @if ($reunion->minutaPendiente())
+                            <p class="card-text">
+                                <a name="crear-minuta-{{$reunion->id}}" id="crear-minuta-{{$reunion->id}}" class="btn btn-primary" href="{{route('reuniones.minuta.create', $reunion->id)}}" role="button">
+                                    <i class="fas fa-file"></i>
+                                    <span class="ml-1">Crear minuta</span>
+                                </a>
+                            </p>
+                        @endif
+                    @endcan
                 @endif
             </div>
         </div>

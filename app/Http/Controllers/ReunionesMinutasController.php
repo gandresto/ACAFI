@@ -15,6 +15,7 @@ class ReunionesMinutasController extends Controller
     public function create(Request $request, int $reunion_id)
     {
         $reunion = Reunion::findOrFail($reunion_id);
+        $this->authorize('update', $reunion);
         return view('reuniones.minuta.create', compact('reunion'));
     }
 }
