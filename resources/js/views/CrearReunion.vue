@@ -45,42 +45,41 @@
     </div>
     <!-- ----------- Formulario para crear la reunión (desplegable al seleccionar academia) --------- -->
     <b-form v-if="academiaSeleccionada && estadoAcademia == estadoApi.LISTO" @submit="submitForm">
-      <!-- ----------- Fecha y hora de inicio --------- -->
       <b-row>
-        <v-datetime
-          class="form-group col-md-12"
-          input-id="fecha-inicio-input"
-          type="datetime"
-          :min-datetime="limiteInferiorFecha"
-          v-model="fechaInicio"
-          :phrases="frases"
-          required="true"
-          :input-class="claseValidacion('fechaInicio')"
-        >
-          <label for="fecha-inicio-input" slot="before">Fecha y hora de inicio *</label>
-          <span v-if="tieneError('fechaInicio')" class="invalid-feedback" role="alert" slot="after">
-            <strong>{{erroresDeValidacion.fechaInicio[0]}}</strong>
-          </span>
-        </v-datetime>
-      </b-row>
+        <!-- ----------- Fecha y hora de inicio --------- -->
+        <div class="col-sm-12 col-md-6">
+          <div class="form-group">
+            <label for="fecha-inicio">Fecha y hora de inicio *</label>
+            <date-picker 
+              id="fecha-inicio"
+              name="fecha-inicio" 
+              :class="claseValidacion('fechaInicio')"
+              required="true"
+              v-model="fechaInicio" :config="optionsPickerInicio"
+              @dp-change="horaInicioCambio"
+            >
+            </date-picker>
+            <span v-if="tieneError('fechaInicio')" class="invalid-feedback" role="alert">
+              <strong>{{erroresDeValidacion.fechaInicio[0]}}</strong>
+            </span>
+          </div>
+        </div>
 
-      <!-- ----------- Fecha y hora de fin --------- -->
-      <b-row v-if="fechaInicio">
-        <v-datetime
-          class="form-group col-md-12"
-          input-id="fecha-fin-input"
-          type="datetime"
-          :min-datetime="fechaInicio"
-          v-model="fechaFin"
-          :phrases="frases"
-          required="true"
-          :input-class="claseValidacion('fechaFin')"
-        >
-          <label for="fecha-fin-input" slot="before">Fecha y hora de finalizacion *</label>
-          <span v-if="tieneError('fechaFin')" class="invalid-feedback" role="alert" slot="after">
-            <strong>{{erroresDeValidacion.fechaFin[0]}}</strong>
-          </span>
-        </v-datetime>
+        <!-- ----------- Fecha y hora de fin --------- -->
+        <div class="col-sm-12 col-md-6" v-if="fechaInicio">
+          <div class="form-grou">
+            <label for="fecha-fin">Fecha y hora de finalización *</label>
+            <date-picker
+              id="fecha-fin"
+              name="fecha-fin" 
+              v-model="fechaFin" :config="optionsPickerFin"
+            >
+            </date-picker>
+            <span v-if="tieneError('fechaFin')" class="invalid-feedback" role="alert">
+              <strong>{{erroresDeValidacion.fechaFin[0]}}</strong>
+            </span>
+          </div>
+        </div>
       </b-row>
 
       <!-- ----------- Lugar --------- -->
@@ -169,6 +168,7 @@
 import ESTADO_API from "../enum-estado-api";
 import API from "../services/api";
 
+import {set} from 'vue';
 import { createNamespacedHelpers } from 'vuex';
 const { mapGetters, mapActions, mapMutations } = createNamespacedHelpers('crearReunion');
 
@@ -186,6 +186,25 @@ export default {
   },
   data() {
     return {
+      optionsPickerInicio: {
+        locale: "es",
+        daysOfWeekDisabled: [0],
+        disabledHours: [0, 1, 2, 3, 4, 5, 21, 22, 23, 24],
+        stepping: 15,
+        sideBySide: true,
+        showClose: true,
+        minDate: moment(),
+      },
+      optionsPickerFin: {
+        locale: "es",
+        daysOfWeekDisabled: [0],
+        disabledHours: [0, 1, 2, 3, 4, 5, 6, 22, 23, 24],
+        stepping: 15,
+        sideBySide: true,
+        showClose: true,
+        minDate: moment(),
+        maxDate: false,
+      },
       academiaSeleccionada: null,
       fechaInicio: null,
       fechaFin: null,
@@ -225,6 +244,12 @@ export default {
         this.leerAcademia(this.academiaSeleccionada);
         this.leerAcuerdosPendientes(this.academiaSeleccionada);
       }
+    },
+    horaInicioCambio({date}) { // date: fecha a la que cambió el evento
+      // console.log(date);
+      set(this, 'fechaFin', date.add(1, 'h'));
+      set(this.optionsPickerFin, 'minDate', date);      
+      // console.log(this.fin)
     },
     vistaPrevia(evt) {
       // evt.preventDefault();
