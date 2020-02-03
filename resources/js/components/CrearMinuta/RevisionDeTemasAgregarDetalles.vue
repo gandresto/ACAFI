@@ -76,16 +76,14 @@
           :for="'fecha-compromiso'+temaId"
           class="col-sm-12 col-md-3 col-form-label text-md-right"
         >Fecha compromiso de resolución</label>
-        <v-datetime
-          :input-id="'fecha-compromiso'+temaId"
-          class="col-sm-12 col-md-6"
-          type="date"
-          :min-datetime="hoy"
-          v-model="nuevoAcuerdo.fecha_compromiso"
-          :phrases="frases"
-          input-class="form-control"
-        >
-        </v-datetime>
+        <div class="col-sm-12 col-md-6">
+          <date-picker
+            :id="'fecha-compromiso'+temaId"
+            :name="'fecha-compromiso'+temaId"
+            v-model="nuevoAcuerdo.fecha_compromiso" :config="optionsDatePicker"
+          >
+          </date-picker>
+        </div>
       </div>
 
       <!-- Botón para agregar el acuerdo  -->
@@ -114,7 +112,7 @@
             </div>
             <div class="card-body">
               <h5 class="card-title">{{acuerdo.descripcion}}</h5>
-              <p class="card-text"><b>Fecha comprimiso de resolución:</b> {{acuerdo.fecha_compromiso | fecha}}</p>
+              <p class="card-text"><b>Fecha comprimiso de resolución:</b> {{acuerdo.fecha_compromiso}}</p>
               <p class="card-text"><b>Resultado/producto esperado:</b> {{acuerdo.producto_esperado}}</p>
               <p class="card-text"><b>Responsable:</b> {{acuerdo.responsable | nombreCompleto}}</p>
             </div>
@@ -162,14 +160,16 @@ export default {
   },
   data() {
     return {
-      hoy: (new Date()).toISOString(),
+      optionsDatePicker: {
+        locale: "es",
+        format: "DD/MM/YYYY",
+        daysOfWeekDisabled: [0],
+        // showClose: true,
+        minDate: moment(),
+      },
       comentario: "",
       generarAcuerdos: false,
       mostrarBusqueda: true,
-      frases: {
-        ok: "Aceptar",
-        cancel: "Cancelar"
-      },
       nuevoAcuerdo: {
         uuid: '',
         tema_id: this.temaId,
@@ -261,7 +261,7 @@ export default {
       return usuario.id ? `${usuario.apellido_paterno} ${usuario.apellido_materno} ${usuario.nombre} ${usuario.grado}` : '';
     },
     fecha: function (ISOstring) {
-      return format(parseISO(ISOstring), 'dd/MM/y');
+      return moment.parse(ISOstring, 'dd/MM/y');
     },
   },
 };

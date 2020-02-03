@@ -6,25 +6,19 @@
 
 require('./bootstrap');
 import 'vue-cal/dist/i18n/es.js';
-
-
 import Vue from 'vue';
 import VueAxios from 'vue-axios';
 import axios from 'axios';
-import BootstrapVue from 'bootstrap-vue';
 import store from './store/';
 
 // Importar modulos externos
-import { Datetime } from 'vue-datetime';
+import BootstrapVue from 'bootstrap-vue';
 import Autocomplete from '@trevoreyre/autocomplete-vue'
 import VueCal from 'vue-cal';
 import datePicker from 'vue-bootstrap-datetimepicker';
 
 Vue.use(VueAxios, axios);
 Vue.use(BootstrapVue);
-Vue.use(Autocomplete);
-Vue.use(VueCal);
-Vue.use(datePicker);
 
 // Configurar headers para Axios
 axios.defaults.headers.common = {
@@ -47,17 +41,6 @@ jQuery.extend(true, jQuery.fn.datetimepicker.defaults, {
         clear: 'fa fa-trash-alt',
         close: 'fa fa-times-circle'
     }
-    // icons: {
-    //     time: 'far fa-clock',
-    //     date: 'far fa-calendar',
-    //     up: 'fas fa-arrow-up',
-    //     down: 'fas fa-arrow-down',
-    //     previous: 'fas fa-chevron-left',
-    //     next: 'fas fa-chevron-right',
-    //     today: 'fas fa-calendar-check',
-    //     clear: 'far fa-trash-alt',
-    //     close: 'far fa-times-circle'
-    // }
 });
 
 /**
@@ -69,7 +52,8 @@ jQuery.extend(true, jQuery.fn.datetimepicker.defaults, {
  */
 
 // Componentes de dependencias
-Vue.component('v-datetime', Datetime);
+Vue.use(Autocomplete);
+Vue.use(datePicker);
 Vue.component('v-calendar', VueCal);
 
 // Componentes propios
@@ -77,7 +61,6 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('buscar-usuario', require('./components/BuscarUsuario.vue').default);
 Vue.component('buscar-division', require('./components/BuscarDivision.vue').default);
 Vue.component('editar-division', require('./components/EditarDivision.vue').default);
-Vue.component('modal', require('./components/PlantillaModal.vue').default);
 Vue.component('crear-usuario-modal', require('./components/CrearUsuarioModal.vue').default);
 Vue.component('aviso-error', require('./components/AvisoDeError.vue').default);
 
