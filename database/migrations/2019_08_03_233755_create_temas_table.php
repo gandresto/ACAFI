@@ -16,7 +16,7 @@ class CreateTemasTable extends Migration
         Schema::create('temas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('descripcion');
-            $table->string('comentario')->nullable();
+            $table->text('comentario')->nullable();
             $table->unsignedBigInteger('reunion_id');
             $table->timestamps();
 
