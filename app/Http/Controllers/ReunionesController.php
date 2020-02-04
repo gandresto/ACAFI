@@ -18,9 +18,9 @@ class ReunionesController extends Controller
     {
         $user = Auth::user();
         // dd($request->query('minuta'));
-        $quieroMinuta = es_verdadero($request->query('minuta'));
-        $antesde = $request->query('antesde') ? Carbon::parse($request->query('antesde')) : null;
-        $despuesde = $request->query('despuesde') ? Carbon::parse($request->query('despuesde')) : null;
+        $quieroMinuta = es_verdadero($request->input('minuta'));
+        $antesde = $request->input('antesde') ? Carbon::parse($request->input('antesde')) : null;
+        $despuesde = $request->input('despuesde') ? Carbon::parse($request->input('despuesde')) : null;
 
         $reuniones = $user->reuniones
                             ->sortBy('inicio')
@@ -32,9 +32,9 @@ class ReunionesController extends Controller
                             });
         return view('reuniones.index', [
             'reuniones' => $reuniones,
-            'minuta' => $request->query('minuta'),
-            'antesde' => $request->query('antesde'),
-            'despuesde' => $request->query('despuesde'),
+            'minuta' => $request->input('minuta'),
+            'antesde' => $request->input('antesde'),
+            'despuesde' => $request->input('despuesde'),
         ]);
     }
 
