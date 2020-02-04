@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\AvisoInvitacionReunion;
 use App\Reunion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -60,5 +61,13 @@ class ReunionesController extends Controller
                 . DIRECTORY_SEPARATOR
                 . $reunion->orden_del_dia
         );
+    }
+
+    public function emailPreview(int $id_reunion)
+    {
+        $reunion = Reunion::findOrFail($id_reunion);
+
+        return (new AvisoInvitacionReunion($reunion))
+                ->toMail($reunion->convocados()->first());
     }
 }
