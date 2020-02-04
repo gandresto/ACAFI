@@ -1,28 +1,39 @@
 <template>
-  <div class="container" v-if="reunion.id">
-    <div class="row">
+  <b-form v-if="reunion.id" @submit.prevent="enviarFormulario">
+    <div class="form-group row">
       <div class="col-sm-12 text-center">
         <h5>Academia de {{reunion.academia.nombre}}</h5>
         <h4>Minuta para la reunión del {{reunion.inicio | fecha}}</h4>
       </div>
-
-      <!--  ----------- Lista de asistencia -------------- -->
+    </div>
+    
+    <!--  ----------- Lista de asistencia -------------- -->
+    <div class="form-group row">
       <div class="col-sm-12" v-if="reunion.convocados">
         <lista-de-asistencia></lista-de-asistencia>
       </div>
-      
-      <!--  ----------- Revisión de temas existentes en reunión -------------- -->
+    </div>
+
+    <!--  ----------- Revisión de temas existentes en reunión -------------- -->
+    <div class="form-group row">
       <div class="col-sm-12" v-if="reunion.temas">
         <revision-de-temas></revision-de-temas>
       </div>
-
-      
     </div>
-  </div>
+
+    <!--  ----------- Revisión de temas existentes en reunión -------------- -->
+    <div class="form-group row">
+      <div class="col-sm-12 text-md-right">
+        <b-button type="submit" variant="primary">Crear Minuta</b-button>
+      </div>
+    </div>
+
+  </b-form>
 </template>
 
 <script>
 import ESTADO_API from "../enum-estado-api";
+import api from "../services/api";
 import {format, parseISO} from 'date-fns';
 
 import { createNamespacedHelpers } from 'vuex'
@@ -43,13 +54,35 @@ export default {
   },
   mounted() {
     this.ponerReunion(this.reunionResource);
-    console.log();
   },
   methods: {
     ...mapActions(["ponerReunion"]),
+    enviarFormulario(){
+      let asistentes_ids = this.asistentes ?
+                          this.asistentes.map(asistente => asistente.id) :
+                          [];
+      let data = JSON.stringify({
+        temas: this.reunion.temas,
+        asistentes_ids,
+      });
+      let url = `${api.baseURL}/reuniones/${this.reunion.id}/minuta`;
+      axios
+        .post(url, {data})
+        .then(data => data.data)
+        .then(data => {
+          console.log(data);
+        })
+        .catch(error => {
+          if(error.response){
+            console.log(error.response);
+          } else{
+            console.log(error);
+          }
+        })
+    },
   },
   computed: {
-    ...mapGetters(["reunion"])
+    ...mapGetters(['reunion', 'asistentes'])
   },
   filters: {
     fecha: function (ISOstring) {

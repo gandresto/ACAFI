@@ -2,7 +2,7 @@
   <div>
     <div class="small-title">Temas que se trataron en la reunión</div>
     <ol>
-      <li class="pt-3" v-for="tema in temas" :key="tema.id">
+      <li class="pt-3" v-for="tema in reunion.temas" :key="tema.id">
         {{tema.descripcion}}
         <br />
 
@@ -40,7 +40,7 @@ export default {
     
   },
   computed: {
-    ...mapGetters(['temas'])
+    ...mapGetters(['reunion'])
   }
 };
 </script>

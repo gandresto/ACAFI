@@ -31,7 +31,7 @@ export default {
     ponerNuevoAcuerdo({commit}, acuerdo){
         commit('colocarNuevoAcuerdo', acuerdo);
     },
-    quitarAcuerdoPorUUID({commit}, uuid){
-        commit('eliminarAcuerdoPorUUID', uuid);
+    quitarAcuerdo({commit}, {tema_id, uuid}){
+        commit('eliminarAcuerdo', {tema_id, uuid});
     },
 };

@@ -108,7 +108,7 @@
           <div class="card fondo-rojo-claro">
             <div class="card-header">
               <b>Acuerdo {{index+1}}</b>
-              <button type="button" class="close" @click.prevent="quitarAcuerdoPorUUID(acuerdo.uuid)">×</button>
+              <button type="button" class="close" @click.prevent="quitarAcuerdo(acuerdo)">×</button>
             </div>
             <div class="card-body">
               <h5 class="card-title">{{acuerdo.descripcion}}</h5>
@@ -182,12 +182,12 @@ export default {
   },
   methods: {
     // ...mapMutations(['colocarNuevoAcuerdo']),
-    ...mapActions(['ponerComentarioEnTema', 'ponerNuevoAcuerdo', 'quitarAcuerdoPorUUID']),
+    ...mapActions(['ponerComentarioEnTema', 'ponerNuevoAcuerdo', 'quitarAcuerdo']),
 
     obtenerNombreCompleto,
 
     actualizarComentario() {
-      if (this.comentario.length >= 10 && this.comentario.length <= 500) {
+      if (this.comentario.length >= 10) {
         // console.log(this.temaId, this.comentario);
         this.ponerComentarioEnTema({
           temaId: this.temaId,
@@ -244,7 +244,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['reunion', 'nuevosAcuerdos']),
+    ...mapGetters(['reunion']),
     botonAgregarDeshabilitado(){
       return !(this.nuevoAcuerdo.tema_id 
             && this.nuevoAcuerdo.responsable
@@ -253,7 +253,11 @@ export default {
             && this.nuevoAcuerdo.fecha_compromiso);
     },
     listaDeAcuerdos(){
-      return this.nuevosAcuerdos.filter(acuerdo => acuerdo.tema_id == this.temaId);
+      return this.reunion
+                  .temas
+                  .filter(tema => tema.id == this.temaId)[0]
+                  .acuerdos
+                  .filter(acuerdo => acuerdo.tema_id == this.temaId);
     }
   },
   filters:{

@@ -24,9 +24,19 @@ export default {
     },
     colocarNuevoAcuerdo(state, acuerdo){
         acuerdo.uuid = uuidv4();
-        state.nuevosAcuerdos.push(acuerdo);
+        state.reunion
+            .temas
+            .filter(tema => tema.id == acuerdo.tema_id)[0]
+            .acuerdos.push(acuerdo);
     },
-    eliminarAcuerdoPorUUID(state, uuid){
-        state.nuevosAcuerdos = state.nuevosAcuerdos.filter(acuerdo => acuerdo.uuid != uuid); 
+    eliminarAcuerdo(state, {tema_id, uuid}){
+        state.reunion
+            .temas
+            .filter(tema => tema.id == tema_id)[0]
+            .acuerdos = state.reunion
+                            .temas
+                            .filter(tema => tema.id == tema_id)[0]
+                            .acuerdos
+                            .filter(acuerdo => acuerdo.uuid != uuid);
     },
 };
