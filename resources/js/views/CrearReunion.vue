@@ -243,6 +243,7 @@ export default {
       if (this.academiaSeleccionada) {
         this.leerAcademia(this.academiaSeleccionada);
         this.leerAcuerdosPendientes(this.academiaSeleccionada);
+        window.onbeforeunload = () => '¿Deseas salir? Puede que los cambios no se hayan guardado';
       }
     },
     horaInicioCambio({date}) { // date: fecha a la que cambió el evento
@@ -282,8 +283,6 @@ export default {
           const fileURL = URL.createObjectURL(file);
           //Open the URL on new Window
           this.urlVistaPrevia = fileURL;
-          // window.open(fileURL);
-          //   console.log(data);
         })
         .catch(err => {
           this.estadoVistaPrevia = ESTADO_API.ERROR;
@@ -306,7 +305,6 @@ export default {
       evt.preventDefault();
       this.estadoCreacionReunion = ESTADO_API.CARGANDO;
       let url = API.baseURL + "/reuniones/";
-      // alert(url);
       let data = {
         academia_id: this.academia.id,
         fechaInicio: this.fechaInicio,
@@ -321,13 +319,13 @@ export default {
         .post(url, data)
         .then(r => r.data)
         .then(data => {
-          // console.log(data);
           this.estadoCreacionReunion = ESTADO_API.LISTO;
           window.onbeforeunload = null;
           alert('Reunión creada satisfactoriamente');
           window.location = process.env.MIX_APP_URL+'/reuniones';
         })
         .catch(error => {
+          window.onbeforeunload = () => '¿Deseas salir? Puede que los cambios no se hayan guardado';
           if (error.response) {
             this.estadoCreacionReunion = ESTADO_API.ERROR;
             /*
@@ -340,11 +338,6 @@ export default {
             }
             else this.error = error.message;
             console.log(error.response.data);
-            // console.log(error.response.status);
-            // console.log(error.response.headers);
-            // if (error.response.status == 404) {
-            //   this.error = error.response.data.message;
-            // } else this.error = error.message;
           } else if (error.request) {
             /*
              * The request was made but no response was received, `error.request`
@@ -352,11 +345,9 @@ export default {
              * of http.ClientRequest in Node.js
              */
             console.log(error.request);
-            // this.error = error.message;
           } else {
             // Something happened in setting up the request and triggered an Error
-            console.log("Error: ", error.message);
-            // this.error = error.message;
+            console.log(error);
           }
         });
     }

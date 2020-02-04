@@ -93,18 +93,16 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-// window.onbeforeunload = () => '¿Seguro que deseas abandonar la página, los cambios hechos se perderán?';
-var submitted = false;
+// Importar cuando se necesite confirmar la salida de un formulario
+// en proceso de creación (solo formularios sin vuejs).
 $(document).ready(function () {
-  $("form").submit(function () {
-    submitted = true;
-  });
-
   window.onbeforeunload = function () {
-    if (!submitted) {
-      return 'Do you really want to leave the page?';
-    }
+    return '¿Seguro que deseas abandonar la página? Puede que los cambios no se hayan guardado';
   };
+
+  $("form").submit(function () {
+    window.onbeforeunload = null;
+  });
 });
 
 /***/ }),

@@ -54,10 +54,12 @@ export default {
   },
   mounted() {
     this.ponerReunion(this.reunionResource);
+    window.onbeforeunload = () => '¿Deseas salir? Puede que los cambios no se hayan guardado';
   },
   methods: {
     ...mapActions(["ponerReunion"]),
     enviarFormulario(){
+      window.onbeforeunload = null;
       let asistentes_ids = this.asistentes ?
                           this.asistentes.map(asistente => asistente.id) :
                           [];
@@ -73,6 +75,8 @@ export default {
           console.log(data);
         })
         .catch(error => {
+          window.scrollTo(0,0);
+          window.onbeforeunload = () => '¿Deseas salir? Puede que los cambios no se hayan guardado';
           if(error.response){
             console.log(error.response);
           } else{
