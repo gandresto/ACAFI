@@ -15,7 +15,7 @@
       <strong>Hubo un problema, intenta de nuevo más tarde</strong>
     </div>
     <!-- --------- Formulario para seleccionar academia --------------- -->
-    <b-form v-if="estadoAcademias == estadoApi.LISTO" target="_blank">
+    <b-form v-if="estadoAcademias == estadoApi.LISTO">
       <b-form-group id="academia" label="Academia" label-for="select-academia">
         <select
           class="form-control"
