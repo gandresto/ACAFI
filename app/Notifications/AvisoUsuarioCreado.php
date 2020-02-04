@@ -43,7 +43,7 @@ class AvisoUsuarioCreado extends Notification
     {
         return (new MailMessage)
                     ->subject('Aviso de registro de usuario')
-                    ->greeting("¡Saludos, {$notifiable->gradoNombreCompleto}!")
+                    ->greeting("Hola, {$notifiable->gradoNombreCompleto}.")
                     ->line('Has sido registrado como usario en el sistema de '
                     .'agenda para las academias de la FI. Tus datos para iniciar sesión son:')
                     ->line("- **Correo:** {$notifiable->email}")
