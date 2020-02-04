@@ -248,7 +248,7 @@ export default {
     },
     horaInicioCambio({date}) { // date: fecha a la que cambió el evento
       // console.log(date);
-      set(this, 'fechaFin', date.add(1, 'h'));
+      set(this, 'fechaFin', date.add(28, 'minutes'));
       set(this.optionsPickerFin, 'minDate', date);      
       // console.log(this.fin)
     },
