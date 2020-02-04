@@ -43,6 +43,7 @@ Route::get('/users/buscar/{consulta}', 'UsersController@buscar')->name('users.bu
 // ------ REUNIONES -----------
 Route::resource('/reuniones', 'ReunionesController')
 ->except(['store', 'update', 'destroy']);
-Route::get('/reuniones/{id}/descargarOrdenDelDia', 'ReunionesController@descargarOrdenDelDia')->name('reuniones.ordendeldia.descargar');
+Route::get('/reuniones/{id}/orden-del-dia', 'ReunionesController@descargarOrdenDelDia')->name('reuniones.ordendeldia.descargar');
+Route::get('/reuniones/{id}/emailpreview', 'ReunionesController@emailPreview');
 Route::resource('reuniones.minuta', 'ReunionesMinutasController')
         ->except(['store', 'update', 'destroy']);
