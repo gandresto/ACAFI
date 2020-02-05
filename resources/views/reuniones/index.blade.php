@@ -97,15 +97,11 @@
     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
         <div class="card reunion-convocado my-2">
             <div class="card-body">
-                @php
-                    $inicio = Carbon\Carbon::parse($reunion->inicio);
-                    $fin = Carbon\Carbon::parse($reunion->fin);
-                @endphp
-                <p class="card-text"><strong>{{$inicio->format('d/m/Y')}}</strong></p>
-                <p class="card-text">Inicia: {{$inicio->format('h:i A')}}</p>
-                <p class="card-text">Finaliza: {{$fin->format('h:i A')}}</p>
+                <p class="card-text"><strong>{{formato_fecha_esp($reunion->inicio)}}</strong></p>
+                <p class="card-text">Academia de {{$reunion->academia->nombre}}</p>
+                <p class="card-text">Inicia: {{$reunion->inicio->format('h:i A')}}</p>
+                <p class="card-text">Finaliza: {{$reunion->fin->format('h:i A')}}</p>
                 <p class="card-text">Lugar: {{$reunion->lugar}} </p>
-                <p class="card-text">Academia: {{$reunion->academia->nombre}}</p>
                 <p class="card-text">
                     <a name="ver-reunion-{{$reunion->id}}" id="ver-reunion-{{$reunion->id}}" class="btn btn-success" href="{{route('reuniones.show', $reunion->id)}}" role="button">
                         <i class="fa fa-calendar" aria-hidden="true"></i>

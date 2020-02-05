@@ -10,7 +10,7 @@
 @endsection
 
 @section('contenido_encabezado')
-    Reunión del {{$reunion->inicio->format('d/m/y')}} <br>
+    Reunión del día {{$reunion->inicio->formatLocalized('%A, %d de %B de %Y')}} <br>
     {{$reunion->lugar}}  <br>
     Inicia: {{$reunion->inicio->format('h:i A')}}  <br>
     Finaliza: {{$reunion->fin->format('h:i A')}}  <br>

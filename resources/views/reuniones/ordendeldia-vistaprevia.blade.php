@@ -14,10 +14,11 @@
 @endsection
 
 @section('contenido_encabezado')
-    Reunión del {{$fechaInicio->format('d/m/y')}} <br>
+    Reunión del día {{formato_dia_y_fecha_esp($inicio)}} <br>
+    {{-- Reunión del día {{$inicio->locale('es')->dayName}}, {{$inicio->formatLocalized('%d de %B de %Y')}} <br> --}}
     {{$lugar}}  <br>
-    Inicia: {{$fechaInicio->format('h:i A')}}  <br>
-    Finaliza: {{$fechaFin->format('h:i A')}}  <br>
+    Inicia: {{$inicio->format('h:i A')}}  <br>
+    Finaliza: {{$fin->format('h:i A')}}  <br>
 @endsection
 
 @section('marca-de-agua')
