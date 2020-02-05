@@ -144,7 +144,7 @@
         <!-- Footer -->
         <footer class="page-footer font-small blue pt-6">
             <!-- Copyright -->
-            <div class="footer-copyright text-center py-3">Copyright 2019 Facultad de Ingeniería, UNAM</div>
+            <div class="footer-copyright text-center py-3">Copyright 2019 {{config('license.owner')}}</div>
             {{-- <div class="container">
                 <div class="small">
                     Autorizado en virtud de la Licencia de Apache, Versión 2.0 (la "Licencia"); se prohíbe utilizar este archivo excepto en cumplimiento de la Licencia. Podrá obtener una copia de la Licencia en:<br>

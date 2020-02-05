@@ -42,7 +42,11 @@ Route::get('/users/buscar/{consulta}', 'UsersController@buscar')->name('users.bu
 
 // ------ REUNIONES -----------
 Route::resource('/reuniones', 'ReunionesController')
-->except(['store', 'update', 'destroy']);
+        ->except(['store', 'update', 'destroy']);
+Route::get('/reuniones/{id}/orden-del-dia', 'ReunionesController@descargarOrdenDelDia')->name('reuniones.ordendeldia.descargar');
+Route::get('/reuniones/{id}/emailpreview', 'ReunionesController@emailPreview');
+Route::resource('reuniones.minuta', 'ReunionesMinutasController')
+        ->except(['store', 'update', 'destroy']);
 // Route::get('/reuniones/{reunion}/vistaPreviaOD', function (App\Reunion $reunion){
     
 //     $pdf = \PDF::loadView('reuniones.ordendeldia', ['reunion' => $reunion]);
@@ -50,9 +54,6 @@ Route::resource('/reuniones', 'ReunionesController')
     
 //     return view('reuniones.ordendeldia', compact('reunion'));
 // });
-Route::get('/reuniones/{reunion}/descargarOrdenDelDia', 'ReunionesController@descargarOrdenDelDia')->name('reuniones.ordendeldia.descargar');
-Route::resource('reuniones.minuta', 'ReunionesMinutasController')
-        ->except(['store', 'update', 'destroy']);
 
 
 // Route::get('/test', function (){

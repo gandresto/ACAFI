@@ -8,6 +8,7 @@ use App\User;
 use App\Http\Resources\UserResource;
 use App\Http\Resources\AcademiasCollection;
 use App\Http\Resources\ReunionResource;
+use App\Notifications\AvisoUsuarioCreado;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
@@ -44,6 +45,8 @@ class UserController extends Controller
         );
         $user = User::create($data);
         $user->rollApiKey();
+        $user->notify(new AvisoUsuarioCreado(['rawPass' => $data['password']])); // Avisamos al usuario por correo
+
         return response([
             'usuario_creado' => new UserResource($user),
             'message' => 'Usuario creado safisfactoriamente',
