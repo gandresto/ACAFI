@@ -9,8 +9,16 @@ class Acuerdo extends Model
 {
     protected $fillable = [
         'descripcion', 'resultado', 'producto_esperado', 
-        'fecha_compromiso', 'fecha_finalizado', 'tema_id',
+        'fecha_compromiso', 'fecha_finalizado', 'tema_id', 
+        'responsable_id'
     ];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['fecha_compromiso', 'fecha_finalizado'];
 
     /**
      * Filtrar una consulta para incluir solo asuntos resueltos.
