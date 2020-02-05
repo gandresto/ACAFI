@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Academia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ReunionResource;
+use App\Notifications\AvisoInvitacionReunion;
 use App\Reunion;
 use App\Tema;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Validator;
 
 class ReunionesController extends Controller
 {
@@ -34,19 +35,17 @@ class ReunionesController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create', Reunion::class);
-        $data = $this->obtenerDatosValidadosReunion($request);
-        return DB::transaction(function () use ($data) {
+        $data = json_decode($request->data, true);
+        $data = $this->obtenerDatosValidadosReunion($data);
+        // return response($data, 500);
+        $reunion = DB::transaction(function () use ($data) {
             // ------ Guardo los datos de la reunión ------
-            $data_reunion = [
-                'academia_id' => $data['academia_id'],
-                'lugar' => $data['lugar'],
-                'inicio' => $data['fechaInicio'],
-                'fin' => $data['fechaFin'],
-            ];
+            $data_reunion = Arr::only($data, ['academia_id', 'lugar', 'inicio', 'fin']);
             $reunion = Reunion::create($data_reunion);
-
+            
             // -------- Guardar convocados ----------
             $ids_convocados = Arr::pluck($data['convocados'], 'id');
+            // return response($ids_convocados, 500);
             $reunion->convocados()->sync($ids_convocados);
 
             // ------ Guardar invitados --------
@@ -68,8 +67,16 @@ class ReunionesController extends Controller
 
             // ------ Guardar el PDF ----------
             $reunion->crearPDFOrdenDelDia();
-            return $reunion ? response($reunion, 200) : response(['message' => 'Error al crear la reunión'], 500);
+
+            return $reunion;
         });
+        if($reunion->exists()){
+            // ------ Enviar notificaciones ----------
+            Notification::send($reunion->convocados, new AvisoInvitacionReunion($reunion));
+            Notification::send($reunion->invitadosExternos, new AvisoInvitacionReunion($reunion));
+            return response($reunion, 200);
+        } else return response(['message' => 'Error al crear la reunión'], 500);
+
     }
 
     /**
@@ -127,36 +134,29 @@ class ReunionesController extends Controller
     public function crearPDFOrdenDelDia(Request $request)
     {
         $this->authorize('create', Reunion::class);
-        $data = $this->obtenerDatosValidadosReunion($request);
+        // return response($request->all(), 500);
+        $data = json_decode($request->data, true);
+        $data = $this->obtenerDatosValidadosReunion($data);
+        // return response($data, 500);
         $pdf = \PDF::loadView('reuniones.ordendeldia-vistaprevia', $data);
         return $pdf->download('orden_del_dia.pdf');
     }
 
-    public function obtenerDatosValidadosReunion(Request $request)
+    public function obtenerDatosValidadosReunion(Array $datos)
     {
-        $val_data = $request->validate([
+        $datos['inicio'] = Carbon::parse($datos['inicio']);
+        $datos['fin'] = Carbon::parse($datos['fin']);
+        Validator::make($datos, [
             'academia_id' => 'required',
-            'fechaInicio' => 'required|after:'. Carbon::now()->subMinutes(30),
-            'fechaFin' => 'required|after:fechaInicio',
+            'inicio' => 'required|after:'. Carbon::now()->subMinutes(30),
+            'fin' => 'required|after:inicio',
             'lugar' => 'required',
             'convocados' => 'required',
             'convocados.*.id' => 'exists:users',
             'invitados.*.id' => 'exists:users',
             'temas' => 'required',
             'temas.*.descripcion' => 'min:3|max:191',
-        ]);
-
-        // return response($data_val, 500);
-
-        return [
-            'academia_id' => $val_data['academia_id'],
-            'fechaInicio' => Carbon::parse($val_data['fechaInicio'])->setTimeZone(config('app.timezone')),
-            'fechaFin' => Carbon::parse($val_data['fechaFin'])->setTimeZone(config('app.timezone')),
-            'lugar' => $val_data['lugar'],
-            'convocados' => $val_data['convocados'],
-            'invitados' => $request->all()['invitados'],
-            'temas' => $val_data['temas'],
-            'acuerdosARevision' => $request->all()['acuerdosARevision']
-        ];
+        ])->validate();
+        return $datos;
     }
 }
