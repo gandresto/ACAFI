@@ -1,5 +1,9 @@
 <template>
   <div class="container">
+    <aviso-error 
+        v-if="hayErrorDeValidacion"
+        :error="'Error: revisa tu formulario y corrige los campos que tienen errores'">
+    </aviso-error>
     <!-- --------- Indicadores de carga y de error -----------  -->
     <div
       v-if="estadoAcademias == estadoApi.CARGANDO ||
@@ -44,7 +48,7 @@
       <strong>Hubo un problema, intenta de nuevo más tarde</strong>
     </div>
     <!-- ----------- Formulario para crear la reunión (desplegable al seleccionar academia) --------- -->
-    <b-form v-if="academiaSeleccionada && estadoAcademia == estadoApi.LISTO" @submit="submitForm">
+    <b-form v-if="academiaSeleccionada && estadoAcademia == estadoApi.LISTO" @submit.prevent="submitForm">
       <b-row>
         <!-- ----------- Fecha y hora de inicio --------- -->
         <div class="col-sm-12 col-md-6">
@@ -53,30 +57,30 @@
             <date-picker 
               id="fecha-inicio"
               name="fecha-inicio" 
-              :class="claseValidacion('fechaInicio')"
+              :class="claseValidacion('inicio')"
               required="true"
-              v-model="fechaInicio" :config="optionsPickerInicio"
+              v-model="inicio" :config="optionsPickerInicio"
               @dp-change="horaInicioCambio"
             >
             </date-picker>
-            <span v-if="tieneError('fechaInicio')" class="invalid-feedback" role="alert">
-              <strong>{{erroresDeValidacion.fechaInicio[0]}}</strong>
+            <span v-if="tieneError('inicio')" class="invalid-feedback" role="alert">
+              <strong>{{erroresDeValidacion.inicio[0]}}</strong>
             </span>
           </div>
         </div>
 
         <!-- ----------- Fecha y hora de fin --------- -->
-        <div class="col-sm-12 col-md-6" v-if="fechaInicio">
+        <div class="col-sm-12 col-md-6" v-if="inicio">
           <div class="form-grou">
             <label for="fecha-fin">Fecha y hora de finalización *</label>
             <date-picker
               id="fecha-fin"
               name="fecha-fin" 
-              v-model="fechaFin" :config="optionsPickerFin"
+              v-model="fin" :config="optionsPickerFin"
             >
             </date-picker>
-            <span v-if="tieneError('fechaFin')" class="invalid-feedback" role="alert">
-              <strong>{{erroresDeValidacion.fechaFin[0]}}</strong>
+            <span v-if="tieneError('fin')" class="invalid-feedback" role="alert">
+              <strong>{{erroresDeValidacion.fin[0]}}</strong>
             </span>
           </div>
         </div>
@@ -156,10 +160,6 @@
           Crear Reunión
         </b-button>
       </b-form-group>
-      <aviso-error 
-        v-if="hayErrorDeValidacion"
-        :error="'Error: revisa tu formulario y corrige los campos que tienen errores'">
-      </aviso-error>
     </b-form>
   </div>
 </template>
@@ -203,22 +203,16 @@ export default {
         sideBySide: true,
         showClose: true,
         minDate: moment(),
-        maxDate: false,
       },
       academiaSeleccionada: null,
-      fechaInicio: null,
-      fechaFin: null,
+      inicio: "",
+      fin: "",
+      lugar: "",
       estadoApi: ESTADO_API,
       estadoVistaPrevia: ESTADO_API.INICIADO,
       estadoCreacionReunion: ESTADO_API.INICIADO,
-      limiteInferiorFecha: "",
-      frases: {
-        ok: "Aceptar",
-        cancel: "Cancelar"
-      },
-      lugar: "",
-      urlVistaPrevia: "#",
       hayErrorDeValidacion: false,
+      urlVistaPrevia: "#",
     };
   },
   mounted() {
@@ -248,31 +242,22 @@ export default {
     },
     horaInicioCambio({date}) { // date: fecha a la que cambió el evento
       // console.log(date);
-      set(this, 'fechaFin', date.add(28, 'minutes'));
+      // set(this, 'fin', date.add(28, 'minutes'));
       set(this.optionsPickerFin, 'minDate', date);      
       // console.log(this.fin)
     },
     vistaPrevia(evt) {
-      // evt.preventDefault();
-      this.hayErrorDeValidacion = false;
+      // Variables para monitorear estado del servidor
       this.estadoVistaPrevia = ESTADO_API.CARGANDO;
+      this.hayErrorDeValidacion = false;
+      // Preparar url y datos para enviarlos a backend
       let url = API.baseURL + "/reuniones/crearPDFOrdenDelDia";
-      // alert(url);
-      let data = {
-        academia_id: this.academia.id,
-        fechaInicio: this.fechaInicio,
-        fechaFin: this.fechaFin,
-        lugar: this.lugar,
-        convocados: this.convocados,
-        invitados: this.invitados,
-        temas: this.temas,
-        acuerdosARevision: this.acuerdosARevision
-      };
+      let data = this.prepararDatosParaEnvio();
       axios({
         method: "post",
         responseType: "blob",
         url,
-        data
+        data: {data},
       })
         .then(r => r.data)
         .then(data => {
@@ -287,6 +272,7 @@ export default {
         .catch(err => {
           this.estadoVistaPrevia = ESTADO_API.ERROR;
           if (err.response){
+            // Convertir de blob a string
             err.response.data.text().then(datosStr=>{
               let datosObj = JSON.parse(datosStr);
               if(err.response.status == 422){
@@ -301,22 +287,15 @@ export default {
         });
     },
     submitForm(evt) {
-      this.hayErrorDeValidacion = false;
-      evt.preventDefault();
+      // Variables de estado
       this.estadoCreacionReunion = ESTADO_API.CARGANDO;
+      this.hayErrorDeValidacion = false;      
+      // Preparar url y datos para enviarlos a backend
       let url = API.baseURL + "/reuniones/";
-      let data = {
-        academia_id: this.academia.id,
-        fechaInicio: this.fechaInicio,
-        fechaFin: this.fechaFin,
-        lugar: this.lugar,
-        convocados: this.convocados,
-        invitados: this.invitados,
-        temas: this.temas,
-        acuerdosARevision: this.acuerdosARevision
-      };
+      let data = this.prepararDatosParaEnvio();
+      // Enviar peticion
       axios
-        .post(url, data)
+        .post(url, {data})
         .then(r => r.data)
         .then(data => {
           this.estadoCreacionReunion = ESTADO_API.LISTO;
@@ -325,6 +304,7 @@ export default {
           window.location = process.env.MIX_APP_URL+'/reuniones';
         })
         .catch(error => {
+          window.scrollTo(0,0);
           window.onbeforeunload = () => '¿Deseas salir? Puede que los cambios no se hayan guardado';
           if (error.response) {
             this.estadoCreacionReunion = ESTADO_API.ERROR;
@@ -350,7 +330,20 @@ export default {
             console.log(error);
           }
         });
-    }
+    },
+    prepararDatosParaEnvio(){
+      let data = {
+        academia_id: this.academia.id,
+        inicio: this.inicio,
+        fin: this.fin,
+        lugar: this.lugar,
+        convocados: this.convocados,
+        invitados: this.invitados,
+        temas: this.temas,
+        acuerdosARevision: this.acuerdosARevision
+      };
+      return JSON.stringify(data);
+    },
   },
   computed: {
     ...mapGetters([
