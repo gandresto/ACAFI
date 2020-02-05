@@ -11,20 +11,6 @@
   margin-bottom: 1cm;
 }
 
-.text-center {
-  text-align: center;
-}
-
-.mx-auto {
-  margin-right: auto !important;
-  margin-left: auto !important;
-}
-
-.row {
-  margin-top: 2mm;
-  margin-bottom: 2mm;
-}
-
 footer {
   position: fixed;
   bottom: -1.5in;
@@ -32,6 +18,25 @@ footer {
   right: 0px;
   height: 0.5in;
   font-size: 9pt;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table,
+th,
+td {
+  border: 1.5px solid #8facd4;
+}
+
+th,
+td {
+  padding: 2mm;
+}
+
+td {
+  vertical-align: top;
 }
 
 #marca-de-agua {
@@ -47,5 +52,40 @@ footer {
   color: rgba(0, 0, 0, 0.3);
   font-size: 65pt;
   font-weight: 600;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mx-auto {
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+.my-10mm {
+  margin-top: 10mm;
+  margin-bottom: 10mm;
+}
+
+.my-5mm {
+  margin-top: 5mm;
+  margin-bottom: 5mm;
+}
+
+.mb-10mm {
+  margin-bottom: 10mm;
+}
+
+.mb-5mm {
+  margin-bottom: 5mm;
+}
+
+.pl-10mm {
+  padding-left: 10mm;
+}
+
+.pl-5mm {
+  padding-left: 5mm;
 }
 
