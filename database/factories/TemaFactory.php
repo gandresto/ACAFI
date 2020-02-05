@@ -11,7 +11,7 @@ $factory->define(Tema::class, function (Faker $faker) {
     // $reuniones=Reunion::all()->pluck('id');
     return [
         "descripcion" => $faker->sentence(6),
-        "comentario" => $faker->sentence(10),
+        // "comentario" => $faker->sentence(10),
         // "reunion_id" => $faker->randomElement($reuniones),
         "created_at" => Carbon::now(),
         "updated_at" => Carbon::now(),
