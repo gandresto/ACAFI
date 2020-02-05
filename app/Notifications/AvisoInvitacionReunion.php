@@ -51,13 +51,13 @@ class AvisoInvitacionReunion extends Notification
         return (new MailMessage)
                     ->subject("Invitación a Reunión")
                     ->greeting("Hola, {$notificado->gradoNombreCompleto}.")
-                    ->line("Fuiste convocado a una reunión por parte de la "
-                    ."Academia de {$this->reunion->academia->nombre}"
-                    ." de la {$this->reunion->academia->departamento->division->nombre}.")
-                    ->line("- **Fecha:** " . dar_formato_de_fecha($this->reunion->inicio))
+                    ->line("Fuiste convocado la reunión que se celebrará el día "
+                    . "**" . $this->reunion->inicio->formatLocalized('%A, %d de %B de %Y') . "**"
+                    . " por parte de la Academia de {$this->reunion->academia->nombre}"
+                    . " de la {$this->reunion->academia->departamento->division->nombre}.")
                     ->line("- **Lugar:** {$this->reunion->lugar}")
-                    ->line("- **Hora de inicio:** " . dar_formato_de_hora($this->reunion->inicio))
-                    ->line("- **Hora de finalización:** " . dar_formato_de_hora($this->reunion->fin))
+                    ->line("- **Hora de inicio:** " . $this->reunion->inicio->format('h:i A'))
+                    ->line("- **Hora de finalización:** " . $this->reunion->fin->format('h:i A'))
                     ->action("Descargar orden del día", $link_ordendeldia)
                     ->line("Para más detalles, consulta el siguiente link: {$link_reunion}.");
     }
