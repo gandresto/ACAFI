@@ -41,4 +41,14 @@ function dar_formato_de_hora($fecha){
     return Carbon\Carbon::parse($fecha)->format('h:i A');
 }
 
+function formato_dia_y_fecha_esp(Carbon\Carbon $fecha)
+{
+    return "{$fecha->dayName}, {$fecha->day} de {$fecha->monthName} de {$fecha->year}";
+}
+
+function formato_fecha_esp(Carbon\Carbon $fecha)
+{
+    return "{$fecha->day} de {$fecha->monthName} de {$fecha->year}";
+}
+
 ?>
