@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class AvisoInvitacionReunion extends Notification
+class AvisoInvitacionReunion extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -52,7 +52,9 @@ class AvisoInvitacionReunion extends Notification
                     ->subject("Invitación a Reunión")
                     ->greeting("Hola, {$notificado->gradoNombreCompleto}.")
                     ->line("Fuiste convocado la reunión que se celebrará el día "
-                    . "**" . $this->reunion->inicio->formatLocalized('%A, %d de %B de %Y') . "**"
+                    . "**" . formato_dia_y_fecha_esp($this->reunion->inicio) . "**"
+                    // . "**" . $this->reunion->inicio->locale('es')->format('l\, d \d\e F \d\e Y') . "**"
+                    // . "**" . $this->reunion->inicio->formatLocalized('%A, %d de %B de %Y') . "**"
                     . " por parte de la Academia de {$this->reunion->academia->nombre}"
                     . " de la {$this->reunion->academia->departamento->division->nombre}.")
                     ->line("- **Lugar:** {$this->reunion->lugar}")
