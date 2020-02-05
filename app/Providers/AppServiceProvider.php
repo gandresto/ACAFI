@@ -32,7 +32,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         Blade::withoutDoubleEncoding();
-        Carbon::setLocale(config('app.locale'));
+        Carbon::setLocale('es_MX');
+        setlocale(LC_TIME, 'es_MX', 'es', 'ES');
         //if(env('FORCE_HTTPS')) {
         //    URL::forceScheme('https');
         //}
