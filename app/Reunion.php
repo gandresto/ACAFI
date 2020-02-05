@@ -70,12 +70,22 @@ class Reunion extends Model
         ->withPivot('asistio');
     }
     
+    public function getconvocadosQueAsistieronAttribute()
+    {
+        return $this->convocados()->wherePivot('asistio', '=', true)->get();
+    }
+    
     public function invitadosExternos()
     {
         return $this->belongsToMany(User::class, 
         'invitado_reunion', 'reunion_id', 'invitado_id')
         ->as('asistencia')
         ->withPivot('asistio');
+    }
+
+    public function getinvitadosExternosQueAsistieronAttribute()
+    {
+        return $this->invitadosExternos()->wherePivot('asistio', '=', true)->get();
     }
     
     public function acuerdosARevision()
