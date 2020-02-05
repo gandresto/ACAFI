@@ -33,18 +33,20 @@
                 </p>
             </div>
         </div>
-        <div class="col-xs-6 col-md-6">
-            @if ($reunion->invitadosExternos)
-                <strong>Invitados</strong>
-                <div>
-                    <p>
-                        @foreach ($reunion->invitadosExternos as $invitado)
-                        {{$invitado->gradoNombreCompleto}}<br>
-                        @endforeach
-                    </p>
-                </div>
-            @endif
-        </div>
+        @if ($reunion->invitadosExternos->isNotEmpty())
+            <div class="col-xs-6 col-md-6">
+                @if ($reunion->invitadosExternos)
+                    <strong>Invitados</strong>
+                    <div>
+                        <p>
+                            @foreach ($reunion->invitadosExternos as $invitado)
+                            {{$invitado->gradoNombreCompleto}}<br>
+                            @endforeach
+                        </p>
+                    </div>
+                @endif
+            </div>
+        @endif
     </div>
     <div id="temas-orden" class="row">
         <div class="col-xs-12">
