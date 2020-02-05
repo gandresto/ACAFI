@@ -45,15 +45,20 @@ Route::resource('/reuniones', 'ReunionesController')
         ->except(['store', 'update', 'destroy']);
 Route::get('/reuniones/{id}/orden-del-dia', 'ReunionesController@descargarOrdenDelDia')->name('reuniones.ordendeldia.descargar');
 Route::get('/reuniones/{id}/emailpreview', 'ReunionesController@emailPreview');
+Route::get('/reuniones/{reunion}/vista-previa-od', function (App\Reunion $reunion){
+    $pdf = \PDF::loadView('reuniones.ordendeldia', ['reunion' => $reunion]);
+    return $pdf->stream();
+    // return view('reuniones.ordendeldia', compact('reunion'));
+});
+
+// --------- MINUTAS --------------
 Route::resource('reuniones.minuta', 'ReunionesMinutasController')
         ->except(['store', 'update', 'destroy']);
-// Route::get('/reuniones/{reunion}/vistaPreviaOD', function (App\Reunion $reunion){
-    
-//     $pdf = \PDF::loadView('reuniones.ordendeldia', ['reunion' => $reunion]);
-//     return $pdf->stream();
-    
-//     return view('reuniones.ordendeldia', compact('reunion'));
-// });
+Route::get('/reuniones/{reunion}/vista-previa-minuta/', function (App\Reunion $reunion){
+    $pdf = \PDF::loadView('reuniones.pdf.minuta', ['reunion' => $reunion]);
+    return $pdf->stream();
+    // return view('reuniones.ordendeldia', compact('reunion'));
+});
 
 
 // Route::get('/test', function (){
