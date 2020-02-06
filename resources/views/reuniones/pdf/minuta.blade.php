@@ -53,25 +53,24 @@
             <div class="">
                 <p><strong>Temas revisados</strong></p>
             </div>
-            <ol>
+            <ol class="lista">
                 @foreach ($reunion->temas as $tema)
                     <li class="mb-5mm">
                         {{$tema->descripcion}}
                         <p><b><i>Comentarios generales</i></b></p>
-                        <p class="pl-10mm">{{$tema->comentario}}</p>
+                        <p class="sangria">{{$tema->comentario}}</p>
                         @if ($tema->acuerdos->isNotEmpty())
                             <p><b><i>Acuerdos generados a partir del tema</i></b></p>
                             <ol>
                                 @foreach ($tema->acuerdos as $acuerdo)
-                                    <li>
+                                    <li class="mb-5mm">
                                         {{$acuerdo->descripcion}}
-                                        <p class="pl-5mm" style="margin-top: 1mm">
-                                            <i>Responsable:</i> {{$acuerdo->responsable->gradoNombreCompleto}}
-                                            <br>
-                                            <i>Producto/resultado esperado:</i> {{$acuerdo->producto_esperado}}
-                                            <br>
-                                            <i>Fecha compromiso de resolución:</i> {{formato_fecha_esp($acuerdo->fecha_compromiso)}}
-                                        </p>
+                                        <br>
+                                        <i>Responsable:</i> {{$acuerdo->responsable->gradoNombreCompleto}}.
+                                        <br>
+                                        <i>Producto/resultado esperado:</i> {{$acuerdo->producto_esperado}}
+                                        <br>
+                                        <i>Fecha compromiso de resolución:</i> {{formato_fecha_esp($acuerdo->fecha_compromiso)}}.
                                     </li>
                                 @endforeach
                             </ol>
