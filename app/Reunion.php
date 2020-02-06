@@ -19,6 +19,13 @@ class Reunion extends Model
      */
     protected $dates = ['inicio', 'fin'];
 
+    public function delete()
+    {
+        $this->eliminarPDFOrdenDelDía();
+        $this->eliminarPDFMinuta();
+        return parent::delete();
+    }
+
     /**
      * Filtrar una consulta para incluir solo reuniones canceladas.
      *
@@ -163,5 +170,33 @@ class Reunion extends Model
             'borrado' => $archivo_antiguo,
             'creado' => $nombre_archivo,
         ];
+    }
+
+    /**
+     * Elimina el archivo de PDF orden del día (si existe)
+     * 
+     * @return array
+     */
+    public function eliminarPDFOrdenDelDia()
+    {
+        $ordenDelDia = $this->orden_del_dia;
+        if($ordenDelDia && Storage::exists($ordenDelDia)){
+            Storage::delete($ordenDelDia); // Borramos el archivo anterior
+            return ['borrado' => $ordenDelDia];
+        } else return ['borrado' => null];
+    }
+
+    /**
+     * Elimina el archivo de PDF minuta (si existe)
+     * 
+     * @return array
+     */
+    public function eliminarPDFminuta()
+    {
+        $minuta = $this->minuta;
+        if($minuta && Storage::exists($minuta)){
+            Storage::delete($minuta); // Borramos el archivo anterior
+            return ['borrado' => $minuta];
+        } else return ['borrado' => null];
     }
 }
