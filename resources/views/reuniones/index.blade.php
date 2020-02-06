@@ -119,7 +119,7 @@
 
                 {{-- Condiciones para botones de minuta --}}
                 @if ($reunion->minuta)
-                    <a name="descargar-minuta-{{$reunion->id}}" id="descargar-minuta-{{$reunion->id}}" class="btn btn-danger" href="#" role="button" target="__blank">
+                    <a name="descargar-minuta-{{$reunion->id}}" id="descargar-minuta-{{$reunion->id}}" class="btn btn-danger" href="{{route('reuniones.minuta.index', $reunion->id)}}" role="button" target="__blank">
                         <i class="fas fa-file-pdf"></i>
                         <span class="ml-1">Minuta</span>
                     </a>
