@@ -79,24 +79,32 @@ class ReunionesMinutaController extends Controller
             //     $asistencia->asistio =  true;
             //     $asistencia->save();
             // }
+
+            // ---- Rellenamos la información de temas con datos nuevos ----
             foreach ($datos['temas'] as $tema) {
                 $temaModel = Tema::find($tema['id']);
+                // Agregamos a cada tema su comentario
                 $temaModel->comentario = $tema['comentario'];
-                // return $tema['acuerdos'];
+                $temaModel->save();
+                // Mapeamos los acuerdos a modelos tipo App\Acuerdo
                 $acuerdos = array_map(function ($acuerdo){
+                    // Creamos nuevos acuerdos con ciertos campos
                     $acuerdoModel = new Acuerdo(Arr::only(
                         $acuerdo, 
                         ['tema_id', 'descripcion', 'producto_esperado', 'fecha_compromiso']
                     ));
+                    // Agregamos el id del responsable del acuerdo
                     $acuerdoModel->responsable_id = $acuerdo['responsable']['id'];
                     return $acuerdoModel;
                 }, $tema['acuerdos']);
-                $temaModel->save();
+                // Guardamos los acuerdos en la base de datos
                 $temaModel->acuerdos()->saveMany($acuerdos);
             }
+            // ---- Creamos el documento pdf de la minuta ----
+            $reunion->crearPDFMinuta();
             return response(['message' => 'Minuta guardada']);
         });
-        return response($datos);
+        // return response($datos);
     }
 
     /**
