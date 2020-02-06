@@ -26,7 +26,7 @@ class ReunionResource extends JsonResource
             'fin' => $this->fin,
             'orden_del_dia' => $this->orden_del_dia,
             'minuta' => $this->minuta,
-            'invitados' => $this->invitados ? UserResource::collection($this->invitados) : [],
+            'invitadosExternos' => $this->invitadosExternos ? UserResource::collection($this->invitadosExternos) : [],
             'convocados' => $this->convocados ? UserResource::collection($this->convocados) : [],
             'temas' => $this->temas ? TemaResource::collection($this->temas) : [],
         ];
