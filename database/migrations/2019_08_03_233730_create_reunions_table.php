@@ -16,8 +16,8 @@ class CreateReunionsTable extends Migration
         Schema::create('reunions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('lugar');
-            $table->timestamp('inicio')->useCurrent();
-            $table->timestamp('fin')->useCurrent();
+            $table->timestamp('inicio')->nullable();
+            $table->timestamp('fin')->nullable();
             $table->string('orden_del_dia')->nullable();
             $table->string('minuta')->nullable();
             $table->boolean('cancelada')->default(false);
