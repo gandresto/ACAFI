@@ -33,18 +33,16 @@
                 </p>
             </div>
         </div>
-        @if ($reunion->invitadosExternos->isNotEmpty())
+        @if ($reunion->invitadosExternosQueAsistieron->isNotEmpty())
             <div class="col-xs-6 col-md-6">
-                @if ($reunion->invitadosExternos)
-                    <strong>Invitados externos</strong>
-                    <div>
-                        <p>
-                            @foreach ($reunion->invitadosExternos as $invitado)
-                            {{$invitado->gradoNombreCompleto}}<br>
-                            @endforeach
-                        </p>
-                    </div>
-                @endif
+                <strong>Invitados externos</strong>
+                <div>
+                    <p>
+                        @foreach ($reunion->invitadosExternosQueAsistieron as $invitado)
+                        {{$invitado->gradoNombreCompleto}}<br>
+                        @endforeach
+                    </p>
+                </div>
             </div>
         @endif
     </div>
@@ -55,7 +53,7 @@
             </div>
             <ol class="lista">
                 @foreach ($reunion->temas as $tema)
-                    <li class="mb-5mm">
+                    <li class="pb-5mm">
                         {{$tema->descripcion}}
                         <p><b><i>Comentarios generales</i></b></p>
                         <p class="sangria">{{$tema->comentario}}</p>
@@ -63,7 +61,7 @@
                             <p><b><i>Acuerdos generados a partir del tema</i></b></p>
                             <ol>
                                 @foreach ($tema->acuerdos as $acuerdo)
-                                    <li class="mb-5mm">
+                                    <li class="pb-5mm">
                                         {{$acuerdo->descripcion}}
                                         <br>
                                         <i>Responsable:</i> {{$acuerdo->responsable->gradoNombreCompleto}}.
@@ -74,26 +72,6 @@
                                     </li>
                                 @endforeach
                             </ol>
-                            {{-- <div class="pl-10mm">
-                                <table class="table">
-                                    <thead class="text-center">
-                                        <tr>
-                                            <th>Acuerdo</th>
-                                            <th>Resultado/Producto esperado</th>
-                                            <th>Fecha compromiso de resolución</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($tema->acuerdos as $acuerdo)
-                                        <tr scope="row">
-                                            <td>{{$acuerdo->descripcion}}</td>
-                                            <td>{{$acuerdo->producto_esperado}}</td>
-                                            <td>{{formato_fecha_esp($acuerdo->fecha_compromiso)}}</td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div> --}}
                         @endif
                     </li>
                 @endforeach

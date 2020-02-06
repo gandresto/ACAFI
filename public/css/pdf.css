@@ -20,6 +20,10 @@ footer {
   font-size: 9pt;
 }
 
+p {
+  page-break-inside: auto;
+}
+
 table {
   border-collapse: collapse;
 }
@@ -81,6 +85,14 @@ td {
   margin-bottom: 5mm;
 }
 
+.pb-10mm {
+  padding-bottom: 10mm;
+}
+
+.pb-5mm {
+  padding-bottom: 5mm;
+}
+
 .pl-10mm {
   padding-left: 10mm;
 }
@@ -90,9 +102,8 @@ td {
 }
 
 .lista {
-  margin-left: 0.5mm;
-  padding-left: 5mm;
-  margin-bottom: 7mm;
+  padding-left: 5.5mm;
+  padding-bottom: 7mm;
 }
 
 .sangria {
