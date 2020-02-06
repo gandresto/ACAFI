@@ -27,7 +27,7 @@ class ReunionesController extends Controller
                             ->sortBy('inicio')
                             ->filter(function ($reunion) use ($quieroMinuta, $antesde, $despuesde) 
                             {
-                                return ($quieroMinuta ? $reunion->minuta : $reunion->minuta == null)
+                                return ($quieroMinuta ? $reunion->minuta : true)
                                         && ($antesde ? $antesde > $reunion->inicio : true)
                                         && ($despuesde ? $despuesde < $reunion->inicio : true);
                             });
