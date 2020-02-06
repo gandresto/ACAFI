@@ -53,11 +53,10 @@ Route::get('/reuniones/{reunion}/vista-previa-od', function (App\Reunion $reunio
 
 // --------- MINUTAS --------------
 Route::resource('reuniones.minuta', 'ReunionesMinutasController')
-        ->except(['store', 'update', 'destroy']);
-Route::get('/reuniones/{reunion}/vista-previa-minuta/', function (App\Reunion $reunion){
+        ->except(['store', 'update', 'destroy', 'show']);
+Route::get('/reuniones/{reunion}/minuta/vista-previa/', function (App\Reunion $reunion){
     $pdf = \PDF::loadView('reuniones.pdf.minuta', ['reunion' => $reunion]);
     return $pdf->stream();
-    // return view('reuniones.ordendeldia', compact('reunion'));
 });
 
 

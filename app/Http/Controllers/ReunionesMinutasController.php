@@ -12,6 +12,17 @@ class ReunionesMinutasController extends Controller
         $this->middleware('auth');
     }
 
+    public function index(Request $request, int $reunion_id)
+    {
+        $reunion = Reunion::findOrFail($reunion_id);
+        if (!$reunion->minuta) abort(404);
+        else return response()->file(
+            config('filesystems.disks.local.root')
+                . DIRECTORY_SEPARATOR
+                . $reunion->minuta
+        );
+    }
+
     public function create(Request $request, int $reunion_id)
     {
         $reunion = Reunion::findOrFail($reunion_id);
