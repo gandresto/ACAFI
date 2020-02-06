@@ -135,4 +135,33 @@ class Reunion extends Model
             'creado' => $nombre_archivo,
         ];
     }
+
+    /**
+     * Crea un nuevo pdf de minuta con la información actual de la reunión
+     * 
+     * @return array
+     */
+    public function crearPDFMinuta()
+    {
+        $pdf = \PDF::loadView('reuniones.pdf.minuta', ['reunion' => $this]);
+        // Generar nombre del archivo a guardar
+        $fecha_str = $this->inicio->format('Ymd_His'); // Formato de fecha
+        $id_str = sprintf("%04d", $this->id); // Relleno con 4 ceros
+        $nombre_archivo = "Divisiones/{$this->academia->departamento->division->id}/";
+        $nombre_archivo .= "Departamentos/{$this->academia->departamento->id}/";
+        $nombre_archivo .= "Academias/{$this->academia->id}/minuta{$id_str}_{$fecha_str}.pdf";
+        
+        $archivo_antiguo = $this->minuta; // Guardo el nombre anterior
+        $this->minuta = $nombre_archivo; // Sustituyo el nombre
+        $content = $pdf->download()->getOriginalContent(); // Obtengo el contenido del archivo en memoria
+        if($archivo_antiguo && Storage::exists($archivo_antiguo)){
+            Storage::delete($archivo_antiguo); // Borramos el archivo anterior
+        }
+        Storage::put($nombre_archivo, $content, 'private'); // Guardo el nuevo archivo
+        $this->save();
+        return [
+            'borrado' => $archivo_antiguo,
+            'creado' => $nombre_archivo,
+        ];
+    }
 }
