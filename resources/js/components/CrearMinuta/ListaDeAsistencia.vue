@@ -1,12 +1,14 @@
 <template>
   <div>
     <b-form-group>
-      <div class="small-title">Lista de asistencia *</div>
+      <div class="small-title">
+        Lista de asistencia de {{tipoDeDatos == "conv" ? "convocados": "invitados externos",}}*
+      </div>
     </b-form-group>
     <b-form-group>
       <b-form-checkbox
-        id="checkbox-convocar-todos"
-        name="checkbox-convocar-todos"
+        :id="`checkbox-asistieron-todos-${tipoDeDatos}`"
+        :name="`checkbox-asistieron-todos-${tipoDeDatos}`"
         v-model="asistieronTodos"
         :indeterminate="estadoIndeterminado"
         @change="alternarSeleccionarTodos"
@@ -20,7 +22,7 @@
         selectable
         selected-variant="primary"
         select-mode="multi"
-        :items="reunion.convocados"
+        :items="datos"
         :fields="camposTablaAsistencia"
         responsive="sm"
         @row-selected="actualizarAsistencia"
@@ -36,7 +38,7 @@
           </template>
         </template>
         <template
-          v-slot:cell(miembro)="data"
+          v-slot:cell(asistente)="data"
         >{{`${data.item.apellido_paterno} ${data.item.apellido_materno} ${data.item.nombre} ${data.item.grado}`}}</template>
       </b-table>
     </b-form-group>
@@ -48,6 +50,7 @@ import { createNamespacedHelpers } from 'vuex'
 const { mapGetters, mapMutations } = createNamespacedHelpers('crearMinuta')
 
 export default {
+  props: ['tipoDeDatos', 'datos'],
   mounted() {
     // console.log('Component mounted.')
   },
@@ -60,19 +63,27 @@ export default {
           key: "asistio",
           label: "¿Asistió?"
         },
-        "miembro",
+        {
+          key: "asistente",
+          label: "Nombre",
+        },
         "email"
       ]
     };
   },
   methods: {
-    ...mapMutations(["colocarAsistentes"]),
-    actualizarAsistencia(miembrosSeleccionados) {
-      if (miembrosSeleccionados.length == 0) {
+    ...mapMutations(
+      [
+        "colocarMiembrosQueAsistieron", 
+        "colocarInvitadosExternosQueAsistieron"
+      ]
+    ),
+    actualizarAsistencia(asistentesSeleccionados) {
+      if (asistentesSeleccionados.length == 0) {
         this.estadoIndeterminado = false;
         this.asistieronTodos = false;
       } else if (
-        miembrosSeleccionados.length == this.reunion.convocados.length
+        asistentesSeleccionados.length == this.datos.length
       ) {
         this.estadoIndeterminado = false;
         this.asistieronTodos = true;
@@ -80,7 +91,10 @@ export default {
         this.estadoIndeterminado = true;
         this.asistieronTodos = false;
       }
-      this.colocarAsistentes(miembrosSeleccionados);
+      if (this.tipoDeDatos == "conv")
+        this.colocarMiembrosQueAsistieron(asistentesSeleccionados);
+      else if (this.tipoDeDatos == "inv")
+        this.colocarInvitadosExternosQueAsistieron(asistentesSeleccionados);
     },
     alternarSeleccionarTodos(checked) {
       // console.log(checked);
@@ -89,7 +103,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["asistentes", "reunion"])
+    ...mapGetters(
+      [
+        "reunion",
+      ]
+    ),
   }
 };
 </script>

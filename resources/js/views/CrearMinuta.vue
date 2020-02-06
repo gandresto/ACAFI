@@ -9,8 +9,21 @@
     
     <!--  ----------- Lista de asistencia -------------- -->
     <div class="form-group row">
-      <div class="col-sm-12" v-if="reunion.convocados">
-        <lista-de-asistencia></lista-de-asistencia>
+      <div class="col-sm-12">
+        <lista-de-asistencia 
+          tipo-de-datos="conv"
+          :datos="reunion.convocados"
+        ></lista-de-asistencia>
+      </div>
+    </div>
+  
+    <!--  ----------- Lista de asistencia -------------- -->
+    <div class="form-group row" v-if="reunion.invitadosExternos.length > 0">
+      <div class="col-sm-12">
+        <lista-de-asistencia 
+          tipo-de-datos="inv"
+          :datos="reunion.invitadosExternos"
+        ></lista-de-asistencia>
       </div>
     </div>
 
@@ -60,12 +73,16 @@ export default {
     ...mapActions(["ponerReunion"]),
     enviarFormulario(){
       window.onbeforeunload = null;
-      let asistentes_ids = this.asistentes ?
-                          this.asistentes.map(asistente => asistente.id) :
+      let miembros_que_asistieron_ids = this.miembrosQueAsistieron.length > 0 ?
+                          this.miembrosQueAsistieron.map(asistente => asistente.id) :
+                          [];
+      let invitados_externos_que_asistieron_ids = this.invitadosExternosQueAsistieron.length > 0 ?
+                          this.invitadosExternosQueAsistieron.map(asistente => asistente.id) :
                           [];
       let data = JSON.stringify({
         temas: this.reunion.temas,
-        asistentes_ids,
+        miembros_que_asistieron_ids,
+        invitados_externos_que_asistieron_ids,
       });
       let url = `${api.baseURL}/reuniones/${this.reunion.id}/minuta`;
       axios
@@ -86,7 +103,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['reunion', 'asistentes'])
+    ...mapGetters(['reunion', 'miembrosQueAsistieron', 'invitadosExternosQueAsistieron'])
   },
   filters: {
     fecha: function (ISOstring) {

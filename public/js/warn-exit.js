@@ -114,7 +114,7 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\agendav2\resources\js\warn-exit.js */"./resources/js/warn-exit.js");
+module.exports = __webpack_require__(/*! C:\Users\Andres.DESKTOP-0MVIK1S\agendav2\resources\js\warn-exit.js */"./resources/js/warn-exit.js");
 
 
 /***/ })

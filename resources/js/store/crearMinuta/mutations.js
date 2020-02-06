@@ -1,8 +1,11 @@
 import { uuidv4} from '../../helpers';
 
 export default {
-    colocarAsistentes(state, asistentes){
-        state.asistentes = asistentes;
+    colocarMiembrosQueAsistieron(state, miembrosQueAsistieron){
+        state.miembrosQueAsistieron = miembrosQueAsistieron;
+    },
+    colocarInvitadosExternosQueAsistieron(state, invitadosExternosQueAsistieron){
+        state.invitadosExternosQueAsistieron = invitadosExternosQueAsistieron;
     },
     colocarReunion(state, reunion){
         state.reunion = reunion;

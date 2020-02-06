@@ -11,6 +11,12 @@
         ></agregar-detalles>
 
       </li>
+      <!-- <div>
+        <b>Agregar nuevo tema</b>
+      </div>
+      <li>
+        :D
+      </li> -->
     </ol>
   </div>
 </template>
