@@ -23,6 +23,6 @@ class AcuerdoResource extends JsonResource
             "fecha_de_creacion" => $this->created_at,
             "ultima_revision" => $this->fechaDeUltimaRevision,
             "fecha_finalizado" => $this->when($this->fecha_finalizado != null, $this->fecha_finalizado),
-        ];;
+        ];
     }
 }
