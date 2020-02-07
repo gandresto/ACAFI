@@ -8,6 +8,7 @@
 
         <agregar-detalles
           :temaId="tema.id"
+          :comentarioProp="tema.comentario"
         ></agregar-detalles>
 
       </li>
@@ -36,7 +37,7 @@ export default {
   },
   data() {
     return {
-      comentario: '',
+      // comentario: '',
       // generarAcuerdos: false,
     };
   },

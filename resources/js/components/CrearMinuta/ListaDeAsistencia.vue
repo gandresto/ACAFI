@@ -53,6 +53,21 @@ export default {
   props: ['tipoDeDatos', 'datos'],
   mounted() {
     // console.log('Component mounted.')
+    if (this.tipoDeDatos == "conv"){
+      this.datos.forEach((convocado, index) => {
+        if(convocado.asistio_convocado)
+          this.$refs.tablaAsistencia.selectRow(index);
+        else
+          this.$refs.tablaAsistencia.unselectRow(index);
+      });
+    } else if (this.tipoDeDatos == "inv"){
+      this.datos.forEach((invitado, index) => {
+        if(invitado.asistio_invitado_externo)
+          this.$refs.tablaAsistencia.selectRow(index);
+        else
+          this.$refs.tablaAsistencia.unselectRow(index);
+      });
+    }
   },
   data() {
     return {

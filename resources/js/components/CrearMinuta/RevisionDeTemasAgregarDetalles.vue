@@ -21,7 +21,7 @@
     <!-- ------ Checkbox para mostrar el formulario de acuerdos ---------------  -->
     <b-form-group>
       <b-form-checkbox v-model="generarAcuerdos" name="check-button" switch>
-        <b>¿Se llegó a algún acuerdo referente a este tema?</b>
+        <b>¿Agregar acuerdos referentes a este tema?</b>
       </b-form-checkbox>
     </b-form-group>
     
@@ -115,9 +115,8 @@
     </div>
 
     <!-- ----------------- Lista de acuerdos generados ---------------  -->
-    <div v-if="generarAcuerdos && listaDeAcuerdos" class="container-fluid py-2">
+    <div v-if="listaDeAcuerdos" class="container-fluid py-2">
       <b-row>
-      <!-- <transition-group name="tarjeta-acuerdo" tag="b-row"> -->
         <b-col 
           sm="6" md="4" lg="3"
           v-for="(acuerdo, index) in listaDeAcuerdos" 
@@ -137,14 +136,7 @@
           </div>
         </b-col>
       </b-row>
-      <!-- </transition-group> -->
     </div>
-
-    
-    <!-- <b-modal id="modal-crear-usuario" hide-footer size="lg" title="Crear usuario">
-      <div class="d-block">
-      </div>
-    </b-modal> -->
   </div>
 </template>
 
@@ -156,7 +148,7 @@ import { createNamespacedHelpers } from 'vuex'
 const { mapActions, mapGetters, mapMutations } = createNamespacedHelpers('crearMinuta')
 
 export default {
-  props: ["temaId"],
+  props: ["temaId", "comentarioProp"],
   mounted() {
     // console.log()
   },
@@ -166,10 +158,9 @@ export default {
         locale: "es",
         format: "DD/MM/YYYY",
         daysOfWeekDisabled: [0],
-        // showClose: true,
         minDate: moment(),
       },
-      comentario: "",
+      comentario: this.comentarioProp ? this.comentarioProp : "",
       generarAcuerdos: false,
       mostrarBusqueda: true,
       nuevoAcuerdo: {
@@ -183,7 +174,6 @@ export default {
     };
   },
   methods: {
-    // ...mapMutations(['colocarNuevoAcuerdo']),
     ...mapActions(['ponerComentarioEnTema', 'ponerNuevoAcuerdo', 'quitarAcuerdo']),
 
     obtenerNombreCompleto,
@@ -246,7 +236,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['reunion']),
+    ...mapGetters(['reunion', 'acuerdosPorTemaId']),
     botonAgregarDeshabilitado(){
       return !(this.nuevoAcuerdo.tema_id 
             && this.nuevoAcuerdo.responsable
@@ -255,11 +245,7 @@ export default {
             && this.nuevoAcuerdo.fecha_compromiso);
     },
     listaDeAcuerdos(){
-      return this.reunion
-                  .temas
-                  .filter(tema => tema.id == this.temaId)[0]
-                  .acuerdos
-                  .filter(acuerdo => acuerdo.tema_id == this.temaId);
+      return this.acuerdosPorTemaId(this.temaId);
     }
   },
   filters:{
@@ -269,6 +255,9 @@ export default {
     fecha: function (ISOstring) {
       return moment.parse(ISOstring, 'dd/MM/y');
     },
+  },
+  watch: {
+    
   },
 };
 </script>
