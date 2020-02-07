@@ -34,7 +34,7 @@ class Reunion extends Model
      */
     public function scopeCanceladas($query)
     {
-        return $query->where('cancelada', '=', false);
+        return $query->where('cancelada', '=', true);
     }
 
     /**
