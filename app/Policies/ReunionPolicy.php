@@ -104,4 +104,17 @@ class ReunionPolicy
     {
         //
     }
+    
+    /**
+     * Determina si el usuario puede o no crear minuta de la reunión.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Reunion  $reunion
+     * @return mixed
+     */
+    public function crearMinuta(User $user, Reunion $reunion)
+    {
+        return $reunion->academia->presidente->id == $user->id &&
+                $reunion->minutaPendiente();
+    }
 }

@@ -124,15 +124,13 @@
                         <span class="ml-1">Minuta</span>
                     </a>
                 @else
-                    @can('update', $reunion)
-                        @if ($reunion->minutaPendiente())
-                            <p class="card-text">
-                                <a name="crear-minuta-{{$reunion->id}}" id="crear-minuta-{{$reunion->id}}" class="btn btn-primary" href="{{route('reuniones.minuta.create', $reunion->id)}}" role="button">
-                                    <i class="fas fa-file"></i>
-                                    <span class="ml-1">Crear minuta</span>
-                                </a>
-                            </p>
-                        @endif
+                    @can('crearMinuta', $reunion)
+                        <p class="card-text">
+                            <a name="crear-minuta-{{$reunion->id}}" id="crear-minuta-{{$reunion->id}}" class="btn btn-primary" href="{{route('reuniones.minuta.create', $reunion->id)}}" role="button">
+                                <i class="fas fa-file"></i>
+                                <span class="ml-1">Crear minuta</span>
+                            </a>
+                        </p>
                     @endcan
                 @endif
             </div>
