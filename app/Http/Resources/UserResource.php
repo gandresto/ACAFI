@@ -36,6 +36,12 @@ class UserResource extends JsonResource
                     'fecha_egreso' =>  $this->pivot->fecha_egreso,
                 ];
             }),
+            'asistio_convocado' => $this->whenPivotLoadedAs('asistencia', 'convocado_reunion', function () {
+                return $this->asistencia->asistio;
+            }),
+            'asistio_invitado_externo' => $this->whenPivotLoadedAs('asistencia', 'invitado_reunion', function () {
+                return $this->asistencia->asistio;
+            }),
         ];
     }
 }

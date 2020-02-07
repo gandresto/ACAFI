@@ -18,7 +18,7 @@ class TemaResource extends JsonResource
             'id' => $this->id,
             'descripcion' => $this->descripcion,
             'comentario' => $this->comentario,
-            'acuerdos' => new JsonResource($this->acuerdos),
+            'acuerdos' => AcuerdosDeTemaResource::collection($this->acuerdos),
         ];
     }
 }
