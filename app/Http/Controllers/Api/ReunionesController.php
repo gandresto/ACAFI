@@ -62,8 +62,8 @@ class ReunionesController extends Controller
             });
 
             // ------- Guardar acuerdos a seguimiento --------
-            $ids_acuerdos = Arr::pluck($data['acuerdosARevision'], 'id');
-            $reunion->acuerdosARevision()->sync($ids_acuerdos);
+            $ids_acuerdos = Arr::pluck($data['acuerdosASeguimiento'], 'id');
+            $reunion->acuerdosASeguimiento()->sync($ids_acuerdos);
 
             // ------ Guardar el PDF ----------
             $reunion->crearPDFOrdenDelDia();

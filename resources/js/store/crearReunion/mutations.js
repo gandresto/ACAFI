@@ -38,8 +38,8 @@ export default {
     colocarAcuerdosPendientes(state, acuerdos){
         state.acuerdosPendientes = acuerdos;
     },
-    colocarAcuerdosARevision(state, acuerdos){
-        state.acuerdosARevision = acuerdos;
+    colocarAcuerdosASeguimiento(state, acuerdos){
+        state.acuerdosASeguimiento = acuerdos;
     },
 
     colocarErroresDeValidacion(state, errores){

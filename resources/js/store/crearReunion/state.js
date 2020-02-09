@@ -9,6 +9,6 @@ export default {
     invitados: [],
     temas: [],
     acuerdosPendientes: [],
-    acuerdosARevision: [],
+    acuerdosASeguimiento: [],
     erroresDeValidacion: {},
 };

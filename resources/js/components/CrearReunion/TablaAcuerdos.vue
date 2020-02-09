@@ -87,7 +87,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["ponerAcuerdosARevision"]),
+    ...mapActions(["ponerAcuerdosASeguimiento"]),
     formatoFecha,
     alternarSeleccionarTodos(checked) {
       // console.log(checked);
@@ -106,7 +106,7 @@ export default {
         this.estanTodosMarcados = false;
       }
     //   console.log(acuerdos);
-      this.ponerAcuerdosARevision(acuerdos);
+      this.ponerAcuerdosASeguimiento(acuerdos);
     }
   },
   computed: {

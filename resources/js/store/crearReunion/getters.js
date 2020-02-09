@@ -7,6 +7,6 @@ export default {
     convocados: state => state.convocados,
     temas: state => state.temas,
     acuerdosPendientes: state => state.acuerdosPendientes,
-    acuerdosARevision: state => state.acuerdosARevision,
+    acuerdosASeguimiento: state => state.acuerdosASeguimiento,
     erroresDeValidacion: state => state.erroresDeValidacion,
 }

@@ -95,7 +95,7 @@ class Reunion extends Model
         return $this->invitadosExternos()->wherePivot('asistio', '=', true)->get();
     }
     
-    public function acuerdosARevision()
+    public function acuerdosASeguimiento()
     {
         return $this->belongsToMany(Acuerdo::class)
         ->as('seguimiento')

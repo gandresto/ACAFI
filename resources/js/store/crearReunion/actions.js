@@ -76,7 +76,7 @@ export default {
         });
 
     },
-    ponerAcuerdosARevision({commit}, acuerdos){
-        commit('colocarAcuerdosARevision', acuerdos);
+    ponerAcuerdosASeguimiento({commit}, acuerdos){
+        commit('colocarAcuerdosASeguimiento', acuerdos);
     },
 };

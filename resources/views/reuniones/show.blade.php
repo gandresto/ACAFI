@@ -137,11 +137,11 @@
                 <li>{{$tema->descripcion}}</li>
             @endforeach
 
-            @if ($reunion->acuerdosARevision->isNotEmpty())
+            @if ($reunion->acuerdosASeguimiento->isNotEmpty())
                 <li>
                     Seguimiento a acuerdos
                     <ol>
-                        @foreach ($reunion->acuerdosARevision as $acuerdo)
+                        @foreach ($reunion->acuerdosASeguimiento as $acuerdo)
                         <li>{{$acuerdo->descripcion}}</li>
                         @endforeach
                     </ol>

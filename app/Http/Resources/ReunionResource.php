@@ -29,6 +29,7 @@ class ReunionResource extends JsonResource
             'invitadosExternos' => UserResource::collection($this->invitadosExternos),
             'convocados' => UserResource::collection($this->convocados),
             'temas' => TemaResource::collection($this->temas()->with('acuerdos.responsable')->get()),
+            'acuerdos_a_seguimiento' => AcuerdoResource::collection($this->acuerdosASeguimiento),
         ];
     }
 }

@@ -2,7 +2,7 @@
   <div class="container">
     <aviso-error 
         v-if="hayErrorDeValidacion"
-        :error="'Error: revisa tu formulario y corrige los campos que tienen errores'">
+        error="Error: revisa tu formulario y corrige los campos que tienen errores">
     </aviso-error>
     <!-- --------- Indicadores de carga y de error -----------  -->
     <div
@@ -276,6 +276,7 @@ export default {
             err.response.data.text().then(datosStr=>{
               let datosObj = JSON.parse(datosStr);
               if(err.response.status == 422){
+                window.scrollTo(0,0);
                 this.colocarErroresDeValidacion(datosObj.errors);
                 this.hayErrorDeValidacion = true;
               } else {
@@ -313,6 +314,7 @@ export default {
              * status code that falls out of the range of 2xx
              */
             if(error.response.status = 422){
+              window.scrollTo(0,0);
               this.colocarErroresDeValidacion(error.response.data.errors);
               this.hayErrorDeValidacion = true;
             }
@@ -340,7 +342,7 @@ export default {
         convocados: this.convocados,
         invitados: this.invitados,
         temas: this.temas,
-        acuerdosARevision: this.acuerdosARevision
+        acuerdosASeguimiento: this.acuerdosASeguimiento
       };
       return JSON.stringify(data);
     },
@@ -355,7 +357,7 @@ export default {
       "invitados",
       "temas",
       "acuerdosPendientes",
-      "acuerdosARevision",
+      "acuerdosASeguimiento",
       "erroresDeValidacion",
     ]),
     cAcademias() {

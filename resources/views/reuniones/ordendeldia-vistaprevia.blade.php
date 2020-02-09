@@ -65,11 +65,11 @@
                     <li>{{$tema['descripcion']}}</li>
                 @endforeach
 
-                @if ($acuerdosARevision)
+                @if ($acuerdosASeguimiento)
                     <li>
                         Seguimiento a acuerdos
                         <ol style="margin-top:1.2mm">
-                            @foreach ($acuerdosARevision as $acuerdo)
+                            @foreach ($acuerdosASeguimiento as $acuerdo)
                             <li>{{$acuerdo['descripcion']}}</li>
                             @endforeach
                         </ol>
