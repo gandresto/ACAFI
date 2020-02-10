@@ -114,7 +114,8 @@ class ReunionPolicy
      */
     public function crearMinuta(User $user, Reunion $reunion)
     {
-        return $reunion->academia->presidente->id == $user->id &&
-                $reunion->minutaPendiente();
+        // Se puede crear minuta si...
+        return $reunion->academia->presidente->id == $user->id && // se es presidente
+                $reunion->minutaPendiente(); // La reunión tiene minuta pendiente
     }
 }

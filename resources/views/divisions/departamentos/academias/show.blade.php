@@ -36,7 +36,7 @@
     </div>
 </div>
 <hr>
-@can('viewMiembros', $academia)
+@can('verMiembros', $academia)
     <div class="row">
         <div class="col-md-12 pb-2">
             <h5>
@@ -44,7 +44,7 @@
             </h5>
         </div>
     </div>
-    @can('addMiembro', $academia)
+    @can('agregarMiembro', $academia)
         <div class="row">
             <div class="col-md-12 py-2">
                 <a class="btn btn-primary" href="#" role="button">

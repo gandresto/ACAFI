@@ -58,7 +58,8 @@ class AcademiaPolicy
      */
     public function update(User $user, Academia $academia)
     {
-        //
+        return $academia->presidente->id == $user->id ||
+                $academia->departamento->jefe->id == $user->id;
     }
 
     /**
@@ -97,7 +98,7 @@ class AcademiaPolicy
         //
     }
 
-    public function viewMiembros(User $user, Academia $academia)
+    public function verMiembros(User $user, Academia $academia)
     {
         return $user->esMiembroActual($academia) || // Miembros de la academia pueden ver miembros
                 $academia->presidente->id == $user->id || // Presidente de academia también
@@ -105,7 +106,7 @@ class AcademiaPolicy
                 $academia->departamento->division->jefe->id == $user->id; // Jefe de división también
     }
 
-    public function addMiembro(User $user, Academia $academia)
+    public function agregarMiembro(User $user, Academia $academia)
     {
         return $academia->presidente->id == $user->id; // Solo el presidente de la academia puede agregar miembros
     }
