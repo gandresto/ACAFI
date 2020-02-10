@@ -16868,6 +16868,10 @@ body {
   background-color: #5a5a5a;
 }
 
+main {
+  min-height: 87vh;
+}
+
 .modal-backdrop {
   background-color: rgba(1, 1, 1, 0.6);
 }
