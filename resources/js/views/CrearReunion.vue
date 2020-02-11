@@ -149,7 +149,7 @@
           <i class="fas fa-file-pdf mr-1"></i>
           Vista Previa
         </b-button>
-        <b-button type="submit" variant="primary">
+        <b-button type="submit" variant="primary" :disabled="estadoCreacionReunion == estadoApi.CARGANDO">
           <div
             v-if="estadoCreacionReunion == estadoApi.CARGANDO"
             class="spinner-border spinner-border-sm mx-1"
@@ -288,6 +288,11 @@ export default {
         });
     },
     submitForm(evt) {
+      //
+      if( ! confirm('¿Deseas agendar la reunión? Esto enviará '+
+                  'invitaciones por correo a todos los convocados ' + 
+                  'y generará el PDF de la orden del día.') )
+        return false;
       // Variables de estado
       this.estadoCreacionReunion = ESTADO_API.CARGANDO;
       this.hayErrorDeValidacion = false;      
@@ -317,9 +322,10 @@ export default {
               window.scrollTo(0,0);
               this.colocarErroresDeValidacion(error.response.data.errors);
               this.hayErrorDeValidacion = true;
-            }
-            else this.error = error.message;
+
+            } else this.error = error.message;
             console.log(error.response.data);
+
           } else if (error.request) {
             /*
              * The request was made but no response was received, `error.request`
@@ -327,6 +333,7 @@ export default {
              * of http.ClientRequest in Node.js
              */
             console.log(error.request);
+
           } else {
             // Something happened in setting up the request and triggered an Error
             console.log(error);
