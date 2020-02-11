@@ -37,7 +37,7 @@
         </template>
         <template
           v-slot:cell(miembro)="data"
-        >{{`${data.item.apellido_paterno} ${data.item.apellido_materno} ${data.item.nombre} ${data.item.grado}`}}</template>
+        >{{obtenerNombreCompleto(data.item)}}</template>
       </b-table>
     </b-form-group>
   </div>
@@ -45,6 +45,7 @@
 
 <script>
 import { createNamespacedHelpers } from "vuex";
+import {obtenerNombreCompleto} from "../../helpers";
 const { mapGetters, mapActions } = createNamespacedHelpers("crearReunion");
 export default {
   mounted() {
@@ -66,6 +67,7 @@ export default {
   },
   methods: {
     ...mapActions(["ponerConvocados"]),
+    obtenerNombreCompleto,
     actualizarConvocados(miembrosSeleccionados) {
       // console.log(this.academia.miembrosActuales);
       if (miembrosSeleccionados.length == 0) {
