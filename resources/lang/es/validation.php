@@ -141,6 +141,10 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'miembros_que_asistieron_ids' => 'miembros que asistieron',
+        'invitados_externos_que_asistieron_ids' => 'invitados externos que asistieron',
+        'temas.*.comentario' => 'comentario',
+    ],
 
 ];

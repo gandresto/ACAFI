@@ -2,7 +2,9 @@
   <div class="my-2">
     <!-- ------ Formulario para agregar comentario ---------------  -->
     <b-form-group>
-      <label :for="'textarea-comentario-'+temaId">Comentarios generales</label>
+      <label :for="'textarea-comentario-'+temaId">
+        Comentarios generales <span class="text-danger">*</span>
+      </label>
       <b-form-textarea
         :id="'textarea-comentario-'+temaId"
         :name="'textarea-comentario-'+temaId"
@@ -122,7 +124,7 @@
           v-for="(acuerdo, index) in listaDeAcuerdos" 
           :key="acuerdo.uuid"
         >
-          <div class="card fondo-rojo-claro">
+          <div class="card reunion-convocado">
             <div class="card-header">
               <b>Acuerdo {{index+1}}</b>
               <button type="button" class="close" @click.prevent="quitarAcuerdo(acuerdo)">×</button>
@@ -179,13 +181,10 @@ export default {
     obtenerNombreCompleto,
 
     actualizarComentario() {
-      if (this.comentario.length >= 10) {
-        // console.log(this.temaId, this.comentario);
-        this.ponerComentarioEnTema({
-          temaId: this.temaId,
-          comentario: this.comentario
-        });
-      }
+      this.ponerComentarioEnTema({
+        temaId: this.temaId,
+        comentario: this.comentario
+      });
     },
 
     // ------ Método para agregar acuerdo a la lista de acuerdos en el estado -----------

@@ -33,10 +33,12 @@ class ReunionesMinutaController extends Controller
      */
     public function store(Request $request, int $reunion_id)
     {
+        // return response(['mensaje' => 'ok'], 401);
         $reunion = Reunion::findOrFail($reunion_id);
         $this->authorize('update', $reunion);
         $datos = json_decode($request->data, true);
 
+        // Creamos objetos de fecha para cada fecha_compromiso de los acuerdos
         foreach ($datos['temas'] as $keyTema => $tema) {
             foreach ($tema['acuerdos'] as $keyAcuerdo => $acuerdo) {
                 $datos['temas'][$keyTema]['acuerdos'][$keyAcuerdo]['fecha_compromiso'] = 
@@ -48,11 +50,6 @@ class ReunionesMinutaController extends Controller
             'temas' => 'required',
             'temas.*.comentario' => 'required|min:3|max:500',
             'temas.*.acuerdos.*.descripcion' => 'min:3|max:191',
-            // 'temas.*.acuerdos.*.fecha_compromiso' => function ($campo, $valor, $fail) {
-            //     if (Carbon::createFromFormat('d/m/Y', $valor)->isBefore(Carbon::now())) {
-            //         $fail($campo.' debe ser una fecha posterior a '. Carbon::now()->format('d/m/Y'));
-            //     }
-            // },
             'temas.*.acuerdos.*.fecha_compromiso' => 'after:'.now(),
             'miembros_que_asistieron_ids' => 'required',
             'miembros_que_asistieron_ids.*' => Rule::in($reunion->convocados->pluck('id')),
@@ -60,7 +57,7 @@ class ReunionesMinutaController extends Controller
         ])->validate();
 
         return DB::transaction(function () use ($datos, $reunion) {
-            // Limpiar lista de asistencia
+            // Actualizar lista de asistentes
             $reunion->convocados()
                     ->each(function ($asistente) use ($datos){
                         if( in_array($asistente->id, $datos['miembros_que_asistieron_ids']) ){
@@ -68,66 +65,44 @@ class ReunionesMinutaController extends Controller
                         } else
                             $asistente->asistencia->asistio = false;
                         $asistente->asistencia->save();
-                    });
+                    }
+            );
             $reunion->invitadosExternos()
-                    ->each(function ($asistente) use ($datos){
+                    ->each(function ($asistente) use ($datos)
+                    {
                         if( in_array($asistente->id, $datos['invitados_externos_que_asistieron_ids']) ){
                             $asistente->asistencia->asistio = true;
                         } else
                             $asistente->asistencia->asistio = false;
                         $asistente->asistencia->save();
-                    });
-            // $reunion->convocados()
-            //         ->find($datos['miembrosQueAsistieron_ids'])
-            //         ->each(function ($asistente){
-            //             $asistente->asistencia->asistio = true;
-            //             $asistente->asistencia->save();
-            //         });
-            // foreach($datos['miembrosQueAsistieron_ids'] as $asistente_id){
-            //     $asistencia = $reunion->convocados()->find($asistente_id)->asistencia;
-            //     $asistencia->asistio =  true;
-            //     $asistencia->save();
-            // }
-
+                    }
+            );
+                  
             // ---- Rellenamos la información de temas con datos nuevos ----
+            $reunion->temas()->delete(); 
             foreach ($datos['temas'] as $tema) {
-                $temaModel = Tema::find($tema['id']);
-
-                // Agregamos a cada tema su comentario
+                // Agregamos información del tema
+                $temaModel = new Tema();
+                $temaModel->reunion_id = $reunion->id;
+                $temaModel->descripcion = $tema['descripcion'];
                 $temaModel->comentario = $tema['comentario'];
                 $temaModel->save();
 
                 // Mapeamos los acuerdos a modelos tipo App\Acuerdo
-                $acuerdos = array_map(function ($acuerdo){
-                    // Creamos nuevos acuerdos con ciertos campos
-                    $acuerdoModel = new Acuerdo(Arr::only(
-                        $acuerdo, 
-                        ['tema_id', 'descripcion', 'producto_esperado', 'fecha_compromiso']
-                    ));
-                    
-                    // Agregamos el id del responsable del acuerdo
+                foreach($tema['acuerdos'] as $acuerdo){
+                    $acuerdoModel = new Acuerdo();
+                    $acuerdoModel->descripcion = $acuerdo['descripcion'];
+                    $acuerdoModel->producto_esperado = $acuerdo['producto_esperado'];
+                    $acuerdoModel->fecha_compromiso = $acuerdo['fecha_compromiso'];
+                    $acuerdoModel->tema_id = $temaModel->id;
                     $acuerdoModel->responsable_id = $acuerdo['responsable']['id'];
-                    return $acuerdoModel;
-                }, $tema['acuerdos']);
-
-                // Guardamos los acuerdos en la base de datos
-                $temaModel->acuerdos()->saveMany($acuerdos);
+                    $acuerdoModel->save();
+                }
             }
             // ---- Creamos el documento pdf de la minuta ----
             $reunion->crearPDFMinuta();
             return response(['message' => 'Minuta guardada']);
         });
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -148,8 +123,11 @@ class ReunionesMinutaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($reunion_id)
     {
-        //
+        $reunion = Reunion::findOrFail($reunion_id);
+        $this->authorize('eliminarMinuta', $reunion);
+        $respuesta = $reunion->eliminarPDFMinuta();
+        return response($respuesta);
     }
 }

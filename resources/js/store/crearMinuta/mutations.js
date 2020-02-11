@@ -2,29 +2,9 @@ import { uuidv4} from '../../helpers';
 
 export default {
     colocarMiembrosQueAsistieron(state, miembrosQueAsistieron){
-        // state.reunion.convocados = 
-        //     state.reunion.convocados.map( convocado => {
-        //         if ( miembrosQueAsistieron.includes(convocado) ){
-        //             convocado.asistio_convocado = 1;
-        //             miembrosQueAsistieron = 
-        //                 miembrosQueAsistieron
-        //                     .filter(asistente => asistente.id != convocado.id);
-        //         }
-        //         return convocado;
-        // });
         state.miembrosQueAsistieron = miembrosQueAsistieron;
     },
     colocarInvitadosExternosQueAsistieron(state, invitadosExternosQueAsistieron){
-        // state.reunion.invitados = 
-        //     state.reunion.invitados.map( invitado => {
-        //         if ( invitadosExternosQueAsistieron.includes(invitado) ){
-        //             invitado.asistio_invitado_externo = 1;
-        //             invitadosExternosQueAsistieron = 
-        //                 invitadosExternosQueAsistieron
-        //                     .filter(asistente => asistente.id != invitado.id);
-        //         }
-        //         return invitado;
-        // });
         state.invitadosExternosQueAsistieron = invitadosExternosQueAsistieron;
     },
     colocarReunion(state, reunion){
@@ -61,5 +41,8 @@ export default {
                             .filter(tema => tema.id == tema_id)[0]
                             .acuerdos
                             .filter(acuerdo => acuerdo.uuid != uuid);
+    },
+    colocarErroresDeValidacion(state, errores){
+        state.erroresDeValidacion = errores;
     },
 };

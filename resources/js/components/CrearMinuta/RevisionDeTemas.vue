@@ -2,10 +2,13 @@
   <div>
     <div class="small-title">Temas que se trataron en la reunión</div>
     <ol>
-      <li class="pt-3" v-for="tema in reunion.temas" :key="tema.id">
+      <li class="pt-3" v-for="(tema, index) in reunion.temas" :key="tema.id">
         {{tema.descripcion}}
         <br />
-
+        <aviso-error 
+          v-if="tieneError(`temas.${index}.comentario`)"
+          :error="erroresDeValidacion[`temas.${index}.comentario`][0]">
+        </aviso-error>
         <agregar-detalles
           :temaId="tema.id"
           :comentarioProp="tema.comentario"
@@ -43,11 +46,14 @@ export default {
   },
   methods: {
     // ...mapMutations(["colocarAsistentes"]),
-    ...mapActions(['ponerComentario'])
-    
+    ...mapActions(['ponerComentario']),
+
+    tieneError(campo) {
+      return this.erroresDeValidacion[campo] ? true : false;
+    },    
   },
   computed: {
-    ...mapGetters(['reunion'])
+    ...mapGetters(['reunion', 'erroresDeValidacion'])
   }
 };
 </script>

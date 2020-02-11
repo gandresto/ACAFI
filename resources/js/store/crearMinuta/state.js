@@ -5,4 +5,5 @@ export default {
     reunion: [],
     miembrosQueAsistieron: [],
     invitadosExternosQueAsistieron: [],
+    erroresDeValidacion: {},
 };
