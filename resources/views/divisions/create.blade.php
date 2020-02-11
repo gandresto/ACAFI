@@ -30,7 +30,16 @@
             <label for="nombre" class="col-md-4 col-form-label text-md-right">Nombre Completo</label>
 
             <div class="col-md-6">
-                <input id="nombre" type="text" class="form-control  @error('nombre') is-invalid @enderror" name="nombre" value="{{ old('nombre') }}" required>
+                <input 
+                    id="nombre" 
+                    type="text" 
+                    class="form-control  
+                    @error('nombre') is-invalid @enderror" 
+                    name="nombre" 
+                    value="División de " 
+                    placeholder="División de..."
+                    required
+                />
 
                 @error('nombre')
                     <span class="invalid-feedback" role="alert">

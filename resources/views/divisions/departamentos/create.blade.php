@@ -10,15 +10,19 @@
 
         <div class="form-group row">
             <label for="nombre" class="col-md-4 col-form-label text-md-right">Nombre del Departamento</label>
-
+            
             <div class="col-md-6">
-                <input id="nombre" type="text" class="form-control  @error('nombre') is-invalid @enderror" name="nombre" value="{{ old('nombre') }}" required>
-
-                @error('nombre')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
+                <div class="input-group">
+                    <div class="input-group-append">
+                      <span class="input-group-text">Departamento de </span>
+                    </div>
+                    <input id="nombre" type="text" class="form-control  @error('nombre') is-invalid @enderror" name="nombre" value="{{ old('nombre') }}" required>
+                    @error('nombre')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
             </div>
         </div>
 
