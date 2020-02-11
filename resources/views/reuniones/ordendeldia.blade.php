@@ -54,14 +54,20 @@
                 <p><strong>Orden del día:</strong></p>
             </div>
             <ol>
-                @foreach ($reunion->temas as $tema)
-                    <li>{{$tema->descripcion}}</li>
-                @endforeach
-
+                <li>Bienvenida y apertura de la sesión</li>
+                <li>Lista de asistencia</li>
+                <li>
+                    Revisión de temas o asuntos
+                    <ol type="a" style="margin-top:1.2mm; padding-left:0.6cm">
+                        @foreach ($reunion->temas as $tema)
+                        <li>{{$tema->descripcion}}</li>
+                        @endforeach
+                    </ol>
+                </li>
                 @if ($reunion->acuerdosASeguimiento->isNotEmpty())
                     <li>
                         Seguimiento a acuerdos
-                        <ol style="margin-top:1.2mm">
+                        <ol type="a" style="margin-top:1.2mm; padding-left:0.6cm">
                             @foreach ($reunion->acuerdosASeguimiento as $acuerdo)
                             <li>{{$acuerdo->descripcion}}</li>
                             @endforeach

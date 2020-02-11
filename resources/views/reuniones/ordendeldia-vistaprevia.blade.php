@@ -61,14 +61,21 @@
                 <p><strong>Orden del día:</strong></p>
             </div>
             <ol>
-                @foreach ($temas as $tema)
-                    <li>{{$tema['descripcion']}}</li>
-                @endforeach
+                <li>Bienvenida y apertura de la sesión</li>
+                <li>Lista de asistencia</li>
+                <li>
+                    Revisión de temas o asuntos
+                    <ol type="a" style="margin-top:1.2mm; padding-left:0.6cm">
+                        @foreach ($temas as $tema)
+                            <li>{{$tema['descripcion']}}</li>
+                        @endforeach
+                    </ol>
+                </li>
 
                 @if ($acuerdosASeguimiento)
                     <li>
                         Seguimiento a acuerdos
-                        <ol style="margin-top:1.2mm">
+                        <ol type="a" style="margin-top:1.2mm; padding-left:0.6cm">
                             @foreach ($acuerdosASeguimiento as $acuerdo)
                             <li>{{$acuerdo['descripcion']}}</li>
                             @endforeach
