@@ -40,6 +40,9 @@ Route::resource('divisions.departamentos.academias', 'DivisionDepartamentoAcadem
 Route::resource('users', 'UsersController');
 Route::get('/users/buscar/{consulta}', 'UsersController@buscar')->name('users.buscar');
 
+// -------- PERFIL --------
+Route::get('perfil', 'PerfilController@index')->name('perfil.index');
+
 // ------ REUNIONES -----------
 Route::resource('/reuniones', 'ReunionesController')
         ->except(['store', 'update', 'destroy']);
