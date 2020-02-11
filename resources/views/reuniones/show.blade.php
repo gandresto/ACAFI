@@ -54,22 +54,21 @@
         </a>
         @endif
         <br>
+        {{-- Condiciones para botones de minuta --}}
         @if ($reunion->minuta)
-        <a name="" id="" class="btn btn-danger" href="#" role="button">
-            <i class="fas fa-file-pdf"></i>
-            <span class="ml-1">Minuta</span>
-        </a>
-        @else
-
-        @can('update', $reunion)
-            @if ($reunion->minutaPendiente())
-            <a name="" id="crear-minuta-{{$reunion->id}}" class="btn btn-primary" href="{{route('reuniones.minuta.create', $reunion->id)}}" role="button">
-                <i class="fas fa-file"></i>
-                <span class="ml-1">Crear minuta</span>
+            <a name="descargar-minuta-{{$reunion->id}}" id="descargar-minuta-{{$reunion->id}}" class="btn btn-danger" href="{{route('reuniones.minuta.index', $reunion->id)}}" role="button">
+                <i class="fas fa-file-pdf"></i>
+                <span class="ml-1">Minuta</span>
             </a>
-            @endif
-        @endcan
-
+        @else
+            @can('crearMinuta', $reunion)
+                <p class="card-text">
+                    <a name="crear-minuta-{{$reunion->id}}" id="crear-minuta-{{$reunion->id}}" class="btn btn-primary" href="{{route('reuniones.minuta.create', $reunion->id)}}" role="button">
+                        <i class="fas fa-file"></i>
+                        <span class="ml-1">Crear minuta</span>
+                    </a>
+                </p>
+            @endcan
         @endif
     </div>
 </div>
@@ -129,7 +128,7 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <strong>Orden del día:</strong>
+        <strong>Temas por revisar:</strong>
     </div>
     <div class="col-sm-12">
         <ol>
