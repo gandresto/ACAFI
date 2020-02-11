@@ -25,6 +25,7 @@ class Division extends Model
     {
         return $this->belongsToMany(User::class, 'division_jefe',
                                     'division_id', 'jefe_id')
+                    ->using(DetallesIngresoEgreso::class)
                     ->withPivot('fecha_ingreso', 'fecha_egreso');;
     }
 
@@ -39,5 +40,11 @@ class Division extends Model
     public function departamentos()
     {
         return $this->hasMany(Departamento::class);
+    }
+
+    // Obtiene todas las academias de una división
+    public function academias()
+    {
+        return $this->hasManyThrough(Academia::class, Departamento::class);
     }
 }

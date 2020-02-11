@@ -100,6 +100,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Division::class, 'division_jefe',
                                     'jefe_id', 'division_id')
+                    ->using(DetallesIngresoEgreso::class)
                     ->withPivot('fecha_ingreso', 'fecha_egreso');
     }
 
@@ -112,6 +113,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Departamento::class, 'departamento_jefe',
                                         'jefe_id', 'departamento_id')
+                    ->using(DetallesIngresoEgreso::class)
                     ->withPivot('fecha_ingreso', 'fecha_egreso');
     }
 
@@ -124,6 +126,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Academia::class, 'academia_presidente',
                                         'presidente_id', 'academia_id')
+                    ->using(DetallesIngresoEgreso::class)
                     ->withPivot('fecha_ingreso', 'fecha_egreso');
     }
 
@@ -136,6 +139,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Academia::class, 'academia_miembro',
                                     'miembro_id', 'academia_id')
+                    ->using(DetallesIngresoEgreso::class)
                     ->withPivot('fecha_ingreso', 'fecha_egreso');
     }
 

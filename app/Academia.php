@@ -24,17 +24,23 @@ class Academia extends Model
     {
         return $this->belongsTo(Departamento::class);
     }
-
-    public function getPresidenteAttribute()
+    
+    public function getDivisionAttribute()
     {
-        return $this->presidentes()->wherePivot('fecha_egreso', '=', null)->first();
+        return $this->departamento->division;
     }
 
     public function presidentes()
     {
         return $this->belongsToMany(User::class, 'academia_presidente',
                                     'academia_id', 'presidente_id')
+                    ->using(DetallesIngresoEgreso::class)
                     ->withPivot('fecha_ingreso', 'fecha_egreso');;
+    }
+
+    public function getPresidenteAttribute()
+    {
+        return $this->presidentes()->wherePivot('fecha_egreso', '=', null)->first();
     }
 
     public function miembros()
@@ -57,7 +63,7 @@ class Academia extends Model
     public function getMiembrosActivosAttribute()
     {
         return $this->miembros()
-                    ->wherePivot('fecha_egreso', '=', null)
+                    ->wherePivot('activo', '=', null)
                     ->get()
                     ->sortBy(function ($miembro){
                         return nombre_completo($miembro, $ordenarPor = 'apellido');

@@ -29,6 +29,7 @@ class Departamento extends Model
     {
         return $this->belongsToMany(User::class, 'departamento_jefe',
                                     'departamento_id', 'jefe_id')
+                    ->using(DetallesIngresoEgreso::class)
                     ->withPivot('fecha_ingreso', 'fecha_egreso');
     }
 
