@@ -27,30 +27,30 @@ class AvisoInvitacionReunion extends Notification implements ShouldQueue
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notificado
+     * @param  mixed  $usuarioNotificado
      * @return array
      */
-    public function via($notificado)
+    public function via($usuarioNotificado)
     {
         $preferencias = [];
-        if($notificado->prefiere_email) array_push($preferencias, 'mail');
-        if($notificado->prefiere_notificaciones_app) array_push($preferencias, 'database');
-        return  $preferencias;
+        if($usuarioNotificado->prefiere_email) array_push($preferencias, 'mail');
+        if($usuarioNotificado->prefiere_notificaciones_app) array_push($preferencias, 'database');
+        return  ['mail', 'database'];
     }
 
     /**
      * Get the mail representation of the notification.
      *
-     * @param  mixed  $notificado
+     * @param  mixed  $usuarioNotificado
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notificado)
+    public function toMail($usuarioNotificado)
     {
         $link_reunion = route('reuniones.show', $this->reunion->id);
         $link_ordendeldia = route('reuniones.ordendeldia.descargar', $this->reunion->id);
         return (new MailMessage)
                     ->subject("Invitación a Reunión")
-                    ->greeting("Hola, {$notificado->gradoNombreCompleto}.")
+                    ->greeting("Hola, {$usuarioNotificado->gradoNombreCompleto}.")
                     ->line("Fuiste convocado la reunión que se celebrará el día "
                     . "**" . formato_dia_y_fecha_esp($this->reunion->inicio) . "**"
                     // . "**" . $this->reunion->inicio->locale('es')->format('l\, d \d\e F \d\e Y') . "**"
@@ -67,13 +67,16 @@ class AvisoInvitacionReunion extends Notification implements ShouldQueue
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notificado
+     * @param  mixed  $usuarioNotificado
      * @return array
      */
-    public function toArray($notificado)
+    public function toArray($usuarioNotificado)
     {
         return [
-            //
+            'mensaje' => 'Fuiste convocado a una reunión por parte de la Academia de '. $this->reunion->academia->nombre,
+            'inicio' => $this->reunion->inicio,
+            'lugar' => $this->reunion->lugar,
+            'url' => route('reuniones.show', $this->reunion->id),
         ];
     }
 }
