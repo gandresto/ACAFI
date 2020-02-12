@@ -15,9 +15,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
-
 Route::get('/calendario', 'CalendarioController@index')->name('calendario');
+
+// -------- USUARIOS ---------
+Auth::routes();
+Route::resource('users', 'UsersController');
+Route::get('/users/buscar/{consulta}', 'UsersController@buscar')->name('users.buscar');
+
+// -------- PERFIL --------
+Route::get('perfil', 'PerfilController@index')->name('perfil.index');
 
 // ----- DIVISIONES -------
 Route::resource('divisions', 'DivisionController');
@@ -36,14 +42,9 @@ Route::get('/divisions/{division}/departamentos/{departamento}/academias/{academ
                 ->name('divisions.departamentos.academias.agregar-miembro');
 Route::resource('divisions.departamentos.academias', 'DivisionDepartamentoAcademiaController');
 
-// -------- USUARIOS ---------
-Route::resource('users', 'UsersController');
-Route::get('/users/buscar/{consulta}', 'UsersController@buscar')->name('users.buscar');
-
-// -------- PERFIL --------
-Route::get('perfil', 'PerfilController@index')->name('perfil.index');
-
 // ------ REUNIONES -----------
+// Route::resource('academias.reuniones', 'AcademiaReunionController')
+//         ->except(['store', 'update', 'destroy']);
 Route::resource('/reuniones', 'ReunionesController')
         ->except(['store', 'update', 'destroy']);
 Route::get('/reuniones/{id}/orden-del-dia', 'ReunionesController@descargarOrdenDelDia')->name('reuniones.ordendeldia.descargar');
@@ -56,13 +57,8 @@ Route::get('/reuniones/{reunion}/vista-previa-od', function (App\Reunion $reunio
 
 // --------- MINUTAS --------------
 Route::resource('reuniones.minuta', 'ReunionesMinutasController')
-        ->except(['store', 'update', 'destroy', 'show']);
+        ->only(['index', 'create']);
 Route::get('/reuniones/{reunion}/minuta/vista-previa/', function (App\Reunion $reunion){
     $pdf = \PDF::loadView('reuniones.pdf.minuta', ['reunion' => $reunion]);
     return $pdf->stream();
 });
-
-
-// Route::get('/test', function (){
-//     return view('test');
-// });
