@@ -20,7 +20,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        if ($this->app->isLocal()) {
+            $this->app->register(TelescopeServiceProvider::class);
+        }
     }
 
     /**
@@ -32,7 +34,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         Blade::withoutDoubleEncoding();
-        Carbon::setLocale('es_MX');
+        Carbon::setLocale(config('app.locale'));
         setlocale(LC_TIME, 'es_MX', 'es', 'ES');
         //if(env('FORCE_HTTPS')) {
         //    URL::forceScheme('https');
