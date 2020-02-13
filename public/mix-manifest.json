@@ -2,5 +2,6 @@
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/css/pdf.css": "/css/pdf.css",
+    "/js/calendario/index.js": "/js/calendario/index.js",
     "/js/warn-exit.js": "/js/warn-exit.js"
 }

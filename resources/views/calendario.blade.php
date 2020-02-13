@@ -1,6 +1,11 @@
 @extends('layouts.app')
+
 @section('title')
     Calendario
+@endsection
+
+@section('page-scripts')
+    <script src="{{asset('js/calendario/index.js')}}" defer></script>
 @endsection
 
 @section('content')
