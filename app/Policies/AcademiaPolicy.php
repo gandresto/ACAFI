@@ -114,4 +114,9 @@ class AcademiaPolicy
     public function darDeBajaCualquierMiembro(User $user, Academia $academia){
         return $academia->presidente->id == $user->id;
     }
+
+    public function crearReunion(User $user, Academia $academia)
+    {
+        return $academia->presidente->id == $user->id;
+    }
 }
