@@ -16,6 +16,7 @@ mix.autoload({
   });
 
 mix.js('resources/js/app.js', 'public/js')
+    .js('resources/js/calendario/index.js', 'public/js/calendario')
     .js('resources/js/warn-exit.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .sass('resources/sass/pdf.scss', 'public/css');
