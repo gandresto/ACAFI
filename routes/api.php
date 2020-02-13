@@ -23,11 +23,15 @@ Route::apiResource('/divisions', 'Api\DivisionController')->middleware('auth:api
 Route::get('/divisions/buscar/{consulta}', 'Api\DivisionController@buscar')->middleware('auth:api');
 
 // ----------- Rutas para Usuario -------------
-Route::get('/users/yo', 'Api\UserController@yo')->middleware('auth:api');
-Route::apiResource('/users', 'Api\UserController')->middleware('auth:api');
-Route::apiResource('/users/{user_id}/reuniones', 'Api\UserReunionesController')->middleware('auth:api');
-Route::get('/users/buscar/{consulta}', 'Api\UserController@buscar')->middleware('auth:api');
-Route::get('/users/{user_id}/academiasQueHaPresidido', 'Api\UserController@academiasQueHaPresidido')->middleware('auth:api');
+Route::apiResource('users', 'Api\UserController')->middleware('auth:api');
+Route::apiResource('users.reuniones', 'Api\UserReunionesController')->middleware('auth:api');
+Route::apiResource('users.academiasQueHaPresidido', 'Api\UserAcademiasQueHaPresididoController')->middleware('auth:api');
+
+// ----------- Rutas para usuario autenticado -------------
+Route::apiResource('/perfil/reuniones', 'Api\PerfilReunionesController')->middleware('auth:api');
+// Route::apiResource('/perfil/presidencia/academias', 'Api\PerfilReunionesController')->middleware('auth:api');
+// Route::apiResource('perfil', 'Api\PerfilController')->middleware('auth:api');
+
 
 // ----------- Rutas para Academias -------------
 Route::apiResource('/academias', 'Api\AcademiaController')->middleware('auth:api');
