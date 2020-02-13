@@ -4,29 +4,20 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
-import 'vue-cal/dist/i18n/es.js';
+// require('./bootstrap');
+
 import Vue from 'vue';
 import VueAxios from 'vue-axios';
-import axios from 'axios';
+// import axios from 'axios';
 import store from './store/';
 
 // Importar modulos externos
 import BootstrapVue from 'bootstrap-vue';
 import Autocomplete from '@trevoreyre/autocomplete-vue'
-import VueCal from 'vue-cal';
 import datePicker from 'vue-bootstrap-datetimepicker';
 
-Vue.use(VueAxios, axios);
+Vue.use(VueAxios, window.axios);
 Vue.use(BootstrapVue);
-
-// Configurar headers para Axios
-axios.defaults.headers.common = {
-    'X-CSRF-TOKEN': Laravel.csrfToken,
-    'X-Requested-With': 'XMLHttpRequest',
-    'Authorization': 'Bearer ' + Laravel.apiToken,
-    'Accept' : 'application/json',
-};
 
 // Configurar iconos de vue-bootstrap-datetimepicker
 jQuery.extend(true, jQuery.fn.datetimepicker.defaults, {
@@ -54,7 +45,6 @@ jQuery.extend(true, jQuery.fn.datetimepicker.defaults, {
 // Componentes de dependencias
 Vue.use(Autocomplete);
 Vue.use(datePicker);
-Vue.component('v-calendar', VueCal);
 
 // Componentes propios
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
@@ -65,7 +55,6 @@ Vue.component('crear-usuario-modal', require('./components/CrearUsuarioModal.vue
 Vue.component('aviso-error', require('./components/AvisoDeError.vue').default);
 
 // Componentes "vista"
-Vue.component('calendario-index', require('./views/Calendario.vue').default);
 Vue.component('crear-reunion', require('./views/CrearReunion.vue').default);
 Vue.component('crear-minuta', require('./views/CrearMinuta.vue').default);
 
