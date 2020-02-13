@@ -43,8 +43,8 @@ Route::get('/divisions/{division}/departamentos/{departamento}/academias/{academ
 Route::resource('divisions.departamentos.academias', 'DivisionDepartamentoAcademiaController');
 
 // ------ REUNIONES -----------
-// Route::resource('academias.reuniones', 'AcademiaReunionController')
-//         ->except(['store', 'update', 'destroy']);
+Route::resource('academias.reuniones', 'AcademiaReunionesController')
+        ->except(['store', 'update', 'destroy']);
 Route::resource('/reuniones', 'ReunionesController')
         ->except(['store', 'update', 'destroy']);
 Route::get('/reuniones/{id}/orden-del-dia', 'ReunionesController@descargarOrdenDelDia')->name('reuniones.ordendeldia.descargar');

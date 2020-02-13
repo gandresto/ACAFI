@@ -15,9 +15,10 @@ mix.autoload({
     'moment': ['moment','window.moment'],   
   });
 
-mix.js('resources/js/app.js', 'public/js')
-    .js('resources/js/calendario/index.js', 'public/js/calendario')
+mix.js('resources/js/calendario/index.js', 'public/js/calendario')
+    .js('resources/js/academias/reuniones/crear/index.js', 'public/js/academias/reuniones/crear')
     .js('resources/js/warn-exit.js', 'public/js')
+    // .js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .sass('resources/sass/pdf.scss', 'public/css');
 
