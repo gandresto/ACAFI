@@ -4,6 +4,10 @@
     Reuniones
 @endsection
 
+@section('page-scripts')
+<script src="{{asset('js/reuniones/index.js')}}"></script>
+@endsection
+
 @section('content')
 
 <div class="row">
@@ -13,15 +17,12 @@
 </div>
 
 @can('create', App\Reunion::class)
-    <div class="row">
-        <div class="col-md-12 py-2">
-        <a class="btn btn-primary" href="{{route('reuniones.create')}}" role="button">
-                <i class="fa fa-calendar-plus" aria-hidden="true"></i>
-                <span class="ml-2">Agendar reunión</span>
-            </a>
-        </div>
+<div class="row">
+    <div class="col-md-12 py-2">
+        <seleccionar-academia-modal></seleccionar-academia-modal>        
     </div>
-    <hr>
+</div>
+<hr>
 @endcan
 
 {{-- Filtrado de reuniones --}}

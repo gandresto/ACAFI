@@ -20,10 +20,6 @@
 <div class="row">
     <div class="col-md-12 py-2">
         <seleccionar-academia-modal></seleccionar-academia-modal>        
-        {{-- <a class="btn btn-primary" href="{{route('reuniones.create')}}" role="button">
-            <i class="fa fa-calendar-plus" aria-hidden="true"></i>
-            <span class="ml-2">Agendar reunión</span>
-        </a> --}}
     </div>
 </div>
 <hr>

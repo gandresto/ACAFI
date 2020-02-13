@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import API from "../../services/api";
+import API from "../../../services/api";
 export default {
   mounted() {
     let url = `${API.baseURL}/users/${window.Laravel.authUserId}/academiasQueHaPresidido?actual=1`;
