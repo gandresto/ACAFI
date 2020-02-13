@@ -55,6 +55,7 @@ class ReunionesController extends Controller
     public function descargarOrdenDelDia(int $id_reunion)
     {
         $reunion = Reunion::findOrFail($id_reunion);
+        $this->authorize('view', $reunion);
         if (!$reunion->orden_del_dia) abort(404);
         else return response()->file(
             config('filesystems.disks.local.root')
