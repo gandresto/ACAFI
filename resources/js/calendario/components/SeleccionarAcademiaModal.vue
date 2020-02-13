@@ -5,7 +5,7 @@
         <span class="ml-2">Agendar reunión</span>
     </b-button>
 
-    <b-modal id="modal-seleccionar-academia" title="Selecciona una academia" v-if="academias">
+    <b-modal id="modal-seleccionar-academia" title="Agendar reunión" v-if="academias">
       <template v-slot:default>
         <div class="form-group">
           <label for="select-academia">Academia</label>
@@ -15,7 +15,11 @@
             value-field="id"
             text-field="nombre"
             disabled-field="notEnabled"
-          ></b-form-select>
+          >
+            <template v-slot:first>
+              <b-form-select-option :value="null" disabled>-- Selecciona una academia --</b-form-select-option>
+            </template>
+          </b-form-select>
         </div>
       </template>
       <template v-slot:modal-footer="{ cancel }">
@@ -30,7 +34,7 @@
             name="btn-seleccionar-academia" 
             id="btn-seleccionar-academia" 
             :href="rutaCrearReunion"
-          >Aceptar</b-button>
+          >Continuar</b-button>
         </div>
       </template>
     </b-modal>
