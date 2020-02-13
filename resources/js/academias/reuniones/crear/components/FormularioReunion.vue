@@ -28,7 +28,7 @@
         </div>
 
         <!-- ----------- Fecha y hora de fin --------- -->
-        <div class="col-sm-12 col-md-6" v-if="inicio">
+        <div class="col-sm-12 col-md-6">
           <div class="form-grou">
             <label for="fecha-fin">Fecha y hora de finalización *</label>
             <date-picker
@@ -163,7 +163,8 @@ export default {
   },
   mounted() {
     let academia = JSON.parse(this.academiaProp);
-    this.colocarAcademia(academia);    
+    this.colocarAcademia(academia);
+    window.onbeforeunload = () => '¿Deseas salir? Puede que los cambios no se hayan guardado';
   },
   methods: {
     ...mapMutations(['colocarErroresDeValidacion', 'colocarAcademia']),
@@ -225,7 +226,7 @@ export default {
         });
     },
     submitForm(evt) {
-      //
+      window.onbeforeunload = null;
       if( ! confirm('¿Deseas agendar la reunión? Esto enviará '+
                   'invitaciones por correo a todos los convocados ' + 
                   'y generará el PDF de la orden del día.') )
@@ -242,7 +243,6 @@ export default {
         .then(r => r.data)
         .then(data => {
           this.estadoCreacionReunion = ESTADO_API.LISTO;
-          window.onbeforeunload = null;
           alert('Reunión creada satisfactoriamente');
           window.location = process.env.MIX_APP_URL+'/reuniones';
         })
