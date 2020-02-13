@@ -40,6 +40,29 @@ class User extends Authenticatable
     ];
 
     /**
+     * Buscar usuario
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $busqueda
+     * @param int $num_resultados
+     * 
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeBuscar($query, string $busqueda, int $limit)
+    {
+        // $connection = config('database.default');
+        // $driver = config("database.connections.{$connection}.driver");
+        // if ($driver == 'sqlite') {
+        //     $query = $query->whereRaw("nombre || ' ' || apellido_paterno || ' ' || apellido_materno LIKE '%{$busqueda}%'")
+        //                 ->orderBy('apellido_paterno')
+        // } else {
+            $query = $query->whereRaw("CONCAT(nombre, ' ', apellido_paterno, ' ', apellido_materno) LIKE '%{$busqueda}%'")
+                        ->orderBy('apellido_paterno');
+        // }
+        return $limit ? $query->limit($limit) : $query;
+    }
+
+    /**
      * Genera un api_token único y guarda al usuario.
      *
      * @return bool
