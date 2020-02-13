@@ -78,9 +78,12 @@ export default {
     buscarInvitado(consulta) {
       return new Promise((res, rej) => {
         if (!consulta || consulta.length < 3) return res([]);
-        let uri = `${api.baseURL}/users/buscar/${consulta}`;
+        let uri = `${api.baseURL}/users`;
+        let params = {
+          q: consulta,
+        }
         axios
-          .get(uri)
+          .get(uri, {params})
           .then(r => r.data.data)
           .then(resultadoBusqueda => {
             this.error = "";

@@ -17,10 +17,21 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $q = $request->input('q');
+        $limit = $request->input('limit', 5);
+        if( $q ){
+            return Cache::remember("user.buscar?q={$q}&limit={$limit}", now()->addSeconds(30), function () use ($q, $limit){
+                // Si la cadena a buscar es menor o igual a 2 caracteres, devuelve una colección vacia
+                $users = strlen($q) > 2 ? User::buscar($q, $limit)->get() : collect([]);
+                // Si no encuentra usuarios, devuelve un error 404
+                return $users->isNotEmpty() ? UserResource::collection($users) : response(['message' => 'No se encontró ningún usuario con los criterios de búsqueda'], 404);
+            });
+        }
         return UserResource::collection(User::all());
     }
 
@@ -59,9 +70,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        return new UserResource(User::findOrFail($id));
+        $this->authorize('view', $user);
+        return new UserResource($user);
     }
 
     /**
@@ -85,30 +97,6 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function buscar($consulta)
-    {
-        $consulta = urldecode($consulta);
-        return Cache::remember('user.buscar.'.$consulta, now()->addSeconds(30), function () use ($consulta){
-            $connection = config('database.default');
-            $driver = config("database.connections.{$connection}.driver");
-            if ($driver == 'sqlite') {
-                $users = User::where("email", "LIKE", "%". $consulta . "%")
-                                    ->orWhereRaw("nombre || ' ' || apellido_paterno || ' ' || apellido_materno LIKE '%" . $consulta . "%' ")
-                                    ->orderBy('nombre', 'desc')
-                                    ->limit(5)
-                                    ->get();
-            } else {
-                $users = User::where("email", 'LIKE', "%". $consulta . "%")
-                                    ->orWhereRaw("CONCAT(nombre, ' ', apellido_paterno, ' ', apellido_materno) LIKE '%" . $consulta . "%' ")
-                                    ->orderBy('nombre', 'desc')
-                                    ->limit(5)
-                                    ->get();
-            }
-            // dd($users);
-            return $users->isNotEmpty() ? UserResource::collection($users) : response()->json(['message' => 'No se encontró ningún usuario con los criterios de búsqueda'], 404);
-        });
     }
 
     public function academiasQueHaPresidido(Request $request, int $user_id)
