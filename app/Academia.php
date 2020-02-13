@@ -77,9 +77,13 @@ class Academia extends Model
 
     public function getAcuerdosPendientesAttribute()
     {
-        $reuniones_ids = $this->reuniones->pluck('id');
-        $temas_reuniones_ids = Tema::whereIn('reunion_id', $reuniones_ids)->select('id');
+        $temas_reuniones_ids = $this->temas->pluck('id');
         return Acuerdo::pendientes()->whereIn('tema_id', $temas_reuniones_ids)->get();
+    }
+
+    public function temas()
+    {
+        return $this->hasManyThrough(Tema::class, Reunion::class);
     }
 
     /**
@@ -93,8 +97,7 @@ class Academia extends Model
      */
     public function acuerdos(string $estado_fin = null)
     {
-        $reuniones_ids = $this->reuniones->pluck('id');
-        $temas_reuniones_ids = Tema::whereIn('reunion_id', $reuniones_ids)->select('id');
+        $temas_reuniones_ids = $this->temas->pluck('id');
         $query = Acuerdo::whereIn('tema_id', $temas_reuniones_ids);
         if($estado_fin == 'pend') $query = $query->pendientes();
         else if($estado_fin == 'fin') $query = $query->finalizados();
