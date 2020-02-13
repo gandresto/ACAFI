@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ReunionResource;
 use App\Http\Resources\VueCalendarEventResource;
+use Illuminate\Support\Facades\Cache;
 
 class UserReunionesController extends Controller
 {
@@ -20,10 +21,13 @@ class UserReunionesController extends Controller
     {
         $user = User::findOrFail($user_id);
         $this->authorize('view', $user);
+        $reuniones = Cache::remember("reuniones-user-{$user->id}", 60, function () use ($user) {
+            return $user->reuniones;
+        });
         if($request->input('vuecal') == 1){
-            return VueCalendarEventResource::collection($user->reuniones);
+            return VueCalendarEventResource::collection($reuniones);
         } else{
-            return ReunionResource::collection($user->reuniones);
+            return ReunionResource::collection($reuniones);
         }
     }
 
