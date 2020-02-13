@@ -1,4 +1,4 @@
-import ESTADO from './../../../../enum-estado-api'
+import ESTADO from './../../../enum-estado-api'
 
 export default {
     estadoAcademia: ESTADO.INICIADO,

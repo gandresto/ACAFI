@@ -1,6 +1,8 @@
-require('../../../bootstrap');
+// require('../../bootstrap');
+require('../../axiosconfig');
+
 import Vue from 'vue';
-import store from './store/';
+import store from './store';
 import BootstrapVue from 'bootstrap-vue';
 import Autocomplete from '@trevoreyre/autocomplete-vue'
 import datePicker from 'vue-bootstrap-datetimepicker';
@@ -32,7 +34,7 @@ Vue.component('agregar-convocados', require('./components/AgregarConvocados.vue'
 Vue.component('tabla-acuerdos', require('./components/TablaAcuerdos.vue').default);
 Vue.component('agregar-temas', require('./components/AgregarTemas.vue').default);
 Vue.component('agregar-temas-tema-item', require('./components/AgregarTemasTemaItem.vue').default);
-Vue.component('aviso-error', require('./../../../components/AvisoDeError.vue').default);
+Vue.component('aviso-error', require('./../../components/AvisoDeError.vue').default);
 
 const app = new Vue({
     store,

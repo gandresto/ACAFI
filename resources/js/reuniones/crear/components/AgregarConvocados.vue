@@ -45,7 +45,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import { obtenerNombreCompleto } from "../../../../helpers";
+import { obtenerNombreCompleto } from "../../../helpers";
 
 export default {
   mounted() {

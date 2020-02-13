@@ -123,8 +123,8 @@
 </template>
 
 <script>
-import ESTADO_API from "../../../../enum-estado-api";
-import API from "../../../../services/api";
+import ESTADO_API from "../../../enum-estado-api";
+import API from "../../../services/api";
 
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 import {set} from 'vue';
