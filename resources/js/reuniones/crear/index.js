@@ -8,7 +8,8 @@ import {
     FormCheckboxPlugin, 
     TablePlugin, 
     ButtonPlugin, 
-    InputGroupPlugin, 
+    InputGroupPlugin,
+    FormInputPlugin, 
     FormPlugin 
 } from 'bootstrap-vue';
 import Autocomplete from '@trevoreyre/autocomplete-vue'
@@ -29,12 +30,15 @@ import datePicker from 'vue-bootstrap-datetimepicker';
 //     }
 // });
 
+// Registro componentes de bootstrap-vue
 Vue.use(FormGroupPlugin);
 Vue.use(FormCheckboxPlugin);
 Vue.use(TablePlugin);
 Vue.use(ButtonPlugin);
 Vue.use(InputGroupPlugin);
 Vue.use(FormPlugin);
+Vue.use(FormInputPlugin);
+
 Vue.use(Autocomplete);
 Vue.use(datePicker);
 
