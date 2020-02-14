@@ -23,7 +23,7 @@ Route::resource('users', 'UsersController');
 Route::get('/users/buscar/{consulta}', 'UsersController@buscar')->name('users.buscar');
 
 // -------- PERFIL --------
-Route::get('perfil', 'PerfilController@index')->name('perfil.index');
+Route::get('perfil', 'PerfilController@index')->name('perfil.index')->middleware('auth');
 
 // ----- DIVISIONES -------
 Route::resource('divisions', 'DivisionController');
@@ -44,10 +44,12 @@ Route::resource('divisions.departamentos.academias', 'DivisionDepartamentoAcadem
 
 // ------ REUNIONES -----------
 Route::resource('academias.reuniones', 'AcademiaReunionesController')
-        ->except(['store', 'update', 'destroy']);
+        ->except(['store', 'update', 'destroy'])
+        ->middleware('auth');
 Route::resource('/reuniones', 'ReunionesController')
         ->except(['store', 'update', 'destroy']);
-Route::get('/reuniones/{id}/orden-del-dia', 'ReunionesController@descargarOrdenDelDia')->name('reuniones.ordendeldia.descargar');
+Route::get('/reuniones/{id}/orden-del-dia', 'ReunionesController@descargarOrdenDelDia')
+        ->name('reuniones.ordendeldia.descargar');
 Route::get('/reuniones/{id}/emailpreview', 'ReunionesController@emailPreview');
 Route::get('/reuniones/{reunion}/vista-previa-od', function (App\Reunion $reunion){
     $pdf = \PDF::loadView('reuniones.ordendeldia', ['reunion' => $reunion]);
