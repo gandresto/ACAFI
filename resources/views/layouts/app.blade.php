@@ -100,12 +100,12 @@
                             </li>
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="dropdownUser" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->grado . ' ' . Auth::user()->nombre }}
                                     <span class="caret"></span>
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownUser">
                                     <a class="dropdown-item" href="{{route('perfil.index')}}">
                                         Perfil
                                     </a>
@@ -165,12 +165,12 @@
             <!-- Copyright -->
         </footer>
         <!-- Footer -->
-    </div>
+    </div>  
     <script>
         window.Laravel = {
             'authUserId' : {{ Auth::user()->id ?? null }}
         };
-     </script>
-     @yield('page-scripts')
+    </script>
+    @yield('page-scripts')
 </body>
 </html>

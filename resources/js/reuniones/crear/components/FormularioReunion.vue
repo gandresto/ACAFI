@@ -7,7 +7,7 @@
 
     <!-- ----------- Formulario para crear la reunión (desplegable al seleccionar academia) --------- -->
     <b-form @submit.prevent="submitForm">
-      <b-row>
+      <div class="row">
         <!-- ----------- Fecha y hora de inicio --------- -->
         <div class="col-sm-12 col-md-6">
           <div class="form-group">
@@ -29,7 +29,7 @@
 
         <!-- ----------- Fecha y hora de fin --------- -->
         <div class="col-sm-12 col-md-6">
-          <div class="form-grou">
+          <div class="form-group">
             <label for="fecha-fin">Fecha y hora de finalización *</label>
             <date-picker
               id="fecha-fin"
@@ -42,7 +42,7 @@
             </span>
           </div>
         </div>
-      </b-row>
+      </div>
 
       <!-- ----------- Lugar --------- -->
       <b-form-group id="lugar" label="Lugar *" label-for="text-lugar">
@@ -82,7 +82,7 @@
       <tabla-acuerdos v-if="acuerdosPendientes.length > 0"></tabla-acuerdos>
 
       <!-- ------- Botones de vista previa y enviar formulario ----- -->
-      <b-form-group class="text-md-right">
+      <div class="form-group text-md-right">
         <b-button variant="secondary" @click="vistaPrevia">
           <div
             v-if="estadoVistaPrevia == estadoApi.CARGANDO"
@@ -117,7 +117,7 @@
           <i class="fa fa-calendar-check mr-1"></i>
           Crear Reunión
         </b-button>
-      </b-form-group>
+      </div>
     </b-form>
   </div>
 </template>
@@ -127,7 +127,7 @@ import ESTADO_API from "../../../enum-estado-api";
 import API from "../../../services/api";
 
 import { mapGetters, mapActions, mapMutations } from 'vuex';
-import {set} from 'vue';
+import { set } from 'vue';
 
 export default {
   props: ['academiaProp'],
