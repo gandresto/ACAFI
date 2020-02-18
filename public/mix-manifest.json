@@ -1,7 +1,9 @@
 {
-    "/js/app.js": "/js/app.js",
+    "/js/bootstrap.js": "/js/bootstrap.js",
     "/css/app.css": "/css/app.css",
     "/css/pdf.css": "/css/pdf.css",
     "/js/calendario/index.js": "/js/calendario/index.js",
+    "/js/reuniones/crear/index.js": "/js/reuniones/crear/index.js",
+    "/js/reuniones/index.js": "/js/reuniones/index.js",
     "/js/warn-exit.js": "/js/warn-exit.js"
 }
