@@ -1,19 +1,10 @@
-// require('../../bootstrap');
 require('../../axiosconfig');
 
 import Vue from 'vue';
 import store from './store';
-import { 
-    FormGroupPlugin, 
-    FormCheckboxPlugin, 
-    TablePlugin, 
-    ButtonPlugin, 
-    InputGroupPlugin,
-    FormInputPlugin, 
-    FormPlugin 
-} from 'bootstrap-vue';
-import Autocomplete from '@trevoreyre/autocomplete-vue'
+import Autocomplete from '@trevoreyre/autocomplete-vue';
 import datePicker from 'vue-bootstrap-datetimepicker';
+import BootstrapVue from 'bootstrap-vue';
 
 // Configurar iconos de vue-bootstrap-datetimepicker
 // jQuery.extend(true, jQuery.fn.datetimepicker.defaults, {
@@ -31,13 +22,7 @@ import datePicker from 'vue-bootstrap-datetimepicker';
 // });
 
 // Registro componentes de bootstrap-vue
-Vue.use(FormGroupPlugin);
-Vue.use(FormCheckboxPlugin);
-Vue.use(TablePlugin);
-Vue.use(ButtonPlugin);
-Vue.use(InputGroupPlugin);
-Vue.use(FormPlugin);
-Vue.use(FormInputPlugin);
+Vue.use(BootstrapVue);
 
 Vue.use(Autocomplete);
 Vue.use(datePicker);

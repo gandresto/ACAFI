@@ -1,5 +1,6 @@
 <template>
-  <b-form 
+ <div>
+    <b-form 
     id="form-crear-minuta"
     v-if="reunion.id" 
     @submit.prevent="enviarFormulario" 
@@ -67,22 +68,22 @@
           </div>
           Crear Minuta
         </b-button>
-        <!-- <b-button type="submit" variant="primary">Crear Minuta</b-button> -->
       </div>
     </div>
   </b-form>
+ </div>
+
 </template>
 
 <script>
-import ESTADO_API from "../enum-estado-api";
-import api from "../services/api";
+import ESTADO_API from "../../../../enum-estado-api";
+import api from "../../../../services/api";
 import {format, parseISO} from 'date-fns';
 
-import { createNamespacedHelpers } from 'vuex'
-const { mapGetters, mapActions, mapMutations } = createNamespacedHelpers('crearMinuta')
-import ListaDeAsistencia from '../components/CrearMinuta/ListaDeAsistencia.vue'
-import RevisionDeTemas from '../components/CrearMinuta/RevisionDeTemas.vue'
-import SeguimientoAAcuerdos from '../components/CrearMinuta/SeguimientoAAcuerdos.vue'
+import { mapGetters, mapActions, mapMutations } from 'vuex';
+import ListaDeAsistencia from './ListaDeAsistencia.vue'
+import RevisionDeTemas from './RevisionDeTemas.vue'
+import SeguimientoAAcuerdos from './SeguimientoAAcuerdos.vue'
 
 export default {
   components: {
@@ -101,9 +102,6 @@ export default {
   mounted() {
     this.ponerReunion(this.reunionResource);
     window.onbeforeunload = () => '¿Deseas salir? Puede que los cambios no se hayan guardado';
-    // this.$nextTick(function(){
-    //   $('#form-crear-minuta').focus();
-    // });
   },
   methods: {
     ...mapMutations(["colocarErroresDeValidacion"]),
@@ -129,8 +127,10 @@ export default {
         .post(url, {data})
         .then(data => data.data)
         .then(data => {
-          console.log(data);
+          // console.log(data);
           this.estadoCreacionDeMinuta = ESTADO_API.LISTO;
+          alert('Minuta creada satisfactoriamente');
+          window.location = process.env.MIX_APP_URL+'/reuniones';
         })
         .catch(error => {
           window.scrollTo(0,0);
@@ -155,10 +155,6 @@ export default {
     tieneError(campo) {
       return this.erroresDeValidacion[campo] ? true : false;
     },
-    // saluda(evt){
-    //   evt.preventDefault();
-    //   console.log(evt);
-    // },
   },
   computed: {
     ...mapGetters([

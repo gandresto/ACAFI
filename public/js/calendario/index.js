@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1773,10 +1773,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../services/api */ "./resources/js/services/api.js");
 /* harmony import */ var _enum_estado_api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../../../enum-estado-api */ "./resources/js/enum-estado-api.js");
-//
-//
-//
-//
 //
 //
 //
@@ -51778,18 +51774,18 @@ var render = function() {
             fn: function() {
               return [
                 _vm.estadoAcademias == _vm.ESTADO.CARGANDO
-                  ? _c("div", { staticClass: "form-group text-center" }, [
-                      _c("div", { staticClass: "col-sm-12" }, [
-                        _c("div", {
-                          staticClass: "spinner-border spinner-border-sm mx-1",
-                          attrs: { role: "status" }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-sm-12" }, [
-                        _vm._v("\n          Cargando academias...\n        ")
-                      ])
-                    ])
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "spinner-border spinner-border-sm mx-1",
+                        attrs: { role: "status" }
+                      },
+                      [
+                        _c("span", { staticClass: "sr-only" }, [
+                          _vm._v("Cargando academias...")
+                        ])
+                      ]
+                    )
                   : _vm._e(),
                 _vm._v(" "),
                 _vm.estadoAcademias == _vm.ESTADO.LISTO
@@ -65489,14 +65485,14 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 2:
+/***/ 1:
 /*!************************************************!*\
   !*** multi ./resources/js/calendario/index.js ***!
   \************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\agendav2\resources\js\calendario\index.js */"./resources/js/calendario/index.js");
+module.exports = __webpack_require__(/*! C:\Users\Andres.DESKTOP-0MVIK1S\agendav2\resources\js\calendario\index.js */"./resources/js/calendario/index.js");
 
 
 /***/ })

@@ -8,8 +8,7 @@
 // import {format, parseISO} from 'date-fns';
 // import { obtenerNombreCompleto } from '../../helpers';
 
-import { createNamespacedHelpers } from 'vuex'
-const { mapActions, mapGetters, mapMutations } = createNamespacedHelpers('crearMinuta')
+import { mapGetters } from 'vuex';
 
 export default {
   computed: {

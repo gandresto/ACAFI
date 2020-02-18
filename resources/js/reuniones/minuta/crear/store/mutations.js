@@ -1,4 +1,4 @@
-import { uuidv4} from '../../helpers';
+import { uuidv4} from '../../../../helpers';
 
 export default {
     colocarMiembrosQueAsistieron(state, miembrosQueAsistieron){

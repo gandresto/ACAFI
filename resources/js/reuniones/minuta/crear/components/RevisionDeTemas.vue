@@ -26,8 +26,7 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
-const { mapGetters, mapActions } = createNamespacedHelpers('crearMinuta')
+import { mapGetters, mapActions } from 'vuex';
 import AgregarDetalles from "./RevisionDeTemasAgregarDetalles.vue";
 
 export default {

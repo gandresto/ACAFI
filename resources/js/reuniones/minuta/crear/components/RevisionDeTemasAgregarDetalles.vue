@@ -144,10 +144,9 @@
 
 <script>
 import {format, parseISO} from 'date-fns';
-import { obtenerNombreCompleto } from '../../helpers';
+import { obtenerNombreCompleto } from '../../../../helpers';
 
-import { createNamespacedHelpers } from 'vuex'
-const { mapActions, mapGetters, mapMutations } = createNamespacedHelpers('crearMinuta')
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   props: ["temaId", "comentarioProp"],

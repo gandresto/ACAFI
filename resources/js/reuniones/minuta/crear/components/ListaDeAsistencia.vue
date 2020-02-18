@@ -46,8 +46,7 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
-const { mapGetters, mapMutations } = createNamespacedHelpers('crearMinuta')
+import { mapGetters, mapMutations } from 'vuex';
 
 export default {
   props: ['tipoDeDatos', 'datos'],
