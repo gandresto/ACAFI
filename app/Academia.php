@@ -47,6 +47,7 @@ class Academia extends Model
     {
         return $this->belongsToMany(User::class, 'academia_miembro',
                                     'academia_id', 'miembro_id')
+                    ->using(DetallesIngresoEgreso::class)    
                     ->withPivot('fecha_ingreso', 'fecha_egreso');
     }
 

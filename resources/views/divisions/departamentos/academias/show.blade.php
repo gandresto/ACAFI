@@ -90,7 +90,7 @@
                                 <tr>
                                     <td>{{$miembro->gradoNombreCompleto}}</td>
                                     <td>{{$miembro->email}}</td>
-                                    <td>{{$miembro->pivot->fecha_ingreso}}</td>
+                                    <td>{{formato_fecha_esp($miembro->pivot->fecha_ingreso)}}</td>
                                     {{-- @can('create', App\Academia::class) --}}
                                         <td>
                                             <form action="{{ route('divisions.departamentos.academias.darDeBajaMiembro', [$division->id, $departamento->id, $academia->id, $miembro->id]) }}" method="POST">
