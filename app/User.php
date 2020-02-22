@@ -162,7 +162,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Academia::class, 'academia_miembro',
                                     'miembro_id', 'academia_id')
-                    ->using(DetallesIngresoEgreso::class)
+                    ->using(DetallesIngresoEgreso::class) // Tabla pivote
                     ->withPivot('fecha_ingreso', 'fecha_egreso');
     }
 
