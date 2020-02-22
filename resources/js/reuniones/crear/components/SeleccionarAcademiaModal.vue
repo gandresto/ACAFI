@@ -7,12 +7,16 @@
 
     <b-modal id="modal-seleccionar-academia" title="Agendar reunión">
       <template v-slot:default>
-        <div
-            v-if="estadoAcademias == ESTADO.CARGANDO"
-            class="spinner-border spinner-border-sm mx-1"
-            role="status"
-          ><span class="sr-only">Cargando academias...</span>
+        <!--  ---------- Icono y mensaje de carga ------------ -->
+        <div class="form-group text-center" v-if="estadoAcademias == ESTADO.CARGANDO">
+          <div class="col-sm-12">
+            <div class="spinner-border spinner-border-sm mx-1" role="status"></div>
+          </div>
+          <div class="col-sm-12">
+            Cargando academias...
+          </div>
         </div>
+        <!--  ---------- Select academia ------------ -->
         <div class="form-group" v-if="estadoAcademias == ESTADO.LISTO">
           <label for="select-academia">Academia</label>
           <b-form-select
