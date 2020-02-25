@@ -64,3 +64,6 @@ Route::get('/reuniones/{reunion}/minuta/vista-previa/', function (App\Reunion $r
     $pdf = \PDF::loadView('reuniones.pdf.minuta', ['reunion' => $reunion]);
     return $pdf->stream();
 });
+
+// ----------- TEAPOT ----------
+Route::get('/teapot/brew','TeapotController@brew')->name('teapot.brew');
