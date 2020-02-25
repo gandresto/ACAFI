@@ -7,6 +7,9 @@ use App\Academia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use App\Rules\NoEsMiembroRule;
+use App\Rules\NoEsPresidenteRule;
+use Illuminate\Support\Facades\Validator;
 
 class AcademiaMiembrosController extends Controller
 {
@@ -30,7 +33,21 @@ class AcademiaMiembrosController extends Controller
      */
     public function store(Request $request, Academia $academia)
     {
-        //
+        $this->authorize('agregarMiembro', $academia);
+
+        $data = (array) $request->data;
+        $miembros = $academia->miembros;
+        $presidente = $academia->presidente;
+        Validator::make($data, [
+            'nuevosMiembros' => 'required',
+            'nuevosMiembros.*' => 'exists:users,id',
+            'nuevosMiembros.*' => [ 
+                new NoEsMiembroRule($miembros),
+                new NoEsPresidenteRule($presidente),
+            ],
+        ])->validate();
+
+        return response($request->all());
     }
 
     /**
