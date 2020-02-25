@@ -21,8 +21,8 @@
     {{-- <script src="{{ asset('js/bootstrap.js') }}" defer></script> --}}
     
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css">
+    {{-- <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css"> --}}
     
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">

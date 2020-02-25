@@ -20,27 +20,49 @@ Agenda para las academias de la FI. Hecho sobre el framework de Laravel 5.8 con 
 
 1. Instalar las dependencias necesarias usando, dentro de la carpeta del proyecto, el comando:
 
-    ```$ composer install```
+    ```shell
+    $ composer install
+    ```
 
-2. Instalar las dependencias de npm usando el comando:
+2. Instalar las dependencias de npm:
 
-    ```$ npm install```
+    ```shell
+    $ npm install
+    ```
 
 3. Editar el archivo .env.example para adecuarlo a tu entorno y renombrarlo como .env
 
-4. Generar clave de aplicación con el comando: 
+4. Generar clave de aplicación: 
 
-    ```$ php artisan key:generate```
+    ```shell
+    $ php artisan key:generate
+    ```
 
-5. Generar la caché de los archivos de configuración con el comando:
+5. Generar la caché de los archivos de configuración:
 
-    ```$ php artisan config:cache```
+    ```shell
+    $ php artisan config:cache
+    ```
 
-6. Correr las migraciones con el comando: 
+6. Correr las migraciones:
 
-    ```$ php artisan migrate```
+    ```shell
+    $ php artisan migrate
+    ```
     
-7. ¡Listo!
+7. Compilar assets de la aplicación:
+
+    ```shell
+    $ npm run dev|prod|watch
+    ```
+
+8. Publicar assets de telescope (en caso de necesitarlos):
+
+    ```shell
+    $ php artisan telescope:publish
+    ```
+    
+9. ¡Listo!
 
 <!-- ## Manual de usuario -->
 
