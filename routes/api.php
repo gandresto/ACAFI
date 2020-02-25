@@ -35,6 +35,7 @@ Route::apiResource('/perfil/reuniones', 'Api\PerfilReunionesController')->middle
 
 // ----------- Rutas para Academias -------------
 Route::apiResource('/academias', 'Api\AcademiaController')->middleware('auth:api');
+Route::apiResource('academias.miembros', 'Api\AcademiaMiembrosController')->middleware('auth:api');
 Route::apiResource('academias.acuerdos', 'Api\AcademiaAcuerdoController')->middleware('auth:api');
 
 // ----------- Rutas para Reuniones -------------
