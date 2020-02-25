@@ -145,6 +145,9 @@ class DivisionDepartamentoAcademiaController extends Controller
         $division = Division::findOrFail($division_id);
         $departamento = $division->departamentos()->findOrFail($departamento_id);
         $academia = $departamento->academias()->findOrFail($academia_id);
+
+        $this->authorize('agregarMiembro', $academia);
+
         return view('divisions.departamentos.academias.agregar-miembro', compact('division', 'departamento', 'academia'));
     }
 }
