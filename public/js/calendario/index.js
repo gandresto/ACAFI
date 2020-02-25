@@ -1822,6 +1822,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -51774,18 +51778,18 @@ var render = function() {
             fn: function() {
               return [
                 _vm.estadoAcademias == _vm.ESTADO.CARGANDO
-                  ? _c(
-                      "div",
-                      {
-                        staticClass: "spinner-border spinner-border-sm mx-1",
-                        attrs: { role: "status" }
-                      },
-                      [
-                        _c("span", { staticClass: "sr-only" }, [
-                          _vm._v("Cargando academias...")
-                        ])
-                      ]
-                    )
+                  ? _c("div", { staticClass: "form-group text-center" }, [
+                      _c("div", { staticClass: "col-sm-12" }, [
+                        _c("div", {
+                          staticClass: "spinner-border spinner-border-sm mx-1",
+                          attrs: { role: "status" }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-12" }, [
+                        _vm._v("\n          Cargando academias...\n        ")
+                      ])
+                    ])
                   : _vm._e(),
                 _vm._v(" "),
                 _vm.estadoAcademias == _vm.ESTADO.LISTO
@@ -65492,7 +65496,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Andres.DESKTOP-0MVIK1S\agendav2\resources\js\calendario\index.js */"./resources/js/calendario/index.js");
+module.exports = __webpack_require__(/*! C:\agendav2\resources\js\calendario\index.js */"./resources/js/calendario/index.js");
 
 
 /***/ })

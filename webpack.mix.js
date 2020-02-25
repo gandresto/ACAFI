@@ -16,8 +16,9 @@ mix.autoload({
 });
 
   // mix.js('resources/js/bootstrap.js', 'public/js')
-  mix.js('resources/js/warn-exit.js', 'public/js')
+mix.js('resources/js/warn-exit.js', 'public/js')
   .js('resources/js/calendario/index.js', 'public/js/calendario')  
+  .js('resources/js/academias/miembros/agregar/index.js', 'public/js/academias/miembros/agregar')  
   .js('resources/js/reuniones/index.js', 'public/js/reuniones')
   .js('resources/js/reuniones/crear/index.js', 'public/js/reuniones/crear')
   .js('resources/js/reuniones/minuta/crear/index.js', 'public/js/reuniones/minuta/crear')

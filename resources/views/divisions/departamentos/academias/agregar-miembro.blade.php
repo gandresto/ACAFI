@@ -1,9 +1,13 @@
 @extends('layouts.app')
 
 @section('title')
-    Agregar miembro para la academia {{$academia->nombre}}
+    Agregar miembros para la Academia de {{$academia->nombre}}
+@endsection
+
+@section('page-scripts')
+    <script src="{{ asset('js/academias/miembros/agregar/index.js') }}"></script>
 @endsection
 
 @section('content')
-
+    <agregar-miembro-form></agregar-miembro-form>
 @endsection

@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -104493,14 +104493,14 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 3:
+/***/ 4:
 /*!*****************************************************!*\
   !*** multi ./resources/js/reuniones/crear/index.js ***!
   \*****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Andres.DESKTOP-0MVIK1S\agendav2\resources\js\reuniones\crear\index.js */"./resources/js/reuniones/crear/index.js");
+module.exports = __webpack_require__(/*! C:\agendav2\resources\js\reuniones\crear\index.js */"./resources/js/reuniones/crear/index.js");
 
 
 /***/ })

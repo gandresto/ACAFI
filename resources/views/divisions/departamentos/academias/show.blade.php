@@ -28,7 +28,7 @@
                 <tr>
                     <td scope="row">Departamento de origen</td>
                     <td>
-                        <a href="{{route('divisions.departamentos.show', [$division->id, $departamento->id])}}">{{$departamento->nombre}}</a>
+                        <a href="{{ route('divisions.departamentos.show', [$division->id, $departamento->id]) }}">{{ $departamento->nombre }}</a>
                     </td>
                 </tr>
             </tbody>
@@ -47,7 +47,7 @@
     @can('agregarMiembro', $academia)
         <div class="row">
             <div class="col-md-12 py-2">
-                <a class="btn btn-primary" href="#" role="button">
+                <a class="btn btn-primary" href="{{ route('divisions.departamentos.academias.agregar-miembro', compact('division', 'departamento', 'academia')) }}" role="button">
                     <i class="fa fa-plus" aria-hidden="true"></i>
                     <span class="ml-2">Añadir miembro</span>
                 </a>
