@@ -59,9 +59,9 @@ class UserController extends Controller
         $user->notify(new AvisoUsuarioCreado(['rawPass' => $data['password']])); // Avisamos al usuario por correo
 
         return response([
-            'usuario_creado' => new UserResource($user),
+            'usuario' => new UserResource($user),
             'message' => 'Usuario creado safisfactoriamente',
-        ], 200);
+        ], 201);
     }
 
     /**
@@ -104,6 +104,7 @@ class UserController extends Controller
         $user = User::findOrFail($user_id);
         $actual = $request->input('actual');
         if($actual && ($actual=="true" || $actual==1))
+            // return new AcademiasCollection($user->academiasQueHaPresidido()->orderBy('nombre')->wherePivot('fecha_egreso', '=', null)->get());
             return new AcademiasCollection($user->academiasQuePreside->sortBy('nombre'));
         return new AcademiasCollection($user->academiasQueHaPresidido->sortBy('nombre'));
     }
