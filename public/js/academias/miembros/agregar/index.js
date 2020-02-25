@@ -2466,8 +2466,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['academiaProp'],
   mounted: function mounted() {},
   data: function data() {
     return {
@@ -2524,10 +2529,47 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
       });
-    } // End buscar usuario
+    },
+    // End buscar usuario
+    submitMiembros: function submitMiembros(evt) {
+      var uri = "".concat(_services_api__WEBPACK_IMPORTED_MODULE_0__["default"].baseURL, "/academias/").concat(this.academiaProp.id, "/miembros");
+      var data = {
+        nuevosMiembros: this.nuevosMiembros.map(function (miembro) {
+          return miembro.id;
+        })
+      };
+      axios.post(uri, {
+        data: data
+      }).then(function (r) {
+        return r.data.data;
+      }).then(function (data) {
+        // this.error = "";
+        console.log(data);
+      })["catch"](function (error) {
+        if (error.response) {
+          console.log(error.response.data);
 
-  } // End methods
+          if (error.response.status == 443) {// this.error = error.response.data.message;
+          } else // this.error = error.message;
+            ;
+        } else if (error.request) {// this.error = error.message;
+        } else {
+          console.log("Error: ", error.message); // this.error = error.message;
+        }
+      });
+    } // End submit miembros
 
+  },
+  // End methods
+  watch: {
+    nuevosMiembros: function nuevosMiembros(newValue, oldValue) {
+      if (newValue.length > 0) {
+        window.onbeforeunload = function () {
+          return '¿Deseas abandonar la página? Los cambios aún no se guardan';
+        };
+      } else window.onbeforeunload = null;
+    }
+  }
 });
 
 /***/ }),
@@ -40043,10 +40085,17 @@ var render = function() {
             "div",
             { staticClass: "col-sm-12 text-md-right" },
             [
-              _c("b-button", { attrs: { variant: "primary" } }, [
-                _c("i", { staticClass: "fa fa-users mr-1" }),
-                _vm._v("\n        Agregar miembros\n      ")
-              ])
+              _c(
+                "b-button",
+                {
+                  attrs: { variant: "primary" },
+                  on: { click: _vm.submitMiembros }
+                },
+                [
+                  _c("i", { staticClass: "fa fa-users mr-1" }),
+                  _vm._v("\n        Agregar miembros\n      ")
+                ]
+              )
             ],
             1
           )

@@ -9,5 +9,6 @@
 @endsection
 
 @section('content')
-    <agregar-miembro-form></agregar-miembro-form>
+    <agregar-miembro-form :academia-prop="{{json_encode(new App\Http\Resources\AcademiaResource($academia))}}">
+    </agregar-miembro-form>
 @endsection

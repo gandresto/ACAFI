@@ -1,11 +1,14 @@
 <template>
   <div>
+    <!-- -------- Input radio para intercambiar formulario ------ -->
     <div class="form-row">
       <b-form-group label="¿El usuario ya está registrado o desea crear uno nuevo?">
         <b-form-radio v-model="formSeleccionado" name="seleccion-form-radio" value="existente">Usuario existente</b-form-radio>
         <b-form-radio v-model="formSeleccionado" name="seleccion-form-radio" value="nuevo">Nuevo usuario</b-form-radio>
       </b-form-group>
     </div>
+
+    <!-- -------- Formulario de creación de nuevo usuario ------ -->
     <div class="row" v-if="formSeleccionado === 'nuevo'">
       <div class="col-sm-12">
         <crear-usuario-form
@@ -61,8 +64,9 @@
         </b-table>
       </div>
 
+      <!-- ------ Botón "submit" ------ -->
       <div class="col-sm-12 text-md-right">
-        <b-button variant="primary">
+        <b-button variant="primary" @click="submitMiembros">
           <i class="fa fa-users mr-1"></i>
           Agregar miembros
         </b-button>
@@ -73,6 +77,7 @@
 <script>
 import api from '../../../../services/api'
 export default {
+  props: ['academiaProp'],
   mounted() {},
   data() {
     return {
@@ -126,7 +131,44 @@ export default {
       });
     }, // End buscar usuario
 
+    submitMiembros(evt){
+      let uri = `${api.baseURL}/academias/${this.academiaProp.id}/miembros`;
+      let data = {
+        nuevosMiembros: this.nuevosMiembros.map(miembro => miembro.id)
+      };
+      axios
+        .post(uri, {data})
+        .then(r => r.data.data)
+        .then(data => {
+          // this.error = "";
+          console.log(data)
+        })
+        .catch(error => {
+          if (error.response) {
+            console.log(error.response.data);
+            if (error.response.status == 443) {
+              // this.error = error.response.data.message;
+            } else
+              // this.error = error.message;
+              ;
+          } else if (error.request) {
+            // this.error = error.message;
+          } else {
+            console.log("Error: ", error.message);
+            // this.error = error.message;
+          }
+        });
+    }, // End submit miembros
 
   }, // End methods
+
+  watch: {
+    nuevosMiembros: function (newValue, oldValue) {
+      if( newValue.length > 0 ){
+        window.onbeforeunload = () => '¿Deseas abandonar la página? Los cambios aún no se guardan';
+      } else 
+        window.onbeforeunload = null;
+    }
+  },
 };
 </script>
