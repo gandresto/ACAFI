@@ -38323,7 +38323,7 @@ __webpack_require__.r(__webpack_exports__);
  *
  * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
  *
- * @param {Date|Number} dateLeft - the first date to compare
+ * @pcram {Date|Number} dateLeft - the first date to compare
  * @param {Date|Number} dateRight - the second date to compare
  * @returns {Number} the result of the comparison
  * @throws {TypeError} 2 arguments required
@@ -88251,7 +88251,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!***************************************!*\
   !*** ./resources/js/helpers/index.js ***!
   \***************************************/
-/*! exports provided: obtenerNombreCompleto, uuidv4, formatoFecha */
+/*! exports provided: obtenerNombreCompleto, uuidv4, formatoFecha, getCookie */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -88259,6 +88259,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "obtenerNombreCompleto", function() { return obtenerNombreCompleto; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "uuidv4", function() { return uuidv4; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatoFecha", function() { return formatoFecha; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCookie", function() { return getCookie; });
 /* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/index.js");
  // export const obtenerNombreCompleto = usuario => usuario.id ? `${usuario.apellido_paterno} ${usuario.apellido_materno} ${usuario.nombre}, ${usuario.grado}` : '';
 
@@ -88279,6 +88280,24 @@ var uuidv4 = function b(a) {
 };
 var formatoFecha = function formatoFecha(ISOstring) {
   return Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["format"])(Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["parseISO"])(ISOstring), 'dd/MM/y');
+};
+var getCookie = function getCookie(cname) {
+  var name = cname + "=";
+  var ca = document.cookie.split(';');
+
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+
+  return "";
 };
 
 /***/ }),

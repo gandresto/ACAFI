@@ -160,10 +160,6 @@ export default {
       usuario['fecha_ingreso'] = moment();
       this.nuevosMiembros.push(usuario);
     },
-    // obtenerNombreCompleto(usuario) {
-    //   // Obtengo solo lo que me interesa del resultado de búsqueda
-    //   return `${usuario.apellido_paterno} ${usuario.apellido_materno} ${usuario.nombre} ${usuario.grado}`;
-    // },
     buscarUsuario(consulta) {
       return new Promise((res, rej) => {
         if (!consulta || consulta.length < 3) return res([]);
@@ -203,14 +199,21 @@ export default {
               id: miembro.id,
               fecha_ingreso: miembro.fecha_ingreso
             }
-          }),
+          }
+        ),
       };
       axios
         .post(uri, {data})
         .then(r => r.data)
         .then(data => {
-          // this.error = "";
           console.log(data)
+          window.onbeforeunload = null;
+          let division_id = this.academiaProp.departamento.division_id;
+          let departamento_id = this.academiaProp.departamento.id;
+          let academia_id = this.academiaProp.id;
+          alert('Usuarios agregados satisfactoriamente.');
+          window.location = `${process.env.MIX_APP_URL}/divisions/${division_id}/departamentos/${departamento_id}/academias/${academia_id}`;
+          // window.location = document.referrer;
         })
         .catch(error => {
           if (error.response) {

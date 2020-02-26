@@ -2560,10 +2560,6 @@ __webpack_require__.r(__webpack_exports__);
       usuario['fecha_ingreso'] = moment();
       this.nuevosMiembros.push(usuario);
     },
-    // obtenerNombreCompleto(usuario) {
-    //   // Obtengo solo lo que me interesa del resultado de búsqueda
-    //   return `${usuario.apellido_paterno} ${usuario.apellido_materno} ${usuario.nombre} ${usuario.grado}`;
-    // },
     buscarUsuario: function buscarUsuario(consulta) {
       var _this = this;
 
@@ -2617,8 +2613,13 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (r) {
         return r.data;
       }).then(function (data) {
-        // this.error = "";
         console.log(data);
+        window.onbeforeunload = null;
+        var division_id = _this2.academiaProp.departamento.division_id;
+        var departamento_id = _this2.academiaProp.departamento.id;
+        var academia_id = _this2.academiaProp.id;
+        alert('Usuarios agregados satisfactoriamente.');
+        window.location = "".concat("http://localhost:8000", "/divisions/").concat(division_id, "/departamentos/").concat(departamento_id, "/academias/").concat(academia_id); // window.location = document.referrer;
       })["catch"](function (error) {
         if (error.response) {
           console.log(error.response.data);
@@ -101547,7 +101548,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!***************************************!*\
   !*** ./resources/js/helpers/index.js ***!
   \***************************************/
-/*! exports provided: obtenerNombreCompleto, uuidv4, formatoFecha */
+/*! exports provided: obtenerNombreCompleto, uuidv4, formatoFecha, getCookie */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -101555,6 +101556,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "obtenerNombreCompleto", function() { return obtenerNombreCompleto; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "uuidv4", function() { return uuidv4; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatoFecha", function() { return formatoFecha; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCookie", function() { return getCookie; });
 /* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/index.js");
  // export const obtenerNombreCompleto = usuario => usuario.id ? `${usuario.apellido_paterno} ${usuario.apellido_materno} ${usuario.nombre}, ${usuario.grado}` : '';
 
@@ -101575,6 +101577,24 @@ var uuidv4 = function b(a) {
 };
 var formatoFecha = function formatoFecha(ISOstring) {
   return Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["format"])(Object(date_fns__WEBPACK_IMPORTED_MODULE_0__["parseISO"])(ISOstring), 'dd/MM/y');
+};
+var getCookie = function getCookie(cname) {
+  var name = cname + "=";
+  var ca = document.cookie.split(';');
+
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+
+  return "";
 };
 
 /***/ }),
