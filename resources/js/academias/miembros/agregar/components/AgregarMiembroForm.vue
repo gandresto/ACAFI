@@ -2,7 +2,10 @@
   <div>
     <!-- -------- Input radio para intercambiar formulario ------ -->
     <div class="form-row">
-      <b-form-group label="¿El usuario ya está registrado o desea crear uno nuevo?">
+      <label for="grado" class="col-md-4 col-form-label text-md-right">
+        ¿El usuario ya está registrado o desea crear uno nuevo?
+      </label>
+      <b-form-group class="col-md-6 p-2">
         <b-form-radio v-model="formSeleccionado" name="seleccion-form-radio" value="existente">Usuario existente</b-form-radio>
         <b-form-radio v-model="formSeleccionado" name="seleccion-form-radio" value="nuevo">Nuevo usuario</b-form-radio>
       </b-form-group>
@@ -19,11 +22,12 @@
 
     <!-- -------- Barra de búsqueda de usuarios ------ -->
     <div class="form-row" v-else>
-      <label for="grado" class="col-md-4 col-form-label text-md-right">
+      <label for="buscar-usuario" class="col-md-4 col-form-label text-md-right">
         Agregar usuario existente
       </label>
       <div class="col-md-6">
         <autocomplete
+          id="buscar-usuario"
           :search="buscarUsuario"
           :debounce-time="500"
           placeholder="Buscar usuario"
@@ -43,62 +47,77 @@
     <hr/>
 
     <!-- --------   Tabla de miembros por agregar ------ -->
-    <div class="form-row" v-if="nuevosMiembros.length > 0">
-      <label class="col-md-4 text-md-right">
-        Usuarios por ser agregados
-      </label>
-      <div class="col-md-6">
-        <b-table
-          head-variant="dark"
-          ref="tablaMiembros"
-          :fields="camposTablaNuevosMiembros"
-          :items="nuevosMiembros"
-          responsive="sm"
-        >
-          <template v-slot:cell(nombre)="data">{{obtenerNombreCompleto(data.item)}}</template>
-          <template v-slot:cell(remover)="data">
-            <div class="w-100 text-right">
-              <b-button @click="removerMiembro(data.item.id, data.index)" variant="danger">
-                <i class="fa fa-trash" aria-hidden="true"></i>
-                <span class="sr-only">Quitar miembro</span>
-              </b-button>
-            </div>
-          </template>
-        </b-table>
+    <span v-if="nuevosMiembros.length > 0">
+      <div class="row">
+        <label class="col-md-1 text-md-right">
+        </label>
+        <div class="col-md-9">
+          <b-table
+            head-variant="dark"
+            ref="tablaMiembros"
+            :fields="camposTablaNuevosMiembros"
+            :items="nuevosMiembros"
+            responsive="sm"
+          >
+            <template v-slot:cell(nombre)="data">
+              {{obtenerNombreCompleto(data.item)}}
+            </template>
+            <template v-slot:cell(fecha_ingreso)="data">
+              <date-picker 
+                id="fecha-ingreso"
+                name="fecha-ingreso" 
+                class="form-control"
+                required="true"
+                v-model="data.item.fecha_ingreso" :config="optionsDatePicker"
+              >
+              </date-picker>
+            </template>
+            <template v-slot:cell(remover)="data">
+              <div class="w-100 text-right">
+                <b-button @click="removerMiembro(data.item.id, data.index)" variant="danger">
+                  <i class="fa fa-trash" aria-hidden="true"></i>
+                  <span class="sr-only">Quitar miembro</span>
+                </b-button>
+              </div>
+            </template>
+          </b-table>
+        </div>
       </div>
 
-      <div class="col-md-4 text-md-right" v-if="erroresDeValidacion != null">
-        Errores
-      </div>
-      <div class="col-md-6 px-2">
-        <div class="alert alert-danger" role="alert" v-if="erroresDeValidacion != null">
-            
-            <!-- 
-            -- Errores de validación
-            --  
-            -- Obtengo las llaves del objeto "erroresDeValidacion", estas tienen una estructura "nuevosMiembros.{$id}"   
-            -- Para obtener la posición en el arreglo de nuevos miembros, divido la cadena separándola por el punto
-            -- y la uso como llave para el objeto nuevosMiembros. Con ello obtengo el objeto miembro correspondiente,
-            -- y con ello su nombre.
-            -- 
-            -->
-            <div v-for="(errKey, index) in Object.keys(erroresDeValidacion)" :key="index">
-              <strong>
-                {{ obtenerNombreCompleto( nuevosMiembros[errKey.split('.')[1]] ) }}
-              </strong>
-              - {{erroresDeValidacion[errKey][0]}}
-            </div>
+      <div class="row">
+        <div class="col-md-1 text-md-right" v-if="erroresDeValidacion != null">
+        </div>
+        <div class="col-md-9 px-2">
+          <div class="alert alert-danger" role="alert" v-if="erroresDeValidacion != null">
+              <!-- 
+              -- Errores de validación
+              --  
+              -- Obtengo las llaves del objeto "erroresDeValidacion", estas tienen una estructura "nuevosMiembros.{$id}"   
+              -- Para obtener la posición en el arreglo de nuevos miembros, divido la cadena separándola por el punto
+              -- y la uso como llave para el objeto nuevosMiembros. Con ello obtengo el objeto miembro correspondiente,
+              -- y con ello su nombre.
+              -- 
+              -->
+              <div v-for="(errKey, index) in Object.keys(erroresDeValidacion)" :key="index">
+                <strong>
+                  {{ obtenerNombreCompleto( nuevosMiembros[errKey.split('.')[1]] ) }}
+                </strong>
+                - {{erroresDeValidacion[errKey][0]}}
+              </div>
+          </div>
         </div>
       </div>
 
       <!-- ------ Botón "submit" ------ -->
-      <div class="col-sm-10 text-md-right">
-        <b-button variant="primary" @click="submitMiembros">
-          <i class="fa fa-users mr-1"></i>
-          Agregar miembros
-        </b-button>
+      <div class="row">
+        <div class="col-sm-10 text-md-right">
+          <b-button variant="primary" @click="submitMiembros">
+            <i class="fa fa-users mr-1"></i>
+            Agregar miembros
+          </b-button>
+        </div>
       </div>
-    </div>
+    </span>
   </div>
 </template>
 <script>
@@ -114,7 +133,13 @@ export default {
       error: null,
       erroresDeValidacion: null,
       nuevosMiembros: [],
-      camposTablaNuevosMiembros: ["nombre", "email", "remover"],
+      camposTablaNuevosMiembros: ["nombre", "email", "fecha_ingreso", "remover"],
+      optionsDatePicker: {
+        locale: "es",
+        format: "YYYY-MM-DD",
+        daysOfWeekDisabled: [0],
+        maxDate: moment().add(1, 'day'),
+      },
     };
   },
   methods: {
@@ -126,9 +151,11 @@ export default {
       }
     },
     agregarDesdeNuevo(data){
-      this.nuevosMiembros.push(data['usuario']);
+      data.usuario['fecha_ingreso'] = moment();
+      this.nuevosMiembros.push(data.usuario);
     },
     agregarDesdeExistente(usuario){
+      usuario['fecha_ingreso'] = moment();
       this.nuevosMiembros.push(usuario);
     },
     // obtenerNombreCompleto(usuario) {
