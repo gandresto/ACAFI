@@ -58,7 +58,7 @@
           <template v-slot:cell(nombre)="data">{{obtenerNombreCompleto(data.item)}}</template>
           <template v-slot:cell(remover)="data">
             <div class="w-100 text-right">
-              <b-button @click="removerMiembro(data.item.id)" variant="danger">
+              <b-button @click="removerMiembro(data.item.id, data.index)" variant="danger">
                 <i class="fa fa-trash" aria-hidden="true"></i>
                 <span class="sr-only">Quitar miembro</span>
               </b-button>
@@ -70,27 +70,29 @@
       <div class="col-md-4 text-md-right" v-if="erroresDeValidacion != null">
         Errores
       </div>
-      <div class="alert alert-danger col-md-6" role="alert" v-if="erroresDeValidacion != null">
-          
-          <!-- 
-          -- Errores de validación
-          --  
-          -- Obtengo las llaves del objeto "erroresDeValidacion", estas tienen una estructura "nuevosMiembros.{$id}"   
-          -- Para obtener la posición en el arreglo de nuevos miembros, divido la cadena separándola por el punto
-          -- y la uso como llave para el objeto nuevosMiembros. Con ello obtengo el objeto miembro correspondiente,
-          -- y con ello su nombre.
-          -- 
-          -->
-          <div v-for="(errKey, index) in Object.keys(erroresDeValidacion)" :key="index" class="mx-2">
-            <strong>
-              {{ obtenerNombreCompleto( nuevosMiembros[errKey.split('.')[1]] ) }}
-            </strong>
-             - {{erroresDeValidacion[errKey][0]}}
-          </div>
+      <div class="col-md-6 px-2">
+        <div class="alert alert-danger" role="alert" v-if="erroresDeValidacion != null">
+            
+            <!-- 
+            -- Errores de validación
+            --  
+            -- Obtengo las llaves del objeto "erroresDeValidacion", estas tienen una estructura "nuevosMiembros.{$id}"   
+            -- Para obtener la posición en el arreglo de nuevos miembros, divido la cadena separándola por el punto
+            -- y la uso como llave para el objeto nuevosMiembros. Con ello obtengo el objeto miembro correspondiente,
+            -- y con ello su nombre.
+            -- 
+            -->
+            <div v-for="(errKey, index) in Object.keys(erroresDeValidacion)" :key="index">
+              <strong>
+                {{ obtenerNombreCompleto( nuevosMiembros[errKey.split('.')[1]] ) }}
+              </strong>
+              - {{erroresDeValidacion[errKey][0]}}
+            </div>
+        </div>
       </div>
 
       <!-- ------ Botón "submit" ------ -->
-      <div class="col-sm-12 text-md-right">
+      <div class="col-sm-10 text-md-right">
         <b-button variant="primary" @click="submitMiembros">
           <i class="fa fa-users mr-1"></i>
           Agregar miembros
@@ -101,6 +103,8 @@
 </template>
 <script>
 import api from '../../../../services/api'
+import { obtenerNombreCompleto } from '../../../../helpers'
+
 export default {
   props: ['academiaProp'],
   mounted() {},
@@ -114,8 +118,12 @@ export default {
     };
   },
   methods: {
-    removerMiembro(id) {
-      this.nuevosMiembros = this.nuevosMiembros.filter(miembro => miembro.id != id);
+    obtenerNombreCompleto,
+    removerMiembro(id, index) {
+      if (window.confirm('¿Deseas quitar al usuario de la lista?')){
+        delete this.erroresDeValidacion[`nuevosMiembros.${index}`]
+        this.nuevosMiembros = this.nuevosMiembros.filter(miembro => miembro.id != id);
+      }
     },
     agregarDesdeNuevo(data){
       this.nuevosMiembros.push(data['usuario']);
@@ -123,10 +131,10 @@ export default {
     agregarDesdeExistente(usuario){
       this.nuevosMiembros.push(usuario);
     },
-    obtenerNombreCompleto(usuario) {
-      // Obtengo solo lo que me interesa del resultado de búsqueda
-      return `${usuario.apellido_paterno} ${usuario.apellido_materno} ${usuario.nombre} ${usuario.grado}`;
-    },
+    // obtenerNombreCompleto(usuario) {
+    //   // Obtengo solo lo que me interesa del resultado de búsqueda
+    //   return `${usuario.apellido_paterno} ${usuario.apellido_materno} ${usuario.nombre} ${usuario.grado}`;
+    // },
     buscarUsuario(consulta) {
       return new Promise((res, rej) => {
         if (!consulta || consulta.length < 3) return res([]);
