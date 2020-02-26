@@ -36,7 +36,7 @@ class AcademiaMiembrosController extends Controller
         $this->authorize('agregarMiembro', $academia);
 
         $data = (array) $request->data;
-        $miembros = $academia->miembros;
+        $miembros = $academia->miembrosActuales;
         $presidente = $academia->presidente;
         Validator::make($data, [
             'nuevosMiembros' => 'required',
@@ -46,6 +46,9 @@ class AcademiaMiembrosController extends Controller
                 new NoEsPresidenteRule($presidente),
             ],
         ])->validate();
+        
+        // collect($data)
+        // $academia->miembros()->syncWithoutDetaching($data->nuevosMiembros, )
 
         return response($request->all());
     }
