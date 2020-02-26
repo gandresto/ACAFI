@@ -3298,7 +3298,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {// console.log("Component mounted.");
   },
@@ -103779,9 +103778,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "uuidv4", function() { return uuidv4; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatoFecha", function() { return formatoFecha; });
 /* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/index.js");
+ // export const obtenerNombreCompleto = usuario => usuario.id ? `${usuario.apellido_paterno} ${usuario.apellido_materno} ${usuario.nombre}, ${usuario.grado}` : '';
 
 var obtenerNombreCompleto = function obtenerNombreCompleto(usuario) {
-  return usuario.id ? "".concat(usuario.apellido_paterno, " ").concat(usuario.apellido_materno, " ").concat(usuario.nombre, ", ").concat(usuario.grado) : '';
+  var orden = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'apellido';
+  var con_grado = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+  var nombreCompleto = '';
+
+  if (usuario.nombre) {
+    if (orden === 'apellido') nombreCompleto = "".concat(usuario.apellido_paterno, " ").concat(usuario.apellido_materno, " ").concat(usuario.nombre);else nombreCompleto = "".concat(usuario.nombre, " ").concat(usuario.apellido_paterno, " ").concat(usuario.apellido_materno);
+    if (con_grado) nombreCompleto += ", ".concat(usuario.grado);
+  }
+
+  return nombreCompleto;
 };
 var uuidv4 = function b(a) {
   return a ? (a ^ Math.random() * 16 >> a / 4).toString(16) : ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, b);

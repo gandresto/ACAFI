@@ -1,12 +1,10 @@
 <template>
   <div class="my-2">
-    {{acuerdosASeguimiento}}
+    {{ acuerdosASeguimiento ? acuerdosASeguimiento : '' }}
   </div>
 </template>
 
 <script>
-// import {format, parseISO} from 'date-fns';
-// import { obtenerNombreCompleto } from '../../helpers';
 
 import { mapGetters } from 'vuex';
 

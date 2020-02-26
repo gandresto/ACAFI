@@ -55,9 +55,8 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex';
-import {formatoFecha} from '../../../helpers';
 import { mapGetters, mapActions } from 'vuex';
+import {formatoFecha} from '../../../helpers';
 
 export default {
   mounted() {
