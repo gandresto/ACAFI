@@ -94,18 +94,26 @@
                                     {{-- @can('create', App\Academia::class) --}}
                                         <td>
                                             <form action="{{ route('divisions.departamentos.academias.darDeBajaMiembro', [$division->id, $departamento->id, $academia->id, $miembro->id]) }}" method="POST">
-                                                <div class="btn-group" role="group" aria-label="Acciones miembro">
+                                                @csrf
+                                                @method('DELETE')
+                                                {{-- <div class="btn-group" role="group" aria-label="Acciones miembro"> --}}
                                                     {{-- <a name="vermiembro" href="{{route('divisions.departamentos.academias.showMiembro', [$division->id, $departamento->id, $academia->id])}}" role="button" class="btn btn-success">
                                                         <i class="fas fa-eye"></i>
                                                     </a> --}}
                                                     @can('darDeBajaCualquierMiembro', $academia)
-                                                        @csrf
                                                         {{-- @method('DELETE') --}}
-                                                        <button type="submit" onclick="return confirm('¿Estás seguro que quieres dar de baja al miembro {{$miembro->nombreCompleto}}? Esta acción no eliminará su cuenta de usuario.')" class="btn btn-danger" href="#" role="button" title="Dar de baja">
+                                                        <button 
+                                                            type="submit" 
+                                                            onclick="return confirm('¿Estás seguro que quieres dar de baja al miembro {{$miembro->nombreCompleto}}? Esta acción no eliminará su cuenta de usuario.')" 
+                                                            class="btn btn-danger" 
+                                                            href="#" 
+                                                            role="button" 
+                                                            title="Dar de baja"
+                                                        >
                                                             <i class="fas fa-user-times" aria-hidden="true"></i>
                                                         </button>
                                                     @endcan
-                                                </div>
+                                                {{-- </div> --}}
                                             </form>
                                         </td>
                                     {{-- @endcan --}}
