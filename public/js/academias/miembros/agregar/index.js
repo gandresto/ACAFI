@@ -2533,7 +2533,7 @@ __webpack_require__.r(__webpack_exports__);
         locale: "es",
         format: "YYYY-MM-DD",
         daysOfWeekDisabled: [0],
-        maxDate: moment().add(1, 'day')
+        maxDate: moment()
       }
     };
   },
@@ -2601,13 +2601,16 @@ __webpack_require__.r(__webpack_exports__);
       this.error = '';
       var data = {
         nuevosMiembros: this.nuevosMiembros.map(function (miembro) {
-          return miembro.id;
+          return {
+            id: miembro.id,
+            fecha_ingreso: miembro.fecha_ingreso
+          };
         })
       };
       axios.post(uri, {
         data: data
       }).then(function (r) {
-        return r.data.data;
+        return r.data;
       }).then(function (data) {
         // this.error = "";
         console.log(data);
@@ -88475,7 +88478,7 @@ var render = function() {
                     "head-variant": "dark",
                     fields: _vm.camposTablaNuevosMiembros,
                     items: _vm.nuevosMiembros,
-                    responsive: "sm"
+                    responsive: "md"
                   },
                   scopedSlots: _vm._u(
                     [

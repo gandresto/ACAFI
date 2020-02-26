@@ -57,7 +57,7 @@
             ref="tablaMiembros"
             :fields="camposTablaNuevosMiembros"
             :items="nuevosMiembros"
-            responsive="sm"
+            responsive="md"
           >
             <template v-slot:cell(nombre)="data">
               {{obtenerNombreCompleto(data.item)}}
@@ -138,7 +138,7 @@ export default {
         locale: "es",
         format: "YYYY-MM-DD",
         daysOfWeekDisabled: [0],
-        maxDate: moment().add(1, 'day'),
+        maxDate: moment(),
       },
     };
   },
@@ -196,11 +196,16 @@ export default {
       this.erroresDeValidacion = null; // Limpio errores
       this.error = '';
       let data = {
-        nuevosMiembros: this.nuevosMiembros.map(miembro => miembro.id)
+        nuevosMiembros: this.nuevosMiembros.map(miembro => {
+          return {
+              id: miembro.id,
+              fecha_ingreso: miembro.fecha_ingreso
+            }
+          }),
       };
       axios
         .post(uri, {data})
-        .then(r => r.data.data)
+        .then(r => r.data)
         .then(data => {
           // this.error = "";
           console.log(data)

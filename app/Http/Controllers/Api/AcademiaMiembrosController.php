@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Rules\NoEsMiembroRule;
 use App\Rules\NoEsPresidenteRule;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 class AcademiaMiembrosController extends Controller
@@ -38,19 +39,30 @@ class AcademiaMiembrosController extends Controller
         $data = (array) $request->data;
         $miembros = $academia->miembrosActuales;
         $presidente = $academia->presidente;
+
         Validator::make($data, [
-            'nuevosMiembros' => 'required',
-            'nuevosMiembros.*' => 'exists:users,id',
-            'nuevosMiembros.*' => [ 
+            'nuevosMiembros' => 'required', 
+            'nuevosMiembros.*.id' => [ 
+                'exists:users,id',
                 new NoEsMiembroRule($miembros),
                 new NoEsPresidenteRule($presidente),
             ],
+            'nuevosMiembros.*.fecha_ingreso' => 'before:'.Carbon::tomorrow(),
         ])->validate();
         
-        // collect($data)
-        // $academia->miembros()->syncWithoutDetaching($data->nuevosMiembros, )
+        $nuevosMiembros = collect($data['nuevosMiembros'])->map(function ($miembro) {
+            return [
+                $miembro['id'] => [
+                    'fecha_ingreso' => Carbon::parse($miembro['fecha_ingreso']),
+                    'fecha_egreso' => null,
+                ]
+            ];
+        });
 
-        return response($request->all());
+        $nuevosMiembros = array_replace_recursive(...$nuevosMiembros);
+        $respuesta = $academia->miembros()->syncWithoutDetaching($nuevosMiembros);
+
+        return response($respuesta, 201);
     }
 
     /**
