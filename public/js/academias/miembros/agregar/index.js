@@ -2470,6 +2470,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['academiaProp'],
@@ -2478,6 +2503,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       formSeleccionado: 'existente',
       error: null,
+      erroresDeValidacion: null,
       nuevosMiembros: [],
       camposTablaNuevosMiembros: ["nombre", "email", "remover"]
     };
@@ -2532,7 +2558,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     // End buscar usuario
     submitMiembros: function submitMiembros(evt) {
+      var _this2 = this;
+
       var uri = "".concat(_services_api__WEBPACK_IMPORTED_MODULE_0__["default"].baseURL, "/academias/").concat(this.academiaProp.id, "/miembros");
+      this.erroresDeValidacion = null; // Limpio errores
+
+      this.error = '';
       var data = {
         nuevosMiembros: this.nuevosMiembros.map(function (miembro) {
           return miembro.id;
@@ -2549,16 +2580,21 @@ __webpack_require__.r(__webpack_exports__);
         if (error.response) {
           console.log(error.response.data);
 
-          if (error.response.status == 443) {// this.error = error.response.data.message;
-          } else // this.error = error.message;
-            ;
-        } else if (error.request) {// this.error = error.message;
+          if (error.response.status == 422) {
+            _this2.erroresDeValidacion = error.response.data.errors; // this.error = error.response.data.message;
+          } else console.log(error.response.data) // this.error = error.message;
+          ;
+        } else if (error.request) {
+          console.log(error.message); // this.error = error.message;
         } else {
           console.log("Error: ", error.message); // this.error = error.message;
         }
       });
-    } // End submit miembros
-
+    },
+    // End submit miembros
+    tieneErroresDeValidacion: function tieneErroresDeValidacion(key) {
+      return this.erroresDeValidacion["nuevosMiembros.".concat(key)] ? true : false;
+    }
   },
   // End methods
   watch: {
@@ -2569,7 +2605,13 @@ __webpack_require__.r(__webpack_exports__);
         };
       } else window.onbeforeunload = null;
     }
-  }
+  } // filters: {
+  //   nombreDeMiembroConError: function (errKey){
+  //     // return this.nuevosMiembros[ errKey.split('.')[1] ];
+  //     return this.obtenerNombreCompleto(this.nuevosMiembros[ errKey.split('.')[1] ]);
+  //   }
+  // },
+
 });
 
 /***/ }),
@@ -40014,9 +40056,13 @@ var render = function() {
     _vm._v(" "),
     _vm.nuevosMiembros.length > 0
       ? _c("div", { staticClass: "form-row" }, [
+          _c("label", { staticClass: "col-md-4 text-md-right" }, [
+            _vm._v("\n      Usuarios por ser agregados\n    ")
+          ]),
+          _vm._v(" "),
           _c(
             "div",
-            { staticClass: "col-sm-12" },
+            { staticClass: "col-md-6" },
             [
               _c("b-table", {
                 ref: "tablaMiembros",
@@ -40080,6 +40126,46 @@ var render = function() {
             ],
             1
           ),
+          _vm._v(" "),
+          _vm.erroresDeValidacion != null
+            ? _c("div", { staticClass: "col-md-4 text-md-right" }, [
+                _vm._v("\n      Errores\n    ")
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.erroresDeValidacion != null
+            ? _c(
+                "div",
+                {
+                  staticClass: "alert alert-danger col-md-6",
+                  attrs: { role: "alert" }
+                },
+                _vm._l(Object.keys(_vm.erroresDeValidacion), function(
+                  errKey,
+                  index
+                ) {
+                  return _c("div", { key: index, staticClass: "mx-2" }, [
+                    _c("strong", [
+                      _vm._v(
+                        "\n            " +
+                          _vm._s(
+                            _vm.obtenerNombreCompleto(
+                              _vm.nuevosMiembros[errKey.split(".")[1]]
+                            )
+                          ) +
+                          "\n          "
+                      )
+                    ]),
+                    _vm._v(
+                      "\n           - " +
+                        _vm._s(_vm.erroresDeValidacion[errKey][0]) +
+                        "\n        "
+                    )
+                  ])
+                }),
+                0
+              )
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "div",

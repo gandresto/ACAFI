@@ -44,7 +44,10 @@
 
     <!-- --------   Tabla de miembros por agregar ------ -->
     <div class="form-row" v-if="nuevosMiembros.length > 0">
-      <div class="col-sm-12">
+      <label class="col-md-4 text-md-right">
+        Usuarios por ser agregados
+      </label>
+      <div class="col-md-6">
         <b-table
           head-variant="dark"
           ref="tablaMiembros"
@@ -62,6 +65,28 @@
             </div>
           </template>
         </b-table>
+      </div>
+
+      <div class="col-md-4 text-md-right" v-if="erroresDeValidacion != null">
+        Errores
+      </div>
+      <div class="alert alert-danger col-md-6" role="alert" v-if="erroresDeValidacion != null">
+          
+          <!-- 
+          -- Errores de validación
+          --  
+          -- Obtengo las llaves del objeto "erroresDeValidacion", estas tienen una estructura "nuevosMiembros.{$id}"   
+          -- Para obtener la posición en el arreglo de nuevos miembros, divido la cadena separándola por el punto
+          -- y la uso como llave para el objeto nuevosMiembros. Con ello obtengo el objeto miembro correspondiente,
+          -- y con ello su nombre.
+          -- 
+          -->
+          <div v-for="(errKey, index) in Object.keys(erroresDeValidacion)" :key="index" class="mx-2">
+            <strong>
+              {{ obtenerNombreCompleto( nuevosMiembros[errKey.split('.')[1]] ) }}
+            </strong>
+             - {{erroresDeValidacion[errKey][0]}}
+          </div>
       </div>
 
       <!-- ------ Botón "submit" ------ -->
@@ -83,6 +108,7 @@ export default {
     return {
       formSeleccionado: 'existente',
       error: null,
+      erroresDeValidacion: null,
       nuevosMiembros: [],
       camposTablaNuevosMiembros: ["nombre", "email", "remover"],
     };
@@ -130,9 +156,10 @@ export default {
           });
       });
     }, // End buscar usuario
-
     submitMiembros(evt){
       let uri = `${api.baseURL}/academias/${this.academiaProp.id}/miembros`;
+      this.erroresDeValidacion = null; // Limpio errores
+      this.error = '';
       let data = {
         nuevosMiembros: this.nuevosMiembros.map(miembro => miembro.id)
       };
@@ -146,12 +173,15 @@ export default {
         .catch(error => {
           if (error.response) {
             console.log(error.response.data);
-            if (error.response.status == 443) {
+            if (error.response.status == 422) {
+              this.erroresDeValidacion = error.response.data.errors;
               // this.error = error.response.data.message;
             } else
+              console.log(error.response.data)
               // this.error = error.message;
               ;
           } else if (error.request) {
+            console.log(error.message);
             // this.error = error.message;
           } else {
             console.log("Error: ", error.message);
@@ -159,7 +189,9 @@ export default {
           }
         });
     }, // End submit miembros
-
+    tieneErroresDeValidacion(key){
+      return this.erroresDeValidacion[`nuevosMiembros.${key}`] ? true : false;
+    },
   }, // End methods
 
   watch: {
@@ -170,5 +202,12 @@ export default {
         window.onbeforeunload = null;
     }
   },
+
+  // filters: {
+  //   nombreDeMiembroConError: function (errKey){
+  //     // return this.nuevosMiembros[ errKey.split('.')[1] ];
+  //     return this.obtenerNombreCompleto(this.nuevosMiembros[ errKey.split('.')[1] ]);
+  //   }
+  // },
 };
 </script>
