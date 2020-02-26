@@ -2548,10 +2548,15 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     agregarDesdeNuevo: function agregarDesdeNuevo(data) {
-      data.usuario['fecha_ingreso'] = moment();
-      this.nuevosMiembros.push(data.usuario);
+      this.agregarNuevoMiembro(data.usuario);
     },
-    agregarDesdeExistente: function agregarDesdeExistente(usuario) {
+    agregarNuevoMiembro: function agregarNuevoMiembro(usuario) {
+      if (this.nuevosMiembros.find(function (miembro) {
+        return miembro.id == usuario.id;
+      })) {
+        return;
+      }
+
       usuario['fecha_ingreso'] = moment();
       this.nuevosMiembros.push(usuario);
     },
@@ -88422,7 +88427,7 @@ var render = function() {
                   "aria-label": "Buscar usuario",
                   "get-result-value": _vm.obtenerNombreCompleto
                 },
-                on: { submit: _vm.agregarDesdeExistente },
+                on: { submit: _vm.agregarNuevoMiembro },
                 scopedSlots: _vm._u([
                   {
                     key: "result",

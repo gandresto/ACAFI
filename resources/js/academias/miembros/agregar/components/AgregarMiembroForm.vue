@@ -33,7 +33,7 @@
           placeholder="Buscar usuario"
           aria-label="Buscar usuario"
           :get-result-value="obtenerNombreCompleto"
-          @submit="agregarDesdeExistente"
+          @submit="agregarNuevoMiembro"
         >
           <template #result="{ result, props }">
             <li v-bind="props" class="autocomplete-result">{{obtenerNombreCompleto(result)}}</li>
@@ -151,10 +151,12 @@ export default {
       }
     },
     agregarDesdeNuevo(data){
-      data.usuario['fecha_ingreso'] = moment();
-      this.nuevosMiembros.push(data.usuario);
+      this.agregarNuevoMiembro(data.usuario);
     },
-    agregarDesdeExistente(usuario){
+    agregarNuevoMiembro(usuario){
+      if(this.nuevosMiembros.find(miembro => miembro.id == usuario.id)){
+        return;
+      }
       usuario['fecha_ingreso'] = moment();
       this.nuevosMiembros.push(usuario);
     },
