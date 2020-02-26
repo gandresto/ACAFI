@@ -2813,6 +2813,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -38855,7 +38858,7 @@ __webpack_require__.r(__webpack_exports__);
  *
  * - [Changes that are common for the whole library](https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#Common-Changes).
  *
- * @param {Date|Number} dateLeft - the first date to compare
+ * @pcram {Date|Number} dateLeft - the first date to compare
  * @param {Date|Number} dateRight - the second date to compare
  * @returns {Number} the result of the comparison
  * @throws {TypeError} 2 arguments required
@@ -57349,18 +57352,28 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.estadoGrados == _vm.estadoApi.LISTO
-      ? _c("div", { staticClass: "form-group row" }, [
-          _c(
-            "label",
-            {
-              staticClass: "col-md-4 col-form-label text-md-right",
-              attrs: { for: "grado" }
-            },
-            [_vm._v("Grado académico")]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-6" }, [
+    _c("div", { staticClass: "form-group row" }, [
+      _c(
+        "label",
+        {
+          staticClass: "col-md-4 col-form-label text-md-right",
+          attrs: { for: "grado" }
+        },
+        [_vm._v("Grado académico")]
+      ),
+      _vm._v(" "),
+      _vm.estadoGrados == _vm.estadoApi.CARGANDO
+        ? _c("div", { staticClass: "col-md-6" }, [
+            _c("i", {
+              staticClass: "fa fa-spinner",
+              attrs: { "aria-hidden": "true" }
+            }),
+            _vm._v(" Cargando...\n    ")
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.estadoGrados == _vm.estadoApi.LISTO
+        ? _c("div", { staticClass: "col-md-6" }, [
             _c(
               "select",
               {
@@ -57422,8 +57435,8 @@ var render = function() {
                 )
               : _vm._e()
           ])
-        ])
-      : _vm._e(),
+        : _vm._e()
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "form-group row" }, [
       _c(

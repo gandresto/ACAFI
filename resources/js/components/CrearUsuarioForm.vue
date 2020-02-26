@@ -21,9 +21,12 @@
     </div>
 
     <!-- ------------- Grado académico ---------------- -->
-    <div class="form-group row" v-if="estadoGrados == estadoApi.LISTO">
+    <div class="form-group row">
       <label for="grado" class="col-md-4 col-form-label text-md-right">Grado académico</label>
-      <div class="col-md-6">
+      <div class="col-md-6" v-if="estadoGrados == estadoApi.CARGANDO">
+        <i class="fa fa-spinner" aria-hidden="true"></i> Cargando...
+      </div>
+      <div class="col-md-6"  v-if="estadoGrados == estadoApi.LISTO">
         <select
           :class="claseValidacion('grado')"
           name="grado"
