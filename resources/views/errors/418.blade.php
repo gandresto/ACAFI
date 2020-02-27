@@ -1,4 +1,4 @@
-@extends('errors.minimal')
+@extends('errors::minimal')
 
 @section('title', 'I\'m a teapot')
 @section('code', '418')

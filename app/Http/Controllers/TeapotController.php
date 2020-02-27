@@ -8,11 +8,6 @@ class TeapotController extends Controller
 {
     public function brew(Request $request)
     {
-        return view('errors.418', ['errors' => [
-            [
-                'code' => '418',
-                'message' => 'I\'m a teapot'
-            ]
-        ]]);
+        return abort(418, "I'm a teapot");
     }
 }
