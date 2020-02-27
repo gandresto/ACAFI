@@ -1,15 +1,21 @@
 <template>
   <div>
     <!-- Modal de reunión actual -->
-    <b-modal id="modal-reunion" hide-footer :title="`Reunion ${reunionSeleccionada.id}`">
+    <b-modal 
+      id="modal-reunion" 
+      hide-footer 
+      :title="`Academia de ${reunionSeleccionada.title}`"
+      header-bg-variant="danger"
+      header-text-variant="light"
+    >
       <div class="d-block contaner">
         <div class="row">
           <div class="col-sm-12">
             <p>
-              <h5>Academia de {{ reunionSeleccionada.title }}</h5>
-              <strong>Inicia: </strong>{{ reunionSeleccionada.start }}
+              <h6>Reunion del día {{ reunionSeleccionada.start | fecha }}</h6>
+              <strong>Inicia: </strong>{{ reunionSeleccionada.start | hora }}
               <br/>
-              <strong>Finaliza: </strong>{{ reunionSeleccionada.end }}
+              <strong>Finaliza: </strong>{{ reunionSeleccionada.end | hora }}
               <br/>
               {{ reunionSeleccionada.content }}
               <br/>
@@ -88,9 +94,18 @@ export default {
   },
   computed: {
     ...mapGetters(["reuniones", "estadoReuniones"])
+  },
+  filters: {
+    hora: function (datetimeString) {
+      return moment(datetimeString).format('LT')
+    },
+    fecha: function (datetimeString) {
+      return moment(datetimeString).format('LL')
+    },
   }
 };
 </script>
+
 <style lang="css">
   .vuecal__cell-events-count {
     width: 1.5rem;

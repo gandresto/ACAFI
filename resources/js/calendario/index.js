@@ -1,5 +1,7 @@
 require('./../axiosconfig');
 
+moment.locale('es');
+
 import Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue';
 
@@ -12,7 +14,6 @@ Vue.component('seleccionar-academia-modal', require('./../reuniones/crear/compon
 
 Vue.component('v-calendar', VueCal);
 Vue.component('calendario-index', require('./components/Calendario.vue').default);
-
 import store from './store/';
 const app = new Vue({
     store,
