@@ -51256,7 +51256,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\agendav2\resources\js\reuniones\index.js */"./resources/js/reuniones/index.js");
+module.exports = __webpack_require__(/*! C:\Users\Andres.DESKTOP-0MVIK1S\agendav2\resources\js\reuniones\index.js */"./resources/js/reuniones/index.js");
 
 
 /***/ })
