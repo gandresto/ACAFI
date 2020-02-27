@@ -83,7 +83,7 @@ class UsersController extends Controller
     {
         $user = User::findOrFail($id);
         $this->authorize('view', $user);
-        dd($user);        
+        return view('users.show', compact('user'));
     }
 
     /**
@@ -132,10 +132,8 @@ class UsersController extends Controller
             ]
         );
 
-        return redirect(route('users.index'))
-                        ->with('success', 'Académico con nombre \''
-                        . $data['nombre']
-                        .'\' actualizado satisfactoriamente.');
+        return redirect(route('users.show', $user))
+                        ->with('success', 'Detalles de usuario actualizados satisfactoriamente.');
     }
 
     /**

@@ -22,9 +22,6 @@ Auth::routes();
 Route::resource('users', 'UsersController');
 Route::get('/users/buscar/{consulta}', 'UsersController@buscar')->name('users.buscar');
 
-// -------- PERFIL --------
-Route::get('perfil', 'PerfilController@index')->name('perfil.index')->middleware('auth');
-
 // ----- DIVISIONES -------
 Route::resource('divisions', 'DivisionController');
 Route::get('/divisions/buscar/{consulta}', 'DivisionController@buscar')->name('divisions.buscar');

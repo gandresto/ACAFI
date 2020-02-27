@@ -106,7 +106,7 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownUser">
-                                    <a class="dropdown-item" href="{{route('perfil.index')}}">
+                                    <a class="dropdown-item" href="{{route('users.show', Auth::user())}}">
                                         Perfil
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
