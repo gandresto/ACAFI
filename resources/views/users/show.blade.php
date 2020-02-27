@@ -47,7 +47,7 @@
                                         <a name="ver-acad-{{$academia->id}}" 
                                             id="ver-acad-{{$academia->id}}" 
                                             class="btn btn-success" 
-                                            href="{{url("divisions/{$academia->division->id}/departamentos/{$academia->departamento->id}/academias/{$academia->id}")}}" 
+                                            href="{{ route("divisions.departamentos.academias.show", [$academia->division, $academia->departamento, $academia]) }}" 
                                             role="button" 
                                             title="Ver detalles de academia"
                                         >
@@ -88,7 +88,7 @@
                                         <a name="ver-acad-{{$academia->id}}" 
                                             id="ver-acad-{{$academia->id}}" 
                                             class="btn btn-success" 
-                                            href="{{url("divisions/{$academia->division->id}/departamentos/{$academia->departamento->id}/academias/{$academia->id}")}}" 
+                                            href="{{ route("divisions.departamentos.academias.show", [$academia->division, $academia->departamento, $academia]) }}" 
                                             role="button" 
                                             title="Ver detalles de academia"
                                         >
