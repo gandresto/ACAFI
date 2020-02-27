@@ -20,6 +20,7 @@ class VueCalendarEventResource extends JsonResource
             'end' => $this->fin->format('Y-m-d H:i'),
             'title' => "{$this->academia->nombre}",
             'content' => "Lugar: {$this->lugar}",
+            'link' => route('reuniones.show', $this->id),
             // 'class' => $this->inicio,
             // 'background' => true,
         ];

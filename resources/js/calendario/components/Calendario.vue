@@ -1,6 +1,27 @@
 <template>
   <div>
-    <!-- <div class="row justify-content-center"> -->
+    <!-- Modal de reunión actual -->
+    <b-modal id="modal-reunion" hide-footer :title="`Reunion ${reunionSeleccionada.id}`">
+      <div class="d-block contaner">
+        <div class="row">
+          <div class="col-sm-12">
+            <p>
+              <h5>Academia de {{ reunionSeleccionada.title }}</h5>
+              <strong>Inicia: </strong>{{ reunionSeleccionada.start }}
+              <br/>
+              <strong>Finaliza: </strong>{{ reunionSeleccionada.end }}
+              <br/>
+              {{ reunionSeleccionada.content }}
+              <br/>
+            </p>
+          </div>
+          <div class="col-sm-12 text-sm-right">
+            <b-button variant="primary" :href="reunionSeleccionada.link">Ver más detalles</b-button>
+          </div>
+        </div>
+      </div>
+    </b-modal>
+
     <div class="row">
       <div class="col-xs-12 col-md-12">
         <div class="card">
@@ -31,6 +52,7 @@
           events-on-month-view="short"
           events-count-on-year-view
           :events="reuniones"
+          :on-event-click="onReunionClick"
         ></v-calendar>
       </div>
     </div>
@@ -39,12 +61,14 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import { formatoFecha } from "../../helpers";
 import ESTADO_API from "../../enum-estado-api";
 
 export default {
   data() {
     return {
       estadoApi : ESTADO_API,
+      reunionSeleccionada: {},
     }
   },
   mounted() {
@@ -52,7 +76,15 @@ export default {
     this.leerReunionesDeUsuario();
   },
   methods: {
-    ...mapActions(["leerReunionesDeUsuario"])
+    ...mapActions(["leerReunionesDeUsuario"]),
+    formatoFecha,
+    onReunionClick (reunion, e) {
+      this.reunionSeleccionada = reunion;
+      this.$bvModal.show('modal-reunion');
+
+      // Prevent navigating to narrower view (default vue-cal behavior).
+      e.stopPropagation()
+    }
   },
   computed: {
     ...mapGetters(["reuniones", "estadoReuniones"])
