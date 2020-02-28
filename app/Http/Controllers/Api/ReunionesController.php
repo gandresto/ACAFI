@@ -8,6 +8,7 @@ use App\Http\Resources\ReunionResource;
 use App\Notifications\AvisoInvitacionReunion;
 use App\Reunion;
 use App\Tema;
+use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -138,7 +139,7 @@ class ReunionesController extends Controller
         $data = json_decode($request->data, true);
         $data = $this->obtenerDatosValidadosReunion($data);
         // return response($data, 500);
-        $pdf = \PDF::loadView('reuniones.ordendeldia-vistaprevia', $data);
+        $pdf = PDF::loadView('reuniones.ordendeldia-vistaprevia', $data);
         return $pdf->download('orden_del_dia.pdf');
     }
 
