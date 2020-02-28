@@ -48,6 +48,4 @@ Route::apiResource('reuniones.minuta', 'Api\ReunionesMinutaController')->middlew
 // ---------- Rutas para grados
 Route::apiResource('/grados', 'Api\GradosController')->middleware('auth:api');
 
-Route::fallback(function(){
-    return response()->json(['message' => '¡No se encontró el recurso! Verifica la url'], 404);
-});
+// Route::fallback(abort(404, '¡No se encontró el recurso! Verifica la url'));

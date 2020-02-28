@@ -11,9 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'CalendarioController@index');
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/calendario', 'CalendarioController@index')->name('calendario');
 
@@ -46,19 +48,19 @@ Route::resource('/reuniones', 'ReunionesController')
 Route::get('/reuniones/{id}/orden-del-dia', 'ReunionesController@descargarOrdenDelDia')
         ->name('reuniones.ordendeldia.descargar');
 Route::get('/reuniones/{id}/emailpreview', 'ReunionesController@emailPreview');
-Route::get('/reuniones/{reunion}/vista-previa-od', function (App\Reunion $reunion){
-    $pdf = \PDF::loadView('reuniones.ordendeldia', ['reunion' => $reunion]);
-    return $pdf->stream();
-    // return view('reuniones.ordendeldia', compact('reunion'));
-});
+// Route::get('/reuniones/{reunion}/vista-previa-od', function (App\Reunion $reunion){
+//     $pdf = PDF::loadView('reuniones.ordendeldia', ['reunion' => $reunion]);
+//     return $pdf->stream();
+//     // return view('reuniones.ordendeldia', compact('reunion'));
+// });
 
 // --------- MINUTAS --------------
 Route::resource('reuniones.minuta', 'ReunionesMinutasController')
         ->only(['index', 'create']);
-Route::get('/reuniones/{reunion}/minuta/vista-previa/', function (App\Reunion $reunion){
-    $pdf = \PDF::loadView('reuniones.pdf.minuta', ['reunion' => $reunion]);
-    return $pdf->stream();
-});
+// Route::get('/reuniones/{reunion}/minuta/vista-previa/', function (App\Reunion $reunion){
+//     $pdf = PDF::loadView('reuniones.pdf.minuta', ['reunion' => $reunion]);
+//     return $pdf->stream();
+// });
 
 // ----------- TEAPOT ----------
 Route::get('/teapot/brew','TeapotController@brew')->name('teapot.brew');
