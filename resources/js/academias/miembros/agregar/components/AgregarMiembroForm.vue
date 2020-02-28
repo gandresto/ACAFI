@@ -84,11 +84,11 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-md-1 text-md-right" v-if="erroresDeValidacion != null">
+      <div class="row" v-if="!isEmpty(erroresDeValidacion)">
+        <div class="col-md-1 text-md-right" >
         </div>
         <div class="col-md-9 px-2">
-          <div class="alert alert-danger" role="alert" v-if="erroresDeValidacion != null">
+          <div class="alert alert-danger" role="alert">
               <!-- 
               -- Errores de validación
               --  
@@ -123,7 +123,7 @@
 <script>
 import api from '../../../../services/api'
 import { obtenerNombreCompleto } from '../../../../helpers'
-
+import { isEmpty } from 'lodash';
 export default {
   props: ['academiaProp'],
   mounted() {},
@@ -143,10 +143,12 @@ export default {
     };
   },
   methods: {
-    obtenerNombreCompleto,
+    obtenerNombreCompleto, // De helpers
+    isEmpty, // De lodash
     removerMiembro(id, index) {
       if (window.confirm('¿Deseas quitar al usuario de la lista?')){
-        delete this.erroresDeValidacion[`nuevosMiembros.${index}`]
+        delete this.erroresDeValidacion[`nuevosMiembros.${index}.id`]
+        delete this.erroresDeValidacion[`nuevosMiembros.${index}.fecha_ingreso`]
         this.nuevosMiembros = this.nuevosMiembros.filter(miembro => miembro.id != id);
       }
     },
