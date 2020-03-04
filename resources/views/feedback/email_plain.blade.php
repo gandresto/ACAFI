@@ -1,9 +1,9 @@
-Reporte de retroalimentación #{{ $feedback->id }} <br>
-Categoría: {{ $feedback->categoria->descripcion }} <br>
+Reporte de retroalimentación #{{ $feedback->id }}
+Categoría: {{ $feedback->categoria->descripcion }}
 
-Usuario #{{ $feedback->user->id }} <br>
-Nombre: {{ $feedback->user->nombrecompleto }} <br>
-Email: {{ $feedback->user->email }} <br>
+Usuario #{{ $feedback->user->id }}
+Nombre: {{ $feedback->user->nombrecompleto }}
+Email: {{ $feedback->user->email }}
 
-Mensaje: <br>
-{{ $feedback->mensaje }} <br>
+Mensaje:
+{{ $feedback->mensaje }}
