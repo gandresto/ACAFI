@@ -36,30 +36,30 @@
                         <div class="form-group col-sm-12 col-md-4">
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    @if ($minuta == 1)
-                                        <input type="radio" class="form-check-input" name="minuta" id="check-con-minuta" value="1" checked>
+                                    @if ($minuta == "con")
+                                        <input type="radio" class="form-check-input" name="minuta" id="check-con-minuta" value="con" checked>
                                     @else
-                                        <input type="radio" class="form-check-input" name="minuta" id="check-con-minuta" value="1">
+                                        <input type="radio" class="form-check-input" name="minuta" id="check-con-minuta" value="con">
                                     @endif
                                     Reuniones con minuta realizada
                                 </label>
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    @if ($minuta == 0)
-                                        <input type="radio" class="form-check-input" name="minuta" id="check-sin-minuta" value="0" checked>
+                                    @if ($minuta == "sin")
+                                        <input type="radio" class="form-check-input" name="minuta" id="check-sin-minuta" value="sin" checked>
                                     @else
-                                        <input type="radio" class="form-check-input" name="minuta" id="check-sin-minuta" value="0">
+                                        <input type="radio" class="form-check-input" name="minuta" id="check-sin-minuta" value="sin">
                                     @endif
                                     Reuniones sin minuta
                                 </label>
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label">
-                                    @if ($minuta == null)
-                                        <input type="radio" class="form-check-input" name="minuta" id="check-todas" value checked>
+                                    @if ($minuta == "todas" || $minuta == null)
+                                        <input type="radio" class="form-check-input" name="minuta" id="check-todas" value="todas" checked>
                                     @else
-                                        <input type="radio" class="form-check-input" name="minuta" id="check-todas" value>
+                                        <input type="radio" class="form-check-input" name="minuta" id="check-todas" value="todas">
                                     @endif
                                     Todas
                                 </label>

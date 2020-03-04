@@ -19,15 +19,15 @@ class ReunionesController extends Controller
     {
         $user = Auth::user();
         // dd($request->query('minuta'));
-        $quieroMinuta = es_verdadero($request->input('minuta'));
+        $minuta = $request->input('minuta', "todas");
         $antesde = $request->input('antesde') ? Carbon::parse($request->input('antesde')) : null;
         $despuesde = $request->input('despuesde') ? Carbon::parse($request->input('despuesde')) : null;
 
         $reuniones = $user->reuniones
                             ->sortBy('inicio')
-                            ->filter(function ($reunion) use ($quieroMinuta, $antesde, $despuesde) 
+                            ->filter(function ($reunion) use ($minuta, $antesde, $despuesde) 
                             {
-                                return ($quieroMinuta ? $reunion->minuta : true)
+                                return ($minuta === "con" ? $reunion->minuta : ( $minuta === "sin" ? $reunion->minuta == null : true))
                                         && ($antesde ? $antesde > $reunion->inicio : true)
                                         && ($despuesde ? $despuesde < $reunion->inicio : true);
                             });
