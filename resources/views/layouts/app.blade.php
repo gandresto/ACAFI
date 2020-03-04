@@ -100,6 +100,33 @@
                             </li>
                         @else
                             <li class="nav-item dropdown">
+                                <a id="dropdownHelp" 
+                                    class="nav-link dropdown-toggle" 
+                                    href="#" 
+                                    role="button" 
+                                    data-toggle="dropdown" 
+                                    aria-haspopup="true" 
+                                    aria-expanded="false" 
+                                    v-pre
+                                    title="Más información"
+                                >
+                                    <i class="fa fa-question-circle" aria-hidden="true"></i>
+                                    {{-- <i class="fa fa-info-circle" aria-hidden="true"></i> --}}
+                                    <span class="caret"></span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownHelp">
+                                    <a class="dropdown-item" href="#">
+                                        Manual de usuario
+                                    </a>
+                                    <a class="dropdown-item" href="{{route('feedback.create')}}">
+                                        Enviar comentarios
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        Acerca de
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
                                 <a id="dropdownUser" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->grado . ' ' . Auth::user()->nombre }}
                                     <span class="caret"></span>
@@ -111,7 +138,7 @@
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                                document.getElementById('logout-form').submit();">
                                         @lang('strings.logout')
                                     </a>
 

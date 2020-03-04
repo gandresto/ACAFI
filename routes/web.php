@@ -62,5 +62,14 @@ Route::resource('reuniones.minuta', 'ReunionesMinutasController')
 //     return $pdf->stream();
 // });
 
+// Enviar comentarios
+Route::resource('feedback', 'FeedbackController')->only(['create', 'store'])->middleware('auth');
+
 // ----------- TEAPOT ----------
 Route::get('/teapot/brew','TeapotController@brew')->name('teapot.brew');
+
+// TEST
+Route::get('mailtest', function () {
+        $feedback = App\Feedback::find(1);
+        return new App\Mail\FeedbackMail($feedback);
+});
