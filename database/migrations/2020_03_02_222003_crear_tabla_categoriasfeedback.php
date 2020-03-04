@@ -16,7 +16,6 @@ class CrearTablaCategoriasfeedback extends Migration
         Schema::create('categoriasfeedback', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('descripcion');
-            $table->timestamps();
         });
     }
 
