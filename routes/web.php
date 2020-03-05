@@ -69,7 +69,7 @@ Route::resource('feedback', 'FeedbackController')->only(['create', 'store'])->mi
 Route::get('/teapot/brew','TeapotController@brew')->name('teapot.brew');
 
 // TEST
-Route::get('mailtest', function () {
-        $feedback = App\Feedback::find(1);
-        return new App\Mail\FeedbackMail($feedback);
-});
+// Route::view('mailtest', function () {
+//         $feedback = App\Feedback::find(1);
+//         return new App\Mail\FeedbackMail($feedback);
+// });
