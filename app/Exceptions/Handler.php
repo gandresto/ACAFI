@@ -2,14 +2,14 @@
 
 namespace App\Exceptions;
 
-use Exception;
+use Throwable;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
     /**
-     * A list of the exception types that are not reported.
+     * A list of the throwable types that are not reported.
      *
      * @var array
      */
@@ -28,28 +28,28 @@ class Handler extends ExceptionHandler
     ];
 
     /**
-     * Report or log an exception.
+     * Report or log an extension.
      *
-     * @param  \Exception  $exception
+     * @param  \Throwable  $extension
      * @return void
      */
-    public function report(Exception $exception)
+    public function report(Throwable $extension)
     {
-        parent::report($exception);
+        parent::report($extension);
     }
 
     /**
-     * Render an exception into an HTTP response.
+     * Render an extension into an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param  \Throwable  $extension
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    public function render($request, Throwable $extension)
     {
-        if ($exception instanceof ModelNotFoundException && $request->wantsJson()) {
-            return response()->json(['message' => 'Not Found!'], 404);
-        }
-        return parent::render($request, $exception);
+        // if ($extension instanceof ModelNotFoundException && $request->wantsJson()) {
+        //     return response()->json(['message' => 'No se encontró el recurso'], 404);
+        // }
+        return parent::render($request, $extension);
     }
 }
