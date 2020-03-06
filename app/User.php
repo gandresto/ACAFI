@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -69,7 +70,7 @@ class User extends Authenticatable
      */
     public function rollApiKey(){
         do{
-           $this->api_token = str_random(80);
+           $this->api_token = Str::random(80);
         }while($this->where('api_token', $this->api_token)->exists());
         $this->save();
         return true;
