@@ -22,15 +22,15 @@ Route::get('/calendario', 'CalendarioController@index')->name('calendario');
 // -------- USUARIOS ---------
 Auth::routes();
 Route::resource('users', 'UsersController');
-Route::get('/users/buscar/{consulta}', 'UsersController@buscar')->name('users.buscar');
+// Route::get('/users/buscar/{consulta}', 'UsersController@buscar')->name('users.buscar');
 
 // ----- DIVISIONES -------
 Route::resource('divisions', 'DivisionController');
-Route::get('/divisions/buscar/{consulta}', 'DivisionController@buscar')->name('divisions.buscar');
+// Route::get('/divisions/buscar/{consulta}', 'DivisionController@buscar')->name('divisions.buscar');
 
 // ------- DEPARTAMENTOS -------
 Route::resource('divisions.departamentos', 'DivisionDepartamentoController');
-Route::resource('departamentos', 'DepartamentosController');
+// Route::resource('departamentos', 'DepartamentosController');
 
 // ------- ACADEMIAS --------
 Route::resource('divisions.departamentos.academias', 'DivisionDepartamentoAcademiaController');
