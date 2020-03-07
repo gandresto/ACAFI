@@ -2,7 +2,7 @@
   <div>
     <b-form-group>
       <div class="small-title">
-        Lista de asistencia de {{tipoDeDatos == "conv" ? "convocados": "invitados externos",}}*
+        Lista de asistencia de {{tipoDeDatos == "conv" ? "convocados": "invitados externos",}} <span class="text-danger">*</span>
       </div>
     </b-form-group>
     <b-form-group>

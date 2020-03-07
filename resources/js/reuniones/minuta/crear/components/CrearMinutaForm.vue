@@ -51,7 +51,7 @@
 
     <!--  ----------- Seguimiento a acuerdos -------------- -->
     <div class="form-group row">
-      <div class="col-sm-12" v-if="reunion.acuerdos_a_seguimiento">
+      <div class="col-sm-12" v-if="reunion && reunion.acuerdos_a_seguimiento.length > 0">
         <seguimiento-a-acuerdos></seguimiento-a-acuerdos>
       </div>
     </div>
