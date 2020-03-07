@@ -7,11 +7,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Grado extends Model
 {
+    /**
+     * The "type" of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
     protected $primaryKey = 'id';
     public $incrementing = false;
 
-    #public function academicos()
-    #{
-    #    return $this->hasMany(Academico::class);
-    #}
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }
