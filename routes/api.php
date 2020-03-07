@@ -19,33 +19,33 @@ use Illuminate\Support\Facades\Route;
 // });
 
 // ----------- Rutas para Divisiones -------------
-Route::apiResource('/divisions', 'Api\DivisionController')->middleware('auth:api');
-Route::get('/divisions/buscar/{consulta}', 'Api\DivisionController@buscar')->middleware('auth:api');
+Route::apiResource('/divisions', 'Api\DivisionController', ['as' => 'api'])->middleware('auth:api');
+Route::get('/divisions/buscar/{consulta}', 'Api\DivisionController@buscar', ['as' => 'api'])->middleware('auth:api');
 
 // ----------- Rutas para Usuario -------------
-Route::apiResource('users', 'Api\UserController')->middleware('auth:api');
-Route::apiResource('users.reuniones', 'Api\UserReunionesController')->middleware('auth:api');
-Route::apiResource('users.academiasQueHaPresidido', 'Api\UserAcademiasQueHaPresididoController')->middleware('auth:api');
+Route::apiResource('users', 'Api\UserController', ['as' => 'api'])->middleware('auth:api');
+Route::apiResource('users.reuniones', 'Api\UserReunionesController', ['as' => 'api'])->middleware('auth:api');
+Route::apiResource('users.academiasQueHaPresidido', 'Api\UserAcademiasQueHaPresididoController', ['as' => 'api'])->middleware('auth:api');
 
 // ----------- Rutas para usuario autenticado -------------
-Route::apiResource('/perfil/reuniones', 'Api\PerfilReunionesController')->middleware('auth:api');
+// Route::apiResource('/perfil/reuniones', 'Api\PerfilReunionesController', ['as' => 'api'])->middleware('auth:api');
 // Route::apiResource('/perfil/presidencia/academias', 'Api\PerfilReunionesController')->middleware('auth:api');
 // Route::apiResource('perfil', 'Api\PerfilController')->middleware('auth:api');
 
 
 // ----------- Rutas para Academias -------------
-Route::apiResource('/academias', 'Api\AcademiaController')->middleware('auth:api');
-Route::apiResource('academias.miembros', 'Api\AcademiaMiembrosController')->middleware('auth:api');
-Route::apiResource('academias.acuerdos', 'Api\AcademiaAcuerdoController')->middleware('auth:api');
+Route::apiResource('/academias', 'Api\AcademiaController', ['as' => 'api'])->middleware('auth:api');
+Route::apiResource('academias.miembros', 'Api\AcademiaMiembrosController', ['as' => 'api'])->middleware('auth:api');
+Route::apiResource('academias.acuerdos', 'Api\AcademiaAcuerdoController', ['as' => 'api'])->middleware('auth:api');
 
 // ----------- Rutas para Reuniones -------------
-Route::post('/reuniones/crearPDFOrdenDelDia', 'Api\ReunionesController@crearPDFOrdenDelDia')->middleware('auth:api');
-Route::apiResource('/reuniones', 'Api\ReunionesController')->middleware('auth:api');
-Route::apiResource('reuniones.minuta', 'Api\ReunionesMinutaController')->middleware('auth:api')->except('show');
+Route::post('/reuniones/crearPDFOrdenDelDia', 'Api\ReunionesController@crearPDFOrdenDelDia', ['as' => 'api'])->middleware('auth:api');
+Route::apiResource('reuniones', 'Api\ReunionesController', ['as' => 'api'])->middleware('auth:api');
+Route::apiResource('reuniones.minuta', 'Api\ReunionesMinutaController', ['as' => 'api'])->middleware('auth:api')->except('show');
 // Route::get('/reuniones/{reunion_id}/actualizarPDFOrdenDelDia', 'Api\ReunionesController@actualizarPDFOrdenDelDia')->middleware('auth:api');
 
 
 // ---------- Rutas para grados
-Route::apiResource('/grados', 'Api\GradosController')->middleware('auth:api');
+Route::apiResource('grados', 'Api\GradosController', ['as' => 'api'])->middleware('auth:api');
 
 // Route::fallback(abort(404, '¡No se encontró el recurso! Verifica la url'));

@@ -78,8 +78,7 @@ export default {
     }
   },
   mounted() {
-    // console.log("Component mounted.");
-    this.leerReunionesDeUsuario();
+    this.leerReunionesDeUsuario(window.Laravel.authUserId);
   },
   methods: {
     ...mapActions(["leerReunionesDeUsuario"]),
