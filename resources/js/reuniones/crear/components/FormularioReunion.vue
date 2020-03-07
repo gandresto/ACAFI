@@ -79,7 +79,7 @@
         :error="erroresDeValidacion.acuerdos[0]">
       </aviso-error>
       <!-- -- Acuerdos de reuniones pasadas sin resolver -- -->
-      <tabla-acuerdos v-if="acuerdosPendientes.length > 0"></tabla-acuerdos>
+      <tabla-acuerdos v-if="academia && academia.acuerdosPendientes.length > 0"></tabla-acuerdos>
 
       <!-- ------- Botones de vista previa y enviar formulario ----- -->
       <div class="form-group text-md-right">
@@ -168,9 +168,6 @@ export default {
   },
   methods: {
     ...mapMutations(['colocarErroresDeValidacion', 'colocarAcademia']),
-    ...mapActions([
-      "leerAcuerdosPendientes"
-    ]),
     tieneError(campo) {
       return this.erroresDeValidacion[campo] ? true : false;
     },
@@ -298,7 +295,6 @@ export default {
       "convocados",
       "invitados",
       "temas",
-      "acuerdosPendientes",
       "acuerdosASeguimiento",
       "erroresDeValidacion",
     ]),

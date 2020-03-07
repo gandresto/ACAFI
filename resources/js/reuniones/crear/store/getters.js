@@ -4,7 +4,7 @@ export default {
     invitados: state => state.invitados,
     convocados: state => state.convocados,
     temas: state => state.temas,
-    acuerdosPendientes: state => state.acuerdosPendientes,
+    acuerdosPendientes: state => state.academia.acuerdosPendientes,
     acuerdosASeguimiento: state => state.acuerdosASeguimiento,
     erroresDeValidacion: state => state.erroresDeValidacion,
 }
