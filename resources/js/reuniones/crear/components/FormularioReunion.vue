@@ -130,7 +130,7 @@ import { mapGetters, mapActions, mapMutations } from 'vuex';
 import { set } from 'vue';
 
 export default {
-  props: ['academiaProp'],
+  props: ['academia-prop'],
   data() {
     return {
       optionsPickerInicio: {
@@ -162,8 +162,8 @@ export default {
     };
   },
   mounted() {
-    let academia = JSON.parse(this.academiaProp);
-    this.colocarAcademia(academia);
+    // let academia = JSON.parse(this.academiaProp);
+    this.colocarAcademia(this.academiaProp);
     window.onbeforeunload = () => '¿Deseas salir? Puede que los cambios no se hayan guardado';
   },
   methods: {

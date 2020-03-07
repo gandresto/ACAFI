@@ -11,7 +11,7 @@
 @section('content')
 <div id="reunion-create" class="row">
     <formulario-reunion
-        academia-prop="{{json_encode(new App\Http\Resources\AcademiaResource($academia, 1, 1, 1))}}"    
+        :academia-prop="{{json_encode(new App\Http\Resources\AcademiaResource($academia, 1, 1, 1))}}"    
     ></formulario-reunion>
 </div>
 @endsection
