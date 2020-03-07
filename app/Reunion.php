@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -121,7 +120,7 @@ class Reunion extends Model
      */
     public function crearPDFOrdenDelDia()
     {
-        $pdf = PDF::loadView('reuniones.ordendeldia', ['reunion' => $this]);
+        $pdf = \PDF::loadView('reuniones.ordendeldia', ['reunion' => $this]);
         // Generar nombre del archivo a guardar
         $fecha_str = $this->inicio->format('Ymd_His'); // Formato de fecha
         $id_str = sprintf("%04d", $this->id); // Relleno con 4 ceros
@@ -151,7 +150,7 @@ class Reunion extends Model
      */
     public function crearPDFMinuta()
     {
-        $pdf = PDF::loadView('reuniones.pdf.minuta', ['reunion' => $this]);
+        $pdf = \PDF::loadView('reuniones.pdf.minuta', ['reunion' => $this]);
         // Generar nombre del archivo a guardar
         $fecha_str = $this->inicio->format('Ymd_His'); // Formato de fecha
         $id_str = sprintf("%04d", $this->id); // Relleno con 4 ceros

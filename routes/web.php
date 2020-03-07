@@ -49,7 +49,7 @@ Route::get('/reuniones/{id}/orden-del-dia', 'ReunionesController@descargarOrdenD
         ->name('reuniones.ordendeldia.descargar');
 Route::get('/reuniones/{id}/emailpreview', 'ReunionesController@emailPreview');
 // Route::get('/reuniones/{reunion}/vista-previa-od', function (App\Reunion $reunion){
-//     $pdf = PDF::loadView('reuniones.ordendeldia', ['reunion' => $reunion]);
+//     $pdf = \PDF::loadView('reuniones.ordendeldia', ['reunion' => $reunion]);
 //     return $pdf->stream();
 //     // return view('reuniones.ordendeldia', compact('reunion'));
 // });
@@ -58,7 +58,7 @@ Route::get('/reuniones/{id}/emailpreview', 'ReunionesController@emailPreview');
 Route::resource('reuniones.minuta', 'ReunionesMinutasController')
         ->only(['index', 'create']);
 // Route::get('/reuniones/{reunion}/minuta/vista-previa/', function (App\Reunion $reunion){
-//     $pdf = PDF::loadView('reuniones.pdf.minuta', ['reunion' => $reunion]);
+//     $pdf = \PDF::loadView('reuniones.pdf.minuta', ['reunion' => $reunion]);
 //     return $pdf->stream();
 // });
 
