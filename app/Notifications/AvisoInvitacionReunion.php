@@ -61,7 +61,7 @@ class AvisoInvitacionReunion extends Notification implements ShouldQueue
                     ->line("- **Hora de inicio:** " . $this->reunion->inicio->format('h:i A'))
                     ->line("- **Hora de finalización:** " . $this->reunion->fin->format('h:i A'))
                     ->action("Descargar orden del día", $link_ordendeldia)
-                    ->line("Para más detalles, consulta el siguiente link: {$link_reunion}.");
+                    ->line("Para más detalles, consulta el siguiente link: [{$link_reunion}]({$link_reunion}).");
     }
 
     /**
