@@ -121,6 +121,7 @@ export default {
         temas: this.reunion.temas,
         miembros_que_asistieron_ids,
         invitados_externos_que_asistieron_ids,
+        acuerdos_a_seguimiento: this.reunion.acuerdos_a_seguimiento,
       });
       let url = `${api.baseURL}/reuniones/${this.reunion.id}/minuta`;
       axios
@@ -135,10 +136,10 @@ export default {
         .catch(error => {
           window.scrollTo(0,0);
           window.onbeforeunload = () => '¿Deseas salir? Puede que los cambios no se hayan guardado.';
+          this.estadoCreacionDeMinuta = ESTADO_API.ERROR;
           if(error.response){
             console.log(error.response);
-            this.estadoCreacionDeMinuta = ESTADO_API.ERROR;
-            if( error.response.status = 422){
+            if( error.response.status == 422){
               this.errorMsg = "Corrige los errores del formulario e intenta de nuevo.";
               this.colocarErroresDeValidacion(error.response.data.errors);
             } else{
@@ -147,13 +148,14 @@ export default {
           } else{
             console.log(error);
             this.errorMsg = "Ocurrió un error, intenta de nuevo más tarde.";
-            this.estadoCreacionDeMinuta = ESTADO_API.ERROR;
           }
         })
     },
 
     tieneError(campo) {
-      return this.erroresDeValidacion[campo] ? true : false;
+      return  this.erroresDeValidacion ? 
+              ( this.erroresDeValidacion[campo] ? true : false ) :
+              false;
     },
   },
   computed: {
