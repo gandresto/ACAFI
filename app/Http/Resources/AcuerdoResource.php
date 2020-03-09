@@ -20,7 +20,11 @@ class AcuerdoResource extends JsonResource
             "producto_esperado" => $this->producto_esperado,
             "fecha_compromiso" => $this->fecha_compromiso,
             "tema" => $this->tema,
-            "fecha_de_creacion" => $this->created_at,
+            "responsable" => [
+                'id' => $this->responsable->id,
+                'nombre_completo' => $this->responsable->gradoNombreCompleto,
+            ],
+            "fecha_de_creacion" => $this->tema->reunion->inicio,
             "ultima_revision" => $this->fechaDeUltimaRevision,
             "fecha_finalizado" => $this->when($this->fecha_finalizado != null, $this->fecha_finalizado),
         ];
