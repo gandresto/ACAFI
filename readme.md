@@ -1,10 +1,10 @@
-# Agenda V2
+# ACAFI
 
-Agenda para las academias de la FI. Hecho sobre el framework de Laravel 5.8 con PHP 7.3.
+Nuevo sistema de agenda para las Academias de la FI (ACAFI). Hecho sobre el framework de Laravel.
 
 ## Requisitos
 
-- PHP >= 7.1.3
+- PHP >= 7.2
 - BCMath PHP Extension
 - Ctype PHP Extension
 - JSON PHP Extension

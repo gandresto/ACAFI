@@ -77,7 +77,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    {{ config('app.name', 'Agenda V2') }}
+                    {{ config('app.name', 'ACAFI') }}
                 </div>
             </div>
         </div>
