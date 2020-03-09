@@ -1,48 +1,68 @@
-import { uuidv4} from '../../../../helpers';
+import { uuidv4 } from '../../../../helpers';
 
 export default {
-    colocarMiembrosQueAsistieron(state, miembrosQueAsistieron){
-        state.miembrosQueAsistieron = miembrosQueAsistieron;
-    },
-    colocarInvitadosExternosQueAsistieron(state, invitadosExternosQueAsistieron){
-        state.invitadosExternosQueAsistieron = invitadosExternosQueAsistieron;
-    },
-    colocarReunion(state, reunion){
-        state.reunion = reunion;
-    },
-    colocarEstadoReunion(state, estadoReunion){
-        state.estadoReunion = estadoReunion;
-    },
-    colocarComentarioEnTema(state, {temaId, comentario}){
-        state.reunion.temas = state.reunion.temas.map(tema => {
-            if (tema.id == temaId) tema.comentario = comentario;
-            return tema;
-        });
-    },
-    colocarAcuerdoEnTema(state, acuerdo){
-        state.reunion.temas = state.reunion.temas.map(tema => {
-            if (tema.id == acuerdo.tema_id) tema.acuerdos.push(acuerdo);
-            return tema;
-        });
-    },
-    colocarNuevoAcuerdo(state, acuerdo){
-        acuerdo.uuid = uuidv4();
-        state.reunion
-            .temas
-            .filter(tema => tema.id == acuerdo.tema_id)[0]
-            .acuerdos.push(acuerdo);
-    },
-    eliminarAcuerdo(state, {tema_id, uuid}){
-        state.reunion
-            .temas
-            .filter(tema => tema.id == tema_id)[0]
-            .acuerdos = state.reunion
-                            .temas
-                            .filter(tema => tema.id == tema_id)[0]
-                            .acuerdos
-                            .filter(acuerdo => acuerdo.uuid != uuid);
-    },
-    colocarErroresDeValidacion(state, errores){
-        state.erroresDeValidacion = errores;
-    },
+  colocarMiembrosQueAsistieron(state, miembrosQueAsistieron) {
+    state.miembrosQueAsistieron = miembrosQueAsistieron;
+  },
+  colocarInvitadosExternosQueAsistieron(state, invitadosExternosQueAsistieron) {
+    state.invitadosExternosQueAsistieron = invitadosExternosQueAsistieron;
+  },
+  colocarReunion(state, reunion) {
+    state.reunion = reunion;
+  },
+  colocarEstadoReunion(state, estadoReunion) {
+    state.estadoReunion = estadoReunion;
+  },
+  colocarComentarioEnTema(state, { temaId, comentario }) {
+    state.reunion.temas = state.reunion.temas.map(tema => {
+      if (tema.id == temaId) tema.comentario = comentario;
+      return tema;
+    });
+  },
+  colocarAcuerdoEnTema(state, acuerdo) {
+    state.reunion.temas = state.reunion.temas.map(tema => {
+      if (tema.id == acuerdo.tema_id) tema.acuerdos.push(acuerdo);
+      return tema;
+    });
+  },
+  colocarNuevoAcuerdo(state, acuerdo) {
+    acuerdo.uuid = uuidv4();
+    state.reunion
+      .temas
+      .filter(tema => tema.id == acuerdo.tema_id)[0]
+      .acuerdos.push(acuerdo);
+  },
+  eliminarAcuerdo(state, { tema_id, uuid }) {
+    state.reunion
+      .temas
+      .filter(tema => tema.id == tema_id)[0]
+      .acuerdos = state.reunion
+        .temas
+        .filter(tema => tema.id == tema_id)[0]
+        .acuerdos
+        .filter(acuerdo => acuerdo.uuid != uuid);
+  },
+  colocarErroresDeValidacion(state, errores) {
+    state.erroresDeValidacion = errores;
+  },
+
+  colocarAvanceEnAcuerdo(state, { acuerdo_id, avance }) {
+    state.reunion.acuerdos_a_seguimiento = state.reunion
+      .acuerdos_a_seguimiento
+      .map(acuerdo => {
+        if (acuerdo.id == acuerdo_id) acuerdo['avance'] = avance;
+        return acuerdo;
+      });
+  },
+  colocarResultadoEnAcuerdo(state, { acuerdo_id, resultado, fecha_finalizado }) {
+    state.reunion.acuerdos_a_seguimiento = state.reunion
+      .acuerdos_a_seguimiento
+      .map(acuerdo => {
+        if (acuerdo.id == acuerdo_id) {
+          acuerdo['resultado'] = resultado;
+          acuerdo['fecha_finalizado'] = fecha_finalizado;
+        }
+        return acuerdo;
+      });
+  },
 };
