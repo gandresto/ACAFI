@@ -1,14 +1,21 @@
 <template>
   <div class="row my-2">
     <div class="col-sm-12 col-md-6">
-      <b-form-group label="Estado del acuerdo">
+      <div class="form-group">
+        <label :for="`estado-acuerdo-${acuerdo.id}`">
+          Estado del acuerdo <span class="text-danger">*</span>
+        </label>
         <b-form-radio-group
+          v-show="modoEdicion"
           :id="`estado-acuerdo-${acuerdo.id}`"
           v-model="estadoAcuerdo"
           :options="opciones"
           :name="`estado-acuerdo-${acuerdo.id}`"
         ></b-form-radio-group>
-      </b-form-group>
+        <div v-show="!modoEdicion">
+          - {{ estadoAcuerdo == 0 ? 'Pendiente/En proceso' : 'Finalizado'}}
+        </div>
+      </div>
     </div>
     <div class="col-sm-12 col-md-6">
       <div class="form-group" v-if="estadoAcuerdo == 1">
@@ -16,11 +23,12 @@
           Fecha de finalización <span class="text-danger">*</span>
         </label>
         <date-picker
+            :disabled="!modoEdicion"
             :id="'fecha-fin-'+acuerdo.id"
             :name="'fecha-fin-'+acuerdo.id"
             v-model="fecha_finalizado" :config="optionsDatePicker"
           >
-          </date-picker>
+        </date-picker>
       </div>
     </div>
     <div class="col-sm-12">
@@ -28,7 +36,8 @@
         <label :for="`avance-resultado-${acuerdo.id}`">
           {{ labelComentario }} <span class="text-danger">*</span>
           </label>
-        <input type="text" 
+        <input type="text"
+          :disabled="!modoEdicion"
           v-model="avanceResultado"
           class="form-control" 
           :name="`avance-resultado-${acuerdo.id}`" 
@@ -39,12 +48,22 @@
     <div class="col-sm-12">
       <div class="form-group text-sm-right">
         <b-button
-         variant="primary"
-         @click="agregarDetalles"
-         :disabled="!validForm"
+          v-show="modoEdicion"
+          variant="success"
+          @click="agregarDetalles"
+          :disabled="!validForm"
         >
-        <i class="fa fa-plus mr-1" aria-hidden="true"></i>
+        <i class="fa fa-check mr-1" aria-hidden="true"></i>
         Agregar {{ estadoAcuerdo == 0 ? 'avance' : 'resultado'}}
+        </b-button>
+        <b-button
+          v-show="!modoEdicion"
+          variant="primary"
+          @click="modoEdicion = true"
+          :disabled="!validForm"
+        >
+        <i class="fa fa-edit mr-1" aria-hidden="true"></i>
+        Editar {{ estadoAcuerdo == 0 ? 'avance' : 'resultado'}}
         </b-button>
       </div>
     </div>
@@ -107,13 +126,6 @@ export default {
       this.modoEdicion = false;
       return;
     },
-  },
-  watch: {
-    // estadoAcuerdo: {
-    //   handler: function (estado, oldestado) {
-        
-    //   }
-    // },
   },
 };
 </script>
