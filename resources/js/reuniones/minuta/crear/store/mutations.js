@@ -50,7 +50,11 @@ export default {
     state.reunion.acuerdos_a_seguimiento = state.reunion
       .acuerdos_a_seguimiento
       .map(acuerdo => {
-        if (acuerdo.id == acuerdo_id) acuerdo['avance'] = avance;
+        if (acuerdo.id == acuerdo_id){ 
+          acuerdo['avance_actual'] = avance;
+          acuerdo['resultado'] = null;
+          acuerdo['fecha_finalizado'] = null;
+        }
         return acuerdo;
       });
   },
@@ -59,6 +63,7 @@ export default {
       .acuerdos_a_seguimiento
       .map(acuerdo => {
         if (acuerdo.id == acuerdo_id) {
+          acuerdo['avance_actual'] = null;
           acuerdo['resultado'] = resultado;
           acuerdo['fecha_finalizado'] = fecha_finalizado;
         }
