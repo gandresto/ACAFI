@@ -19,14 +19,19 @@ class AcuerdoResource extends JsonResource
             "descripcion" => $this->descripcion,
             "producto_esperado" => $this->producto_esperado,
             "fecha_compromiso" => $this->fecha_compromiso,
-            "tema" => $this->tema,
+            "resultado" => $this->resultado,
+            "tema" => [
+                "id" => $this->tema->id,
+                "descripcion" => $this->tema->descripcion,
+            ],
             "responsable" => [
                 'id' => $this->responsable->id,
                 'nombre_completo' => $this->responsable->gradoNombreCompleto,
             ],
             "fecha_de_creacion" => $this->tema->reunion->inicio,
             "ultima_revision" => $this->fechaDeUltimaRevision,
-            "fecha_finalizado" => $this->when($this->fecha_finalizado != null, $this->fecha_finalizado),
+            "fecha_finalizado" => $this->fecha_finalizado,
+            'avance' => $this->whenPivotLoadedAs('avance', 'acuerdo_reunion', $this->avance),
         ];
     }
 }
