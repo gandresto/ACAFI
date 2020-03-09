@@ -280,7 +280,7 @@ export default {
             this.estadoForm = ESTADO_API.ERROR;
             if (err.response) {
               // console.log(err.response);
-              if(err.response.status = 422) this.erroresDeValidacion = err.response.data.errors;
+              if(err.response.status == 422) this.erroresDeValidacion = err.response.data.errors;
               else this.error = err.message;
             } else {
               console.log(err);
