@@ -181,7 +181,7 @@ export default {
 
     actualizarComentario() {
       this.ponerComentarioEnTema({
-        temaId: this.temaId,
+        tema_id: this.temaId,
         comentario: this.comentario
       });
     },
