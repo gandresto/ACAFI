@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <aviso-error 
-        v-if="hayErrorDeValidacion"
-        error="Error: revisa tu formulario y corrige los campos que tienen errores">
+        v-if="error"
+        :error="error">
     </aviso-error>
 
     <!-- ----------- Formulario para crear la reunión (desplegable al seleccionar academia) --------- -->
@@ -11,7 +11,7 @@
         <!-- ----------- Fecha y hora de inicio --------- -->
         <div class="col-sm-12 col-md-6">
           <div class="form-group">
-            <label for="fecha-inicio">Fecha y hora de inicio *</label>
+            <label for="fecha-inicio">Fecha y hora de inicio <span class="text-danger">*</span></label>
             <date-picker 
               id="fecha-inicio"
               name="fecha-inicio" 
@@ -30,7 +30,7 @@
         <!-- ----------- Fecha y hora de fin --------- -->
         <div class="col-sm-12 col-md-6">
           <div class="form-group">
-            <label for="fecha-fin">Fecha y hora de finalización *</label>
+            <label for="fecha-fin">Fecha y hora de finalización <span class="text-danger">*</span></label>
             <date-picker
               id="fecha-fin"
               name="fecha-fin" 
@@ -45,12 +45,13 @@
       </div>
 
       <!-- ----------- Lugar --------- -->
-      <b-form-group id="lugar" label="Lugar *" label-for="text-lugar">
+      <div class="form-group">
+        <label for="text-lugar">Lugar <span class="text-danger">*</span></label>
         <b-form-input id="text-lugar" v-model="lugar" type="text" required :class="claseValidacion('lugar')"></b-form-input>
         <span v-if="tieneError('lugar')" class="invalid-feedback" role="alert">
           <strong>{{erroresDeValidacion.lugar[0]}}</strong>
         </span>
-      </b-form-group>
+      </div>
       <hr />
 
       <aviso-error 
@@ -85,7 +86,7 @@
       <div class="form-group text-md-right">
         <b-button variant="secondary" @click="vistaPrevia">
           <div
-            v-if="estadoVistaPrevia == estadoApi.CARGANDO"
+            v-if="estadoVistaPrevia == ESTADO_API.CARGANDO"
             class="spinner-border spinner-border-sm mx-1"
             role="status"
           >
@@ -93,12 +94,12 @@
           </div>
           Generar vista previa de Orden del Día
         </b-button>
-        <b-button :disabled="estadoVistaPrevia != estadoApi.LISTO"
+        <b-button :disabled="estadoVistaPrevia != ESTADO_API.LISTO"
           variant="danger" 
           :href="urlVistaPrevia"
           target="__blank"
         >
-          <i v-if="estadoVistaPrevia == estadoApi.ERROR" 
+          <i v-if="estadoVistaPrevia == ESTADO_API.ERROR" 
             class="fa fa-times mr-1" 
             aria-hidden="true"
           >
@@ -107,9 +108,9 @@
           <i class="fas fa-file-pdf mr-1"></i>
           Vista Previa
         </b-button>
-        <b-button type="submit" variant="primary" :disabled="estadoCreacionReunion == estadoApi.CARGANDO">
+        <b-button type="submit" variant="primary" :disabled="estadoCreacionReunion == ESTADO_API.CARGANDO">
           <div
-            v-if="estadoCreacionReunion == estadoApi.CARGANDO"
+            v-if="estadoCreacionReunion == ESTADO_API.CARGANDO"
             class="spinner-border spinner-border-sm mx-1"
             role="status"
           ><span class="sr-only">Creando reunión...</span>
@@ -154,10 +155,10 @@ export default {
       inicio: "",
       fin: "",
       lugar: "",
-      estadoApi: ESTADO_API,
+      ESTADO_API,
       estadoVistaPrevia: ESTADO_API.INICIADO,
       estadoCreacionReunion: ESTADO_API.INICIADO,
-      hayErrorDeValidacion: false,
+      error: "",
       urlVistaPrevia: "#",
     };
   },
@@ -183,7 +184,8 @@ export default {
     vistaPrevia(evt) {
       // Variables para monitorear estado del servidor
       this.estadoVistaPrevia = ESTADO_API.CARGANDO;
-      this.hayErrorDeValidacion = false;
+      // Limpiar campo de error
+      this.error = "";
       // Preparar url y datos para enviarlos a backend
       let url = API.baseURL + "/reuniones/crearPDFOrdenDelDia";
       let data = this.prepararDatosParaEnvio();
@@ -204,22 +206,24 @@ export default {
           this.urlVistaPrevia = fileURL;
         })
         .catch(err => {
+          window.scrollTo(0,0);
           this.estadoVistaPrevia = ESTADO_API.ERROR;
           if (err.response){
             // Convertir de blob a string
             err.response.data.text().then(datosStr=>{
               let datosObj = JSON.parse(datosStr);
               if(err.response.status == 422){
-                window.scrollTo(0,0);
                 console.log(datosObj.errors);
                 this.colocarErroresDeValidacion(datosObj.errors);
-                this.hayErrorDeValidacion = true;
+                this.error = "Error: revisa tu formulario y corrige los campos que contengan errores.";
               } else {
                 console.log(datosObj);
               }
             });
           } 
-          else console.log(err);
+          else{
+            this.error = "Error con la conexión al servidor, intente de nuevo más tarde.";
+          } console.log(err);
         });
     },
     submitForm(evt) {
@@ -230,7 +234,8 @@ export default {
         return false;
       // Variables de estado
       this.estadoCreacionReunion = ESTADO_API.CARGANDO;
-      this.hayErrorDeValidacion = false;      
+      // Limpiar errores
+      this.error = "";
       // Preparar url y datos para enviarlos a backend
       let url = API.baseURL + "/reuniones/";
       let data = this.prepararDatosParaEnvio();
@@ -253,11 +258,11 @@ export default {
              * status code that falls out of the range of 2xx
              */
             if(error.response.status == 422){
-              window.scrollTo(0,0);
               this.colocarErroresDeValidacion(error.response.data.errors);
-              this.hayErrorDeValidacion = true;
-
-            } else this.error = error.message;
+              this.error = "Error: revisa tu formulario y corrige los campos que contengan errores.";
+            } else { 
+              this.error = error.message
+            };
             console.log(error.response.data);
 
           } else if (error.request) {
@@ -267,9 +272,10 @@ export default {
              * of http.ClientRequest in Node.js
              */
             console.log(error.request);
-
+            this.error = "Error en la conexión al servidor. Intente de nuevo más tarde.";
           } else {
             // Something happened in setting up the request and triggered an Error
+            this.error = "Ocurrió un error inesperado. Intente de nuevo más tarde.";
             console.log(error);
           }
         });
