@@ -43,11 +43,11 @@ Route::delete('/divisions/{division}/departamentos/{departamento}/academias/{aca
 Route::resource('academias.reuniones', 'AcademiaReunionesController')
         ->except(['store', 'update', 'destroy'])
         ->middleware('auth');
+Route::get('/reuniones/{reunion}/orden-del-dia', 'ReunionesController@descargarOrdenDelDia')
+        ->name('reuniones.ordendeldia.descargar');
+Route::get('/reuniones/{reunion}/emailpreview', 'ReunionesController@emailPreview');
 Route::resource('/reuniones', 'ReunionesController')
         ->except(['store', 'update', 'destroy']);
-Route::get('/reuniones/{id}/orden-del-dia', 'ReunionesController@descargarOrdenDelDia')
-        ->name('reuniones.ordendeldia.descargar');
-Route::get('/reuniones/{id}/emailpreview', 'ReunionesController@emailPreview');
 // Route::get('/reuniones/{reunion}/vista-previa-od', function (App\Reunion $reunion){
 //     $pdf = \PDF::loadView('reuniones.ordendeldia', ['reunion' => $reunion]);
 //     return $pdf->stream();
