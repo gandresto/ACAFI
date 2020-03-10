@@ -54,7 +54,7 @@ class AcademiaResource extends JsonResource
                 ),
                 'acuerdosPendientes' => $this->when(
                     $this->con_ap, 
-                    AcuerdoPendienteResource::collection($this->acuerdosPendientes)
+                    AcuerdoPendienteResource::collection($this->acuerdosPendientes->sortBy('fecha_compromiso'))
                 ),
             ];
     }
