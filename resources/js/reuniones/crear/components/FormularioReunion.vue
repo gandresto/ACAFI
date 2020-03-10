@@ -252,7 +252,7 @@ export default {
              * The request was made and the server responded with a
              * status code that falls out of the range of 2xx
              */
-            if(error.response.status = 422){
+            if(error.response.status == 422){
               window.scrollTo(0,0);
               this.colocarErroresDeValidacion(error.response.data.errors);
               this.hayErrorDeValidacion = true;
