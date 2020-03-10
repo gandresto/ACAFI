@@ -13,9 +13,9 @@ export default {
   colocarEstadoReunion(state, estadoReunion) {
     state.estadoReunion = estadoReunion;
   },
-  colocarComentarioEnTema(state, { temaId, comentario }) {
+  colocarComentarioEnTema(state, { tema_id, comentario }) {
     state.reunion.temas = state.reunion.temas.map(tema => {
-      if (tema.id == temaId) tema.comentario = comentario;
+      if (tema.id == tema_id) tema.comentario = comentario;
       return tema;
     });
   },
@@ -51,6 +51,7 @@ export default {
       .acuerdos_a_seguimiento
       .map(acuerdo => {
         if (acuerdo.id == acuerdo_id){ 
+          acuerdo['estado'] = 0;
           acuerdo['avance_actual'] = avance;
           acuerdo['resultado'] = null;
           acuerdo['fecha_finalizado'] = null;
@@ -63,6 +64,7 @@ export default {
       .acuerdos_a_seguimiento
       .map(acuerdo => {
         if (acuerdo.id == acuerdo_id) {
+          acuerdo['estado'] = 1;
           acuerdo['avance_actual'] = null;
           acuerdo['resultado'] = resultado;
           acuerdo['fecha_finalizado'] = fecha_finalizado;

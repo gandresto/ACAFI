@@ -51,6 +51,8 @@ class ReunionesMinutaController extends Controller
             }
         }
 
+        // return response($datos, 500);
+
         Validator::make($datos, [
             'miembros_que_asistieron_ids' => 'required',
             'miembros_que_asistieron_ids.*' => Rule::in($reunion->convocados->pluck('id')),
@@ -61,11 +63,12 @@ class ReunionesMinutaController extends Controller
             'temas.*.acuerdos.*.responsable_id' => 'required',
             'temas.*.acuerdos.*.producto_esperado' => 'required|min:3|max:191',
             'temas.*.acuerdos.*.fecha_compromiso' => 'required|after:'.now(),
-            'acuerdos_a_seguimiento.*.avance' => 'required_if:acuerdos_a_seguimiento.*.fecha_finalizado,null',
-            'acuerdos_a_seguimiento.*.resultado' => 'required_with:acuerdos_a_seguimiento.*.fecha_finalizado',
+            'acuerdos_a_seguimiento.*.estado' => 'required|in:0,1',
+            'acuerdos_a_seguimiento.*.avance' => 'required_if:acuerdos_a_seguimiento.*.estado,0',
+            'acuerdos_a_seguimiento.*.resultado' => 'required_if:acuerdos_a_seguimiento.*.estado,1',
         ])->validate();
         
-        return response($datos, 500);
+        return response($datos, 418);
 
         return DB::transaction(function () use ($datos, $reunion) {
             // Actualizar lista de asistentes
