@@ -237,7 +237,7 @@ export default {
       // Limpiar errores
       this.error = "";
       // Preparar url y datos para enviarlos a backend
-      let url = API.baseURL + "/reuniones/";
+      let url = API.baseURL + "/reuniones";
       let data = this.prepararDatosParaEnvio();
       // Enviar peticion
       axios
@@ -245,7 +245,7 @@ export default {
         .then(r => r.data)
         .then(data => {
           this.estadoCreacionReunion = ESTADO_API.LISTO;
-          alert('Reunión creada satisfactoriamente');
+          alert(data.message);
           window.location = process.env.MIX_APP_URL+'/reuniones';
         })
         .catch(error => {
