@@ -13,6 +13,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
+use Swift_TransportException;
 
 class ReunionesController extends Controller
 {
@@ -23,7 +24,7 @@ class ReunionesController extends Controller
      */
     public function index()
     {
-        //
+        return response(['mensaje' => 'Aún no disponible']);
     }
 
     /**
@@ -71,10 +72,21 @@ class ReunionesController extends Controller
             return $reunion;
         });
         if($reunion->exists()){
+            try {
+                //code...
+                Notification::send($reunion->convocados, new AvisoInvitacionReunion($reunion));
+                Notification::send($reunion->invitadosExternos, new AvisoInvitacionReunion($reunion));
+                return response([
+                    "message" => "Reunión creada satisfactoriamente.",
+                    "reunion" => $reunion
+                ], 201);
+            } catch (Swift_TransportException $th) {
+                return response([
+                    "message" => "Reunión creada satisfactoriamente. Correos no enviados.",
+                    "reunion" => $reunion
+                ], 201);
+            }
             // ------ Enviar notificaciones ----------
-            Notification::send($reunion->convocados, new AvisoInvitacionReunion($reunion));
-            Notification::send($reunion->invitadosExternos, new AvisoInvitacionReunion($reunion));
-            return response($reunion, 200);
         } else return response(['message' => 'Error al crear la reunión'], 500);
 
     }
