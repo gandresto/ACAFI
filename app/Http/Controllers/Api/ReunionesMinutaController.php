@@ -33,11 +33,10 @@ class ReunionesMinutaController extends Controller
      */
     public function store(Request $request, int $reunion_id)
     {
-        // return response(['mensaje' => 'ok'], 401);
         $reunion = Reunion::findOrFail($reunion_id);
         $this->authorize('update', $reunion);
         $datos = json_decode($request->data, true);
-
+        
         // Creamos objetos de fecha para cada fecha_compromiso de los acuerdos
         foreach ($datos['temas'] as $keyTema => $tema) {
             foreach ($tema['acuerdos'] as $keyAcuerdo => $acuerdo) {
@@ -45,16 +44,28 @@ class ReunionesMinutaController extends Controller
                     Carbon::createFromFormat('d/m/Y', $acuerdo['fecha_compromiso']);
             }
         }
+        foreach ($datos['acuerdos_a_seguimiento'] as $keyAcuerdo => $acuerdo){
+            if ($acuerdo['fecha_finalizado']) {
+                $datos['acuerdos_a_seguimiento'][$keyAcuerdo]['fecha_finalizado'] =
+                    Carbon::createFromFormat('d/m/Y', $acuerdo['fecha_finalizado']);
+            }
+        }
 
         Validator::make($datos, [
-            'temas' => 'required',
-            'temas.*.comentario' => 'required|min:3|max:500',
-            'temas.*.acuerdos.*.descripcion' => 'min:3|max:191',
-            'temas.*.acuerdos.*.fecha_compromiso' => 'after:'.now(),
             'miembros_que_asistieron_ids' => 'required',
             'miembros_que_asistieron_ids.*' => Rule::in($reunion->convocados->pluck('id')),
             'invitados_externos_que_asistieron_ids.*' => Rule::in($reunion->invitadosExternos->pluck('id')),
+            'temas' => 'required',
+            'temas.*.comentario' => 'required|min:3|max:500',
+            'temas.*.acuerdos.*.descripcion' => 'required|min:3|max:191',
+            'temas.*.acuerdos.*.responsable_id' => 'required',
+            'temas.*.acuerdos.*.producto_esperado' => 'required|min:3|max:191',
+            'temas.*.acuerdos.*.fecha_compromiso' => 'required|after:'.now(),
+            'acuerdos_a_seguimiento.*.avance' => 'required_if:acuerdos_a_seguimiento.*.fecha_finalizado,null',
+            'acuerdos_a_seguimiento.*.resultado' => 'required_with:acuerdos_a_seguimiento.*.fecha_finalizado',
         ])->validate();
+        
+        return response($datos, 500);
 
         return DB::transaction(function () use ($datos, $reunion) {
             // Actualizar lista de asistentes

@@ -91,6 +91,7 @@ export default {
         format: "DD/MM/YYYY",
         daysOfWeekDisabled: [0],
         minDate: moment(this.acuerdo.fecha_de_creacion),
+        maxDate: moment(),
       },
     }
   },
