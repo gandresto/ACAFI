@@ -39,9 +39,9 @@ Route::apiResource('academias.miembros', 'Api\AcademiaMiembrosController', ['as'
 Route::apiResource('academias.acuerdos', 'Api\AcademiaAcuerdoController', ['as' => 'api'])->middleware('auth:api');
 
 // ----------- Rutas para Reuniones -------------
-Route::post('/reuniones/crearPDFOrdenDelDia', 'Api\ReunionesController@crearPDFOrdenDelDia', ['as' => 'api'])->middleware('auth:api');
 Route::apiResource('reuniones', 'Api\ReunionesController', ['as' => 'api'])->middleware('auth:api');
 Route::apiResource('reuniones.minuta', 'Api\ReunionesMinutaController', ['as' => 'api'])->middleware('auth:api')->except('show');
+Route::post('/reuniones/crearPDFOrdenDelDia', 'Api\ReunionesController@crearPDFOrdenDelDia', ['as' => 'api'])->middleware('auth:api');
 // Route::get('/reuniones/{reunion_id}/actualizarPDFOrdenDelDia', 'Api\ReunionesController@actualizarPDFOrdenDelDia')->middleware('auth:api');
 
 
