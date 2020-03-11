@@ -125,6 +125,9 @@ return [
     */
 
     'custom' => [
+        'acuerdos_a_seguimiento.*.estado' => [
+          'required' => 'Los datos de avance o resultado del acuerdo son obligatorios.',  
+        ],
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
@@ -145,7 +148,10 @@ return [
         'miembros_que_asistieron_ids' => 'miembros que asistieron',
         'invitados_externos_que_asistieron_ids' => 'invitados externos que asistieron',
         'temas.*.comentario' => 'comentario',
-        'nuevosMiembros.*.fecha_ingreso' => 'fecha de ingreso',
+        'acuerdos_a_seguimiento.*.estado' => 'estado',
+        'acuerdos_a_seguimiento.*.avance_actual' => 'avance',
+        'acuerdos_a_seguimiento.*.resultado' => 'resultado',
+        'acuerdos_a_seguimiento.*.fecha_compromiso' => 'fecha compromiso',
     ],
 
 ];

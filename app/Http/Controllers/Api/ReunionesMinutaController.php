@@ -64,7 +64,8 @@ class ReunionesMinutaController extends Controller
             'temas.*.acuerdos.*.producto_esperado' => 'required|min:3|max:191',
             'temas.*.acuerdos.*.fecha_compromiso' => 'required|after:'.now(),
             'acuerdos_a_seguimiento.*.estado' => 'required|in:0,1',
-            'acuerdos_a_seguimiento.*.avance' => 'required_if:acuerdos_a_seguimiento.*.estado,0',
+            'acuerdos_a_seguimiento.*.avance_actual' => 'required_if:acuerdos_a_seguimiento.*.estado,0',
+            'acuerdos_a_seguimiento.*.fecha_compromiso' => 'required_if:acuerdos_a_seguimiento.*.estado,1',
             'acuerdos_a_seguimiento.*.resultado' => 'required_if:acuerdos_a_seguimiento.*.estado,1',
         ])->validate();
         
