@@ -29,7 +29,7 @@
         "bootstrap-vue": "^2.4.0",
         "date-fns": "^2.9.0",
         "luxon": "^1.22.0",
-        "moment": "^2.24.0",
+        "moment": "^2.29.2",
         "nprogress": "^0.2.0",
         "vue-axios": "^2.1.5",
         "vue-bootstrap-datetimepicker": "^5.0.1",
